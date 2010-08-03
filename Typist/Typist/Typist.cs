@@ -88,14 +88,7 @@ namespace Typist
             if (ofdImport.ShowDialog() == DialogResult.OK)
             {
                 using (StreamReader sr = new StreamReader(ofdImport.FileName))
-                {
-                    string importedText = sr.ReadToEnd();
-
-                    ImportedText = importedText.Replace("\r\n", "\n");
-
-                    txtImportedText.Text = importedText;
-                    txtImportedText.Select(0, 0);
-                }
+                    ImportedText = sr.ReadToEnd().Replace("\r\n", "\n");
 
                 TypedText = new StringBuilder();
                 pbTyping.Refresh();
