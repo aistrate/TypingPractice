@@ -40,7 +40,7 @@
             // 
             // btnImport
             // 
-            this.btnImport.Location = new System.Drawing.Point(2, 7);
+            this.btnImport.Location = new System.Drawing.Point(0, 1);
             this.btnImport.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(100, 25);
@@ -61,7 +61,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pbTyping.BackColor = System.Drawing.Color.White;
             this.pbTyping.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbTyping.Location = new System.Drawing.Point(2, 35);
+            this.pbTyping.Location = new System.Drawing.Point(0, 26);
             this.pbTyping.Name = "pbTyping";
             this.pbTyping.Size = new System.Drawing.Size(623, 524);
             this.pbTyping.TabIndex = 1;
@@ -73,7 +73,7 @@
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Enabled = false;
-            this.btnStart.Location = new System.Drawing.Point(525, 7);
+            this.btnStart.Location = new System.Drawing.Point(523, 1);
             this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 25);
@@ -85,7 +85,7 @@
             // lblTime
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTime.Location = new System.Drawing.Point(459, 12);
+            this.lblTime.Location = new System.Drawing.Point(457, 6);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(59, 14);
             this.lblTime.TabIndex = 5;
@@ -99,7 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 561);
+            this.ClientSize = new System.Drawing.Size(624, 550);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pbTyping);
