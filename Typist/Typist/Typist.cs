@@ -153,13 +153,15 @@ namespace Typist
 
         private bool controlKeyPressed = false;
 
+        private Keys[] suppressKeys = new Keys[] { Keys.Tab, Keys.Escape, Keys.Left, Keys.Right, Keys.Up, Keys.Down };
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (PracticeMode)
             {
                 Keys keyMinusShift = keyData & ~Keys.Shift;
 
-                if (keyMinusShift == Keys.Tab)
+                if (suppressKeys.Contains(keyMinusShift))
                     return true;
 
                 if (keyMinusShift == Keys.Return || keyMinusShift == Keys.Space)
