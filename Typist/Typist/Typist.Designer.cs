@@ -99,11 +99,12 @@
             // 
             // lblTime
             // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(140, 17);
+            this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTime.Location = new System.Drawing.Point(448, 17);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(0, 14);
+            this.lblTime.Size = new System.Drawing.Size(59, 14);
             this.lblTime.TabIndex = 5;
+            this.lblTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // tmrTimer
             // 

@@ -37,6 +37,9 @@ namespace Typist
                 practiceMode = value;
                 btnStart.Text = practiceMode ? "Pause" : "Start";
 
+                if (practiceMode)
+                    afterImport = false;
+
                 IsTimerRunning = practiceMode;
 
                 txtImportedText.Focus();
@@ -134,10 +137,7 @@ namespace Typist
         private void Typist_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (afterImport)
-            {
                 PracticeMode = true;
-                afterImport = false;
-            }
 
             e.Handled = true;
 
