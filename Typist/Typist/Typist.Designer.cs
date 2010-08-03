@@ -35,6 +35,7 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.lblTime = new System.Windows.Forms.Label();
             this.tmrTimer = new System.Windows.Forms.Timer(this.components);
+            this.lblWPM = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,11 +96,19 @@
             // 
             this.tmrTimer.Tick += new System.EventHandler(this.tmrTimer_Tick);
             // 
+            // lblWPM
+            // 
+            this.lblWPM.Location = new System.Drawing.Point(107, 6);
+            this.lblWPM.Name = "lblWPM";
+            this.lblWPM.Size = new System.Drawing.Size(75, 14);
+            this.lblWPM.TabIndex = 6;
+            // 
             // TypistForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 550);
+            this.Controls.Add(this.lblWPM);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pbTyping);
@@ -107,7 +116,7 @@
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MinimumSize = new System.Drawing.Size(350, 500);
+            this.MinimumSize = new System.Drawing.Size(350, 350);
             this.Name = "TypistForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";
@@ -128,6 +137,7 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer tmrTimer;
+        private System.Windows.Forms.Label lblWPM;
     }
 }
 

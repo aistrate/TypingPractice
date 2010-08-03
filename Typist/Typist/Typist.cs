@@ -17,13 +17,15 @@ namespace Typist
         public TypistForm()
         {
             InitializeComponent();
-            TypedText = new StringBuilder();
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
             CurrentFont = new Font("Courier New", 10);
+
             ImportedText = "";
+            TypedText = new StringBuilder();
+
             PracticeMode = false;
         }
 
@@ -49,6 +51,8 @@ namespace Typist
 
                 if (practiceMode)
                     afterImport = false;
+
+                pbTyping.Refresh();
 
                 IsTimerRunning = practiceMode;
 
@@ -91,7 +95,6 @@ namespace Typist
                     ImportedText = sr.ReadToEnd().Replace("\r\n", "\n");
 
                 TypedText = new StringBuilder();
-                pbTyping.Refresh();
 
                 stopwatch.Reset();
 
@@ -107,8 +110,11 @@ namespace Typist
 
         private void pbTyping_Paint(object sender, PaintEventArgs e)
         {
-            drawText(showNewLineChars(ImportedText), e.Graphics, e.ClipRectangle, Brushes.Black);
-            drawText(showNewLineChars(TypedText.ToString()), e.Graphics, e.ClipRectangle, Brushes.Silver);
+            drawText(showNewLineChars(ImportedText),
+                     e.Graphics, e.ClipRectangle, Brushes.Black);
+
+            drawText(showNewLineChars(TypedText.ToString() + (PracticeMode ? "_" : "")),
+                     e.Graphics, e.ClipRectangle, Brushes.CornflowerBlue);
         }
 
         private void drawText(string text, Graphics graphics, Rectangle rectangle, Brush brush)
@@ -206,28 +212,36 @@ namespace Typist
             if (PracticeMode)
             {
                 if (keyChar == '\b')
-                {
-                    if (TypedText.Length > 0)
-                        TypedText.Remove(TypedText.Length - 1, 1);
-                }
+                    removeLast(TypedText);
                 else
                 {
-                    string str;
+                    string s;
                     switch (keyChar)
                     {
                         case '\r':
-                            str = "\n";
+                            s = "\n";
                             break;
                         default:
-                            str = keyChar.ToString();
+                            s = keyChar.ToString();
                             break;
                     }
 
-                    TypedText.Append(str);
+                    appendToTypedText(s);
                 }
 
                 pbTyping.Refresh();
             }
+        }
+
+        private void removeLast(StringBuilder sb)
+        {
+            if (sb.Length > 0)
+                TypedText.Remove(sb.Length - 1, 1);
+        }
+
+        private void appendToTypedText(string s)
+        {
+            TypedText.Append(s);
         }
 
         private void tmrTimer_Tick(object sender, EventArgs e)
