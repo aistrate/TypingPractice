@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Typist
 {
@@ -36,12 +37,32 @@ namespace Typist
                 practiceMode = value;
                 btnStart.Text = practiceMode ? "Pause" : "Start";
 
+                IsTimerRunning = practiceMode;
+
                 txtImportedText.Focus();
             }
         }
         private bool practiceMode = false;
 
         private bool afterImport = false;
+
+        protected bool IsTimerRunning
+        {
+            get { return stopwatch.IsRunning; }
+            private set
+            {
+                displayTime();
+
+                if (value)
+                    stopwatch.Start();
+                else
+                    stopwatch.Stop();
+
+                tmrTimer.Enabled = value;
+            }
+        }
+
+        private Stopwatch stopwatch = new Stopwatch();
 
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -57,6 +78,9 @@ namespace Typist
                 txtImportedText.Text = ImportedText;
                 txtImportedText.Select(0, 0);
 
+                stopwatch.Reset();
+
+                PracticeMode = false;
                 afterImport = true;
             }
         }
@@ -142,6 +166,18 @@ namespace Typist
 
                 pbTyping.Refresh();
             }
+        }
+
+        private void tmrTimer_Tick(object sender, EventArgs e)
+        {
+            displayTime();
+        }
+
+        private void displayTime()
+        {
+            lblTime.Text = string.Format("{0:00}:{1:00}",
+                                         stopwatch.Elapsed.Minutes,
+                                         stopwatch.Elapsed.Seconds);
         }
     }
 }

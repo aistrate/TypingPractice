@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnImport = new System.Windows.Forms.Button();
             this.ofdImport = new System.Windows.Forms.OpenFileDialog();
             this.pbTyping = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.txtImportedText = new System.Windows.Forms.TextBox();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.tmrTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,11 +97,24 @@
             this.txtImportedText.Size = new System.Drawing.Size(622, 224);
             this.txtImportedText.TabIndex = 4;
             // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Location = new System.Drawing.Point(140, 17);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(0, 14);
+            this.lblTime.TabIndex = 5;
+            // 
+            // tmrTimer
+            // 
+            this.tmrTimer.Tick += new System.EventHandler(this.tmrTimer_Tick);
+            // 
             // Typist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 518);
+            this.Controls.Add(this.lblTime);
             this.Controls.Add(this.txtImportedText);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pbTyping);
@@ -106,7 +122,7 @@
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MinimumSize = new System.Drawing.Size(300, 500);
+            this.MinimumSize = new System.Drawing.Size(350, 500);
             this.Name = "Typist";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";
@@ -126,6 +142,8 @@
         private System.Windows.Forms.PictureBox pbTyping;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.TextBox txtImportedText;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Timer tmrTimer;
     }
 }
 
