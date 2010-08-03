@@ -120,7 +120,7 @@ namespace Typist
                                 {
                                     X = 1,
                                     Y = 2,
-                                    Width = rectangle.Width - 24,
+                                    Width = rectangle.Width - 2,
                                     Height = rectangle.Height - 4
                                 },
                                 new StringFormat(StringFormatFlags.LineLimit)
@@ -131,7 +131,8 @@ namespace Typist
 
         private string showNewLineChars(string text)
         {
-            return text.Replace("\n", "\xB6\n");
+            //return text.Replace("\n", "\xB6\n");
+            return text;
         }
 
         private void pbTyping_Resize(object sender, EventArgs e)
