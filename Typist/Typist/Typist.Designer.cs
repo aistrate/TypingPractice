@@ -32,7 +32,7 @@
             this.ofdImport = new System.Windows.Forms.OpenFileDialog();
             this.pbTyping = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
-            this.rtbImportedText = new System.Windows.Forms.RichTextBox();
+            this.txtImportedText = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,25 +80,26 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // rtbImportedText
+            // txtImportedText
             // 
-            this.rtbImportedText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.txtImportedText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbImportedText.BackColor = System.Drawing.Color.White;
-            this.rtbImportedText.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbImportedText.Location = new System.Drawing.Point(12, 282);
-            this.rtbImportedText.Name = "rtbImportedText";
-            this.rtbImportedText.ReadOnly = true;
-            this.rtbImportedText.Size = new System.Drawing.Size(622, 224);
-            this.rtbImportedText.TabIndex = 4;
-            this.rtbImportedText.Text = "";
+            this.txtImportedText.BackColor = System.Drawing.Color.White;
+            this.txtImportedText.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtImportedText.Location = new System.Drawing.Point(12, 282);
+            this.txtImportedText.Multiline = true;
+            this.txtImportedText.Name = "txtImportedText";
+            this.txtImportedText.ReadOnly = true;
+            this.txtImportedText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtImportedText.Size = new System.Drawing.Size(622, 224);
+            this.txtImportedText.TabIndex = 4;
             // 
             // Typist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 518);
-            this.Controls.Add(this.rtbImportedText);
+            this.Controls.Add(this.txtImportedText);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pbTyping);
             this.Controls.Add(this.btnImport);
@@ -114,6 +115,7 @@
             this.Move += new System.EventHandler(this.Typist_Move);
             ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -123,7 +125,7 @@
         private System.Windows.Forms.OpenFileDialog ofdImport;
         private System.Windows.Forms.PictureBox pbTyping;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.RichTextBox rtbImportedText;
+        private System.Windows.Forms.TextBox txtImportedText;
     }
 }
 

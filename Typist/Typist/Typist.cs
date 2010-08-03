@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
 
 namespace Typist
 {
@@ -27,7 +28,20 @@ namespace Typist
 
         protected StringBuilder TypedText { get; private set; }
 
-        protected bool PracticeMode { get; private set; }
+        protected bool PracticeMode
+        {
+            get { return practiceMode; }
+            private set
+            {
+                practiceMode = value;
+                btnStart.Text = practiceMode ? "Pause" : "Start";
+
+                txtImportedText.Focus();
+            }
+        }
+        private bool practiceMode = false;
+
+        private bool afterImport = false;
 
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -40,18 +54,16 @@ namespace Typist
                 TypedText = new StringBuilder();
                 pbTyping.Refresh();
 
-                rtbImportedText.Text = ImportedText;
+                txtImportedText.Text = ImportedText;
+                txtImportedText.Select(0, 0);
 
-                PracticeMode = false;
-                btnStart_Click(btnStart, EventArgs.Empty);
+                afterImport = true;
             }
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
             PracticeMode = !PracticeMode;
-            btnStart.Text = PracticeMode ? "Pause" : "Start";
-            rtbImportedText.Focus();
         }
 
         private void pbTyping_Paint(object sender, PaintEventArgs e)
@@ -64,8 +76,7 @@ namespace Typist
         {
             StringFormat stringFormat = new StringFormat(StringFormatFlags.LineLimit)
             {
-                Trimming = StringTrimming.None,
-                HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.Show
+                Trimming = StringTrimming.Word,
             };
 
             graphics.DrawString(text,
@@ -79,31 +90,6 @@ namespace Typist
                                     Height = rectangle.Height - 4
                                 },
                                 stringFormat);
-
-            //stringFormat.SetMeasurableCharacterRanges(new[]
-            //    {
-            //        new CharacterRange(0, 100),
-            //        new CharacterRange(100, 200),
-            //        new CharacterRange(200, 300),
-            //        new CharacterRange(300, 400),
-            //    });
-
-            //Region[] regions = graphics.MeasureCharacterRanges(text,
-            //             new Font("Courier New", 9),
-            //             new Rectangle()
-            //             {
-            //                 X = 1,
-            //                 Y = 2,
-            //                 Width = rectangle.Width - 24,
-            //                 Height = rectangle.Height - 4
-            //             },
-            //             stringFormat);
-
-            //foreach (var region in regions)
-            //{
-            //    RectangleF rectF = region.GetBounds(g);
-            //    graphics.DrawRectangle(Pens.Black, new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height));
-            //}
         }
 
         private void pbTyping_Resize(object sender, EventArgs e)
@@ -123,6 +109,14 @@ namespace Typist
 
         private void Typist_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (afterImport)
+            {
+                PracticeMode = true;
+                afterImport = false;
+            }
+
+            e.Handled = true;
+
             if (PracticeMode)
             {
                 if (e.KeyChar == '\b')
@@ -148,8 +142,6 @@ namespace Typist
 
                 pbTyping.Refresh();
             }
-
-            e.Handled = true;
         }
     }
 }
