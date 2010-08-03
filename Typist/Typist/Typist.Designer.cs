@@ -64,16 +64,16 @@
             this.pbTyping.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbTyping.Location = new System.Drawing.Point(13, 52);
             this.pbTyping.Name = "pbTyping";
-            this.pbTyping.Size = new System.Drawing.Size(621, 224);
+            this.pbTyping.Size = new System.Drawing.Size(621, 372);
             this.pbTyping.TabIndex = 1;
             this.pbTyping.TabStop = false;
-            this.pbTyping.Click += new System.EventHandler(this.pbTyping_Click);
             this.pbTyping.Resize += new System.EventHandler(this.pbTyping_Resize);
             this.pbTyping.Paint += new System.Windows.Forms.PaintEventHandler(this.pbTyping_Paint);
             // 
             // btnStart
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStart.Enabled = false;
             this.btnStart.Location = new System.Drawing.Point(514, 12);
             this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStart.Name = "btnStart";
@@ -89,12 +89,12 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImportedText.BackColor = System.Drawing.Color.White;
             this.txtImportedText.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtImportedText.Location = new System.Drawing.Point(12, 282);
+            this.txtImportedText.Location = new System.Drawing.Point(12, 430);
             this.txtImportedText.Multiline = true;
             this.txtImportedText.Name = "txtImportedText";
             this.txtImportedText.ReadOnly = true;
             this.txtImportedText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtImportedText.Size = new System.Drawing.Size(622, 224);
+            this.txtImportedText.Size = new System.Drawing.Size(622, 113);
             this.txtImportedText.TabIndex = 4;
             // 
             // lblTime
@@ -114,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(646, 518);
+            this.ClientSize = new System.Drawing.Size(646, 555);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.txtImportedText);
             this.Controls.Add(this.btnStart);
@@ -128,8 +128,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";
             this.Load += new System.EventHandler(this.TypistForm_Load);
+            this.Activated += new System.EventHandler(this.TypistForm_Activated);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TypistForm_KeyPress);
-            this.Move += new System.EventHandler(this.TypistForm_Move);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TypistForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).EndInit();
             this.ResumeLayout(false);

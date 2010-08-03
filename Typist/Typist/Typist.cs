@@ -22,6 +22,7 @@ namespace Typist
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
+            PracticeMode = false;
         }
 
 
@@ -34,7 +35,14 @@ namespace Typist
             get { return practiceMode; }
             private set
             {
+                if (string.IsNullOrEmpty(ImportedText))
+                    value = false;
+
                 practiceMode = value;
+
+                btnImport.Enabled = !value;
+
+                btnStart.Enabled = !string.IsNullOrEmpty(ImportedText);
                 btnStart.Text = practiceMode ? "Pause" : "Start";
 
                 if (practiceMode)
@@ -42,7 +50,8 @@ namespace Typist
 
                 IsTimerRunning = practiceMode;
 
-                txtImportedText.Focus();
+                if (practiceMode)
+                    pbTyping.Focus();
             }
         }
         private bool practiceMode = false;
@@ -70,6 +79,8 @@ namespace Typist
 
         private void btnImport_Click(object sender, EventArgs e)
         {
+            PracticeMode = false;
+
             if (ofdImport.ShowDialog() == DialogResult.OK)
             {
                 using (StreamReader sr = new StreamReader(ofdImport.FileName))
@@ -121,28 +132,41 @@ namespace Typist
 
         private void pbTyping_Resize(object sender, EventArgs e)
         {
-            pbTyping.Refresh();
+            pbTyping.Invalidate();
         }
 
-        private void pbTyping_Click(object sender, EventArgs e)
+        private void TypistForm_Activated(object sender, EventArgs e)
         {
-            pbTyping.Refresh();
+            pbTyping.Invalidate();
         }
 
-        private void TypistForm_Move(object sender, EventArgs e)
+        private bool controlKeyPressed = false;
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            pbTyping.Refresh();
-        }
+            if (PracticeMode)
+            {
+                Keys keyMinusShift = keyData & ~Keys.Shift;
 
-        private bool controlPressed = false;
+                if (keyMinusShift == Keys.Tab)
+                    return true;
+
+                if (keyMinusShift == Keys.Return || keyMinusShift == Keys.Space)
+                {
+                    controlKeyPressed = false;
+                    typeKey((char)keyMinusShift);
+                    return true;
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         private void TypistForm_KeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = true;
+            controlKeyPressed = e.Control;
 
-            controlPressed = (e.Modifiers & Keys.Control) == Keys.Control;
-
-            if (controlPressed)
+            if (controlKeyPressed)
                 switch (e.KeyCode)
                 {
                     case Keys.P:
@@ -152,14 +176,21 @@ namespace Typist
                         PracticeMode = false;
                         TypistForm.ActiveForm.WindowState = FormWindowState.Minimized;
                         break;
+                    case Keys.I:
+                        if (btnImport.Enabled)
+                            btnImport_Click(btnImport, EventArgs.Empty);
+                        break;
                 }
         }
 
         private void TypistForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = true;
+            typeKey(e.KeyChar);
+        }
 
-            if (controlPressed)
+        private void typeKey(char keyChar)
+        {
+            if (controlKeyPressed)
                 return;
 
             if (afterImport)
@@ -167,7 +198,7 @@ namespace Typist
 
             if (PracticeMode)
             {
-                if (e.KeyChar == '\b')
+                if (keyChar == '\b')
                 {
                     if (TypedText.Length > 0)
                         TypedText.Remove(TypedText.Length - 1, 1);
@@ -175,13 +206,13 @@ namespace Typist
                 else
                 {
                     string str;
-                    switch (e.KeyChar)
+                    switch (keyChar)
                     {
                         case '\r':
                             str = "\n";
                             break;
                         default:
-                            str = e.KeyChar.ToString();
+                            str = keyChar.ToString();
                             break;
                     }
 
