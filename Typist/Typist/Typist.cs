@@ -70,6 +70,7 @@ namespace Typist
             private set
             {
                 displayTime();
+                displayWPM();
 
                 if (value)
                     stopwatch.Start();
@@ -226,7 +227,7 @@ namespace Typist
                             break;
                     }
 
-                    appendToTypedText(s);
+                    append(TypedText, s);
                 }
 
                 pbTyping.Refresh();
@@ -239,14 +240,22 @@ namespace Typist
                 TypedText.Remove(sb.Length - 1, 1);
         }
 
-        private void appendToTypedText(string s)
+        private void append(StringBuilder sb, string s)
         {
-            TypedText.Append(s);
+            sb.Append(s);
+        }
+
+        private string whitespaceChars = " \n\r\t";
+
+        private int countWords(StringBuilder sb)
+        {
+            return sb.ToString().Where(c => whitespaceChars.IndexOf(c) < 0).Count() / 5;
         }
 
         private void tmrTimer_Tick(object sender, EventArgs e)
         {
             displayTime();
+            displayWPM();
         }
 
         private void displayTime()
@@ -254,6 +263,21 @@ namespace Typist
             lblTime.Text = string.Format("{0:00}:{1:00}",
                                          stopwatch.Elapsed.Minutes,
                                          stopwatch.Elapsed.Seconds);
+        }
+
+        private DateTime lastWPMCalcTime = DateTime.MinValue;
+
+        private void displayWPM()
+        {
+            if (DateTime.Now - lastWPMCalcTime > new TimeSpan(0, 0, 2))
+            {
+                lastWPMCalcTime = DateTime.Now;
+
+                int wordCount = countWords(TypedText);
+                double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
+
+                lblWPM.Text = string.Format("{0:#0} wpm", elapsedMinutes != 0.0 ? (double)wordCount / elapsedMinutes : 0.0);
+            }
         }
     }
 }

@@ -100,8 +100,9 @@
             // 
             this.lblWPM.Location = new System.Drawing.Point(107, 6);
             this.lblWPM.Name = "lblWPM";
-            this.lblWPM.Size = new System.Drawing.Size(75, 14);
+            this.lblWPM.Size = new System.Drawing.Size(65, 14);
             this.lblWPM.TabIndex = 6;
+            this.lblWPM.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // TypistForm
             // 
