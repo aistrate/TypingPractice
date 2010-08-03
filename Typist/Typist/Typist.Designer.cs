@@ -1,6 +1,6 @@
 ﻿namespace Typist
 {
-    partial class Typist
+    partial class TypistForm
     {
         /// <summary>
         /// Required designer variable.
@@ -110,7 +110,7 @@
             // 
             this.tmrTimer.Tick += new System.EventHandler(this.tmrTimer_Tick);
             // 
-            // Typist
+            // TypistForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -124,12 +124,13 @@
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MinimumSize = new System.Drawing.Size(350, 500);
-            this.Name = "Typist";
+            this.Name = "TypistForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";
-            this.Load += new System.EventHandler(this.Typist_Load);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Typist_KeyPress);
-            this.Move += new System.EventHandler(this.Typist_Move);
+            this.Load += new System.EventHandler(this.TypistForm_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TypistForm_KeyPress);
+            this.Move += new System.EventHandler(this.TypistForm_Move);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TypistForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

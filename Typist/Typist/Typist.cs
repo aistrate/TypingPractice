@@ -12,15 +12,15 @@ using System.Diagnostics;
 
 namespace Typist
 {
-    public partial class Typist : Form
+    public partial class TypistForm : Form
     {
-        public Typist()
+        public TypistForm()
         {
             InitializeComponent();
             TypedText = new StringBuilder();
         }
 
-        private void Typist_Load(object sender, EventArgs e)
+        private void TypistForm_Load(object sender, EventArgs e)
         {
         }
 
@@ -129,17 +129,41 @@ namespace Typist
             pbTyping.Refresh();
         }
 
-        private void Typist_Move(object sender, EventArgs e)
+        private void TypistForm_Move(object sender, EventArgs e)
         {
             pbTyping.Refresh();
         }
 
-        private void Typist_KeyPress(object sender, KeyPressEventArgs e)
+        private bool controlPressed = false;
+
+        private void TypistForm_KeyDown(object sender, KeyEventArgs e)
         {
+            e.Handled = true;
+
+            controlPressed = (e.Modifiers & Keys.Control) == Keys.Control;
+
+            if (controlPressed)
+                switch (e.KeyCode)
+                {
+                    case Keys.P:
+                        PracticeMode = !PracticeMode;
+                        break;
+                    case Keys.M:
+                        PracticeMode = false;
+                        TypistForm.ActiveForm.WindowState = FormWindowState.Minimized;
+                        break;
+                }
+        }
+
+        private void TypistForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+
+            if (controlPressed)
+                return;
+
             if (afterImport)
                 PracticeMode = true;
-
-            e.Handled = true;
 
             if (PracticeMode)
             {

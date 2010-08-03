@@ -15,7 +15,7 @@ namespace Typist
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Typist());
+            Application.Run(new TypistForm());
         }
     }
 }
