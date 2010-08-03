@@ -22,6 +22,8 @@ namespace Typist
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
+            CurrentFont = new Font("Courier New", 9);
+            ImportedText = "";
             PracticeMode = false;
         }
 
@@ -76,6 +78,8 @@ namespace Typist
 
         private Stopwatch stopwatch = new Stopwatch();
 
+        protected Font CurrentFont { get; private set; }
+
 
         private void btnImport_Click(object sender, EventArgs e)
         {
@@ -84,13 +88,17 @@ namespace Typist
             if (ofdImport.ShowDialog() == DialogResult.OK)
             {
                 using (StreamReader sr = new StreamReader(ofdImport.FileName))
-                    ImportedText = sr.ReadToEnd();
+                {
+                    string importedText = sr.ReadToEnd();
+
+                    ImportedText = importedText.Replace("\r\n", "\n");
+
+                    txtImportedText.Text = importedText;
+                    txtImportedText.Select(0, 0);
+                }
 
                 TypedText = new StringBuilder();
                 pbTyping.Refresh();
-
-                txtImportedText.Text = ImportedText;
-                txtImportedText.Select(0, 0);
 
                 stopwatch.Reset();
 
@@ -106,19 +114,14 @@ namespace Typist
 
         private void pbTyping_Paint(object sender, PaintEventArgs e)
         {
-            drawText(ImportedText, e.Graphics, e.ClipRectangle, Brushes.Black);
-            drawText(TypedText.ToString(), e.Graphics, e.ClipRectangle, Brushes.Red);
+            drawText(showNewLineChars(ImportedText), e.Graphics, e.ClipRectangle, Brushes.Black);
+            drawText(showNewLineChars(TypedText.ToString()), e.Graphics, e.ClipRectangle, Brushes.Red);
         }
 
         private void drawText(string text, Graphics graphics, Rectangle rectangle, Brush brush)
         {
-            StringFormat stringFormat = new StringFormat(StringFormatFlags.LineLimit)
-            {
-                Trimming = StringTrimming.Word,
-            };
-
             graphics.DrawString(text,
-                                new Font("Courier New", 9),
+                                CurrentFont,
                                 brush,
                                 new Rectangle()
                                 {
@@ -127,7 +130,15 @@ namespace Typist
                                     Width = rectangle.Width - 24,
                                     Height = rectangle.Height - 4
                                 },
-                                stringFormat);
+                                new StringFormat(StringFormatFlags.LineLimit)
+                                {
+                                    Trimming = StringTrimming.Word,
+                                });
+        }
+
+        private string showNewLineChars(string text)
+        {
+            return text.Replace("\n", "\xB6\n");
         }
 
         private void pbTyping_Resize(object sender, EventArgs e)
@@ -193,7 +204,7 @@ namespace Typist
             if (controlKeyPressed)
                 return;
 
-            if (afterImport)
+            if (afterImport && keyChar != ' ')
                 PracticeMode = true;
 
             if (PracticeMode)
