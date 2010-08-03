@@ -22,7 +22,7 @@ namespace Typist
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
-            CurrentFont = new Font("Courier New", 9);
+            CurrentFont = new Font("Courier New", 10);
             ImportedText = "";
             PracticeMode = false;
         }
@@ -108,7 +108,7 @@ namespace Typist
         private void pbTyping_Paint(object sender, PaintEventArgs e)
         {
             drawText(showNewLineChars(ImportedText), e.Graphics, e.ClipRectangle, Brushes.Black);
-            drawText(showNewLineChars(TypedText.ToString()), e.Graphics, e.ClipRectangle, Brushes.Red);
+            drawText(showNewLineChars(TypedText.ToString()), e.Graphics, e.ClipRectangle, Brushes.Silver);
         }
 
         private void drawText(string text, Graphics graphics, Rectangle rectangle, Brush brush)
