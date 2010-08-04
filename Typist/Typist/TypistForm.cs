@@ -134,7 +134,7 @@ namespace Typist
 
             drawText(ImportedText.Text, e.Graphics, innerRect, Brushes.Black);
 
-            const int maxShownErrors = 20;
+            const int maxShownErrors = 10;
             int[] shownErrors = TypedText.ErrorsUncorrected.Skip(TypedText.ErrorsUncorrected.Count - maxShownErrors)
                                                            .ToArray();
             int firstShownError = shownErrors.Length > 0 ? shownErrors[0] : 0;
@@ -142,6 +142,19 @@ namespace Typist
             string typedText = TypedText.Substring(0, firstShownError) +
                                ImportedText.Substring(firstShownError, TypedText.Length - firstShownError) +
                                (PracticeMode ? "_" : "");
+
+            int charsMissingAtEOL = getCharsMissingAtEOL(ImportedText.Text, TypedText.LastIndex, e.Graphics, innerRect);
+            if (charsMissingAtEOL > 0)
+                typedText = typedText.Insert(typedText.LastIndexOf(' ') + 1,
+                                             new string(' ', charsMissingAtEOL));
+
+            else if (TypedText.LastIndex >= 0)
+            {
+                int charsTooManyAtEOL = getCharsMissingAtEOL(ImportedText.Text.Insert(TypedText.LastIndex, "_"),
+                                                             TypedText.LastIndex, e.Graphics, innerRect);
+                if (charsTooManyAtEOL == 1)
+                    typedText = typedText.Remove(TypedText.LastIndex + 1);
+            }
 
             drawText(typedText, e.Graphics, innerRect, Brushes.CornflowerBlue);
 
@@ -158,6 +171,28 @@ namespace Typist
                                           LineAlignment = StringAlignment.Far,
                                       });
             }
+        }
+
+        private int getCharsMissingAtEOL(string text, int lastIndex, Graphics graphics, Rectangle innerRect)
+        {
+            if (lastIndex < 0)
+                return 0;
+
+            int missing = 0;
+            Rectangle originalPos, typedPos;
+            do
+            {
+                originalPos = getRectangle(text, lastIndex + missing, graphics, innerRect);
+                typedPos = getRectangle(text.Substring(0, lastIndex + missing + 1), lastIndex + missing, graphics, innerRect);
+
+                if (typedPos.X - originalPos.X > 5)
+                    missing++;
+                else
+                    break;
+            }
+            while (lastIndex + missing < text.Length);
+
+            return missing;
         }
 
         private void drawText(string text, Graphics graphics, Rectangle innerRect, Brush brush)
