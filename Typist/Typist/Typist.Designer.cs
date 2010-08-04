@@ -116,7 +116,7 @@
             this.tblLine.Name = "tblLine";
             this.tblLine.RowCount = 1;
             this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.tblLine.Size = new System.Drawing.Size(625, 2);
             this.tblLine.TabIndex = 9;
             // 
@@ -125,7 +125,7 @@
             this.lblErrorCount.BackColor = System.Drawing.SystemColors.Control;
             this.lblErrorCount.Location = new System.Drawing.Point(174, 6);
             this.lblErrorCount.Name = "lblErrorCount";
-            this.lblErrorCount.Size = new System.Drawing.Size(104, 14);
+            this.lblErrorCount.Size = new System.Drawing.Size(115, 14);
             this.lblErrorCount.TabIndex = 10;
             this.lblErrorCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
@@ -144,7 +144,7 @@
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MinimumSize = new System.Drawing.Size(440, 350);
+            this.MinimumSize = new System.Drawing.Size(450, 350);
             this.Name = "TypistForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";

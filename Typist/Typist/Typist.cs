@@ -63,6 +63,8 @@ namespace Typist
                 timeOfLastCharTyped = DateTime.Now;
 
                 IsTimerRunning = practiceMode;
+                displayStats();
+                displayErrorCount();
 
                 if (practiceMode)
                     pbTyping.Focus();
@@ -87,8 +89,6 @@ namespace Typist
                     stopwatch.Stop();
                     tmrTimer.Stop();
                 }
-
-                displayStats();
             }
         }
 
@@ -225,6 +225,7 @@ namespace Typist
                 TypedText.ProcessKey(keyChar);
 
                 timeOfLastCharTyped = DateTime.Now;
+                displayErrorCount();
 
                 if (TypedText.Length == ImportedText.Length)
                     PracticeMode = false;
@@ -268,6 +269,14 @@ namespace Typist
 
                 lblWPM.Text = string.Format("{0:#0} wpm", elapsedMinutes != 0.0 ? (double)TypedText.WordCount / elapsedMinutes : 0.0);
             }
+        }
+
+        private void displayErrorCount()
+        {
+            lblErrorCount.Text = TypedText.TotalErrors != 0 ? string.Format("{0:#0} errs ({1:p0})",
+                                                                            TypedText.ErrorsCommitted,
+                                                                            TypedText.Accuracy) :
+                                                              "";
         }
 
         private DateTime timeOfLastWPMCalc = DateTime.MinValue;
