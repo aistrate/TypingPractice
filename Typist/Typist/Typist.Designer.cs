@@ -36,6 +36,7 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.tmrTimer = new System.Windows.Forms.Timer(this.components);
             this.lblWPM = new System.Windows.Forms.Label();
+            this.tblLine = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,10 +62,9 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pbTyping.BackColor = System.Drawing.Color.White;
-            this.pbTyping.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbTyping.Location = new System.Drawing.Point(0, 26);
+            this.pbTyping.Location = new System.Drawing.Point(0, 30);
             this.pbTyping.Name = "pbTyping";
-            this.pbTyping.Size = new System.Drawing.Size(623, 524);
+            this.pbTyping.Size = new System.Drawing.Size(623, 519);
             this.pbTyping.TabIndex = 1;
             this.pbTyping.TabStop = false;
             this.pbTyping.Resize += new System.EventHandler(this.pbTyping_Resize);
@@ -104,11 +104,27 @@
             this.lblWPM.TabIndex = 6;
             this.lblWPM.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // tblLine
+            // 
+            this.tblLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tblLine.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble;
+            this.tblLine.ColumnCount = 1;
+            this.tblLine.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblLine.Location = new System.Drawing.Point(0, 26);
+            this.tblLine.Name = "tblLine";
+            this.tblLine.RowCount = 1;
+            this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tblLine.Size = new System.Drawing.Size(625, 3);
+            this.tblLine.TabIndex = 9;
+            // 
             // TypistForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 550);
+            this.Controls.Add(this.tblLine);
             this.Controls.Add(this.lblWPM);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.btnStart);
@@ -139,6 +155,7 @@
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer tmrTimer;
         private System.Windows.Forms.Label lblWPM;
+        private System.Windows.Forms.TableLayoutPanel tblLine;
     }
 }
 

@@ -270,7 +270,7 @@ namespace Typist
 
         private void displayWPM()
         {
-            if (DateTime.Now - lastWPMCalcTime > new TimeSpan(0, 0, 2))
+            if (DateTime.Now - lastWPMCalcTime > new TimeSpan(0, 0, 1))
             {
                 lastWPMCalcTime = DateTime.Now;
 
