@@ -49,16 +49,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TextBuffer.cs" />
-    <Compile Include="Typist.cs">
+    <Compile Include="TypistForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Typist.Designer.cs">
-      <DependentUpon>Typist.cs</DependentUpon>
+    <Compile Include="TypistForm.Designer.cs">
+      <DependentUpon>TypistForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Typist.resx">
-      <DependentUpon>Typist.cs</DependentUpon>
+    <EmbeddedResource Include="TypistForm.resx">
+      <DependentUpon>TypistForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
