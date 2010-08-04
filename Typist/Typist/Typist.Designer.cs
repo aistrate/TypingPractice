@@ -62,9 +62,9 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pbTyping.BackColor = System.Drawing.Color.White;
-            this.pbTyping.Location = new System.Drawing.Point(0, 30);
+            this.pbTyping.Location = new System.Drawing.Point(0, 29);
             this.pbTyping.Name = "pbTyping";
-            this.pbTyping.Size = new System.Drawing.Size(623, 519);
+            this.pbTyping.Size = new System.Drawing.Size(623, 521);
             this.pbTyping.TabIndex = 1;
             this.pbTyping.TabStop = false;
             this.pbTyping.Resize += new System.EventHandler(this.pbTyping_Resize);
@@ -108,7 +108,7 @@
             // 
             this.tblLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tblLine.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble;
+            this.tblLine.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
             this.tblLine.ColumnCount = 1;
             this.tblLine.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblLine.Location = new System.Drawing.Point(0, 26);
@@ -116,7 +116,7 @@
             this.tblLine.RowCount = 1;
             this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblLine.Size = new System.Drawing.Size(625, 3);
+            this.tblLine.Size = new System.Drawing.Size(625, 2);
             this.tblLine.TabIndex = 9;
             // 
             // TypistForm
