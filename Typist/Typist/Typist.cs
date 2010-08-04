@@ -249,7 +249,8 @@ namespace Typist
 
         private int countWords(StringBuilder sb)
         {
-            return sb.ToString().Where(c => whitespaceChars.IndexOf(c) < 0).Count() / 5;
+            //return sb.ToString().Where(c => whitespaceChars.IndexOf(c) < 0).Count() / 5;
+            return sb.Length / 5;
         }
 
         private void tmrTimer_Tick(object sender, EventArgs e)
