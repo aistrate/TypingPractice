@@ -81,6 +81,9 @@ namespace Typist
             {
                 ErrorsCommitted++;
                 ErrorsUncorrected.Add(LastIndex);
+
+                if (ch == '\n')
+                    buffer[LastIndex] = '\xB6';
             }
 
             return this;
