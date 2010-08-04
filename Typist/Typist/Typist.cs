@@ -30,6 +30,7 @@ namespace Typist
         }
 
         private const bool visibleNewlines = false;
+        private const int pauseAfterInterval = 0;
 
 
         protected TextBuffer ImportedText { get; private set; }
@@ -58,6 +59,8 @@ namespace Typist
                     afterImport = false;
 
                 pbTyping.Refresh();
+
+                timeOfLastCharTyped = DateTime.Now;
 
                 IsTimerRunning = practiceMode;
 
@@ -221,6 +224,8 @@ namespace Typist
             {
                 TypedText.ProcessKey(keyChar);
 
+                timeOfLastCharTyped = DateTime.Now;
+
                 if (TypedText.Length == ImportedText.Length)
                     PracticeMode = false;
 
@@ -230,7 +235,14 @@ namespace Typist
 
         private void tmrTimer_Tick(object sender, EventArgs e)
         {
+            pauseIfNotTyping();
             displayStats();
+        }
+
+        private void pauseIfNotTyping()
+        {
+            if (pauseAfterInterval > 0 && DateTime.Now - timeOfLastCharTyped > new TimeSpan(0, 0, pauseAfterInterval))
+                PracticeMode = false;
         }
 
         private void displayStats()
@@ -248,15 +260,17 @@ namespace Typist
 
         private void displayWPM()
         {
-            if (DateTime.Now - lastWPMCalcTime > new TimeSpan(0, 0, 1))
+            if (DateTime.Now - timeOfLastWPMCalc > new TimeSpan(0, 0, 1))
             {
-                lastWPMCalcTime = DateTime.Now;
+                timeOfLastWPMCalc = DateTime.Now;
 
                 double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
 
                 lblWPM.Text = string.Format("{0:#0} wpm", elapsedMinutes != 0.0 ? (double)TypedText.WordCount / elapsedMinutes : 0.0);
             }
         }
-        private DateTime lastWPMCalcTime = DateTime.MinValue;
+
+        private DateTime timeOfLastWPMCalc = DateTime.MinValue;
+        private DateTime timeOfLastCharTyped = DateTime.MaxValue;
     }
 }
