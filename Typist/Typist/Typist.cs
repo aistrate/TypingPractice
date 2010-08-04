@@ -23,31 +23,36 @@ namespace Typist
         {
             CurrentFont = new Font("Courier New", 10);
 
-            ImportedText = "";
-            TypedText = new StringBuilder();
+            ImportedText = new TextBuffer("");
+            TypedText = new TextBuffer(ImportedText);
 
             PracticeMode = false;
         }
 
+        private const bool visibleNewlines = false;
 
-        protected string ImportedText { get; private set; }
 
-        protected StringBuilder TypedText { get; private set; }
+        protected TextBuffer ImportedText { get; private set; }
+
+        protected TextBuffer TypedText { get; private set; }
 
         protected bool PracticeMode
         {
             get { return practiceMode; }
             private set
             {
-                if (string.IsNullOrEmpty(ImportedText))
+                if (ImportedText.Length == 0)
                     value = false;
 
                 practiceMode = value;
 
                 btnImport.Enabled = !value;
 
-                btnStart.Enabled = !string.IsNullOrEmpty(ImportedText);
-                btnStart.Text = practiceMode ? "Pause" : "Start";
+                btnStart.Enabled = ImportedText.Length > 0;
+                btnStart.Text =
+                    practiceMode ? "Pause" :
+                    ImportedText.Length == 0 || afterImport ? "Start" :
+                    "Resume";
 
                 if (practiceMode)
                     afterImport = false;
@@ -69,15 +74,18 @@ namespace Typist
             get { return stopwatch.IsRunning; }
             private set
             {
-                displayTime();
-                displayWPM();
-
                 if (value)
+                {
                     stopwatch.Start();
+                    tmrTimer.Start();
+                }
                 else
+                {
                     stopwatch.Stop();
+                    tmrTimer.Stop();
+                }
 
-                tmrTimer.Enabled = value;
+                displayStats();
             }
         }
 
@@ -93,14 +101,16 @@ namespace Typist
             if (ofdImport.ShowDialog() == DialogResult.OK)
             {
                 using (StreamReader sr = new StreamReader(ofdImport.FileName))
-                    ImportedText = sr.ReadToEnd().Replace("\r\n", "\n");
+                    ImportedText = new TextBuffer(sr.ReadToEnd()
+                                                    .Replace("\r\n", "\n")
+                                                    .Replace("\t", "    "));
 
-                TypedText = new StringBuilder();
+                TypedText = new TextBuffer(ImportedText);
 
                 stopwatch.Reset();
 
-                PracticeMode = false;
                 afterImport = true;
+                PracticeMode = false;
             }
         }
 
@@ -111,15 +121,18 @@ namespace Typist
 
         private void pbTyping_Paint(object sender, PaintEventArgs e)
         {
-            drawText(showNewLineChars(ImportedText),
+            drawText(ImportedText.Text,
                      e.Graphics, e.ClipRectangle, Brushes.Black);
 
-            drawText(showNewLineChars(TypedText.ToString() + (PracticeMode ? "_" : "")),
+            drawText(TypedText.Text + (PracticeMode ? "_" : ""),
                      e.Graphics, e.ClipRectangle, Brushes.CornflowerBlue);
         }
 
         private void drawText(string text, Graphics graphics, Rectangle rectangle, Brush brush)
         {
+            if (visibleNewlines)
+                text = text.Replace("\n", "\xB6\n");
+
             graphics.DrawString(text,
                                 CurrentFont,
                                 brush,
@@ -132,14 +145,8 @@ namespace Typist
                                 },
                                 new StringFormat(StringFormatFlags.LineLimit)
                                 {
-                                    Trimming = StringTrimming.Word,
+                                    Trimming = StringTrimming.None,
                                 });
-        }
-
-        private string showNewLineChars(string text)
-        {
-            //return text.Replace("\n", "\xB6\n");
-            return text;
         }
 
         private void pbTyping_Resize(object sender, EventArgs e)
@@ -212,48 +219,21 @@ namespace Typist
 
             if (PracticeMode)
             {
-                if (keyChar == '\b')
-                    removeLast(TypedText);
-                else
-                {
-                    string s;
-                    switch (keyChar)
-                    {
-                        case '\r':
-                            s = "\n";
-                            break;
-                        default:
-                            s = keyChar.ToString();
-                            break;
-                    }
+                TypedText.ProcessKey(keyChar);
 
-                    append(TypedText, s);
-                }
+                if (TypedText.Length == ImportedText.Length)
+                    PracticeMode = false;
 
                 pbTyping.Refresh();
             }
         }
 
-        private void removeLast(StringBuilder sb)
-        {
-            if (sb.Length > 0)
-                TypedText.Remove(sb.Length - 1, 1);
-        }
-
-        private void append(StringBuilder sb, string s)
-        {
-            sb.Append(s);
-        }
-
-        private string whitespaceChars = " \n\r\t";
-
-        private int countWords(StringBuilder sb)
-        {
-            //return sb.ToString().Where(c => whitespaceChars.IndexOf(c) < 0).Count() / 5;
-            return sb.Length / 5;
-        }
-
         private void tmrTimer_Tick(object sender, EventArgs e)
+        {
+            displayStats();
+        }
+
+        private void displayStats()
         {
             displayTime();
             displayWPM();
@@ -266,19 +246,17 @@ namespace Typist
                                          stopwatch.Elapsed.Seconds);
         }
 
-        private DateTime lastWPMCalcTime = DateTime.MinValue;
-
         private void displayWPM()
         {
             if (DateTime.Now - lastWPMCalcTime > new TimeSpan(0, 0, 1))
             {
                 lastWPMCalcTime = DateTime.Now;
 
-                int wordCount = countWords(TypedText);
                 double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
 
-                lblWPM.Text = string.Format("{0:#0} wpm", elapsedMinutes != 0.0 ? (double)wordCount / elapsedMinutes : 0.0);
+                lblWPM.Text = string.Format("{0:#0} wpm", elapsedMinutes != 0.0 ? (double)TypedText.WordCount / elapsedMinutes : 0.0);
             }
         }
+        private DateTime lastWPMCalcTime = DateTime.MinValue;
     }
 }
