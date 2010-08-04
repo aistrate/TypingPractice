@@ -273,10 +273,14 @@ namespace Typist
 
         private void displayErrorCount()
         {
-            lblErrorCount.Text = TypedText.TotalErrors != 0 ? string.Format("{0:#0} errs ({1:p0})",
-                                                                            TypedText.ErrorsCommitted,
-                                                                            TypedText.Accuracy) :
-                                                              "";
+            decimal accuracy = Math.Round(TypedText.Accuracy, 2);
+
+            lblErrorCount.Text = TypedText.TotalErrors != 0 ?
+                string.Format("{0:#0} errs {1}({2:p0})",
+                              TypedText.ErrorsCommitted,
+                              new string(' ', (accuracy < 0.1m) ? 2 : 0),
+                              accuracy) :
+                "";
         }
 
         private DateTime timeOfLastWPMCalc = DateTime.MinValue;

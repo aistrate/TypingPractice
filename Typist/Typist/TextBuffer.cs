@@ -93,7 +93,7 @@ namespace Typist
 
         public decimal Accuracy
         {
-            get { return (decimal)(Length - ErrorsUncorrected) / (decimal)TotalKeys; }
+            get { return TotalKeys > 0 ? (decimal)(Length - ErrorsUncorrected) / (decimal)TotalKeys : 1m; }
         }
 
         public int WordCount
