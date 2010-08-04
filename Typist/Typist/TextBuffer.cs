@@ -8,6 +8,7 @@ namespace Typist
     public class TextBuffer
     {
         public TextBuffer(string text)
+            : this()
         {
             text = text ?? string.Empty;
 
@@ -16,6 +17,7 @@ namespace Typist
         }
 
         public TextBuffer(TextBuffer original)
+            : this()
         {
             if (original == null)
                 throw new ArgumentNullException("original.", "Original TextBuffer cannot be null.");
@@ -24,6 +26,11 @@ namespace Typist
 
             buffer = new char[Math.Max(2000, 2 * original.Length)];
             Length = 0;
+        }
+
+        private TextBuffer()
+        {
+            ErrorsUncorrected = new List<int>();
         }
 
         private readonly char[] buffer;
@@ -35,10 +42,21 @@ namespace Typist
         public int TotalKeys { get; private set; }
 
         public int ErrorsCommitted { get; private set; }
-        public int ErrorsUncorrected { get; private set; }
+
+        public List<int> ErrorsUncorrected { get; private set; }
 
 
         public string Text { get { return new string(buffer, 0, Length); } }
+
+        public string Substring(int startIndex)
+        {
+            return new string(buffer, startIndex, Length - startIndex);
+        }
+
+        public string Substring(int startIndex, int length)
+        {
+            return new string(buffer, startIndex, Math.Min(length, Length - startIndex));
+        }
 
         public char this[int index] { get { return buffer[index]; } }
 
@@ -48,7 +66,7 @@ namespace Typist
         public TextBuffer RemoveLast()
         {
             if (Length > 0 && !IsLastSameAsOriginal)
-                ErrorsUncorrected--;
+                ErrorsUncorrected.RemoveAt(ErrorsUncorrected.Count - 1);
 
             Length = Math.Max(0, Length - 1);
 
@@ -62,7 +80,7 @@ namespace Typist
             if (!IsLastSameAsOriginal)
             {
                 ErrorsCommitted++;
-                ErrorsUncorrected++;
+                ErrorsUncorrected.Add(LastIndex);
             }
 
             return this;
@@ -88,12 +106,12 @@ namespace Typist
 
         public int TotalErrors
         {
-            get { return TotalKeys - Length + ErrorsUncorrected; }
+            get { return TotalKeys - Length + ErrorsUncorrected.Count; }
         }
 
         public decimal Accuracy
         {
-            get { return TotalKeys > 0 ? (decimal)(Length - ErrorsUncorrected) / (decimal)TotalKeys : 1m; }
+            get { return TotalKeys > 0 ? (decimal)(Length - ErrorsUncorrected.Count) / (decimal)TotalKeys : 1m; }
         }
 
         public int WordCount

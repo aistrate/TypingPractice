@@ -124,32 +124,70 @@ namespace Typist
 
         private void pbTyping_Paint(object sender, PaintEventArgs e)
         {
-            drawText(ImportedText.Text,
-                     e.Graphics, e.ClipRectangle, Brushes.Black);
+            Rectangle innerRect = new Rectangle()
+                                  {
+                                      X = 1,
+                                      Y = 2,
+                                      Width = e.ClipRectangle.Width - 2,
+                                      Height = e.ClipRectangle.Height - 4
+                                  };
 
-            drawText(TypedText.Text + (PracticeMode ? "_" : ""),
-                     e.Graphics, e.ClipRectangle, Brushes.CornflowerBlue);
+            drawText(ImportedText.Text, e.Graphics, innerRect, Brushes.Black);
+
+            const int maxShownErrors = 20;
+            int[] shownErrors = TypedText.ErrorsUncorrected.Skip(TypedText.ErrorsUncorrected.Count - maxShownErrors)
+                                                           .ToArray();
+            int firstShownError = shownErrors.Length > 0 ? shownErrors[0] : 0;
+
+            string typedText = TypedText.Substring(0, firstShownError) +
+                               ImportedText.Substring(firstShownError, TypedText.Length - firstShownError) +
+                               (PracticeMode ? "_" : "");
+
+            drawText(typedText, e.Graphics, innerRect, Brushes.CornflowerBlue);
+
+            foreach (int error in shownErrors)
+            {
+                Rectangle errorCharRect = getRectangle(ImportedText.Text, error, e.Graphics, innerRect);
+
+                e.Graphics.FillRectangle(Brushes.LightGray, errorCharRect);
+
+                e.Graphics.DrawString(TypedText[error].ToString(), CurrentFont, Brushes.Red, errorCharRect,
+                                      new StringFormat(StringFormatFlags.NoClip | StringFormatFlags.FitBlackBox)
+                                      {
+                                          Alignment = StringAlignment.Center,
+                                          LineAlignment = StringAlignment.Far,
+                                      });
+            }
         }
 
-        private void drawText(string text, Graphics graphics, Rectangle rectangle, Brush brush)
+        private void drawText(string text, Graphics graphics, Rectangle innerRect, Brush brush)
         {
             if (visibleNewlines)
                 text = text.Replace("\n", "\xB6\n");
 
-            graphics.DrawString(text,
-                                CurrentFont,
-                                brush,
-                                new Rectangle()
-                                {
-                                    X = 1,
-                                    Y = 2,
-                                    Width = rectangle.Width - 2,
-                                    Height = rectangle.Height - 4
-                                },
-                                new StringFormat(StringFormatFlags.LineLimit)
-                                {
-                                    Trimming = StringTrimming.None,
-                                });
+            graphics.DrawString(text, CurrentFont, brush, innerRect, createStringFormat());
+        }
+
+        private StringFormat createStringFormat()
+        {
+            return new StringFormat(StringFormatFlags.LineLimit)
+                       {
+                           Trimming = StringTrimming.None,
+                       };
+        }
+
+        private Rectangle getRectangle(string text, int index, Graphics graphics, Rectangle innerRect)
+        {
+            StringFormat stringFormat = createStringFormat();
+
+            stringFormat.SetMeasurableCharacterRanges(new[] { new CharacterRange(index, 1) });
+
+            Region region = graphics.MeasureCharacterRanges(text, CurrentFont, innerRect, stringFormat)
+                                    .First();
+
+            RectangleF rectF = region.GetBounds(graphics);
+
+            return new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
         }
 
         private void pbTyping_Resize(object sender, EventArgs e)
