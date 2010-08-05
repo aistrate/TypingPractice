@@ -90,6 +90,8 @@ namespace Typist
 
                 if (ch == '\n')
                     buffer[LastIndex] = '\xB6';
+
+                OnError(EventArgs.Empty);
             }
 
             return this;
@@ -178,5 +180,14 @@ namespace Typist
         }
 
         private const string whitespaceChars = " \n\r\t";
+
+
+        public event EventHandler Error;
+
+        protected virtual void OnError(EventArgs e)
+        {
+            if (Error != null)
+                Error(this, e);
+        }
     }
 }

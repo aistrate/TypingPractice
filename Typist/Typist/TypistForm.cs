@@ -24,19 +24,33 @@ namespace Typist
             CurrentFont = new Font("Courier New", 10, FontStyle.Regular);
 
             ImportedText = new TextBuffer("");
-            TypedText = new TextBuffer(ImportedText, countWhitespaceAsWordChars);
 
             PracticeMode = false;
         }
 
+        private const bool beepOnError = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
         private const int pauseAfterInterval = 10;
 
 
-        protected TextBuffer ImportedText { get; private set; }
+        protected TextBuffer ImportedText
+        {
+            get { return importedText; }
+            private set
+            {
+                importedText = value;
+
+                TypedText = new TextBuffer(importedText, countWhitespaceAsWordChars);
+
+                if (beepOnError)
+                    TypedText.Error += new EventHandler(TypedText_Error);
+            }
+        }
+        private TextBuffer importedText;
 
         protected TextBuffer TypedText { get; private set; }
+
 
         protected bool PracticeMode
         {
@@ -112,8 +126,6 @@ namespace Typist
                     ImportedText = new TextBuffer(sr.ReadToEnd()
                                                     .Replace("\r\n", "\n")
                                                     .Replace("\t", "    "));
-
-                TypedText = new TextBuffer(ImportedText, countWhitespaceAsWordChars);
 
                 stopwatch.Reset();
 
@@ -396,6 +408,11 @@ namespace Typist
 
         private DateTime timeOfLastWPMCalc = DateTime.MinValue;
         private DateTime timeOfLastCharTyped = DateTime.MaxValue;
+
+        protected void TypedText_Error(object sender, EventArgs e)
+        {
+            System.Media.SystemSounds.Beep.Play();
+        }
 
         private void doOnce(Action action)
         {
