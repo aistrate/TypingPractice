@@ -21,7 +21,7 @@ namespace Typist
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
-            CurrentFont = new Font("Courier New", 10);
+            CurrentFont = new Font("Courier New", 10, FontStyle.Regular);
 
             ImportedText = new TextBuffer("");
             TypedText = new TextBuffer(ImportedText);
