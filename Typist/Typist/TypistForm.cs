@@ -134,28 +134,27 @@ namespace Typist
                 Height = e.Graphics.ClipBounds.Height - 4,
             };
 
+
             drawText(ImportedText.Text, e.Graphics, innerRect, Brushes.Black);
+
 
             string typedText = ImportedText.Substring(0, TypedText.Length);
 
-            int charsMissingAtEOL = getCharsMissingAtEOL(ImportedText.Text, TypedText.LastIndex, e.Graphics, innerRect);
-            if (charsMissingAtEOL > 0)
+            int missingAtEol = countMissingAtEol(ImportedText.Text, TypedText.LastIndex, e.Graphics, innerRect);
+            if (missingAtEol > 0)
                 typedText = typedText.Insert(typedText.LastIndexOf(' ') + 1,
-                                             new string(' ', charsMissingAtEOL));
+                                             new string(' ', missingAtEol));
 
             drawText(typedText, e.Graphics, innerRect, Brushes.CornflowerBlue);
+
 
             if (PracticeMode && TypedText.Length < ImportedText.Length)
             {
                 RectangleF cursorRect = getRectangle(ImportedText.Text, TypedText.LastIndex + 1, e.Graphics, innerRect);
 
-                e.Graphics.DrawString("_", CurrentFont, Brushes.CornflowerBlue, cursorRect,
-                                      new StringFormat(StringFormatFlags.NoWrap)
-                                      {
-                                          Alignment = StringAlignment.Center,
-                                          LineAlignment = StringAlignment.Far,
-                                      });
+                e.Graphics.DrawString("_", CurrentFont, Brushes.CornflowerBlue, cursorRect, SingleCharStringFormat);
             }
+
 
             RectangleF[] errorRects = getRectangles(ImportedText.Text, TypedText.ErrorsUncorrected.ToArray(), e.Graphics, innerRect);
 
@@ -163,16 +162,12 @@ namespace Typist
             {
                 e.Graphics.FillRectangle(Brushes.LightGray, errorRects[i]);
 
-                e.Graphics.DrawString(TypedText[TypedText.ErrorsUncorrected[i]].ToString(), CurrentFont, Brushes.Red, errorRects[i],
-                                      new StringFormat(StringFormatFlags.NoWrap)
-                                      {
-                                          Alignment = StringAlignment.Center,
-                                          LineAlignment = StringAlignment.Far,
-                                      });
+                e.Graphics.DrawString(TypedText[TypedText.ErrorsUncorrected[i]].ToString(), CurrentFont,
+                                      Brushes.Red, errorRects[i], SingleCharStringFormat);
             }
         }
 
-        private int getCharsMissingAtEOL(string text, int lastIndex, Graphics graphics, RectangleF innerRect)
+        private int countMissingAtEol(string text, int lastIndex, Graphics graphics, RectangleF innerRect)
         {
             if (lastIndex < 0)
                 return 0;
@@ -199,7 +194,7 @@ namespace Typist
             if (visibleNewlines)
                 text = text.Replace("\n", "\xB6\n");
 
-            graphics.DrawString(text, CurrentFont, brush, innerRect, createStringFormat());
+            graphics.DrawString(text, CurrentFont, brush, innerRect, TextStringFormat);
         }
 
         private RectangleF getRectangle(string text, int index, Graphics graphics, RectangleF innerRect)
@@ -227,7 +222,7 @@ namespace Typist
         {
             CharacterRange[] ranges = indexes.Select(i => new CharacterRange(i, 1)).ToArray();
 
-            StringFormat stringFormat = createStringFormat();
+            StringFormat stringFormat = new StringFormat(TextStringFormat);
             stringFormat.SetMeasurableCharacterRanges(ranges);
 
             Region[] regions = graphics.MeasureCharacterRanges(text, CurrentFont, innerRect, stringFormat);
@@ -236,15 +231,20 @@ namespace Typist
                           .ToArray();
         }
 
-        private StringFormat createStringFormat()
-        {
-            return new StringFormat(StringFormatFlags.LineLimit)
+        protected readonly static StringFormat TextStringFormat =
+            new StringFormat(StringFormatFlags.LineLimit)
             {
                 Trimming = StringTrimming.Word,
                 Alignment = StringAlignment.Near,
                 LineAlignment = StringAlignment.Near,
             };
-        }
+
+        protected readonly static StringFormat SingleCharStringFormat =
+            new StringFormat(StringFormatFlags.NoWrap)
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Far,
+            };
 
         private void pbTyping_Resize(object sender, EventArgs e)
         {
