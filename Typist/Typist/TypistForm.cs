@@ -148,14 +148,14 @@ namespace Typist
                 typedText = typedText.Insert(typedText.LastIndexOf(' ') + 1,
                                              new string(' ', missingAtEol));
 
-            drawText(typedText, e.Graphics, innerRect, Brushes.CornflowerBlue);
+            drawText(typedText, e.Graphics, innerRect, Brushes.LightSlateGray);
 
 
             if (PracticeMode && TypedText.Length < ImportedText.Length)
             {
                 RectangleF cursorRect = getRectangle(ImportedText.Text, TypedText.LastIndex + 1, e.Graphics, innerRect);
 
-                e.Graphics.DrawString("_", CurrentFont, Brushes.CornflowerBlue, cursorRect, SingleCharStringFormat);
+                e.Graphics.DrawString("_", CurrentFont, Brushes.Red, cursorRect, SingleCharStringFormat);
             }
 
 
@@ -166,7 +166,7 @@ namespace Typist
                 e.Graphics.FillRectangle(Brushes.LightGray, errorRects[i]);
 
                 e.Graphics.DrawString(TypedText[TypedText.ErrorsUncorrected[i]].ToString(), CurrentFont,
-                                      Brushes.Red, errorRects[i], SingleCharStringFormat);
+                                      Brushes.Purple, errorRects[i], SingleCharStringFormat);
             }
         }
 
