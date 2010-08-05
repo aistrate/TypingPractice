@@ -148,7 +148,7 @@ namespace Typist
                 typedText = typedText.Insert(typedText.LastIndexOf(' ') + 1,
                                              new string(' ', missingAtEol));
 
-            drawText(typedText, e.Graphics, innerRect, Brushes.LightSlateGray);
+            drawText(typedText, e.Graphics, innerRect, Brushes.CornflowerBlue);
 
 
             if (PracticeMode && TypedText.Length < ImportedText.Length)
