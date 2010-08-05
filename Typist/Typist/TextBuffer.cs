@@ -14,9 +14,11 @@ namespace Typist
 
             buffer = text.ToCharArray();
             Length = text.Length;
+
+            CountWhitespaceAsWordChars = true;
         }
 
-        public TextBuffer(TextBuffer original)
+        public TextBuffer(TextBuffer original, bool countWhitespaceAsWordChars)
             : this()
         {
             if (original == null)
@@ -26,6 +28,8 @@ namespace Typist
 
             buffer = new char[Math.Max(2000, 2 * original.Length)];
             Length = 0;
+
+            CountWhitespaceAsWordChars = countWhitespaceAsWordChars;
         }
 
         private TextBuffer()
@@ -44,6 +48,8 @@ namespace Typist
         public int ErrorsCommitted { get; private set; }
 
         public List<int> ErrorsUncorrected { get; private set; }
+
+        public bool CountWhitespaceAsWordChars { get; set; }
 
 
         public string Text { get { return new string(buffer, 0, Length); } }
@@ -147,7 +153,30 @@ namespace Typist
 
         public int WordCount
         {
-            get { return Length / 5; }
+            get
+            {
+                if (CountWhitespaceAsWordChars)
+                    return Length / 5;
+                else
+                    return Count(c => whitespaceChars.IndexOf(c) < 0) / 5;
+            }
         }
+
+        public int Count(Func<char, bool> predicate)
+        {
+            return Array.FindAll(Active, c => predicate(c)).Length;
+        }
+
+        public char[] Active
+        {
+            get
+            {
+                char[] active = new char[Length];
+                Array.Copy(buffer, 0, active, 0, Length);
+                return active;
+            }
+        }
+
+        private const string whitespaceChars = " \n\r\t";
     }
 }

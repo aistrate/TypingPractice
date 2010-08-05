@@ -24,12 +24,13 @@ namespace Typist
             CurrentFont = new Font("Courier New", 10, FontStyle.Regular);
 
             ImportedText = new TextBuffer("");
-            TypedText = new TextBuffer(ImportedText);
+            TypedText = new TextBuffer(ImportedText, countWhitespaceAsWordChars);
 
             PracticeMode = false;
         }
 
         private const bool visibleNewlines = false;
+        private const bool countWhitespaceAsWordChars = false;
         private const int pauseAfterInterval = 0;
 
 
@@ -112,7 +113,7 @@ namespace Typist
                                                     .Replace("\r\n", "\n")
                                                     .Replace("\t", "    "));
 
-                TypedText = new TextBuffer(ImportedText);
+                TypedText = new TextBuffer(ImportedText, countWhitespaceAsWordChars);
 
                 stopwatch.Reset();
 
