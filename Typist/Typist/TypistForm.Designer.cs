@@ -38,6 +38,7 @@
             this.lblWPM = new System.Windows.Forms.Label();
             this.tblLine = new System.Windows.Forms.TableLayoutPanel();
             this.lblErrorCount = new System.Windows.Forms.Label();
+            this.lblAccuracy = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,8 +89,9 @@
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTime.Location = new System.Drawing.Point(457, 6);
+            this.lblTime.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(59, 14);
+            this.lblTime.Size = new System.Drawing.Size(60, 14);
             this.lblTime.TabIndex = 5;
             this.lblTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
@@ -100,6 +102,7 @@
             // lblWPM
             // 
             this.lblWPM.Location = new System.Drawing.Point(103, 6);
+            this.lblWPM.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.lblWPM.Name = "lblWPM";
             this.lblWPM.Size = new System.Drawing.Size(65, 14);
             this.lblWPM.TabIndex = 6;
@@ -123,17 +126,29 @@
             // lblErrorCount
             // 
             this.lblErrorCount.BackColor = System.Drawing.SystemColors.Control;
-            this.lblErrorCount.Location = new System.Drawing.Point(174, 6);
+            this.lblErrorCount.Location = new System.Drawing.Point(171, 6);
+            this.lblErrorCount.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.lblErrorCount.Name = "lblErrorCount";
-            this.lblErrorCount.Size = new System.Drawing.Size(115, 14);
+            this.lblErrorCount.Size = new System.Drawing.Size(65, 14);
             this.lblErrorCount.TabIndex = 10;
             this.lblErrorCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblAccuracy
+            // 
+            this.lblAccuracy.BackColor = System.Drawing.SystemColors.Control;
+            this.lblAccuracy.Location = new System.Drawing.Point(239, 6);
+            this.lblAccuracy.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblAccuracy.Name = "lblAccuracy";
+            this.lblAccuracy.Size = new System.Drawing.Size(60, 14);
+            this.lblAccuracy.TabIndex = 11;
+            this.lblAccuracy.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // TypistForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 550);
+            this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
             this.Controls.Add(this.tblLine);
             this.Controls.Add(this.lblWPM);
@@ -144,7 +159,7 @@
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MinimumSize = new System.Drawing.Size(450, 350);
+            this.MinimumSize = new System.Drawing.Size(470, 350);
             this.Name = "TypistForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";
@@ -168,6 +183,7 @@
         private System.Windows.Forms.Label lblWPM;
         private System.Windows.Forms.TableLayoutPanel tblLine;
         private System.Windows.Forms.Label lblErrorCount;
+        private System.Windows.Forms.Label lblAccuracy;
     }
 }
 

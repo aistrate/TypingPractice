@@ -42,21 +42,21 @@ namespace Typist
             get { return practiceMode; }
             private set
             {
-                if (ImportedText.Length == 0)
+                if (!IsImported)
                     value = false;
 
                 practiceMode = value;
 
                 btnImport.Enabled = !value;
 
-                btnStart.Enabled = ImportedText.Length > 0;
+                btnStart.Enabled = IsImported;
                 btnStart.Text =
                     practiceMode ? "Pause" :
                     IsStarted ? "Resume" :
                     "Start";
 
                 if (practiceMode)
-                    afterImport = false;
+                    rightAfterImport = false;
 
                 pbTyping.Refresh();
 
@@ -72,7 +72,7 @@ namespace Typist
         }
         private bool practiceMode = false;
 
-        private bool afterImport = false;
+        private bool rightAfterImport = false;
 
         protected bool IsTimerRunning
         {
@@ -96,7 +96,9 @@ namespace Typist
 
         protected Font CurrentFont { get; private set; }
 
-        protected bool IsStarted { get { return ImportedText.Length > 0 & !afterImport; } }
+        protected bool IsImported { get { return ImportedText.Length > 0; } }
+
+        protected bool IsStarted { get { return IsImported && !rightAfterImport; } }
 
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -114,7 +116,7 @@ namespace Typist
 
                 stopwatch.Reset();
 
-                afterImport = true;
+                rightAfterImport = true;
                 PracticeMode = false;
             }
         }
@@ -311,7 +313,7 @@ namespace Typist
             if (controlKeyPressed)
                 return;
 
-            if (afterImport && keyChar != ' ')
+            if (rightAfterImport && keyChar != ' ')
                 PracticeMode = true;
 
             if (PracticeMode)
@@ -348,33 +350,47 @@ namespace Typist
 
         private void displayTime()
         {
-            lblTime.Text = string.Format("{0:00}:{1:00}",
-                                         stopwatch.Elapsed.Minutes,
-                                         stopwatch.Elapsed.Seconds);
+            if (IsImported)
+                lblTime.Text = string.Format("{0:00}:{1:00}",
+                                             stopwatch.Elapsed.Minutes,
+                                             stopwatch.Elapsed.Seconds);
+            else
+                lblTime.Text = "";
         }
 
         private void displayWPM()
         {
-            if (DateTime.Now - timeOfLastWPMCalc > new TimeSpan(0, 0, 1))
+            if (IsImported)
             {
-                timeOfLastWPMCalc = DateTime.Now;
+                if (DateTime.Now - timeOfLastWPMCalc > new TimeSpan(0, 0, 1))
+                {
+                    timeOfLastWPMCalc = DateTime.Now;
 
-                double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
+                    double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
 
-                lblWPM.Text = string.Format("{0:#0} wpm", elapsedMinutes != 0.0 ? (double)TypedText.WordCount / elapsedMinutes : 0.0);
+                    lblWPM.Text = string.Format("{0:#0} wpm",
+                                                elapsedMinutes != 0.0 ?
+                                                    (double)TypedText.WordCount / elapsedMinutes :
+                                                    0.0);
+                }
             }
+            else
+                lblWPM.Text = "";
         }
 
         private void displayErrorCount()
         {
-            decimal accuracy = Math.Round(TypedText.Accuracy, 2);
+            if (IsImported)
+            {
+                lblErrorCount.Text = string.Format("{0:#0} errs", TypedText.ErrorsCommitted);
 
-            lblErrorCount.Text = TypedText.TotalErrors != 0 ?
-                string.Format("{0:#0} errs {1}({2:p0})",
-                              TypedText.ErrorsCommitted,
-                              new string(' ', (accuracy < 0.1m) ? 2 : 0),
-                              accuracy) :
-                "";
+                lblAccuracy.Text = string.Format("({0:p0})", TypedText.Accuracy);
+            }
+            else
+            {
+                lblErrorCount.Text = "";
+                lblAccuracy.Text = "";
+            }
         }
 
         private DateTime timeOfLastWPMCalc = DateTime.MinValue;
