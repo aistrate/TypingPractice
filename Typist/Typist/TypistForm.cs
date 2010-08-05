@@ -158,10 +158,16 @@ namespace Typist
 
                 for (int i = 0; i < errorGroup.Length; i++)
                 {
-                    e.Graphics.FillRectangle(Brushes.LightGray, errorGroupRects[i]);
+                    Rectangle errorGroupRect = errorGroupRects[i];
 
-                    e.Graphics.DrawString(TypedText[errorGroup[i]].ToString(), CurrentFont, Brushes.Red, errorGroupRects[i],
-                                          new StringFormat()
+                    if (ImportedText[errorGroup[i]] == '\n')
+                        errorGroupRect = getRectangle(ImportedText.Text.Insert(errorGroup[i], "-"),
+                                                      errorGroup[i], e.Graphics, innerRect);
+
+                    e.Graphics.FillRectangle(Brushes.LightGray, errorGroupRect);
+
+                    e.Graphics.DrawString(TypedText[errorGroup[i]].ToString(), CurrentFont, Brushes.Red, errorGroupRect,
+                                          new StringFormat(StringFormatFlags.NoWrap)
                                           {
                                               Alignment = StringAlignment.Center,
                                               LineAlignment = StringAlignment.Far,
@@ -226,7 +232,7 @@ namespace Typist
         {
             return new StringFormat(StringFormatFlags.LineLimit)
             {
-                Trimming = StringTrimming.None,
+                Trimming = StringTrimming.Word,
                 Alignment = StringAlignment.Near,
                 LineAlignment = StringAlignment.Near,
             };
@@ -373,5 +379,13 @@ namespace Typist
 
         private DateTime timeOfLastWPMCalc = DateTime.MinValue;
         private DateTime timeOfLastCharTyped = DateTime.MaxValue;
+
+        private void doOnce(Action action)
+        {
+            if (!done)
+                action();
+            done = true;
+        }
+        private bool done = false;
     }
 }
