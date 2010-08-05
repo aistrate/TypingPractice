@@ -3,3 +3,8 @@
 - keep a MissingNewlines property in class TextBuffer; insert all missing newlines before showing TypedText on the screen, so that typed chars will always display on top of the originals (even after typing a printable char for a newline in the original)
 
 - Tab chars ('\t') at the beginning of the line should advance the cursor to the first printable char (to be used with Code practice texts, e.g., Haskell or C# source code)
+
+- error: typing a printable char instead of a newline (show the char at the end of the line, in red)
+
+
+* retrieve 32 rectangles at a time when displaying all uncorrected errors

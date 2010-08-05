@@ -134,13 +134,7 @@ namespace Typist
 
             drawText(ImportedText.Text, e.Graphics, innerRect, Brushes.Black);
 
-            const int maxShownErrors = 10;
-            int[] shownErrors = TypedText.ErrorsUncorrected.Skip(TypedText.ErrorsUncorrected.Count - maxShownErrors)
-                                                           .ToArray();
-            int firstShownError = shownErrors.Length > 0 ? shownErrors[0] : 0;
-
-            string typedText = TypedText.Substring(0, firstShownError) +
-                               ImportedText.Substring(firstShownError, TypedText.Length - firstShownError) +
+            string typedText = ImportedText.Substring(0, TypedText.Length) +
                                (PracticeMode ? "_" : "");
 
             int charsMissingAtEOL = getCharsMissingAtEOL(ImportedText.Text, TypedText.LastIndex, e.Graphics, innerRect);
@@ -158,18 +152,21 @@ namespace Typist
 
             drawText(typedText, e.Graphics, innerRect, Brushes.CornflowerBlue);
 
-            foreach (int error in shownErrors)
+            foreach (int[] errorGroup in split(TypedText.ErrorsUncorrected, 32).Select(g => g.ToArray()))
             {
-                Rectangle errorCharRect = getRectangle(ImportedText.Text, error, e.Graphics, innerRect);
+                Rectangle[] errorGroupRects = getRectangles(ImportedText.Text, errorGroup, e.Graphics, innerRect);
 
-                e.Graphics.FillRectangle(Brushes.LightGray, errorCharRect);
+                for (int i = 0; i < errorGroup.Length; i++)
+                {
+                    e.Graphics.FillRectangle(Brushes.LightGray, errorGroupRects[i]);
 
-                e.Graphics.DrawString(TypedText[error].ToString(), CurrentFont, Brushes.Red, errorCharRect,
-                                      new StringFormat(StringFormatFlags.NoClip | StringFormatFlags.FitBlackBox)
-                                      {
-                                          Alignment = StringAlignment.Center,
-                                          LineAlignment = StringAlignment.Far,
-                                      });
+                    e.Graphics.DrawString(TypedText[errorGroup[i]].ToString(), CurrentFont, Brushes.Red, errorGroupRects[i],
+                                          new StringFormat(StringFormatFlags.NoClip | StringFormatFlags.FitBlackBox)
+                                          {
+                                              Alignment = StringAlignment.Center,
+                                              LineAlignment = StringAlignment.Far,
+                                          });
+                }
             }
         }
 
@@ -213,16 +210,32 @@ namespace Typist
 
         private Rectangle getRectangle(string text, int index, Graphics graphics, Rectangle innerRect)
         {
+            return getRectangles(text, new[] { index }, graphics, innerRect).First();
+        }
+
+        private Rectangle[] getRectangles(string text, int[] indexes, Graphics graphics, Rectangle innerRect)
+        {
+            CharacterRange[] ranges = indexes.Select(i => new CharacterRange(i, 1)).ToArray();
+
             StringFormat stringFormat = createStringFormat();
+            stringFormat.SetMeasurableCharacterRanges(ranges);
 
-            stringFormat.SetMeasurableCharacterRanges(new[] { new CharacterRange(index, 1) });
+            Region[] regions = graphics.MeasureCharacterRanges(text, CurrentFont, innerRect, stringFormat);
 
-            Region region = graphics.MeasureCharacterRanges(text, CurrentFont, innerRect, stringFormat)
-                                    .First();
+            return regions.Select(r =>
+                           {
+                               RectangleF rectF = r.GetBounds(graphics);
+                               return new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
+                           })
+                          .ToArray();
+        }
 
-            RectangleF rectF = region.GetBounds(graphics);
-
-            return new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
+        private static IEnumerable<IEnumerable<T>> split<T>(IEnumerable<T> source, int subsequenceLength)
+        {
+            for (IEnumerable<T> subseq = source.Take(subsequenceLength), rest = source.Skip(subsequenceLength);
+                 subseq.Count() > 0;
+                 subseq = rest.Take(subsequenceLength), rest = rest.Skip(subsequenceLength))
+                yield return subseq;
         }
 
         private void pbTyping_Resize(object sender, EventArgs e)
