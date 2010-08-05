@@ -106,8 +106,36 @@ namespace Typist
 
             if (ch == '\r')
                 return Append('\n');
+            else if (ch == '\t')
+                return ExpandTab();
             else
                 return Append(ch);
+        }
+
+        public TextBuffer ExpandTab()
+        {
+            Append(' ');
+
+            if (IsLastSameAsOriginal)
+                for (int i = LastIndex + 1; i < Original.Length && Original[i] == ' '; i++)
+                {
+                    TotalKeys++;
+                    Append(' ');
+                }
+
+            return this;
+        }
+
+        public bool IsAtBeginningOfLine
+        {
+            get
+            {
+                int i;
+                for (i = LastIndex; i >= 0 && Original[i] == ' '; i--)
+                    ;
+
+                return i < 0 || (Original[i] == '\n');
+            }
         }
 
         public int TotalErrors
@@ -124,7 +152,5 @@ namespace Typist
         {
             get { return Length / 5; }
         }
-
-        private const string whitespaceChars = " \n\r\t";
     }
 }

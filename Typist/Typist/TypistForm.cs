@@ -258,7 +258,7 @@ namespace Typist
 
         private bool controlKeyPressed = false;
 
-        private Keys[] suppressKeys = new Keys[] { Keys.Tab, Keys.Escape, Keys.Left, Keys.Right, Keys.Up, Keys.Down };
+        private Keys[] suppressKeys = new Keys[] { Keys.Escape, Keys.Left, Keys.Right, Keys.Up, Keys.Down };
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -269,7 +269,7 @@ namespace Typist
                 if (suppressKeys.Contains(keyMinusShift))
                     return true;
 
-                if (keyMinusShift == Keys.Return || keyMinusShift == Keys.Space)
+                if (keyMinusShift == Keys.Return || keyMinusShift == Keys.Space || keyMinusShift == Keys.Tab)
                 {
                     controlKeyPressed = false;
                     typeKey((char)keyMinusShift);
