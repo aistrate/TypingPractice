@@ -161,7 +161,7 @@ namespace Typist
                     e.Graphics.FillRectangle(Brushes.LightGray, errorGroupRects[i]);
 
                     e.Graphics.DrawString(TypedText[errorGroup[i]].ToString(), CurrentFont, Brushes.Red, errorGroupRects[i],
-                                          new StringFormat(StringFormatFlags.NoClip | StringFormatFlags.FitBlackBox)
+                                          new StringFormat()
                                           {
                                               Alignment = StringAlignment.Center,
                                               LineAlignment = StringAlignment.Far,
@@ -200,14 +200,6 @@ namespace Typist
             graphics.DrawString(text, CurrentFont, brush, innerRect, createStringFormat());
         }
 
-        private StringFormat createStringFormat()
-        {
-            return new StringFormat(StringFormatFlags.LineLimit)
-                       {
-                           Trimming = StringTrimming.None,
-                       };
-        }
-
         private Rectangle getRectangle(string text, int index, Graphics graphics, Rectangle innerRect)
         {
             return getRectangles(text, new[] { index }, graphics, innerRect).First();
@@ -228,6 +220,16 @@ namespace Typist
                                return new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
                            })
                           .ToArray();
+        }
+
+        private StringFormat createStringFormat()
+        {
+            return new StringFormat(StringFormatFlags.LineLimit)
+            {
+                Trimming = StringTrimming.None,
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Near,
+            };
         }
 
         private static IEnumerable<IEnumerable<T>> split<T>(IEnumerable<T> source, int subsequenceLength)
