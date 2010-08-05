@@ -99,6 +99,9 @@ namespace Typist
             if (ch == '\b')
                 return RemoveLast();
 
+            if (Length >= Original.Length)
+                return this;
+
             TotalKeys++;
 
             if (ch == '\r')

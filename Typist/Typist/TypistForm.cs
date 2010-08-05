@@ -145,7 +145,7 @@ namespace Typist
 
             drawText(typedText, e.Graphics, innerRect, Brushes.CornflowerBlue);
 
-            if (PracticeMode)
+            if (PracticeMode && TypedText.Length < ImportedText.Length)
             {
                 RectangleF cursorRect = getRectangle(ImportedText.Text, TypedText.LastIndex + 1, e.Graphics, innerRect);
 
@@ -209,9 +209,12 @@ namespace Typist
 
         private RectangleF[] getRectangles(string text, int[] indexes, Graphics graphics, RectangleF innerRect)
         {
-            RectangleF[] rectangles =
-                split(indexes, 32).SelectMany(grp => get32Rectangles(text, grp.ToArray(), graphics, innerRect))
-                                  .ToArray();
+            indexes = indexes.Where(i => i < text.Length)
+                             .ToArray();
+
+            RectangleF[] rectangles = indexes.Split(32)
+                                             .SelectMany(grp => get32Rectangles(text, grp.ToArray(), graphics, innerRect))
+                                             .ToArray();
 
             for (int i = 0; i < indexes.Length; i++)
                 if (rectangles[i].IsEmpty)
@@ -241,14 +244,6 @@ namespace Typist
                 Alignment = StringAlignment.Near,
                 LineAlignment = StringAlignment.Near,
             };
-        }
-
-        private static IEnumerable<IEnumerable<T>> split<T>(IEnumerable<T> source, int subsequenceLength)
-        {
-            for (IEnumerable<T> subseq = source.Take(subsequenceLength), rest = source.Skip(subsequenceLength);
-                 subseq.Count() > 0;
-                 subseq = rest.Take(subsequenceLength), rest = rest.Skip(subsequenceLength))
-                yield return subseq;
         }
 
         private void pbTyping_Resize(object sender, EventArgs e)
@@ -326,7 +321,7 @@ namespace Typist
                 timeOfLastCharTyped = DateTime.Now;
                 displayErrorCount();
 
-                if (TypedText.Length == ImportedText.Length)
+                if (TypedText.Length >= ImportedText.Length)
                     PracticeMode = false;
 
                 pbTyping.Refresh();
