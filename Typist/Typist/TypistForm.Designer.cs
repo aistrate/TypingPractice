@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TypistForm));
             this.btnImport = new System.Windows.Forms.Button();
             this.ofdImport = new System.Windows.Forms.OpenFileDialog();
             this.pbTyping = new System.Windows.Forms.PictureBox();
@@ -89,7 +90,7 @@
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTime.Location = new System.Drawing.Point(457, 6);
-            this.lblTime.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblTime.Margin = new System.Windows.Forms.Padding(0);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(60, 14);
             this.lblTime.TabIndex = 5;
@@ -102,7 +103,7 @@
             // lblWPM
             // 
             this.lblWPM.Location = new System.Drawing.Point(103, 6);
-            this.lblWPM.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblWPM.Margin = new System.Windows.Forms.Padding(0);
             this.lblWPM.Name = "lblWPM";
             this.lblWPM.Size = new System.Drawing.Size(65, 14);
             this.lblWPM.TabIndex = 6;
@@ -127,7 +128,7 @@
             // 
             this.lblErrorCount.BackColor = System.Drawing.SystemColors.Control;
             this.lblErrorCount.Location = new System.Drawing.Point(171, 6);
-            this.lblErrorCount.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblErrorCount.Margin = new System.Windows.Forms.Padding(0);
             this.lblErrorCount.Name = "lblErrorCount";
             this.lblErrorCount.Size = new System.Drawing.Size(65, 14);
             this.lblErrorCount.TabIndex = 10;
@@ -137,7 +138,7 @@
             // 
             this.lblAccuracy.BackColor = System.Drawing.SystemColors.Control;
             this.lblAccuracy.Location = new System.Drawing.Point(239, 6);
-            this.lblAccuracy.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblAccuracy.Margin = new System.Windows.Forms.Padding(0);
             this.lblAccuracy.Name = "lblAccuracy";
             this.lblAccuracy.Size = new System.Drawing.Size(60, 14);
             this.lblAccuracy.TabIndex = 11;
@@ -157,6 +158,7 @@
             this.Controls.Add(this.pbTyping);
             this.Controls.Add(this.btnImport);
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MinimumSize = new System.Drawing.Size(470, 350);
