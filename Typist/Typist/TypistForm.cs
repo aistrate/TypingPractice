@@ -31,7 +31,7 @@ namespace Typist
 
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
-        private const int pauseAfterInterval = 0;
+        private const int pauseAfterInterval = 10;
 
 
         protected TextBuffer ImportedText { get; private set; }
