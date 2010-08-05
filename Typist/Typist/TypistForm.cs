@@ -52,8 +52,8 @@ namespace Typist
                 btnStart.Enabled = ImportedText.Length > 0;
                 btnStart.Text =
                     practiceMode ? "Pause" :
-                    ImportedText.Length == 0 || afterImport ? "Start" :
-                    "Resume";
+                    IsStarted ? "Resume" :
+                    "Start";
 
                 if (practiceMode)
                     afterImport = false;
@@ -96,6 +96,8 @@ namespace Typist
 
         protected Font CurrentFont { get; private set; }
 
+        protected bool IsStarted { get { return ImportedText.Length > 0 & !afterImport; } }
+
 
         private void btnImport_Click(object sender, EventArgs e)
         {
@@ -124,65 +126,59 @@ namespace Typist
 
         private void pbTyping_Paint(object sender, PaintEventArgs e)
         {
-            Rectangle innerRect = new Rectangle()
-                                  {
-                                      X = 1,
-                                      Y = 2,
-                                      Width = e.ClipRectangle.Width - 2,
-                                      Height = e.ClipRectangle.Height - 4
-                                  };
+            RectangleF innerRect = new RectangleF()
+            {
+                X = 1,
+                Y = 2,
+                Width = e.Graphics.ClipBounds.Width - 2,
+                Height = e.Graphics.ClipBounds.Height - 4,
+            };
 
             drawText(ImportedText.Text, e.Graphics, innerRect, Brushes.Black);
 
-            string typedText = ImportedText.Substring(0, TypedText.Length) +
-                               (PracticeMode ? "_" : "");
+            string typedText = ImportedText.Substring(0, TypedText.Length);
 
             int charsMissingAtEOL = getCharsMissingAtEOL(ImportedText.Text, TypedText.LastIndex, e.Graphics, innerRect);
             if (charsMissingAtEOL > 0)
                 typedText = typedText.Insert(typedText.LastIndexOf(' ') + 1,
                                              new string(' ', charsMissingAtEOL));
 
-            else if (TypedText.LastIndex >= 0)
-            {
-                int charsTooManyAtEOL = getCharsMissingAtEOL(ImportedText.Text.Insert(TypedText.LastIndex, "_"),
-                                                             TypedText.LastIndex, e.Graphics, innerRect);
-                if (charsTooManyAtEOL == 1)
-                    typedText = typedText.Remove(TypedText.LastIndex + 1);
-            }
-
             drawText(typedText, e.Graphics, innerRect, Brushes.CornflowerBlue);
 
-            foreach (int[] errorGroup in split(TypedText.ErrorsUncorrected, 32).Select(g => g.ToArray()))
+            if (PracticeMode)
             {
-                Rectangle[] errorGroupRects = getRectangles(ImportedText.Text, errorGroup, e.Graphics, innerRect);
+                RectangleF cursorRect = getRectangle(ImportedText.Text, TypedText.LastIndex + 1, e.Graphics, innerRect);
 
-                for (int i = 0; i < errorGroup.Length; i++)
-                {
-                    Rectangle errorGroupRect = errorGroupRects[i];
+                e.Graphics.DrawString("_", CurrentFont, Brushes.CornflowerBlue, cursorRect,
+                                      new StringFormat(StringFormatFlags.NoWrap)
+                                      {
+                                          Alignment = StringAlignment.Center,
+                                          LineAlignment = StringAlignment.Far,
+                                      });
+            }
 
-                    if (ImportedText[errorGroup[i]] == '\n')
-                        errorGroupRect = getRectangle(ImportedText.Text.Insert(errorGroup[i], "-"),
-                                                      errorGroup[i], e.Graphics, innerRect);
+            RectangleF[] errorRects = getRectangles(ImportedText.Text, TypedText.ErrorsUncorrected.ToArray(), e.Graphics, innerRect);
 
-                    e.Graphics.FillRectangle(Brushes.LightGray, errorGroupRect);
+            for (int i = 0; i < TypedText.ErrorsUncorrected.Count; i++)
+            {
+                e.Graphics.FillRectangle(Brushes.LightGray, errorRects[i]);
 
-                    e.Graphics.DrawString(TypedText[errorGroup[i]].ToString(), CurrentFont, Brushes.Red, errorGroupRect,
-                                          new StringFormat(StringFormatFlags.NoWrap)
-                                          {
-                                              Alignment = StringAlignment.Center,
-                                              LineAlignment = StringAlignment.Far,
-                                          });
-                }
+                e.Graphics.DrawString(TypedText[TypedText.ErrorsUncorrected[i]].ToString(), CurrentFont, Brushes.Red, errorRects[i],
+                                      new StringFormat(StringFormatFlags.NoWrap)
+                                      {
+                                          Alignment = StringAlignment.Center,
+                                          LineAlignment = StringAlignment.Far,
+                                      });
             }
         }
 
-        private int getCharsMissingAtEOL(string text, int lastIndex, Graphics graphics, Rectangle innerRect)
+        private int getCharsMissingAtEOL(string text, int lastIndex, Graphics graphics, RectangleF innerRect)
         {
             if (lastIndex < 0)
                 return 0;
 
             int missing = 0;
-            Rectangle originalPos, typedPos;
+            RectangleF originalPos, typedPos;
             do
             {
                 originalPos = getRectangle(text, lastIndex + missing, graphics, innerRect);
@@ -198,7 +194,7 @@ namespace Typist
             return missing;
         }
 
-        private void drawText(string text, Graphics graphics, Rectangle innerRect, Brush brush)
+        private void drawText(string text, Graphics graphics, RectangleF innerRect, Brush brush)
         {
             if (visibleNewlines)
                 text = text.Replace("\n", "\xB6\n");
@@ -206,12 +202,25 @@ namespace Typist
             graphics.DrawString(text, CurrentFont, brush, innerRect, createStringFormat());
         }
 
-        private Rectangle getRectangle(string text, int index, Graphics graphics, Rectangle innerRect)
+        private RectangleF getRectangle(string text, int index, Graphics graphics, RectangleF innerRect)
         {
             return getRectangles(text, new[] { index }, graphics, innerRect).First();
         }
 
-        private Rectangle[] getRectangles(string text, int[] indexes, Graphics graphics, Rectangle innerRect)
+        private RectangleF[] getRectangles(string text, int[] indexes, Graphics graphics, RectangleF innerRect)
+        {
+            RectangleF[] rectangles =
+                split(indexes, 32).SelectMany(grp => get32Rectangles(text, grp.ToArray(), graphics, innerRect))
+                                  .ToArray();
+
+            for (int i = 0; i < indexes.Length; i++)
+                if (rectangles[i].IsEmpty)
+                    rectangles[i] = get32Rectangles(text.Insert(indexes[i], "-"), new[] { indexes[i] }, graphics, innerRect)[0];
+
+            return rectangles;
+        }
+
+        private RectangleF[] get32Rectangles(string text, int[] indexes, Graphics graphics, RectangleF innerRect)
         {
             CharacterRange[] ranges = indexes.Select(i => new CharacterRange(i, 1)).ToArray();
 
@@ -220,11 +229,7 @@ namespace Typist
 
             Region[] regions = graphics.MeasureCharacterRanges(text, CurrentFont, innerRect, stringFormat);
 
-            return regions.Select(r =>
-                           {
-                               RectangleF rectF = r.GetBounds(graphics);
-                               return new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
-                           })
+            return regions.Select(r => r.GetBounds(graphics))
                           .ToArray();
         }
 
