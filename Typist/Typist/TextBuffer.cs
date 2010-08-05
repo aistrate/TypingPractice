@@ -126,16 +126,13 @@ namespace Typist
             return this;
         }
 
-        public bool IsAtBeginningOfLine
+        public bool IsAtBeginningOfLine(int index)
         {
-            get
-            {
-                int i;
-                for (i = LastIndex; i >= 0 && Original[i] == ' '; i--)
-                    ;
+            int i;
+            for (i = index; i >= 0 && this[i] == ' '; i--)
+                ;
 
-                return i < 0 || (Original[i] == '\n');
-            }
+            return i < 0 || (this[i] == '\n');
         }
 
         public int TotalErrors
