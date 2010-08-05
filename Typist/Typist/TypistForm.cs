@@ -30,7 +30,7 @@ namespace Typist
         }
 
         private const bool visibleNewlines = false;
-        private const bool countWhitespaceAsWordChars = false;
+        private const bool countWhitespaceAsWordChars = true;
         private const int pauseAfterInterval = 0;
 
 
