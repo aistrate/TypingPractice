@@ -124,6 +124,8 @@ namespace Typist
 
             if (ofdImport.ShowDialog() == DialogResult.OK)
             {
+                this.Text = ofdImport.SafeFileName + " - Typist";
+
                 using (StreamReader sr = new StreamReader(ofdImport.FileName))
                     ImportedText = new TextBuffer(sr.ReadToEnd()
                                                     .Replace("\r\n", "\n")
