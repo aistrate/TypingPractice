@@ -67,7 +67,7 @@
             this.pbTyping.BackColor = System.Drawing.Color.White;
             this.pbTyping.Location = new System.Drawing.Point(0, 29);
             this.pbTyping.Name = "pbTyping";
-            this.pbTyping.Size = new System.Drawing.Size(623, 521);
+            this.pbTyping.Size = new System.Drawing.Size(461, 737);
             this.pbTyping.TabIndex = 1;
             this.pbTyping.TabStop = false;
             this.pbTyping.Resize += new System.EventHandler(this.pbTyping_Resize);
@@ -77,7 +77,7 @@
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Enabled = false;
-            this.btnStart.Location = new System.Drawing.Point(523, 1);
+            this.btnStart.Location = new System.Drawing.Point(361, 1);
             this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 25);
@@ -89,7 +89,7 @@
             // lblTime
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTime.Location = new System.Drawing.Point(457, 6);
+            this.lblTime.Location = new System.Drawing.Point(295, 6);
             this.lblTime.Margin = new System.Windows.Forms.Padding(0);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(60, 14);
@@ -121,7 +121,7 @@
             this.tblLine.RowCount = 1;
             this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tblLine.Size = new System.Drawing.Size(625, 2);
+            this.tblLine.Size = new System.Drawing.Size(463, 2);
             this.tblLine.TabIndex = 9;
             // 
             // lblErrorCount
@@ -148,7 +148,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 550);
+            this.ClientSize = new System.Drawing.Size(462, 766);
             this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
             this.Controls.Add(this.tblLine);
@@ -161,8 +161,9 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MinimumSize = new System.Drawing.Size(470, 350);
+            this.MinimumSize = new System.Drawing.Size(470, 150);
             this.Name = "TypistForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";
             this.Load += new System.EventHandler(this.TypistForm_Load);

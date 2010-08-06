@@ -26,6 +26,8 @@ namespace Typist
             ImportedText = new TextBuffer("");
 
             PracticeMode = false;
+
+            this.Top = 0;
         }
 
         private const bool beepOnError = true;
