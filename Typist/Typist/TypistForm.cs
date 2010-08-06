@@ -10,22 +10,11 @@ namespace Typist
 {
     public partial class TypistForm : Form
     {
-        public TypistForm()
-        {
-            InitializeComponent();
-        }
+        #region Flags and Settings
 
-        private void TypistForm_Load(object sender, EventArgs e)
-        {
-            this.Top = 0;
-
-            ImportedText = new TextBuffer("");
-            PracticeMode = false;
-        }
-
-        private const bool allowBackspace = true;
         private const bool cursorAsVerticalBar = false;
 
+        private const bool allowBackspace = true;
         private const bool beepOnError = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
@@ -39,6 +28,23 @@ namespace Typist
         private static readonly Brush errorBackColor = Brushes.LightGray;
         private static readonly Brush errorForeColor = Brushes.Purple;
 
+        #endregion
+
+
+        #region General Behavior
+
+        public TypistForm()
+        {
+            InitializeComponent();
+        }
+
+        private void TypistForm_Load(object sender, EventArgs e)
+        {
+            this.Top = 0;
+
+            ImportedText = new TextBuffer("");
+            PracticeMode = false;
+        }
 
         protected TextBuffer ImportedText
         {
@@ -56,7 +62,6 @@ namespace Typist
         private TextBuffer importedText;
 
         protected TextBuffer TypedText { get; private set; }
-
 
         protected bool PracticeMode
         {
@@ -143,12 +148,28 @@ namespace Typist
             PracticeMode = !PracticeMode;
         }
 
-        private bool repaintNeeded = false;
+        protected void TypedText_Error(object sender, EventArgs e)
+        {
+            playBeep();
+        }
+
+        private void playBeep()
+        {
+            if (beepOnError)
+                SystemSounds.Beep.Play();
+        }
+
+        #endregion
+
+
+        #region Paint Event Handler
 
         private void TypistForm_Paint(object sender, PaintEventArgs e)
         {
             repaintNeeded = true;
         }
+
+        private bool repaintNeeded = false;
 
         private void picTyping_Paint(object sender, PaintEventArgs e)
         {
@@ -318,6 +339,11 @@ namespace Typist
             picTyping.Invalidate();
         }
 
+        #endregion
+
+
+        #region Key Processing
+
         protected override bool ProcessMnemonic(char charCode)
         {
             return false;
@@ -400,6 +426,11 @@ namespace Typist
 
         private DateTime timeOfLastCharTyped;
 
+        #endregion
+
+
+        #region Timer and Statistics
+
         private void tmrTimer_Tick(object sender, EventArgs e)
         {
             if (repaintNeeded)
@@ -470,23 +501,6 @@ namespace Typist
             }
         }
 
-        protected void TypedText_Error(object sender, EventArgs e)
-        {
-            playBeep();
-        }
-
-        private void playBeep()
-        {
-            if (beepOnError)
-                SystemSounds.Beep.Play();
-        }
-
-        private void doOnce(Action action)
-        {
-            if (!done)
-                action();
-            done = true;
-        }
-        private bool done = false;
+        #endregion
     }
 }

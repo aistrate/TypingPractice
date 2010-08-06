@@ -2,6 +2,8 @@
 
 - new program flag: cursorAsVerticalBar (false means underscore char, '_')
 
+- save window position between sessions (instead of always starting centered)
+
 - align error highlight chars better with the rest of the text
 
 
