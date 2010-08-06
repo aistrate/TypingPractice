@@ -68,10 +68,10 @@
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
             this.picTyping.Size = new System.Drawing.Size(461, 737);
-            this.picTyping.TabIndex = 1;
+            this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
-            this.picTyping.Resize += new System.EventHandler(this.pbTyping_Resize);
-            this.picTyping.Paint += new System.Windows.Forms.PaintEventHandler(this.pbTyping_Paint);
+            this.picTyping.Resize += new System.EventHandler(this.picTyping_Resize);
+            this.picTyping.Paint += new System.Windows.Forms.PaintEventHandler(this.picTyping_Paint);
             // 
             // btnStart
             // 
@@ -81,7 +81,7 @@
             this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 25);
-            this.btnStart.TabIndex = 2;
+            this.btnStart.TabIndex = 1;
             this.btnStart.Text = "&Start";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
@@ -98,6 +98,7 @@
             // 
             // tmrTimer
             // 
+            this.tmrTimer.Enabled = true;
             this.tmrTimer.Tick += new System.EventHandler(this.tmrTimer_Tick);
             // 
             // lblWPM
@@ -157,6 +158,7 @@
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.picTyping);
             this.Controls.Add(this.btnImport);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -167,6 +169,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";
             this.Load += new System.EventHandler(this.TypistForm_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.TypistForm_Paint);
             this.Activated += new System.EventHandler(this.TypistForm_Activated);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TypistForm_KeyPress);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TypistForm_KeyDown);

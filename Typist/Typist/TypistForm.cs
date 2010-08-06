@@ -31,9 +31,10 @@ namespace Typist
         }
 
         private const bool beepOnError = true;
+        private const bool allowBackspace = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
-        private const int pauseAfterInterval = 10;
+        private const int pauseAfterElapsed = 10;
 
 
         protected TextBuffer ImportedText
@@ -79,33 +80,31 @@ namespace Typist
 
                 timeOfLastCharTyped = DateTime.Now;
 
-                IsTimerRunning = practiceMode;
-                displayStats();
+                IsStopwatchRunning = practiceMode;
+
+                displayTimeElapsed();
+                displayWPM();
                 displayErrorCount();
 
                 if (practiceMode)
                     picTyping.Focus();
+                else
+                    btnStart.Focus();
             }
         }
         private bool practiceMode = false;
 
         private bool rightAfterImport = false;
 
-        protected bool IsTimerRunning
+        protected bool IsStopwatchRunning
         {
             get { return stopwatch.IsRunning; }
             private set
             {
                 if (value)
-                {
                     stopwatch.Start();
-                    tmrTimer.Start();
-                }
                 else
-                {
                     stopwatch.Stop();
-                    tmrTimer.Stop();
-                }
             }
         }
 
@@ -143,7 +142,14 @@ namespace Typist
             PracticeMode = !PracticeMode;
         }
 
-        private void pbTyping_Paint(object sender, PaintEventArgs e)
+        private bool repaintNeeded = false;
+
+        private void TypistForm_Paint(object sender, PaintEventArgs e)
+        {
+            repaintNeeded = true;
+        }
+
+        private void picTyping_Paint(object sender, PaintEventArgs e)
         {
             RectangleF innerRect = new RectangleF()
             {
@@ -265,7 +271,7 @@ namespace Typist
                 LineAlignment = StringAlignment.Far,
             };
 
-        private void pbTyping_Resize(object sender, EventArgs e)
+        private void picTyping_Resize(object sender, EventArgs e)
         {
             picTyping.Invalidate();
         }
@@ -297,6 +303,12 @@ namespace Typist
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        protected override bool ProcessMnemonic(char charCode)
+        {
+            return false;
+            //return base.ProcessMnemonic(charCode);
         }
 
         private void TypistForm_KeyDown(object sender, KeyEventArgs e)
@@ -343,49 +355,58 @@ namespace Typist
             }
         }
 
+        private DateTime timeOfLastCharTyped;
+
         private void tmrTimer_Tick(object sender, EventArgs e)
         {
-            pauseIfNotTyping();
-            displayStats();
+            if (repaintNeeded)
+            {
+                picTyping.Invalidate();
+                repaintNeeded = false;
+            }
+
+            if (PracticeMode)
+            {
+                displayTimeElapsed();
+
+                if (timeChanged)
+                    displayWPM();
+
+                if (pauseAfterElapsed > 0 &&
+                    DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, pauseAfterElapsed))
+                    PracticeMode = false;
+            }
         }
 
-        private void pauseIfNotTyping()
-        {
-            if (pauseAfterInterval > 0 && DateTime.Now - timeOfLastCharTyped > new TimeSpan(0, 0, pauseAfterInterval))
-                PracticeMode = false;
-        }
-
-        private void displayStats()
-        {
-            displayTime();
-            displayWPM();
-        }
-
-        private void displayTime()
+        private void displayTimeElapsed()
         {
             if (IsImported)
+            {
+                string oldTime = lblTime.Text;
+
                 lblTime.Text = string.Format("{0:00}:{1:00}",
                                              stopwatch.Elapsed.Minutes,
                                              stopwatch.Elapsed.Seconds);
+
+                timeChanged = (oldTime != lblTime.Text);
+
+            }
             else
                 lblTime.Text = "";
         }
+
+        private bool timeChanged = false;
 
         private void displayWPM()
         {
             if (IsImported)
             {
-                if (DateTime.Now - timeOfLastWPMCalc > new TimeSpan(0, 0, 1))
-                {
-                    timeOfLastWPMCalc = DateTime.Now;
+                double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
 
-                    double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
-
-                    lblWPM.Text = string.Format("{0:#0} wpm",
-                                                elapsedMinutes != 0.0 ?
-                                                    (double)TypedText.WordCount / elapsedMinutes :
-                                                    0.0);
-                }
+                lblWPM.Text = string.Format("{0:#0} wpm",
+                                            elapsedMinutes != 0.0 ?
+                                                (double)TypedText.WordCount / elapsedMinutes :
+                                                0.0);
             }
             else
                 lblWPM.Text = "";
@@ -405,9 +426,6 @@ namespace Typist
                 lblAccuracy.Text = "";
             }
         }
-
-        private DateTime timeOfLastWPMCalc = DateTime.MinValue;
-        private DateTime timeOfLastCharTyped = DateTime.MaxValue;
 
         protected void TypedText_Error(object sender, EventArgs e)
         {
