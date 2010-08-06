@@ -23,8 +23,10 @@ namespace Typist
             PracticeMode = false;
         }
 
+        private const bool allowBackspace = false;
+        private const bool cursorAsVerticalBar = false;
+
         private const bool beepOnError = true;
-        private const bool allowBackspace = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
         private const int pauseAfterElapsed = 10;
@@ -316,9 +318,11 @@ namespace Typist
             picTyping.Invalidate();
         }
 
-        private bool controlKeyPressed = false;
-
-        private Keys[] suppressKeys = new Keys[] { Keys.Escape, Keys.Left, Keys.Right, Keys.Up, Keys.Down };
+        protected override bool ProcessMnemonic(char charCode)
+        {
+            return false;
+            //return base.ProcessMnemonic(charCode);
+        }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -326,13 +330,12 @@ namespace Typist
             {
                 Keys keyMinusShift = keyData & ~Keys.Shift;
 
-                if (suppressKeys.Contains(keyMinusShift))
+                if (keyMinusShift.IsOneOf(Keys.Left, Keys.Right, Keys.Up, Keys.Down))
                     return true;
 
-                if (keyMinusShift == Keys.Return || keyMinusShift == Keys.Space || keyMinusShift == Keys.Tab)
+                if (keyMinusShift.IsOneOf(Keys.Return, Keys.Tab, Keys.Space))
                 {
-                    controlKeyPressed = false;
-                    typeKey((char)keyMinusShift);
+                    OnKeyPress(new KeyPressEventArgs((char)keyMinusShift));
                     return true;
                 }
             }
@@ -340,47 +343,52 @@ namespace Typist
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        protected override bool ProcessMnemonic(char charCode)
-        {
-            return false;
-            //return base.ProcessMnemonic(charCode);
-        }
-
         private void TypistForm_KeyDown(object sender, KeyEventArgs e)
         {
-            controlKeyPressed = e.Control;
-
-            if (controlKeyPressed)
-                switch (e.KeyCode)
+            if (e.Control || e.Alt)
+            {
+                if (e.Control)
                 {
-                    case Keys.P:
+                    if (e.KeyCode == Keys.P)
                         PracticeMode = !PracticeMode;
-                        break;
-                    case Keys.M:
+                    else if (e.KeyCode == Keys.M)
+                    {
                         PracticeMode = false;
                         TypistForm.ActiveForm.WindowState = FormWindowState.Minimized;
-                        break;
+                    }
                 }
+
+                if (PracticeMode)
+                    e.SuppressKeyPress = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                if (PracticeMode)
+                    PracticeMode = false;
+
+                e.SuppressKeyPress = true;
+            }
         }
 
         private void TypistForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            typeKey(e.KeyChar);
-        }
-
-        private void typeKey(char keyChar)
-        {
-            if (controlKeyPressed)
-                return;
-
-            if (rightAfterImport && keyChar != ' ')
+            if (rightAfterImport &&
+                e.KeyChar != ' ' && e.KeyChar != '\b' &&
+                !char.IsControl(e.KeyChar))
                 PracticeMode = true;
 
             if (PracticeMode)
             {
-                TypedText.ProcessKey(keyChar);
-
                 timeOfLastCharTyped = DateTime.Now;
+
+                if (!allowBackspace && e.KeyChar == '\b')
+                {
+                    playBeep();
+                    return;
+                }
+
+                TypedText.ProcessKey(e.KeyChar);
+
                 displayErrorCount();
 
                 if (TypedText.Length >= ImportedText.Length)
@@ -464,7 +472,13 @@ namespace Typist
 
         protected void TypedText_Error(object sender, EventArgs e)
         {
-            SystemSounds.Beep.Play();
+            playBeep();
+        }
+
+        private void playBeep()
+        {
+            if (beepOnError)
+                SystemSounds.Beep.Play();
         }
 
         private void doOnce(Action action)

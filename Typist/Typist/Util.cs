@@ -14,5 +14,10 @@ namespace Typist
                  subseq = rest.Take(subsequenceLength), rest = rest.Skip(subsequenceLength))
                 yield return subseq;
         }
+
+        public static bool IsOneOf<T>(this T elem, params T[] list)
+        {
+            return list.Contains(elem);
+        }
     }
 }

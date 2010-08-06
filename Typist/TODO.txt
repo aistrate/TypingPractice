@@ -1,14 +1,13 @@
-- catch Esc and Backspace keys while NOT in PracticeMode
-
-- make Esc switch off PracticeMode
-
 - allow button mnemonics (& in labels) only when Alt is pressed at the same time as the key (NOT: Alt, pause, key)
 
-- new program flag: allowBackspace
+- new program flag: cursorAsVerticalBar (false means underscore char, '_')
 
 - align error highlight chars better with the rest of the text
 
 
+* new program flag: allowBackspace
+* make Esc switch off PracticeMode
+* catch Esc and Backspace keys while NOT in PracticeMode
 * Tab chars ('\t') at the beginning of the line should advance the cursor to the first printable char (to be used with Code practice texts, e.g., Haskell or C# source code)
 * deal with the end of the imported text (limit the length of the typed text, by blocking keyboard input; avoid exception/crash if the last char is an error)
 * display underscore char ('_') separately, as a cursor (don't just append it to TypedText, but use the getRectangle method to position it on the screen)
