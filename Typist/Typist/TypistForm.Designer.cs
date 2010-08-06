@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TypistForm));
             this.btnImport = new System.Windows.Forms.Button();
-            this.ofdImport = new System.Windows.Forms.OpenFileDialog();
-            this.pbTyping = new System.Windows.Forms.PictureBox();
+            this.dlgImport = new System.Windows.Forms.OpenFileDialog();
+            this.picTyping = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.lblTime = new System.Windows.Forms.Label();
             this.tmrTimer = new System.Windows.Forms.Timer(this.components);
@@ -40,7 +40,7 @@
             this.tblLine = new System.Windows.Forms.TableLayoutPanel();
             this.lblErrorCount = new System.Windows.Forms.Label();
             this.lblAccuracy = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picTyping)).BeginInit();
             this.SuspendLayout();
             // 
             // btnImport
@@ -50,28 +50,28 @@
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(100, 25);
             this.btnImport.TabIndex = 0;
-            this.btnImport.Text = "Import...";
+            this.btnImport.Text = "&Import...";
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
-            // ofdImport
+            // dlgImport
             // 
-            this.ofdImport.DefaultExt = "txt";
-            this.ofdImport.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+            this.dlgImport.DefaultExt = "txt";
+            this.dlgImport.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
             // 
-            // pbTyping
+            // picTyping
             // 
-            this.pbTyping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.picTyping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbTyping.BackColor = System.Drawing.Color.White;
-            this.pbTyping.Location = new System.Drawing.Point(0, 29);
-            this.pbTyping.Name = "pbTyping";
-            this.pbTyping.Size = new System.Drawing.Size(461, 737);
-            this.pbTyping.TabIndex = 1;
-            this.pbTyping.TabStop = false;
-            this.pbTyping.Resize += new System.EventHandler(this.pbTyping_Resize);
-            this.pbTyping.Paint += new System.Windows.Forms.PaintEventHandler(this.pbTyping_Paint);
+            this.picTyping.BackColor = System.Drawing.Color.White;
+            this.picTyping.Location = new System.Drawing.Point(0, 29);
+            this.picTyping.Name = "picTyping";
+            this.picTyping.Size = new System.Drawing.Size(461, 737);
+            this.picTyping.TabIndex = 1;
+            this.picTyping.TabStop = false;
+            this.picTyping.Resize += new System.EventHandler(this.pbTyping_Resize);
+            this.picTyping.Paint += new System.Windows.Forms.PaintEventHandler(this.pbTyping_Paint);
             // 
             // btnStart
             // 
@@ -82,7 +82,7 @@
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 25);
             this.btnStart.TabIndex = 2;
-            this.btnStart.Text = "Start";
+            this.btnStart.Text = "&Start";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
@@ -155,7 +155,7 @@
             this.Controls.Add(this.lblWPM);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.pbTyping);
+            this.Controls.Add(this.picTyping);
             this.Controls.Add(this.btnImport);
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -170,7 +170,7 @@
             this.Activated += new System.EventHandler(this.TypistForm_Activated);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TypistForm_KeyPress);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TypistForm_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.pbTyping)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picTyping)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -178,8 +178,8 @@
         #endregion
 
         private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.OpenFileDialog ofdImport;
-        private System.Windows.Forms.PictureBox pbTyping;
+        private System.Windows.Forms.OpenFileDialog dlgImport;
+        private System.Windows.Forms.PictureBox picTyping;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer tmrTimer;

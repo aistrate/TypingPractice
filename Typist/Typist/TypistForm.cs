@@ -68,14 +68,14 @@ namespace Typist
 
                 btnStart.Enabled = IsImported;
                 btnStart.Text =
-                    practiceMode ? "Pause" :
-                    IsStarted ? "Resume" :
-                    "Start";
+                    practiceMode ? "&Pause" :
+                    IsStarted ? "&Resume" :
+                    "&Start";
 
                 if (practiceMode)
                     rightAfterImport = false;
 
-                pbTyping.Refresh();
+                picTyping.Refresh();
 
                 timeOfLastCharTyped = DateTime.Now;
 
@@ -84,7 +84,7 @@ namespace Typist
                 displayErrorCount();
 
                 if (practiceMode)
-                    pbTyping.Focus();
+                    picTyping.Focus();
             }
         }
         private bool practiceMode = false;
@@ -122,11 +122,11 @@ namespace Typist
         {
             PracticeMode = false;
 
-            if (ofdImport.ShowDialog() == DialogResult.OK)
+            if (dlgImport.ShowDialog() == DialogResult.OK)
             {
-                this.Text = ofdImport.SafeFileName + " - Typist";
+                this.Text = dlgImport.SafeFileName + " - Typist";
 
-                using (StreamReader sr = new StreamReader(ofdImport.FileName))
+                using (StreamReader sr = new StreamReader(dlgImport.FileName))
                     ImportedText = new TextBuffer(sr.ReadToEnd()
                                                     .Replace("\r\n", "\n")
                                                     .Replace("\t", "    "));
@@ -267,12 +267,12 @@ namespace Typist
 
         private void pbTyping_Resize(object sender, EventArgs e)
         {
-            pbTyping.Invalidate();
+            picTyping.Invalidate();
         }
 
         private void TypistForm_Activated(object sender, EventArgs e)
         {
-            pbTyping.Invalidate();
+            picTyping.Invalidate();
         }
 
         private bool controlKeyPressed = false;
@@ -313,10 +313,6 @@ namespace Typist
                         PracticeMode = false;
                         TypistForm.ActiveForm.WindowState = FormWindowState.Minimized;
                         break;
-                    case Keys.I:
-                        if (btnImport.Enabled)
-                            btnImport_Click(btnImport, EventArgs.Empty);
-                        break;
                 }
         }
 
@@ -343,7 +339,7 @@ namespace Typist
                 if (TypedText.Length >= ImportedText.Length)
                     PracticeMode = false;
 
-                pbTyping.Refresh();
+                picTyping.Refresh();
             }
         }
 
