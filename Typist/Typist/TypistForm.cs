@@ -23,7 +23,7 @@ namespace Typist
             PracticeMode = false;
         }
 
-        private const bool allowBackspace = false;
+        private const bool allowBackspace = true;
         private const bool cursorAsVerticalBar = false;
 
         private const bool beepOnError = true;
