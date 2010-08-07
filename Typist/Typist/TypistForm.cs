@@ -16,13 +16,15 @@ namespace Typist
         private const bool beepOnError = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
-        private const int pauseAfterElapsed = 0;
+        private const int pauseAfterElapsed = 10;
 
         private const bool cursorAsVerticalBar = true;
         private const int barCursorLineWidth = 2;
-        private const char nonBarCursorChar = '_';
+        private const char charCursorChar = '_';
+        private const bool showCursorWhenPaused = true;
 
-        private const float cursorVOffset = -0.1f;
+        private const float barCursorVOffset = -0.1f;
+        private const float charCursorVOffset = 0;
         private const float errorVOffset = -0.1f;
 
         private static readonly Brush importedTextColor = Brushes.Black;
@@ -234,13 +236,15 @@ namespace Typist
 
         private void drawCursor(Graphics g, RectangleF typingArea)
         {
-            if (PracticeMode && TypedText.Length < ImportedText.Length)
+            if ((PracticeMode || showCursorWhenPaused && IsStarted) &&
+                TypedText.Length < ImportedText.Length)
             {
                 RectangleF cursorArea = getCharArea(ImportedText.Text,
                                                     TypedText.LastIndex + 1,
                                                     g, typingArea);
 
-                cursorArea = fracOffsetCharArea(cursorArea, 0, cursorVOffset);
+                cursorArea = fracOffsetCharArea(cursorArea, 0,
+                                                cursorAsVerticalBar ? barCursorVOffset : charCursorVOffset);
 
                 if (cursorAsVerticalBar)
                     g.FillRectangle(cursorColor, new RectangleF()
@@ -251,7 +255,7 @@ namespace Typist
                         Height = cursorArea.Height,
                     });
                 else
-                    drawChar(nonBarCursorChar, g, cursorColor, cursorArea);
+                    drawChar(charCursorChar, g, cursorColor, cursorArea);
             }
         }
 
