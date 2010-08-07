@@ -17,6 +17,9 @@ namespace Typist
         private const bool beepOnError = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
+        private const bool askBeforeCloseDuringPractice = false;
+        private const bool pauseOnDeactivate = false;
+        private const bool pauseOnMinimize = true;
         private const int pauseAfterElapsed = 10;
 
         private const bool cursorAsVerticalBar = true;
@@ -168,6 +171,27 @@ namespace Typist
         private void btnStart_Click(object sender, EventArgs e)
         {
             PracticeMode = !PracticeMode;
+        }
+
+        private void TypistForm_Deactivate(object sender, EventArgs e)
+        {
+            if (pauseOnDeactivate && PracticeMode)
+                PracticeMode = false;
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            if (askBeforeCloseDuringPractice && IsStarted)
+            {
+                PracticeMode = false;
+
+                if (MessageBox.Show("Practice session is in progress. Are you sure you want to quit?", "Typist",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
+                                    == DialogResult.No)
+                    e.Cancel = true;
+            }
+
+            base.OnClosing(e);
         }
 
         protected void TypedText_Error(object sender, EventArgs e)
@@ -458,7 +482,7 @@ namespace Typist
             {
                 timeOfLastCharTyped = DateTime.Now;
 
-                if (!allowBackspace && e.KeyChar == '\b')
+                if (e.KeyChar == '\b' && (!allowBackspace || TypedText.Length == 0))
                 {
                     playBeep();
                     return;
@@ -497,8 +521,8 @@ namespace Typist
                 if (timeChanged)
                     displayWPM();
 
-                if (pauseAfterElapsed > 0 &&
-                    DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, pauseAfterElapsed))
+                if ((pauseAfterElapsed > 0 && DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, pauseAfterElapsed)) ||
+                    (pauseOnMinimize && WindowState == FormWindowState.Minimized))
                     PracticeMode = false;
             }
         }

@@ -168,6 +168,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Typist";
+            this.Deactivate += new System.EventHandler(this.TypistForm_Deactivate);
             this.Load += new System.EventHandler(this.TypistForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.TypistForm_Paint);
             this.Activated += new System.EventHandler(this.TypistForm_Activated);

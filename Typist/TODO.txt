@@ -4,13 +4,12 @@
 
 - avoid the cursor staying in the same place for two consecutive chars (at the beginning of line, after a long line that doesn't fit another char)
 
-- pause if minimized
-
 - save window position between sessions (instead of always starting centered)
 
 - align error highlight chars better with the rest of the text
 
 
+* pause if minimized
 * new program flag: cursorAsVerticalBar (false means underscore char, '_')
 * new program flag: allowBackspace
 * make Esc switch off PracticeMode
