@@ -22,7 +22,7 @@ namespace Typist
         private const bool cursorAsVerticalBar = true;
         private const int barCursorLineWidth = 2;
         private const char charCursorChar = '_';
-        private const bool showCursorWhenPaused = true;
+        private const bool showCursorWhenPaused = false;
 
         private const float barCursorVOffset = -0.1f;
         private const float charCursorVOffset = 0;
@@ -94,7 +94,7 @@ namespace Typist
 
                 this.Text = string.Format("{0}Typist{1}",
                                           IsImported ? dlgImport.SafeFileName + " - " : "",
-                                          IsPaused ? " (Paused)" : "");
+                                          IsPaused ? (IsFinished ? " (Finished)" : " (Paused)") : "");
 
                 if (practiceMode)
                     rightAfterImport = false;
@@ -138,6 +138,8 @@ namespace Typist
         protected bool IsStarted { get { return IsImported && !rightAfterImport; } }
 
         protected bool IsPaused { get { return IsStarted && !PracticeMode; } }
+
+        protected bool IsFinished { get { return TypedText.Length >= ImportedText.Length; } }
 
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -246,7 +248,7 @@ namespace Typist
         private void drawCursor(Graphics g, RectangleF typingArea)
         {
             if ((PracticeMode || showCursorWhenPaused && IsPaused) &&
-                TypedText.Length < ImportedText.Length)
+                !IsFinished)
             {
                 RectangleF cursorArea = getCharArea(ImportedText.Text,
                                                     TypedText.LastIndex + 1,
@@ -466,7 +468,7 @@ namespace Typist
 
                 displayErrorCount();
 
-                if (TypedText.Length >= ImportedText.Length)
+                if (IsFinished)
                     PracticeMode = false;
 
                 picTyping.Refresh();
