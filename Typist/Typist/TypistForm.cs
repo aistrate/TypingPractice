@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using System.Media;
 using System.Windows.Forms;
 
@@ -28,9 +29,9 @@ namespace Typist
         private const float errorVOffset = -0.1f;
 
         private static readonly Brush importedTextColor = Brushes.Black;
-        private static readonly Brush typedTextColor = Brushes.CornflowerBlue;
-        private static readonly Brush errorBackColor = Brushes.LightGray;
-        private static readonly Brush errorForeColor = Brushes.Purple;
+        private static readonly Brush typedTextColor = new SolidBrush(VSColors.UserTypes);
+        private static readonly Brush errorBackColor = new SolidBrush(VSColors.SelectedTextBackground);
+        private static readonly Brush errorForeColor = new SolidBrush(VSColors.String);
         private static readonly Brush cursorColor = Brushes.Crimson;
 
         private static readonly Font typingFont =
@@ -91,6 +92,10 @@ namespace Typist
                     IsStarted ? "&Resume" :
                     "&Start";
 
+                this.Text = string.Format("{0}Typist{1}",
+                                          IsImported ? dlgImport.SafeFileName + " - " : "",
+                                          IsPaused ? " (Paused)" : "");
+
                 if (practiceMode)
                     rightAfterImport = false;
 
@@ -132,6 +137,8 @@ namespace Typist
 
         protected bool IsStarted { get { return IsImported && !rightAfterImport; } }
 
+        protected bool IsPaused { get { return IsStarted && !PracticeMode; } }
+
 
         private void btnImport_Click(object sender, EventArgs e)
         {
@@ -139,7 +146,7 @@ namespace Typist
 
             if (dlgImport.ShowDialog() == DialogResult.OK)
             {
-                this.Text = dlgImport.SafeFileName + " - Typist";
+                importedFileName = dlgImport.SafeFileName;
 
                 using (StreamReader sr = new StreamReader(dlgImport.FileName))
                     ImportedText = new TextBuffer(sr.ReadToEnd()
@@ -153,6 +160,8 @@ namespace Typist
                 PracticeMode = false;
             }
         }
+
+        private string importedFileName = "";
 
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -236,7 +245,7 @@ namespace Typist
 
         private void drawCursor(Graphics g, RectangleF typingArea)
         {
-            if ((PracticeMode || showCursorWhenPaused && IsStarted) &&
+            if ((PracticeMode || showCursorWhenPaused && IsPaused) &&
                 TypedText.Length < ImportedText.Length)
             {
                 RectangleF cursorArea = getCharArea(ImportedText.Text,
