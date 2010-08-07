@@ -12,21 +12,21 @@ namespace Typist
     {
         #region Flags and Settings
 
-        private const bool cursorAsVerticalBar = false;
+        private const bool cursorAsVerticalBar = true;
 
         private const bool allowBackspace = true;
         private const bool beepOnError = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
-        private const int pauseAfterElapsed = 10;
+        private const int pauseAfterElapsed = 0;
 
         private static readonly Font typingFont = new Font("Courier New", 10, FontStyle.Regular);
 
         private static readonly Brush importedTextColor = Brushes.Black;
         private static readonly Brush typedTextColor = Brushes.CornflowerBlue;
-        private static readonly Brush cursorColor = Brushes.Red;
         private static readonly Brush errorBackColor = Brushes.LightGray;
         private static readonly Brush errorForeColor = Brushes.Purple;
+        private static readonly Brush cursorColor = Brushes.Red;
 
         #endregion
 
@@ -185,9 +185,9 @@ namespace Typist
 
             drawTypedText(e.Graphics, typingArea);
 
-            drawCursor(e.Graphics, typingArea);
-
             drawErrorChars(e.Graphics, typingArea);
+
+            drawCursor(e.Graphics, typingArea);
         }
 
         private void drawImportedText(Graphics g, RectangleF typingArea)
@@ -215,7 +215,16 @@ namespace Typist
                                                     TypedText.LastIndex + 1,
                                                     g, typingArea);
 
-                drawChar('_', g, cursorColor, cursorArea);
+                if (cursorAsVerticalBar)
+                {
+                    float verticalOffset = 0.1f * (cursorArea.Bottom - cursorArea.Top);
+
+                    g.DrawLine(new Pen(cursorColor),
+                               new PointF(cursorArea.Left - 1, cursorArea.Top - verticalOffset),
+                               new PointF(cursorArea.Left - 1, cursorArea.Bottom - verticalOffset));
+                }
+                else
+                    drawChar('_', g, cursorColor, cursorArea);
             }
         }
 
