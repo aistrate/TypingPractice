@@ -12,21 +12,29 @@ namespace Typist
     {
         #region Flags and Settings
 
-        private const bool cursorAsVerticalBar = true;
-
         private const bool allowBackspace = true;
         private const bool beepOnError = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
         private const int pauseAfterElapsed = 0;
 
-        private static readonly Font typingFont = new Font("Courier New", 10, FontStyle.Regular);
+        private const bool cursorAsVerticalBar = true;
+        private const int barCursorLineWidth = 2;
+        private const char nonBarCursorChar = '_';
+
+        private const float cursorVOffset = -0.1f;
+        private const float errorVOffset = -0.1f;
 
         private static readonly Brush importedTextColor = Brushes.Black;
         private static readonly Brush typedTextColor = Brushes.CornflowerBlue;
         private static readonly Brush errorBackColor = Brushes.LightGray;
         private static readonly Brush errorForeColor = Brushes.Purple;
-        private static readonly Brush cursorColor = Brushes.Red;
+        private static readonly Brush cursorColor = Brushes.Crimson;
+
+        private static readonly Font typingFont =
+            new Font("Courier New", 10, FontStyle.Regular);
+            //new Font("Courier New", 16, FontStyle.Bold);
+            //new Font("Bitstream Vera Sans Mono", 16, FontStyle.Bold);
 
         #endregion
 
@@ -134,7 +142,8 @@ namespace Typist
                 using (StreamReader sr = new StreamReader(dlgImport.FileName))
                     ImportedText = new TextBuffer(sr.ReadToEnd()
                                                     .Replace("\r\n", "\n")
-                                                    .Replace("\t", "    "));
+                                                    .Replace("\t", "    ")
+                                                    .TrimEnd('\n', ' '));
 
                 stopwatch.Reset();
 
@@ -207,27 +216,6 @@ namespace Typist
             drawText(typedText, g, typedTextColor, typingArea);
         }
 
-        private void drawCursor(Graphics g, RectangleF typingArea)
-        {
-            if (PracticeMode && TypedText.Length < ImportedText.Length)
-            {
-                RectangleF cursorArea = getCharArea(ImportedText.Text,
-                                                    TypedText.LastIndex + 1,
-                                                    g, typingArea);
-
-                if (cursorAsVerticalBar)
-                {
-                    float verticalOffset = 0.1f * (cursorArea.Bottom - cursorArea.Top);
-
-                    g.DrawLine(new Pen(cursorColor),
-                               new PointF(cursorArea.Left - 1, cursorArea.Top - verticalOffset),
-                               new PointF(cursorArea.Left - 1, cursorArea.Bottom - verticalOffset));
-                }
-                else
-                    drawChar('_', g, cursorColor, cursorArea);
-            }
-        }
-
         private void drawErrorChars(Graphics g, RectangleF typingArea)
         {
             RectangleF[] errorCharAreas = getCharAreas(ImportedText.Text,
@@ -236,12 +224,51 @@ namespace Typist
 
             for (int i = 0; i < TypedText.ErrorsUncorrected.Count; i++)
             {
-                g.FillRectangle(errorBackColor, errorCharAreas[i]);
+                g.FillRectangle(errorBackColor, fracOffsetCharArea(errorCharAreas[i], 0, errorVOffset));
 
                 drawChar(TypedText[TypedText.ErrorsUncorrected[i]],
                          g, errorForeColor,
                          errorCharAreas[i]);
             }
+        }
+
+        private void drawCursor(Graphics g, RectangleF typingArea)
+        {
+            if (PracticeMode && TypedText.Length < ImportedText.Length)
+            {
+                RectangleF cursorArea = getCharArea(ImportedText.Text,
+                                                    TypedText.LastIndex + 1,
+                                                    g, typingArea);
+
+                cursorArea = fracOffsetCharArea(cursorArea, 0, cursorVOffset);
+
+                if (cursorAsVerticalBar)
+                    g.FillRectangle(cursorColor, new RectangleF()
+                    {
+                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * barCursorLineWidth),
+                        Y = cursorArea.Y,
+                        Width = barCursorLineWidth,
+                        Height = cursorArea.Height,
+                    });
+                else
+                    drawChar(nonBarCursorChar, g, cursorColor, cursorArea);
+            }
+        }
+
+        private RectangleF fracOffsetCharArea(RectangleF charArea, float fracWidth, float fracHeight)
+        {
+            return offsetCharArea(charArea, fracWidth * charArea.Width, fracHeight * charArea.Height);
+        }
+
+        private RectangleF offsetCharArea(RectangleF charArea, float x, float y)
+        {
+            return new RectangleF()
+            {
+                X = charArea.X + x,
+                Y = charArea.Y + y,
+                Width = charArea.Width,
+                Height = charArea.Height,
+            };
         }
 
         private int countMissingAtEol(string text, int lastIndex, Graphics g, RectangleF typingArea)
