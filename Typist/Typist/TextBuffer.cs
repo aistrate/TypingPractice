@@ -7,19 +7,27 @@ namespace Typist
 {
     public class TextBuffer
     {
-        public TextBuffer(string text)
-            : this()
+        public TextBuffer(string text, bool countWhitespaceAsWordChars)
+            : this(countWhitespaceAsWordChars)
         {
+            string allowedWhitespace = " \n";
+
             text = text ?? string.Empty;
+
+            text = text.Replace("\r\n", "\n")
+                       .Replace("\t", "    ")
+                       .Where(c => !char.IsWhiteSpace(c) || allowedWhitespace.IndexOf(c) >= 0)
+                       .AsString()
+                       .TrimEnd(allowedWhitespace.ToCharArray());
 
             buffer = text.ToCharArray();
             Length = text.Length;
 
-            CountWhitespaceAsWordChars = true;
+            CountErrorsAsWordChars = true;
         }
 
-        public TextBuffer(TextBuffer original, bool countWhitespaceAsWordChars)
-            : this()
+        public TextBuffer(TextBuffer original, bool countWhitespaceAsWordChars, bool countErrorsAsWordChars)
+            : this(countWhitespaceAsWordChars)
         {
             if (original == null)
                 throw new ArgumentNullException("original.", "Original TextBuffer cannot be null.");
@@ -29,11 +37,13 @@ namespace Typist
             buffer = new char[Math.Max(2000, 2 * original.Length)];
             Length = 0;
 
-            CountWhitespaceAsWordChars = countWhitespaceAsWordChars;
+            CountErrorsAsWordChars = countErrorsAsWordChars;
         }
 
-        private TextBuffer()
+        private TextBuffer(bool countWhitespaceAsWordChars)
         {
+            CountWhitespaceAsWordChars = countWhitespaceAsWordChars;
+
             ErrorsUncorrected = new List<int>();
         }
 
@@ -50,9 +60,13 @@ namespace Typist
         public List<int> ErrorsUncorrected { get; private set; }
 
         public bool CountWhitespaceAsWordChars { get; set; }
+        public bool CountErrorsAsWordChars { get; set; }
 
 
-        public string Text { get { return new string(buffer, 0, Length); } }
+        public char this[int index] { get { return buffer[index]; } }
+
+        public int LastIndex { get { return Length - 1; } }
+
 
         public string Substring(int startIndex)
         {
@@ -64,9 +78,10 @@ namespace Typist
             return new string(buffer, startIndex, Math.Min(length, Length - startIndex));
         }
 
-        public char this[int index] { get { return buffer[index]; } }
-
-        public int LastIndex { get { return Length - 1; } }
+        public override string ToString()
+        {
+            return new string(buffer, 0, Length);
+        }
 
 
         public TextBuffer RemoveLast()
@@ -88,9 +103,6 @@ namespace Typist
                 ErrorsCommitted++;
                 ErrorsUncorrected.Add(LastIndex);
 
-                if (ch == '\n')
-                    buffer[LastIndex] = '\xB6';
-
                 OnError(EventArgs.Empty);
             }
 
@@ -99,7 +111,12 @@ namespace Typist
 
         public bool IsLastSameAsOriginal
         {
-            get { return 0 < Length && Length <= Original.Length && this[LastIndex] == Original[LastIndex]; }
+            get { return Length > 0 && IsSameAsOriginal(LastIndex); }
+        }
+
+        public bool IsSameAsOriginal(int index)
+        {
+            return index <= Original.LastIndex && this[index] == Original[index];
         }
 
         public TextBuffer ProcessKey(char ch)
@@ -157,30 +174,29 @@ namespace Typist
         {
             get
             {
-                if (CountWhitespaceAsWordChars)
-                    return Length / 5;
-                else
-                    return Count(c => whitespaceChars.IndexOf(c) < 0) / 5;
+                Func<int, char, bool> isWordChar = (i, c) =>
+                    (CountWhitespaceAsWordChars || !char.IsWhiteSpace(c)) &&
+                    (CountErrorsAsWordChars || IsSameAsOriginal(i));
+
+                return Count(isWordChar) / 5;
             }
         }
 
         public int Count(Func<char, bool> predicate)
         {
-            return Array.FindAll(Active, c => predicate(c)).Length;
+            return Count((i, c) => predicate(c));
         }
 
-        public char[] Active
+        public int Count(Func<int, char, bool> predicate)
         {
-            get
-            {
-                char[] active = new char[Length];
-                Array.Copy(buffer, 0, active, 0, Length);
-                return active;
-            }
+            int count = 0;
+
+            for (int i = 0; i < Length; i++)
+                if (predicate(i, this[i]))
+                    count++;
+
+            return count;
         }
-
-        private const string whitespaceChars = " \n\r\t";
-
 
         public event EventHandler Error;
 

@@ -19,5 +19,10 @@ namespace Typist
         {
             return list.Contains(elem);
         }
+
+        public static string AsString(this IEnumerable<char> chars)
+        {
+            return new string(chars.ToArray());
+        }
     }
 }

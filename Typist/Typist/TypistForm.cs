@@ -14,13 +14,16 @@ namespace Typist
         #region Flags and Settings
 
         private const bool allowBackspace = true;
-        private const bool beepOnError = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
+        private const bool countErrorsAsWordChars = true;
+
+        private const bool beepOnError = true;
         private const bool askBeforeCloseDuringPractice = false;
-        private const bool pauseOnDeactivate = false;
-        private const bool pauseOnMinimize = true;
+
         private const int pauseAfterElapsed = 10;
+        private const bool pauseOnMinimize = true;
+        private const bool pauseOnDeactivate = false;
 
         private const bool cursorAsVerticalBar = true;
         private const int barCursorLineWidth = 2;
@@ -29,12 +32,12 @@ namespace Typist
 
         private const float barCursorVOffset = -0.1f;
         private const float charCursorVOffset = 0;
-        private const float errorVOffset = -0.1f;
+        private const float errorBackgroundVOffset = -0.1f;
 
         private static readonly Brush importedTextColor = Brushes.Black;
-        private static readonly Brush typedTextColor = new SolidBrush(VSColors.UserTypes);
-        private static readonly Brush errorBackColor = new SolidBrush(VSColors.SelectedTextBackground);
-        private static readonly Brush errorForeColor = new SolidBrush(VSColors.String);
+        private static readonly Brush typedTextColor = new SolidBrush(VsColors.UserTypes);
+        private static readonly Brush errorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
+        private static readonly Brush errorForeColor = new SolidBrush(VsColors.StringLiteral);
         private static readonly Brush cursorColor = Brushes.Crimson;
 
         private static readonly Font typingFont =
@@ -56,7 +59,7 @@ namespace Typist
         {
             this.Top = 0;
 
-            ImportedText = new TextBuffer("");
+            ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
         }
 
@@ -67,7 +70,7 @@ namespace Typist
             {
                 importedText = value;
 
-                TypedText = new TextBuffer(importedText, countWhitespaceAsWordChars);
+                TypedText = new TextBuffer(importedText, countWhitespaceAsWordChars, countErrorsAsWordChars);
 
                 if (beepOnError)
                     TypedText.Error += new EventHandler(TypedText_Error);
@@ -112,7 +115,7 @@ namespace Typist
                 displayWPM();
                 displayErrorCount();
 
-                if (practiceMode)
+                if (practiceMode || IsFinished)
                     picTyping.Focus();
                 else
                     btnStart.Focus();
@@ -154,10 +157,7 @@ namespace Typist
                 importedFileName = dlgImport.SafeFileName;
 
                 using (StreamReader sr = new StreamReader(dlgImport.FileName))
-                    ImportedText = new TextBuffer(sr.ReadToEnd()
-                                                    .Replace("\r\n", "\n")
-                                                    .Replace("\t", "    ")
-                                                    .TrimEnd('\n', ' '));
+                    ImportedText = new TextBuffer(sr.ReadToEnd(), countWhitespaceAsWordChars);
 
                 stopwatch.Reset();
 
@@ -238,17 +238,17 @@ namespace Typist
 
         private void drawImportedText(Graphics g, RectangleF typingArea)
         {
-            drawText(ImportedText.Text, g, importedTextColor, typingArea);
+            drawText(ImportedText.ToString(), g, importedTextColor, typingArea);
         }
 
         private void drawShadowText(Graphics g, RectangleF typingArea)
         {
             string shadowText = ImportedText.Substring(0, TypedText.Length);
 
-            int lineJumpIndex = findLineJump(ImportedText.Text, TypedText.LastIndex,
+            int lineJumpIndex = findLineJump(ImportedText.ToString(), TypedText.LastIndex,
                                              g, typingArea);
             if (lineJumpIndex < TypedText.LastIndex)
-                shadowText = insertSpacesAfterJump(ImportedText.Text, shadowText,
+                shadowText = insertSpacesAfterJump(ImportedText.ToString(), shadowText,
                                                    lineJumpIndex, TypedText.LastIndex,
                                                    g, typingArea);
 
@@ -305,13 +305,13 @@ namespace Typist
 
         private void drawErrorChars(Graphics g, RectangleF typingArea)
         {
-            RectangleF[] errorCharAreas = getCharAreas(ImportedText.Text,
+            RectangleF[] errorCharAreas = getCharAreas(ImportedText.ToString(),
                                                        TypedText.ErrorsUncorrected.ToArray(),
                                                        g, typingArea);
 
             for (int i = 0; i < TypedText.ErrorsUncorrected.Count; i++)
             {
-                g.FillRectangle(errorBackColor, fracOffsetCharArea(errorCharAreas[i], 0, errorVOffset));
+                g.FillRectangle(errorBackColor, fracOffsetCharArea(errorCharAreas[i], 0, errorBackgroundVOffset));
 
                 drawChar(TypedText[TypedText.ErrorsUncorrected[i]],
                          g, errorForeColor,
@@ -324,7 +324,7 @@ namespace Typist
             if ((PracticeMode || showCursorWhenPaused && IsPaused) &&
                 !IsFinished)
             {
-                RectangleF cursorArea = getCharArea(ImportedText.Text,
+                RectangleF cursorArea = getCharArea(ImportedText.ToString(),
                                                     TypedText.LastIndex + 1,
                                                     g, typingArea);
 
@@ -360,15 +360,20 @@ namespace Typist
             };
         }
 
+        private char pilcrow = '\xB6';
+
         private void drawChar(char ch, Graphics g, Brush brush, RectangleF charArea)
         {
+            if (ch == '\n')
+                ch = pilcrow;
+
             g.DrawString(ch.ToString(), typingFont, brush, charArea, SingleCharStringFormat);
         }
 
         private void drawText(string text, Graphics g, Brush brush, RectangleF typingArea)
         {
             if (visibleNewlines)
-                text = text.Replace("\n", "\xB6\n");
+                text = text.Replace("\n", string.Format("{0}\n", pilcrow));
 
             g.DrawString(text, typingFont, brush, typingArea, TextStringFormat);
         }

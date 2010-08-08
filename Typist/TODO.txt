@@ -2,6 +2,14 @@
 
 - avoid the cursor staying in the same place for two consecutive chars (at the beginning of line, after a long line that doesn't fit one more char); if the char has an empty rectangle (zero w/h), that means it's at the end of line, so draw the cursor/error to the right of the prev char, on the same line (leave an empty margin to the right of the form)
 
+- test how it works with two or more spaces at the end of a screen line (but no '\n' char); do all of them have size zero?
+
+- display Unicode chars
+
+- allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
+
+- color schemes
+
 - save window position between sessions (instead of always starting centered)
 
 - align error highlight chars better with the rest of the text
@@ -18,4 +26,5 @@
 * display underscore char ('_') separately, as a cursor (don't just append it to TypedText, but use the getRectangle method to position it on the screen)
 * error: typing a printable char instead of a newline (show the char at the end of the line, in red)
 * retrieve 32 rectangles at a time when displaying all uncorrected errors
-*o keep a MissingNewlines property in class TextBuffer; insert all missing newlines before showing TypedText on the screen, so that typed chars will always display on top of the originals (even after typing a printable char for a newline in the original)
+
+*.|keep a MissingNewlines property in class TextBuffer; insert all missing newlines before showing TypedText on the screen, so that typed chars will always display on top of the originals (even after typing a printable char for a newline in the original)
