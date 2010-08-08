@@ -50,7 +50,8 @@
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(100, 25);
             this.btnImport.TabIndex = 0;
-            this.btnImport.Text = "&Import...";
+            this.btnImport.Text = "Import...";
+            this.btnImport.UseMnemonic = false;
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
@@ -82,7 +83,8 @@
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 25);
             this.btnStart.TabIndex = 1;
-            this.btnStart.Text = "&Start";
+            this.btnStart.Text = "Start";
+            this.btnStart.UseMnemonic = false;
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 

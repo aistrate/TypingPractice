@@ -94,9 +94,9 @@ namespace Typist
 
                 btnStart.Enabled = IsImported;
                 btnStart.Text =
-                    practiceMode ? "&Pause" :
-                    IsStarted ? "&Resume" :
-                    "&Start";
+                    practiceMode ? "Pause" :
+                    IsStarted ? "Resume" :
+                    "Start";
 
                 this.Text = string.Format("{0}Typist{1}",
                                           IsImported ? dlgImport.SafeFileName + " - " : "",
@@ -445,12 +445,6 @@ namespace Typist
 
 
         #region Key Processing
-
-        protected override bool ProcessMnemonic(char charCode)
-        {
-            return false;
-            //return base.ProcessMnemonic(charCode);
-        }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
