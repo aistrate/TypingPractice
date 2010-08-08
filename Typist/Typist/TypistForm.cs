@@ -34,6 +34,11 @@ namespace Typist
         private const float charCursorVOffset = 0;
         private const float errorBackgroundVOffset = -0.1f;
 
+        private const int marginLeft = 1;
+        private const int marginRight = 1;
+        private const int marginTop = 2;
+        private const int marginBottom = 2;
+
         private static readonly Brush importedTextColor = Brushes.Black;
         private static readonly Brush typedTextColor = new SolidBrush(VsColors.UserTypes);
         private static readonly Brush errorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
@@ -44,6 +49,7 @@ namespace Typist
             new Font("Courier New", 10, FontStyle.Regular);
             //new Font("Courier New", 16, FontStyle.Bold);
             //new Font("Bitstream Vera Sans Mono", 16, FontStyle.Bold);
+            //new Font("Verdana", 10, FontStyle.Regular);
 
         #endregion
 
@@ -219,21 +225,25 @@ namespace Typist
 
         private void picTyping_Paint(object sender, PaintEventArgs e)
         {
-            RectangleF typingArea = new RectangleF()
-            {
-                X = 1,
-                Y = 2,
-                Width = e.Graphics.ClipBounds.Width - 2,
-                Height = e.Graphics.ClipBounds.Height - 4,
-            };
+            RectangleF typingArea = calcTypingArea(e.Graphics);
 
             drawImportedText(e.Graphics, typingArea);
-
             drawShadowText(e.Graphics, typingArea);
-
             drawErrorChars(e.Graphics, typingArea);
-
             drawCursor(e.Graphics, typingArea);
+        }
+
+        private RectangleF calcTypingArea(Graphics g)
+        {
+            RectangleF sampleCharArea = getCharArea("_", 0, g, g.ClipBounds);
+
+            return new RectangleF()
+            {
+                X = marginLeft,
+                Y = marginTop,
+                Width = g.ClipBounds.Width - marginLeft - marginRight - sampleCharArea.Width,
+                Height = g.ClipBounds.Height - marginTop - marginBottom,
+            };
         }
 
         private void drawImportedText(Graphics g, RectangleF typingArea)

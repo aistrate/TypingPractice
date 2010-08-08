@@ -2,6 +2,8 @@
 
 - test how it works with two or more spaces at the end of a screen line (but no '\n' char); do all of them have size zero?
 
+- solve bug: with a non-fixed-width font (e.g., Verdana), chars on the last line being typed become misaligned, until typing past the end of the (screen) line
+
 - display Unicode chars
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
