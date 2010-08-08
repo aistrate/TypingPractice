@@ -243,14 +243,63 @@ namespace Typist
 
         private void drawTypedText(Graphics g, RectangleF typingArea)
         {
-            string typedText = ImportedText.Substring(0, TypedText.Length);
+            int lineJumpIndex = findLineJump(ImportedText.Text, TypedText.LastIndex, g, typingArea);
 
-            int missing = countMissingAtEol(ImportedText.Text, TypedText.LastIndex, g, typingArea);
-            if (missing > 0)
-                typedText = typedText.Insert(typedText.LastIndexOf(' ') + 1,
-                                             new string(' ', missing));
+            string typedText = insertSpacesAfterJump(ImportedText.Text, lineJumpIndex, TypedText.LastIndex, g, typingArea);
 
             drawText(typedText, g, typedTextColor, typingArea);
+        }
+
+        private int findLineJump(string text, int lastIndex, Graphics g, RectangleF typingArea)
+        {
+            RectangleF importedCharArea, typedCharArea;
+            int lineJumpIndex = lastIndex;
+
+            while (lineJumpIndex >= 0)
+            {
+                importedCharArea = getCharArea(text,
+                                               lineJumpIndex,
+                                               g, typingArea);
+
+                typedCharArea = getCharArea(text.Substring(0, lineJumpIndex + 1),
+                                            lineJumpIndex,
+                                            g, typingArea);
+
+                if (typedCharArea.Y == importedCharArea.Y)
+                    break;
+
+                lineJumpIndex--;
+            }
+
+            return lineJumpIndex;
+        }
+
+        private string insertSpacesAfterJump(string text, int lineJumpIndex, int lastIndex, Graphics g, RectangleF typingArea)
+        {
+            string typedText = text.Substring(0, lastIndex + 1);
+
+            if (lineJumpIndex < lastIndex)
+            {
+                RectangleF importedCharArea = getCharArea(text,
+                                                          lastIndex,
+                                                          g, typingArea);
+
+                RectangleF typedCharArea;
+                int spaces = 0;
+
+                do
+                {
+                    typedText = typedText.Insert(lineJumpIndex + 1, " ");
+                    spaces++;
+
+                    typedCharArea = getCharArea(typedText,
+                                                lastIndex + spaces,
+                                                g, typingArea);
+                }
+                while (typedCharArea.Y < importedCharArea.Y);
+            }
+
+            return typedText;
         }
 
         private void drawErrorChars(Graphics g, RectangleF typingArea)
@@ -308,34 +357,6 @@ namespace Typist
                 Width = charArea.Width,
                 Height = charArea.Height,
             };
-        }
-
-        private int countMissingAtEol(string text, int lastIndex, Graphics g, RectangleF typingArea)
-        {
-            if (lastIndex < 0)
-                return 0;
-
-            RectangleF importedCharArea, typedCharArea;
-            int missing = 0;
-
-            do
-            {
-                importedCharArea = getCharArea(text,
-                                               lastIndex + missing,
-                                               g, typingArea);
-
-                typedCharArea = getCharArea(text.Substring(0, lastIndex + missing + 1),
-                                            lastIndex + missing,
-                                            g, typingArea);
-
-                if (typedCharArea.X - importedCharArea.X > 5)
-                    missing++;
-                else
-                    break;
-            }
-            while (lastIndex + missing < text.Length);
-
-            return missing;
         }
 
         private void drawChar(char ch, Graphics g, Brush brush, RectangleF charArea)
