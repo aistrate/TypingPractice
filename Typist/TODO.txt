@@ -1,14 +1,13 @@
 - allow button mnemonics (& in labels) only when Alt is pressed at the same time as the key (NOT: Alt, pause, key)
 
-- bug for 'Ernest Hemingway.txt' file: when typing "non-fiction" (towards the end of the first paragraph), the "non-" stays on the preceding line (because of the dash)
-
-- avoid the cursor staying in the same place for two consecutive chars (at the beginning of line, after a long line that doesn't fit another char)
+- avoid the cursor staying in the same place for two consecutive chars (at the beginning of line, after a long line that doesn't fit one more char); if the char has an empty rectangle (zero w/h), that means it's at the end of line, so draw the cursor/error to the right of the prev char, on the same line (leave an empty margin to the right of the form)
 
 - save window position between sessions (instead of always starting centered)
 
 - align error highlight chars better with the rest of the text
 
 
+* bug for 'Ernest Hemingway.txt' file: when typing "non-fiction" (towards the end of the first paragraph), the "non-" stays on the preceding line (because of the dash)
 * pause if minimized
 * new program flag: cursorAsVerticalBar (false means underscore char, '_')
 * new program flag: allowBackspace

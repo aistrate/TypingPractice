@@ -229,7 +229,7 @@ namespace Typist
 
             drawImportedText(e.Graphics, typingArea);
 
-            drawTypedText(e.Graphics, typingArea);
+            drawShadowText(e.Graphics, typingArea);
 
             drawErrorChars(e.Graphics, typingArea);
 
@@ -241,18 +241,23 @@ namespace Typist
             drawText(ImportedText.Text, g, importedTextColor, typingArea);
         }
 
-        private void drawTypedText(Graphics g, RectangleF typingArea)
+        private void drawShadowText(Graphics g, RectangleF typingArea)
         {
-            int lineJumpIndex = findLineJump(ImportedText.Text, TypedText.LastIndex, g, typingArea);
+            string shadowText = ImportedText.Substring(0, TypedText.Length);
 
-            string typedText = insertSpacesAfterJump(ImportedText.Text, lineJumpIndex, TypedText.LastIndex, g, typingArea);
+            int lineJumpIndex = findLineJump(ImportedText.Text, TypedText.LastIndex,
+                                             g, typingArea);
+            if (lineJumpIndex < TypedText.LastIndex)
+                shadowText = insertSpacesAfterJump(ImportedText.Text, shadowText,
+                                                   lineJumpIndex, TypedText.LastIndex,
+                                                   g, typingArea);
 
-            drawText(typedText, g, typedTextColor, typingArea);
+            drawText(shadowText, g, typedTextColor, typingArea);
         }
 
         private int findLineJump(string text, int lastIndex, Graphics g, RectangleF typingArea)
         {
-            RectangleF importedCharArea, typedCharArea;
+            RectangleF importedCharArea, shadowCharArea;
             int lineJumpIndex = lastIndex;
 
             while (lineJumpIndex >= 0)
@@ -261,45 +266,41 @@ namespace Typist
                                                lineJumpIndex,
                                                g, typingArea);
 
-                typedCharArea = getCharArea(text.Substring(0, lineJumpIndex + 1),
-                                            lineJumpIndex,
-                                            g, typingArea);
+                shadowCharArea = getCharArea(text.Substring(0, lineJumpIndex + 1),
+                                             lineJumpIndex,
+                                             g, typingArea);
 
-                if (typedCharArea.Y == importedCharArea.Y)
-                    break;
+                if (shadowCharArea.Y == importedCharArea.Y)
+                    return lineJumpIndex;
 
                 lineJumpIndex--;
             }
 
-            return lineJumpIndex;
+            return lastIndex;
         }
 
-        private string insertSpacesAfterJump(string text, int lineJumpIndex, int lastIndex, Graphics g, RectangleF typingArea)
+        private string insertSpacesAfterJump(string text, string shadowText, int lineJumpIndex, int lastIndex,
+                                             Graphics g, RectangleF typingArea)
         {
-            string typedText = text.Substring(0, lastIndex + 1);
+            RectangleF importedCharArea = getCharArea(text,
+                                                      lastIndex,
+                                                      g, typingArea);
 
-            if (lineJumpIndex < lastIndex)
+            RectangleF shadowCharArea;
+            int spaces = 0;
+
+            do
             {
-                RectangleF importedCharArea = getCharArea(text,
-                                                          lastIndex,
-                                                          g, typingArea);
+                shadowText = shadowText.Insert(lineJumpIndex + 1, " ");
+                spaces++;
 
-                RectangleF typedCharArea;
-                int spaces = 0;
-
-                do
-                {
-                    typedText = typedText.Insert(lineJumpIndex + 1, " ");
-                    spaces++;
-
-                    typedCharArea = getCharArea(typedText,
-                                                lastIndex + spaces,
-                                                g, typingArea);
-                }
-                while (typedCharArea.Y < importedCharArea.Y);
+                shadowCharArea = getCharArea(shadowText,
+                                             lastIndex + spaces,
+                                             g, typingArea);
             }
+            while (shadowCharArea.Y < importedCharArea.Y);
 
-            return typedText;
+            return shadowText;
         }
 
         private void drawErrorChars(Graphics g, RectangleF typingArea)
@@ -476,7 +477,7 @@ namespace Typist
                     else if (e.KeyCode == Keys.M)
                     {
                         PracticeMode = false;
-                        TypistForm.ActiveForm.WindowState = FormWindowState.Minimized;
+                        WindowState = FormWindowState.Minimized;
                     }
                 }
 
