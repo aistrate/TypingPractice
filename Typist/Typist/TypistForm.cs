@@ -19,7 +19,6 @@ namespace Typist
         private const bool countWhitespaceAsWordChars = true;
         private const bool countErrorsAsWordChars = true;
 
-        private const bool beepOnError = false;
         private const bool askBeforeCloseDuringPractice = false;
 
         private const int pauseAfterElapsed = 10;
@@ -72,7 +71,7 @@ namespace Typist
 
                 TypedText = new TextBuffer(importedText, countWhitespaceAsWordChars, countErrorsAsWordChars);
 
-                if (beepOnError)
+                if (theme.BeepOnError)
                     TypedText.Error += new EventHandler(TypedText_Error);
             }
         }
@@ -201,7 +200,7 @@ namespace Typist
 
         private void playBeep()
         {
-            if (beepOnError)
+            if (theme.BeepOnError)
                 SystemSounds.Beep.Play();
         }
 

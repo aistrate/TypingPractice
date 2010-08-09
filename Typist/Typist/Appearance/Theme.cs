@@ -23,6 +23,8 @@ namespace Typist.Appearance
             PositionWindowAtTopScreen = true;
             WindowWidth = 470;
             WindowHeight = 800;
+
+            BeepOnError = true;
         }
 
         public Theme(Theme original)
@@ -40,6 +42,8 @@ namespace Typist.Appearance
             PositionWindowAtTopScreen = original.PositionWindowAtTopScreen;
             WindowWidth = original.WindowWidth;
             WindowHeight = original.WindowHeight;
+
+            BeepOnError = original.BeepOnError;
         }
 
         public Theme(Theme original, string fontName)
@@ -61,6 +65,8 @@ namespace Typist.Appearance
         public bool PositionWindowAtTopScreen { get; set; }
         public int WindowWidth { get; set; }
         public int WindowHeight { get; set; }
+
+        public bool BeepOnError { get; set; }
 
 
         public string FontName
@@ -98,6 +104,7 @@ namespace Typist.Appearance
             CursorColor = Brushes.Black,
             PositionWindowAtTopScreen = false,
             WindowHeight = 600,
+            BeepOnError = false,
         };
     }
 }
