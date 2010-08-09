@@ -39,7 +39,12 @@ namespace Typist
         private const int marginTop = 2;
         private const int marginBottom = 2;
 
-        private static readonly Theme theme = new Theme(Theme.Default, FontNames.FixedWidth.CourierNew);
+        private static readonly Theme theme =
+            new Theme(Theme.DefaultLarge)
+            {
+                FontName = FontNames.FixedWidth.CourierNew,
+                BeepOnError = false,
+            };
 
         #endregion
 
@@ -417,7 +422,7 @@ namespace Typist
             if (ch == '\n')
                 ch = pilcrow;
 
-            g.DrawString(ch.ToString(), theme.TypingFont, brush, charArea, SingleCharStringFormat);
+            g.DrawString(ch.ToString(), theme.Font, brush, charArea, SingleCharStringFormat);
         }
 
         private void drawText(string text, Graphics g, Brush brush, RectangleF typingArea)
@@ -425,7 +430,7 @@ namespace Typist
             if (visibleNewlines)
                 text = text.Replace("\n", string.Format("{0}\n", pilcrow));
 
-            g.DrawString(text, theme.TypingFont, brush, typingArea, TextStringFormat);
+            g.DrawString(text, theme.Font, brush, typingArea, TextStringFormat);
         }
 
         private RectangleF getCharArea(string text, int charIndex, Graphics g, RectangleF typingArea)
@@ -459,7 +464,7 @@ namespace Typist
             StringFormat stringFormat = new StringFormat(TextStringFormat);
             stringFormat.SetMeasurableCharacterRanges(ranges);
 
-            Region[] regions = g.MeasureCharacterRanges(text, theme.TypingFont, typingArea, stringFormat);
+            Region[] regions = g.MeasureCharacterRanges(text, theme.Font, typingArea, stringFormat);
 
             return regions.Select(r => r.GetBounds(g))
                           .ToArray();

@@ -10,7 +10,7 @@ namespace Typist.Appearance
     {
         private Theme()
         {
-            TypingFont = new Font(FontNames.FixedWidth.CourierNew, 10, FontStyle.Regular);
+            Font = new Font(FontNames.FixedWidth.CourierNew, 10, FontStyle.Regular);
 
             ImportedTextColor = Brushes.Black;
             TypedTextColor = new SolidBrush(VsColors.UserTypes);
@@ -25,7 +25,7 @@ namespace Typist.Appearance
 
         public Theme(Theme original)
         {
-            TypingFont = (Font)original.TypingFont.Clone();
+            Font = (Font)original.Font.Clone();
 
             ImportedTextColor = original.ImportedTextColor;
             TypedTextColor = original.TypedTextColor;
@@ -44,7 +44,7 @@ namespace Typist.Appearance
             FontName = fontName;
         }
 
-        public Font TypingFont { get; set; }
+        public Font Font { get; set; }
 
         public Brush ImportedTextColor { get; set; }
         public Brush TypedTextColor { get; set; }
@@ -59,20 +59,20 @@ namespace Typist.Appearance
 
         public string FontName
         {
-            get { return TypingFont.FontFamily.Name; }
-            set { TypingFont = new Font(value, TypingFont.Size, TypingFont.Style); }
+            get { return Font.FontFamily.Name; }
+            set { Font = new Font(value, Font.Size, Font.Style); }
         }
 
         public float FontSize
         {
-            get { return TypingFont.Size; }
-            set { TypingFont = new Font(TypingFont.FontFamily, value, TypingFont.Style); }
+            get { return Font.Size; }
+            set { Font = new Font(Font.FontFamily, value, Font.Style); }
         }
 
         public FontStyle FontStyle
         {
-            get { return TypingFont.Style; }
-            set { TypingFont = new Font(TypingFont.FontFamily, TypingFont.Size, value); }
+            get { return Font.Style; }
+            set { Font = new Font(Font.FontFamily, Font.Size, value); }
         }
 
 
