@@ -51,7 +51,7 @@ namespace Typist
 
         #region General Behavior
 
-        public TypistForm()
+        public TypistForm(string filePath)
         {
             InitializeComponent();
 
@@ -66,12 +66,15 @@ namespace Typist
                 Location = new Point(Properties.Settings.Default.WindowX, Properties.Settings.Default.WindowY);
                 Size = new Size(Properties.Settings.Default.WindowWidth, Properties.Settings.Default.WindowHeight);
             }
+
+            ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
+            PracticeMode = false;
+
+            ImportFile(filePath);
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
-            ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
-            PracticeMode = false;
         }
 
         protected TextBuffer ImportedText
@@ -110,7 +113,7 @@ namespace Typist
                     "Start";
 
                 this.Text = string.Format("{0}Typist{1}",
-                                          IsImported ? dlgImport.SafeFileName + " - " : "",
+                                          IsImported && !string.IsNullOrEmpty(importedFileName) ? importedFileName + " - " : "",
                                           IsPaused ? (IsFinished ? " (Finished)" : " (Paused)") : "");
 
                 if (practiceMode)
@@ -164,10 +167,19 @@ namespace Typist
             PracticeMode = false;
 
             if (dlgImport.ShowDialog() == DialogResult.OK)
-            {
-                importedFileName = dlgImport.SafeFileName;
+                ImportFile(dlgImport.FileName);
+        }
 
-                using (StreamReader sr = new StreamReader(dlgImport.FileName))
+        public void ImportFile(string filePath)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(filePath.Trim()))
+                    return;
+
+                importedFileName = new FileInfo(filePath).Name;
+
+                using (StreamReader sr = new StreamReader(filePath))
                     ImportedText = new TextBuffer(sr.ReadToEnd(), countWhitespaceAsWordChars);
 
                 stopwatch.Reset();
@@ -175,8 +187,11 @@ namespace Typist
                 rightAfterImport = true;
                 PracticeMode = false;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Typist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
         private string importedFileName = "";
 
         private void btnStart_Click(object sender, EventArgs e)

@@ -8,11 +8,10 @@
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
 
-- 'Open With...' from Windows Explorer
-
 - align error highlight chars better with the rest of the text
 
 
+* 'Open With...' from Windows Explorer
 * bug: when window is maximized (or just wide), after an error it takes about half a second for the error rectangles to appear on screen (a very noticeable delay); (solved: the cause appears to be a slow audio card; turning theme.BeepOnError = false eliminates the delay)
 * save window position between sessions (instead of always starting centered)
 * color schemes (themes)
