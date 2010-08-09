@@ -12,6 +12,7 @@
     <AssemblyName>Typist</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ApplicationIcon>Typist.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,6 +84,9 @@
     </Compile>
     <Compile Include="Util.cs" />
     <Compile Include="Appearance\VsColors.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Typist.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
