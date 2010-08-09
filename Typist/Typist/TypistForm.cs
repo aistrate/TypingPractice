@@ -174,7 +174,7 @@ namespace Typist
         {
             try
             {
-                if (string.IsNullOrEmpty(filePath.Trim()))
+                if (string.IsNullOrEmpty(filePath))
                     return;
 
                 importedFileName = new FileInfo(filePath).Name;
