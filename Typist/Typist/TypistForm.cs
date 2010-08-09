@@ -21,7 +21,7 @@ namespace Typist
         private const bool beepOnError = true;
         private const bool askBeforeCloseDuringPractice = false;
 
-        private const int pauseAfterElapsed = 10;
+        private const int pauseAfterElapsed = 0;
         private const bool pauseOnMinimize = true;
         private const bool pauseOnDeactivate = false;
 
@@ -34,18 +34,18 @@ namespace Typist
         private const float charCursorVOffset = 0;
         private const float errorBackgroundVOffset = -0.1f;
 
-        private const int marginLeft = 1;
-        private const int marginRight = 1;
-        private const int marginTop = 2;
-        private const int marginBottom = 2;
+        private const int marginLeft = 5;
+        private const int marginRight = 5;
+        private const int marginTop = 5;
+        private const int marginBottom = 5;
 
-        private static readonly Brush importedTextColor = Brushes.Black;
-        private static readonly Brush typedTextColor = new SolidBrush(VsColors.UserTypes);
-        private static readonly Brush errorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
-        private static readonly Brush errorForeColor = new SolidBrush(VsColors.StringLiteral);
-        private static readonly Brush cursorColor = Brushes.Crimson;
+        private readonly Brush importedTextColor = Brushes.Black;
+        private readonly Brush typedTextColor = new SolidBrush(VsColors.UserTypes);
+        private readonly Brush errorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
+        private readonly Brush errorForeColor = new SolidBrush(VsColors.StringLiteral);
+        private readonly Brush cursorColor = Brushes.Crimson;
 
-        private static readonly Font typingFont =
+        private readonly Font typingFont =
             new Font("Courier New", 10, FontStyle.Regular);
             //new Font("Courier New", 16, FontStyle.Bold);
             //new Font("Bitstream Vera Sans Mono", 16, FontStyle.Bold);
@@ -65,6 +65,10 @@ namespace Typist
         {
             this.Top = 0;
 
+            //lblAccuracy.Left = lblErrorCount.Left + 125;
+            //lblErrorCount.Width = 120;
+            //lblAccuracy.Width = 130;
+
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
         }
@@ -77,6 +81,8 @@ namespace Typist
                 importedText = value;
 
                 TypedText = new TextBuffer(importedText, countWhitespaceAsWordChars, countErrorsAsWordChars);
+
+                cachedCharAreas = new Dictionary<int, RectangleF>();
 
                 if (beepOnError)
                     TypedText.Error += new EventHandler(TypedText_Error);
@@ -235,7 +241,7 @@ namespace Typist
 
         private RectangleF calcTypingArea(Graphics g)
         {
-            RectangleF sampleCharArea = getCharArea("_", 0, g, g.ClipBounds);
+            RectangleF sampleCharArea = getCharArea_Uncached("_", 0, g, g.ClipBounds);
 
             return new RectangleF()
             {
@@ -255,12 +261,18 @@ namespace Typist
         {
             string shadowText = ImportedText.Substring(0, TypedText.Length);
 
-            int lineJumpIndex = findLineJump(ImportedText.ToString(), TypedText.LastIndex,
-                                             g, typingArea);
-            if (lineJumpIndex < TypedText.LastIndex)
-                shadowText = insertSpacesAfterJump(ImportedText.ToString(), shadowText,
-                                                   lineJumpIndex, TypedText.LastIndex,
-                                                   g, typingArea);
+            if (shadowText.Length > 0 &&
+                shadowText[TypedText.LastIndex] != ' ' &&
+                shadowText[TypedText.LastIndex] != '\n')
+            {
+                int lineJumpIndex = findLineJump(ImportedText.ToString(), TypedText.LastIndex,
+                                                 g, typingArea);
+
+                if (lineJumpIndex < TypedText.LastIndex)
+                    shadowText = insertSpacesAfterJump(ImportedText.ToString(), shadowText,
+                                                       lineJumpIndex, TypedText.LastIndex,
+                                                       g, typingArea);
+            }
 
             drawText(shadowText, g, typedTextColor, typingArea);
         }
@@ -276,9 +288,9 @@ namespace Typist
                                                lineJumpIndex,
                                                g, typingArea);
 
-                shadowCharArea = getCharArea(text.Substring(0, lineJumpIndex + 1),
-                                             lineJumpIndex,
-                                             g, typingArea);
+                shadowCharArea = getCharArea_Uncached(text.Substring(0, lineJumpIndex + 1),
+                                                      lineJumpIndex,
+                                                      g, typingArea);
 
                 if (shadowCharArea.Y == importedCharArea.Y)
                     return lineJumpIndex;
@@ -304,9 +316,9 @@ namespace Typist
                 shadowText = shadowText.Insert(lineJumpIndex + 1, " ");
                 spaces++;
 
-                shadowCharArea = getCharArea(shadowText,
-                                             lastIndex + spaces,
-                                             g, typingArea);
+                shadowCharArea = getCharArea_Uncached(shadowText,
+                                                      lastIndex + spaces,
+                                                      g, typingArea);
             }
             while (shadowCharArea.Y < importedCharArea.Y);
 
@@ -393,7 +405,31 @@ namespace Typist
             return getCharAreas(text, new[] { charIndex }, g, typingArea).First();
         }
 
+        private RectangleF getCharArea_Uncached(string text, int charIndex, Graphics g, RectangleF typingArea)
+        {
+            return getCharAreas_Uncached(text, new[] { charIndex }, g, typingArea).First();
+        }
+
+        Dictionary<int, RectangleF> cachedCharAreas = new Dictionary<int, RectangleF>();
+
         private RectangleF[] getCharAreas(string text, int[] charIndexes, Graphics g, RectangleF typingArea)
+        {
+            int[] nonCachedKeys = charIndexes.Where(i => !cachedCharAreas.ContainsKey(i))
+                                             .ToArray();
+
+            RectangleF[] nonCachedValues = getCharAreas_Uncached(text, nonCachedKeys, g, typingArea);
+
+            for (int i = 0; i < nonCachedKeys.Length; i++)
+                cachedCharAreas[nonCachedKeys[i]] = nonCachedValues[i];
+
+            return charIndexes.Select(i => cachedCharAreas[i])
+                              .ToArray();
+
+
+            //return getCharAreas_Uncached(text, charIndexes, g, typingArea);
+        }
+
+        private RectangleF[] getCharAreas_Uncached(string text, int[] charIndexes, Graphics g, RectangleF typingArea)
         {
             charIndexes = charIndexes.Where(i => i < text.Length)
                                      .ToArray();
@@ -404,10 +440,19 @@ namespace Typist
                                                 .ToArray();
 
             for (int i = 0; i < charIndexes.Length; i++)
-                if (charAreas[i].IsEmpty)
-                    charAreas[i] = getCharAreas32(text.Insert(charIndexes[i], "-"),
-                                                  new[] { charIndexes[i] },
-                                                  g, typingArea)[0];
+            {
+                //lblErrorCount.Text = string.Format("{0}|{1}", charAreas[i].X, charAreas[i].Y);
+                //lblAccuracy.Text = string.Format("{0}|{1}", charAreas[i].Width, charAreas[i].Height);
+
+                //if (charAreas[i].IsEmpty)
+                //{
+                //    charAreas[i] = getCharAreas32(text.Insert(charIndexes[i], "-"),
+                //                                  new[] { charIndexes[i] },
+                //                                  g, typingArea)[0];
+
+                //    g.DrawRectangle(Pens.Red, Rectangle.Round(charAreas[i]));
+                //}
+            }
 
             return charAreas;
         }
@@ -417,6 +462,7 @@ namespace Typist
             CharacterRange[] ranges = charIndexes.Select(i => new CharacterRange(i, 1)).ToArray();
 
             StringFormat stringFormat = new StringFormat(TextStringFormat);
+            //stringFormat.FormatFlags = TextStringFormat.FormatFlags & ~StringFormatFlags.NoClip;
             stringFormat.SetMeasurableCharacterRanges(ranges);
 
             Region[] regions = g.MeasureCharacterRanges(text, typingFont, typingArea, stringFormat);
@@ -425,24 +471,68 @@ namespace Typist
                           .ToArray();
         }
 
-        protected readonly static StringFormat TextStringFormat =
-            new StringFormat(StringFormatFlags.LineLimit)
+        protected StringFormat TextStringFormat
+        {
+            get
             {
-                Trimming = StringTrimming.Word,
-                Alignment = StringAlignment.Near,
-                LineAlignment = StringAlignment.Near,
-            };
+                if (textStringFormat == null)
+                    textStringFormat = new StringFormat(StringFormat.GenericTypographic)
+                    {
+                        FormatFlags = StringFormat.GenericTypographic.FormatFlags |
+                                      StringFormatFlags.MeasureTrailingSpaces,
+                    };
 
-        protected readonly static StringFormat SingleCharStringFormat =
-            new StringFormat(StringFormatFlags.NoWrap)
+                return textStringFormat;
+            }
+        }
+        private StringFormat textStringFormat;
+
+
+        protected StringFormat SingleCharStringFormat
+        {
+            get
             {
-                Alignment = StringAlignment.Center,
-                LineAlignment = StringAlignment.Far,
-            };
+                if (singleCharStringFormat == null)
+                    singleCharStringFormat = new StringFormat(StringFormatFlags.NoWrap)
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Far,
+                    };
+
+                    //singleCharStringFormat = new StringFormat(StringFormat.GenericTypographic)
+                    //{
+                    //    FormatFlags = StringFormatFlags.FitBlackBox |
+                    //                  StringFormatFlags.NoClip |
+                    //                  StringFormatFlags.NoWrap,
+                    //    //Alignment = StringAlignment.Center,
+                    //    LineAlignment = StringAlignment.Near,
+                    //};
+
+                return singleCharStringFormat;
+            }
+        }
+        private StringFormat singleCharStringFormat;
+
+
+        //protected readonly StringFormat TextStringFormat =
+        //    new StringFormat(StringFormatFlags.LineLimit | StringFormatFlags.MeasureTrailingSpaces)
+        //    {
+        //        Trimming = StringTrimming.None,
+        //        Alignment = StringAlignment.Near,
+        //        LineAlignment = StringAlignment.Near,
+        //    };
+
+        //protected readonly StringFormat SingleCharStringFormat =
+        //    new StringFormat(StringFormatFlags.NoWrap)
+        //    {
+        //        Alignment = StringAlignment.Center,
+        //        LineAlignment = StringAlignment.Far,
+        //    };
 
 
         private void picTyping_Resize(object sender, EventArgs e)
         {
+            cachedCharAreas = new Dictionary<int, RectangleF>();
             picTyping.Invalidate();
         }
 

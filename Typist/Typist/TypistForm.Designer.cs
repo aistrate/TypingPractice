@@ -68,7 +68,7 @@
             this.picTyping.BackColor = System.Drawing.Color.White;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
-            this.picTyping.Size = new System.Drawing.Size(461, 737);
+            this.picTyping.Size = new System.Drawing.Size(575, 737);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
             this.picTyping.Resize += new System.EventHandler(this.picTyping_Resize);
@@ -78,7 +78,7 @@
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Enabled = false;
-            this.btnStart.Location = new System.Drawing.Point(361, 1);
+            this.btnStart.Location = new System.Drawing.Point(475, 1);
             this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 25);
@@ -91,7 +91,7 @@
             // lblTime
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTime.Location = new System.Drawing.Point(295, 6);
+            this.lblTime.Location = new System.Drawing.Point(409, 6);
             this.lblTime.Margin = new System.Windows.Forms.Padding(0);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(60, 14);
@@ -101,6 +101,7 @@
             // tmrTimer
             // 
             this.tmrTimer.Enabled = true;
+            this.tmrTimer.Interval = 50;
             this.tmrTimer.Tick += new System.EventHandler(this.tmrTimer_Tick);
             // 
             // lblWPM
@@ -124,7 +125,7 @@
             this.tblLine.RowCount = 1;
             this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tblLine.Size = new System.Drawing.Size(463, 2);
+            this.tblLine.Size = new System.Drawing.Size(577, 2);
             this.tblLine.TabIndex = 9;
             // 
             // lblErrorCount
@@ -151,7 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(462, 766);
+            this.ClientSize = new System.Drawing.Size(576, 766);
             this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
             this.Controls.Add(this.tblLine);
