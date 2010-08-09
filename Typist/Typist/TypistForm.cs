@@ -39,7 +39,7 @@ namespace Typist
         private const int marginTop = 2;
         private const int marginBottom = 2;
 
-        private static readonly Theme theme = new Theme(Theme.Default, FontNames.NonFixedWidth.Verdana);
+        private static readonly Theme theme = new Theme(Theme.Discreet, FontNames.FixedWidth.CourierNew);
 
         #endregion
 
@@ -49,11 +49,15 @@ namespace Typist
         public TypistForm()
         {
             InitializeComponent();
+
+            this.Width = theme.WindowWidth;
+            this.Height = theme.WindowHeight;
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
-            //this.Top = 0;
+            if (theme.PositionWindowAtTopScreen)
+                this.Top = 0;
 
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;

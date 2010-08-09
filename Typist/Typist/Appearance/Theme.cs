@@ -19,6 +19,10 @@ namespace Typist.Appearance
             CursorColor = Brushes.Crimson;
 
             BarCursorLineWidth = 2;
+
+            PositionWindowAtTopScreen = true;
+            WindowWidth = 470;
+            WindowHeight = 800;
         }
 
         public Theme(Theme original)
@@ -32,6 +36,10 @@ namespace Typist.Appearance
             CursorColor = original.CursorColor;
 
             BarCursorLineWidth = original.BarCursorLineWidth;
+
+            PositionWindowAtTopScreen = original.PositionWindowAtTopScreen;
+            WindowWidth = original.WindowWidth;
+            WindowHeight = original.WindowHeight;
         }
 
         public Theme(Theme original, string fontName)
@@ -49,6 +57,10 @@ namespace Typist.Appearance
         public Brush CursorColor { get; set; }
 
         public int BarCursorLineWidth { get; set; }
+
+        public bool PositionWindowAtTopScreen { get; set; }
+        public int WindowWidth { get; set; }
+        public int WindowHeight { get; set; }
 
 
         public string FontName
@@ -77,11 +89,15 @@ namespace Typist.Appearance
             FontSize = 16,
             FontStyle = FontStyle.Bold,
             BarCursorLineWidth = 3,
+            WindowWidth = 700,
+            WindowHeight = 950,
         };
 
         public static Theme Discreet = new Theme(Default)
         {
             CursorColor = Brushes.Black,
+            PositionWindowAtTopScreen = false,
+            WindowHeight = 600,
         };
     }
 }
