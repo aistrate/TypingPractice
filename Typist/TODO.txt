@@ -4,6 +4,8 @@
 
 - solve bug: with a non-fixed-width font (e.g., Verdana), chars on the last line being typed become misaligned, until typing past the end of the (screen) line
 
+- refactor the "typing zone" of the form (the PictureBox with its Paint event handler) into a separate user control
+
 - display Unicode chars
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
