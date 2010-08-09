@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Media;
 using System.Windows.Forms;
+using Typist.Appearance;
 
 namespace Typist
 {
@@ -18,7 +19,7 @@ namespace Typist
         private const bool countWhitespaceAsWordChars = true;
         private const bool countErrorsAsWordChars = true;
 
-        private const bool beepOnError = true;
+        private const bool beepOnError = false;
         private const bool askBeforeCloseDuringPractice = false;
 
         private const int pauseAfterElapsed = 10;
@@ -26,7 +27,6 @@ namespace Typist
         private const bool pauseOnDeactivate = false;
 
         private const bool cursorAsVerticalBar = true;
-        private const int barCursorLineWidth = 2;
         private const char charCursorChar = '_';
         private const bool showCursorWhenPaused = false;
 
@@ -39,17 +39,7 @@ namespace Typist
         private const int marginTop = 2;
         private const int marginBottom = 2;
 
-        private static readonly Brush importedTextColor = Brushes.Black;
-        private static readonly Brush typedTextColor = new SolidBrush(VsColors.UserTypes);
-        private static readonly Brush errorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
-        private static readonly Brush errorForeColor = new SolidBrush(VsColors.StringLiteral);
-        private static readonly Brush cursorColor = Brushes.Crimson;
-
-        private static readonly Font typingFont =
-            new Font("Courier New", 10, FontStyle.Regular);
-            //new Font("Courier New", 16, FontStyle.Bold);
-            //new Font("Bitstream Vera Sans Mono", 16, FontStyle.Bold);
-            //new Font("Verdana", 10, FontStyle.Regular);
+        private static readonly Theme theme = new Theme(Theme.Default, FontNames.NonFixedWidth.Verdana);
 
         #endregion
 
@@ -63,7 +53,7 @@ namespace Typist
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
-            this.Top = 0;
+            //this.Top = 0;
 
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
@@ -248,7 +238,7 @@ namespace Typist
 
         private void drawImportedText(Graphics g, RectangleF typingArea)
         {
-            drawText(ImportedText.ToString(), g, importedTextColor, typingArea);
+            drawText(ImportedText.ToString(), g, theme.ImportedTextColor, typingArea);
         }
 
         private void drawShadowText(Graphics g, RectangleF typingArea)
@@ -262,7 +252,7 @@ namespace Typist
                                                    lineJumpIndex, TypedText.LastIndex,
                                                    g, typingArea);
 
-            drawText(shadowText, g, typedTextColor, typingArea);
+            drawText(shadowText, g, theme.TypedTextColor, typingArea);
         }
 
         private int findLineJump(string text, int lastIndex, Graphics g, RectangleF typingArea)
@@ -321,10 +311,10 @@ namespace Typist
 
             for (int i = 0; i < TypedText.ErrorsUncorrected.Count; i++)
             {
-                g.FillRectangle(errorBackColor, fracOffsetCharArea(errorCharAreas[i], 0, errorBackgroundVOffset));
+                g.FillRectangle(theme.ErrorBackColor, fracOffsetCharArea(errorCharAreas[i], 0, errorBackgroundVOffset));
 
                 drawChar(TypedText[TypedText.ErrorsUncorrected[i]],
-                         g, errorForeColor,
+                         g, theme.ErrorForeColor,
                          errorCharAreas[i]);
             }
         }
@@ -342,15 +332,15 @@ namespace Typist
                                                 cursorAsVerticalBar ? barCursorVOffset : charCursorVOffset);
 
                 if (cursorAsVerticalBar)
-                    g.FillRectangle(cursorColor, new RectangleF()
+                    g.FillRectangle(theme.CursorColor, new RectangleF()
                     {
-                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * barCursorLineWidth),
+                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * theme.BarCursorLineWidth),
                         Y = cursorArea.Y,
-                        Width = barCursorLineWidth,
+                        Width = theme.BarCursorLineWidth,
                         Height = cursorArea.Height,
                     });
                 else
-                    drawChar(charCursorChar, g, cursorColor, cursorArea);
+                    drawChar(charCursorChar, g, theme.CursorColor, cursorArea);
             }
         }
 
@@ -377,7 +367,7 @@ namespace Typist
             if (ch == '\n')
                 ch = pilcrow;
 
-            g.DrawString(ch.ToString(), typingFont, brush, charArea, SingleCharStringFormat);
+            g.DrawString(ch.ToString(), theme.TypingFont, brush, charArea, SingleCharStringFormat);
         }
 
         private void drawText(string text, Graphics g, Brush brush, RectangleF typingArea)
@@ -385,7 +375,7 @@ namespace Typist
             if (visibleNewlines)
                 text = text.Replace("\n", string.Format("{0}\n", pilcrow));
 
-            g.DrawString(text, typingFont, brush, typingArea, TextStringFormat);
+            g.DrawString(text, theme.TypingFont, brush, typingArea, TextStringFormat);
         }
 
         private RectangleF getCharArea(string text, int charIndex, Graphics g, RectangleF typingArea)
@@ -419,7 +409,7 @@ namespace Typist
             StringFormat stringFormat = new StringFormat(TextStringFormat);
             stringFormat.SetMeasurableCharacterRanges(ranges);
 
-            Region[] regions = g.MeasureCharacterRanges(text, typingFont, typingArea, stringFormat);
+            Region[] regions = g.MeasureCharacterRanges(text, theme.TypingFont, typingArea, stringFormat);
 
             return regions.Select(r => r.GetBounds(g))
                           .ToArray();

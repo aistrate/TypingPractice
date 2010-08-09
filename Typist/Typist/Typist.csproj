@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{873EDEF2-0F24-4EF0-9C51-71C62AA45200}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appearance\FontNames.cs" />
     <Compile Include="TextBuffer.cs" />
+    <Compile Include="Appearance\Theme.cs" />
     <Compile Include="TypistForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,7 +81,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Util.cs" />
-    <Compile Include="VsColors.cs" />
+    <Compile Include="Appearance\VsColors.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

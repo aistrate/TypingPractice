@@ -68,7 +68,7 @@
             this.picTyping.BackColor = System.Drawing.Color.White;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
-            this.picTyping.Size = new System.Drawing.Size(461, 737);
+            this.picTyping.Size = new System.Drawing.Size(461, 537);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
             this.picTyping.Resize += new System.EventHandler(this.picTyping_Resize);
@@ -151,7 +151,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(462, 766);
+            this.ClientSize = new System.Drawing.Size(462, 566);
             this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
             this.Controls.Add(this.tblLine);
