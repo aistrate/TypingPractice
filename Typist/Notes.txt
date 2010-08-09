@@ -1,0 +1,14 @@
+User-specific application settings are saved into this file (by Properties.Settings.Default.Save()):
+
+C:\Documents and Settings\a.istrate\Local Settings\Application Data\Borghols_Groep_BV\
+    Typist.exe_Url_vsdlwool355tdyq2ldqlczyokexyavao\1.0.0.0\user.config
+
+(When run in Debug mode, the application will use folder Typist.vshost.exe_Url_vsdlwool355tdyq2ldqlczyokexyavao, instead of Typist.exe_Url_vsdlwool355tdyq2ldqlczyokexyavao.)
+
+
+Use this kind of code to retrieve the path programatically:
+
+Configuration roamingConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+MessageBox.Show(roamingConfig.FilePath);
+
+(But first, add a reference to the System.Configuration assembly.)

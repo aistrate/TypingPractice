@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Media;
 using System.Windows.Forms;
 using Typist.Appearance;
+using System.Configuration;
 
 namespace Typist
 {
@@ -38,7 +39,7 @@ namespace Typist
         private const int marginTop = 2;
         private const int marginBottom = 2;
 
-        private static readonly Theme theme = new Theme(Theme.Discreet, FontNames.FixedWidth.CourierNew);
+        private static readonly Theme theme = new Theme(Theme.Default, FontNames.FixedWidth.CourierNew);
 
         #endregion
 
@@ -49,15 +50,21 @@ namespace Typist
         {
             InitializeComponent();
 
-            this.Width = theme.WindowWidth;
-            this.Height = theme.WindowHeight;
+            if (Properties.Settings.Default.IsMaximized)
+                WindowState = FormWindowState.Maximized;
+
+            if (Properties.Settings.Default.WindowX == 0 && Properties.Settings.Default.WindowY == 0 &&
+                Properties.Settings.Default.WindowWidth == 0 && Properties.Settings.Default.WindowHeight == 0)
+                StartPosition = FormStartPosition.CenterScreen;
+            else
+            {
+                Location = new Point(Properties.Settings.Default.WindowX, Properties.Settings.Default.WindowY);
+                Size = new Size(Properties.Settings.Default.WindowWidth, Properties.Settings.Default.WindowHeight);
+            }
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
         {
-            if (theme.PositionWindowAtTopScreen)
-                this.Top = 0;
-
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
         }
@@ -178,6 +185,40 @@ namespace Typist
                 PracticeMode = false;
         }
 
+        private void TypistForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (pauseOnMinimize && WindowState == FormWindowState.Minimized)
+                PracticeMode = false;
+
+            presaveWindowPosition(false, true);
+        }
+
+        private void TypistForm_Move(object sender, EventArgs e)
+        {
+            presaveWindowPosition(true, false);
+        }
+
+        private void presaveWindowPosition(bool location, bool size)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                if (location)
+                {
+                    Properties.Settings.Default.WindowX = Location.X;
+                    Properties.Settings.Default.WindowY = Location.Y;
+                }
+
+                if (size)
+                {
+                    Properties.Settings.Default.WindowWidth = Size.Width;
+                    Properties.Settings.Default.WindowHeight = Size.Height;
+                }
+            }
+
+            if (WindowState != FormWindowState.Minimized)
+                Properties.Settings.Default.IsMaximized = WindowState == FormWindowState.Maximized;
+        }
+
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             if (askBeforeCloseDuringPractice && IsStarted)
@@ -187,8 +228,14 @@ namespace Typist
                 if (MessageBox.Show("Practice session is in progress. Are you sure you want to quit?", "Typist",
                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
                                     == DialogResult.No)
+                {
                     e.Cancel = true;
+                    return;
+                }
             }
+
+            presaveWindowPosition(true, true);
+            Properties.Settings.Default.Save();
 
             base.OnClosing(e);
         }
@@ -545,8 +592,7 @@ namespace Typist
                 if (timeChanged)
                     displayWPM();
 
-                if ((pauseAfterElapsed > 0 && DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, pauseAfterElapsed)) ||
-                    (pauseOnMinimize && WindowState == FormWindowState.Minimized))
+                if (pauseAfterElapsed > 0 && DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, pauseAfterElapsed))
                     PracticeMode = false;
             }
         }

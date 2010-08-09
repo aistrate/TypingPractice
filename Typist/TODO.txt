@@ -8,11 +8,14 @@
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
 
-- save window position between sessions (instead of always starting centered)
+- 'Open With...' from Windows Explorer
+
+- bug: when window is maximized (or just wide), after an error it takes about half a second for the error rectangles to appear on screen (a very noticeable delay)
 
 - align error highlight chars better with the rest of the text
 
 
+* save window position between sessions (instead of always starting centered)
 * color schemes (themes)
 * bug for 'Ernest Hemingway.txt' file: when typing "non-fiction" (towards the end of the first paragraph), the "non-" stays on the preceding line (because of the dash)
 * pause if minimized
