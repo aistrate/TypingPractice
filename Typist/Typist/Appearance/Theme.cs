@@ -101,6 +101,7 @@ namespace Typist.Appearance
 
         public static Theme Discreet = new Theme(Default)
         {
+            ErrorBackColor = Brushes.LightGray,
             CursorColor = Brushes.Black,
             PositionWindowAtTopScreen = false,
             WindowHeight = 600,
