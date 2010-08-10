@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TypistForm));
             this.btnImport = new System.Windows.Forms.Button();
             this.dlgImport = new System.Windows.Forms.OpenFileDialog();
-            this.picTyping = new TypingBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.lblTime = new System.Windows.Forms.Label();
             this.tmrTimer = new System.Windows.Forms.Timer(this.components);
@@ -40,6 +39,7 @@
             this.tblLine = new System.Windows.Forms.TableLayoutPanel();
             this.lblErrorCount = new System.Windows.Forms.Label();
             this.lblAccuracy = new System.Windows.Forms.Label();
+            this.picTyping = new Typist.TypingBox();
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,18 +59,6 @@
             // 
             this.dlgImport.DefaultExt = "txt";
             this.dlgImport.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-            // 
-            // picTyping
-            // 
-            this.picTyping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.picTyping.BackColor = System.Drawing.Color.White;
-            this.picTyping.Location = new System.Drawing.Point(0, 29);
-            this.picTyping.Name = "picTyping";
-            this.picTyping.Size = new System.Drawing.Size(461, 537);
-            this.picTyping.TabIndex = 2;
-            this.picTyping.TabStop = false;
             // 
             // btnStart
             // 
@@ -144,6 +132,21 @@
             this.lblAccuracy.Size = new System.Drawing.Size(60, 14);
             this.lblAccuracy.TabIndex = 11;
             this.lblAccuracy.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // picTyping
+            // 
+            this.picTyping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.picTyping.BackColor = System.Drawing.Color.White;
+            this.picTyping.ImportedText = null;
+            this.picTyping.Location = new System.Drawing.Point(0, 29);
+            this.picTyping.Name = "picTyping";
+            this.picTyping.Size = new System.Drawing.Size(461, 537);
+            this.picTyping.TabIndex = 2;
+            this.picTyping.TabStop = false;
+            this.picTyping.Theme = null;
+            this.picTyping.TypedText = null;
             // 
             // TypistForm
             // 

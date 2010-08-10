@@ -12,6 +12,8 @@ namespace Typist
 {
     public class TypingBox : PictureBox
     {
+        #region Properties
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public TextBuffer ImportedText { get; set; }
@@ -21,50 +23,98 @@ namespace Typist
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(0)]
         public int MarginLeft { get; set; }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(0)]
         public int MarginRight { get; set; }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(0)]
         public int MarginTop { get; set; }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(0)]
         public int MarginBottom { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Theme Theme { get; set; }
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue(true)]
+        [Description("Determines whether the cursor will be a vertical bar (true), or a character (false).")]
         public bool CursorAsVerticalBar { get; set; }
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
+
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue('_')]
+        [Description("The character that will represent the cursor, " +
+                     "if in character cursor mode (as opposed to vertical bar cursor mode).")]
         public char CharCursorChar { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(0)]
         public float BarCursorVOffset { get; set; }
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public float CharCursorVOffset { get; set; }
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public float ErrorBackgroundVOffset { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool VisibleNewlines { get; set; }
+        [DefaultValue(0)]
+        public float CharCursorVOffset { get; set; }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(0)]
+        public float ErrorBackgroundVOffset { get; set; }
+
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue(false)]
+        [Description("If true, newline characters will be made visible as paragraph signs (pilcrows).")]
+        public bool VisibleNewlines { get; set; }
+
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue(false)]
+        [Description("Determines whether the cursor is visible when typing is paused, " +
+                     "or only when the user is actually typing (practice mode).")]
         public bool ShowCursorWhenPaused { get; set; }
+
+        #endregion
+
+
+        #region General
+
+        public TypingBox()
+        {
+            CursorAsVerticalBar = true;
+            CharCursorChar = '_';
+        }
+
+        public event CancelEventHandler DrawingCursor;
+
+        protected virtual void OnDrawingCursor(CancelEventArgs e)
+        {
+            if (DrawingCursor != null)
+                DrawingCursor(this, e);
+        }
 
         protected override void OnResize(EventArgs e)
         {
             this.Invalidate();
             base.OnResize(e);
         }
+
+        #endregion
+
+
+        #region Paint event handler
 
         protected override void OnPaint(PaintEventArgs pe)
         {
@@ -291,12 +341,6 @@ namespace Typist
                 LineAlignment = StringAlignment.Far,
             };
 
-        public event CancelEventHandler DrawingCursor;
-
-        protected virtual void OnDrawingCursor(CancelEventArgs e)
-        {
-            if (DrawingCursor != null)
-                DrawingCursor(this, e);
-        }
+        #endregion
     }
 }
