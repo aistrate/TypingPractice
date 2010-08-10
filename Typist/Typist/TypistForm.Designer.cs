@@ -68,7 +68,7 @@
             this.picTyping.BackColor = System.Drawing.Color.White;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
-            this.picTyping.Size = new System.Drawing.Size(575, 737);
+            this.picTyping.Size = new System.Drawing.Size(461, 537);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
             this.picTyping.Resize += new System.EventHandler(this.picTyping_Resize);
@@ -152,7 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 766);
+            this.ClientSize = new System.Drawing.Size(462, 566);
             this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
             this.Controls.Add(this.tblLine);
@@ -169,13 +169,15 @@
             this.MinimumSize = new System.Drawing.Size(470, 150);
             this.Name = "TypistForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Typist";
             this.Deactivate += new System.EventHandler(this.TypistForm_Deactivate);
             this.Load += new System.EventHandler(this.TypistForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.TypistForm_Paint);
+            this.SizeChanged += new System.EventHandler(this.TypistForm_SizeChanged);
             this.Activated += new System.EventHandler(this.TypistForm_Activated);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TypistForm_KeyPress);
+            this.Move += new System.EventHandler(this.TypistForm_Move);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TypistForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).EndInit();
             this.ResumeLayout(false);

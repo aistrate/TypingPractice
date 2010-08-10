@@ -6,6 +6,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Media;
 using System.Windows.Forms;
+using Typist.Appearance;
+using System.Configuration;
 
 namespace Typist
 {
@@ -18,7 +20,6 @@ namespace Typist
         private const bool countWhitespaceAsWordChars = true;
         private const bool countErrorsAsWordChars = true;
 
-        private const bool beepOnError = true;
         private const bool askBeforeCloseDuringPractice = false;
 
         private const int pauseAfterElapsed = 0;
@@ -26,7 +27,6 @@ namespace Typist
         private const bool pauseOnDeactivate = false;
 
         private const bool cursorAsVerticalBar = true;
-        private const int barCursorLineWidth = 2;
         private const char charCursorChar = '_';
         private const bool showCursorWhenPaused = false;
 
@@ -39,31 +39,33 @@ namespace Typist
         private const int marginTop = 5;
         private const int marginBottom = 5;
 
-        private readonly Brush importedTextColor = Brushes.Black;
-        private readonly Brush typedTextColor = new SolidBrush(VsColors.UserTypes);
-        private readonly Brush errorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
-        private readonly Brush errorForeColor = new SolidBrush(VsColors.StringLiteral);
-        private readonly Brush cursorColor = Brushes.Crimson;
-
-        private readonly Font typingFont =
-            new Font("Courier New", 10, FontStyle.Regular);
-            //new Font("Courier New", 16, FontStyle.Bold);
-            //new Font("Bitstream Vera Sans Mono", 16, FontStyle.Bold);
-            //new Font("Verdana", 10, FontStyle.Regular);
+        private static readonly Theme theme =
+            new Theme(Theme.Discreet)
+            {
+                FontName = FontNames.FixedWidth.CourierNew,
+                BeepOnError = false,
+            };
 
         #endregion
 
 
         #region General Behavior
 
-        public TypistForm()
+        public TypistForm(string filePath)
         {
             InitializeComponent();
-        }
 
-        private void TypistForm_Load(object sender, EventArgs e)
-        {
-            this.Top = 0;
+            if (Properties.Settings.Default.IsMaximized)
+                WindowState = FormWindowState.Maximized;
+
+            if (Properties.Settings.Default.WindowX == 0 && Properties.Settings.Default.WindowY == 0 &&
+                Properties.Settings.Default.WindowWidth == 0 && Properties.Settings.Default.WindowHeight == 0)
+                StartPosition = FormStartPosition.CenterScreen;
+            else
+            {
+                Location = new Point(Properties.Settings.Default.WindowX, Properties.Settings.Default.WindowY);
+                Size = new Size(Properties.Settings.Default.WindowWidth, Properties.Settings.Default.WindowHeight);
+            }
 
             //lblAccuracy.Left = lblErrorCount.Left + 125;
             //lblErrorCount.Width = 120;
@@ -71,6 +73,12 @@ namespace Typist
 
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
+
+            ImportFile(filePath);
+        }
+
+        private void TypistForm_Load(object sender, EventArgs e)
+        {
         }
 
         protected TextBuffer ImportedText
@@ -84,7 +92,7 @@ namespace Typist
 
                 cachedCharAreas = new Dictionary<int, RectangleF>();
 
-                if (beepOnError)
+                if (theme.BeepOnError)
                     TypedText.Error += new EventHandler(TypedText_Error);
             }
         }
@@ -111,7 +119,7 @@ namespace Typist
                     "Start";
 
                 this.Text = string.Format("{0}Typist{1}",
-                                          IsImported ? dlgImport.SafeFileName + " - " : "",
+                                          IsImported && !string.IsNullOrEmpty(importedFileName) ? importedFileName + " - " : "",
                                           IsPaused ? (IsFinished ? " (Finished)" : " (Paused)") : "");
 
                 if (practiceMode)
@@ -165,10 +173,19 @@ namespace Typist
             PracticeMode = false;
 
             if (dlgImport.ShowDialog() == DialogResult.OK)
-            {
-                importedFileName = dlgImport.SafeFileName;
+                ImportFile(dlgImport.FileName);
+        }
 
-                using (StreamReader sr = new StreamReader(dlgImport.FileName))
+        public void ImportFile(string filePath)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(filePath))
+                    return;
+
+                importedFileName = new FileInfo(filePath).Name;
+
+                using (StreamReader sr = new StreamReader(filePath))
                     ImportedText = new TextBuffer(sr.ReadToEnd(), countWhitespaceAsWordChars);
 
                 stopwatch.Reset();
@@ -176,8 +193,11 @@ namespace Typist
                 rightAfterImport = true;
                 PracticeMode = false;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Typist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
         private string importedFileName = "";
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -191,6 +211,40 @@ namespace Typist
                 PracticeMode = false;
         }
 
+        private void TypistForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (pauseOnMinimize && WindowState == FormWindowState.Minimized)
+                PracticeMode = false;
+
+            presaveWindowPosition(false, true);
+        }
+
+        private void TypistForm_Move(object sender, EventArgs e)
+        {
+            presaveWindowPosition(true, false);
+        }
+
+        private void presaveWindowPosition(bool location, bool size)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                if (location)
+                {
+                    Properties.Settings.Default.WindowX = Location.X;
+                    Properties.Settings.Default.WindowY = Location.Y;
+                }
+
+                if (size)
+                {
+                    Properties.Settings.Default.WindowWidth = Size.Width;
+                    Properties.Settings.Default.WindowHeight = Size.Height;
+                }
+            }
+
+            if (WindowState != FormWindowState.Minimized)
+                Properties.Settings.Default.IsMaximized = WindowState == FormWindowState.Maximized;
+        }
+
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             if (askBeforeCloseDuringPractice && IsStarted)
@@ -200,8 +254,14 @@ namespace Typist
                 if (MessageBox.Show("Practice session is in progress. Are you sure you want to quit?", "Typist",
                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
                                     == DialogResult.No)
+                {
                     e.Cancel = true;
+                    return;
+                }
             }
+
+            presaveWindowPosition(true, true);
+            Properties.Settings.Default.Save();
 
             base.OnClosing(e);
         }
@@ -213,7 +273,7 @@ namespace Typist
 
         private void playBeep()
         {
-            if (beepOnError)
+            if (theme.BeepOnError)
                 SystemSounds.Beep.Play();
         }
 
@@ -254,7 +314,7 @@ namespace Typist
 
         private void drawImportedText(Graphics g, RectangleF typingArea)
         {
-            drawText(ImportedText.ToString(), g, importedTextColor, typingArea);
+            drawText(ImportedText.ToString(), g, theme.ImportedTextColor, typingArea);
         }
 
         private void drawShadowText(Graphics g, RectangleF typingArea)
@@ -274,7 +334,7 @@ namespace Typist
                                                        g, typingArea);
             }
 
-            drawText(shadowText, g, typedTextColor, typingArea);
+            drawText(shadowText, g, theme.TypedTextColor, typingArea);
         }
 
         private int findLineJump(string text, int lastIndex, Graphics g, RectangleF typingArea)
@@ -333,10 +393,10 @@ namespace Typist
 
             for (int i = 0; i < TypedText.ErrorsUncorrected.Count; i++)
             {
-                g.FillRectangle(errorBackColor, fracOffsetCharArea(errorCharAreas[i], 0, errorBackgroundVOffset));
+                g.FillRectangle(theme.ErrorBackColor, fracOffsetCharArea(errorCharAreas[i], 0, errorBackgroundVOffset));
 
                 drawChar(TypedText[TypedText.ErrorsUncorrected[i]],
-                         g, errorForeColor,
+                         g, theme.ErrorForeColor,
                          errorCharAreas[i]);
             }
         }
@@ -354,15 +414,15 @@ namespace Typist
                                                 cursorAsVerticalBar ? barCursorVOffset : charCursorVOffset);
 
                 if (cursorAsVerticalBar)
-                    g.FillRectangle(cursorColor, new RectangleF()
+                    g.FillRectangle(theme.CursorColor, new RectangleF()
                     {
-                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * barCursorLineWidth),
+                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * theme.BarCursorLineWidth),
                         Y = cursorArea.Y,
-                        Width = barCursorLineWidth,
+                        Width = theme.BarCursorLineWidth,
                         Height = cursorArea.Height,
                     });
                 else
-                    drawChar(charCursorChar, g, cursorColor, cursorArea);
+                    drawChar(charCursorChar, g, theme.CursorColor, cursorArea);
             }
         }
 
@@ -389,7 +449,7 @@ namespace Typist
             if (ch == '\n')
                 ch = pilcrow;
 
-            g.DrawString(ch.ToString(), typingFont, brush, charArea, SingleCharStringFormat);
+            g.DrawString(ch.ToString(), theme.Font, brush, charArea, SingleCharStringFormat);
         }
 
         private void drawText(string text, Graphics g, Brush brush, RectangleF typingArea)
@@ -397,7 +457,7 @@ namespace Typist
             if (visibleNewlines)
                 text = text.Replace("\n", string.Format("{0}\n", pilcrow));
 
-            g.DrawString(text, typingFont, brush, typingArea, TextStringFormat);
+            g.DrawString(text, theme.Font, brush, typingArea, TextStringFormat);
         }
 
         private RectangleF getCharArea(string text, int charIndex, Graphics g, RectangleF typingArea)
@@ -465,7 +525,7 @@ namespace Typist
             //stringFormat.FormatFlags = TextStringFormat.FormatFlags & ~StringFormatFlags.NoClip;
             stringFormat.SetMeasurableCharacterRanges(ranges);
 
-            Region[] regions = g.MeasureCharacterRanges(text, typingFont, typingArea, stringFormat);
+            Region[] regions = g.MeasureCharacterRanges(text, theme.Font, typingArea, stringFormat);
 
             return regions.Select(r => r.GetBounds(g))
                           .ToArray();
@@ -642,8 +702,7 @@ namespace Typist
                 if (timeChanged)
                     displayWPM();
 
-                if ((pauseAfterElapsed > 0 && DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, pauseAfterElapsed)) ||
-                    (pauseOnMinimize && WindowState == FormWindowState.Minimized))
+                if (pauseAfterElapsed > 0 && DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, pauseAfterElapsed))
                     PracticeMode = false;
             }
         }

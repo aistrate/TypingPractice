@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace Typist
+namespace Typist.Appearance
 {
     /// <summary>
     /// The standard Visual Studio editor colors.

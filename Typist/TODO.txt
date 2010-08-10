@@ -4,17 +4,19 @@
 
 - solve bug: with a non-fixed-width font (e.g., Verdana), chars on the last line being typed become misaligned, until typing past the end of the (screen) line
 
+- refactor the "typing zone" of the form (the PictureBox with its Paint event handler) into a separate user control
+
 - display Unicode chars
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
 
-- color schemes
-
-- save window position between sessions (instead of always starting centered)
-
 - align error highlight chars better with the rest of the text
 
 
+* 'Open With...' from Windows Explorer
+* bug: when window is maximized (or just wide), after an error it takes about half a second for the error rectangles to appear on screen (a very noticeable delay); (solved: the cause appears to be a slow audio card; turning theme.BeepOnError = false eliminates the delay)
+* save window position between sessions (instead of always starting centered)
+* color schemes (themes)
 * bug for 'Ernest Hemingway.txt' file: when typing "non-fiction" (towards the end of the first paragraph), the "non-" stays on the preceding line (because of the dash)
 * pause if minimized
 * new program flag: cursorAsVerticalBar (false means underscore char, '_')
