@@ -326,20 +326,38 @@ namespace Typist
                           .ToArray();
         }
 
-        protected readonly static StringFormat TextStringFormat =
-            new StringFormat(StringFormatFlags.LineLimit)
+        protected StringFormat TextStringFormat
+        {
+            get
             {
-                Trimming = StringTrimming.Word,
-                Alignment = StringAlignment.Near,
-                LineAlignment = StringAlignment.Near,
-            };
+                if (textStringFormat == null)
+                    textStringFormat = new StringFormat(StringFormatFlags.LineLimit)
+                    {
+                        Trimming = StringTrimming.Word,
+                        Alignment = StringAlignment.Near,
+                        LineAlignment = StringAlignment.Near,
+                    };
 
-        protected readonly static StringFormat SingleCharStringFormat =
-            new StringFormat(StringFormatFlags.NoWrap)
+                return textStringFormat;
+            }
+        }
+        private StringFormat textStringFormat;
+
+        protected StringFormat SingleCharStringFormat
+        {
+            get
             {
-                Alignment = StringAlignment.Center,
-                LineAlignment = StringAlignment.Far,
-            };
+                if (singleCharStringFormat == null)
+                    singleCharStringFormat = new StringFormat(StringFormatFlags.NoWrap)
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Far,
+                    };
+
+                return singleCharStringFormat;
+            }
+        }
+        private StringFormat singleCharStringFormat;
 
         #endregion
     }
