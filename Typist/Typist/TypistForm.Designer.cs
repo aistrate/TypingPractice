@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TypistForm));
             this.btnImport = new System.Windows.Forms.Button();
             this.dlgImport = new System.Windows.Forms.OpenFileDialog();
-            this.picTyping = new System.Windows.Forms.PictureBox();
+            this.picTyping = new TypingBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.lblTime = new System.Windows.Forms.Label();
             this.tmrTimer = new System.Windows.Forms.Timer(this.components);
@@ -71,8 +71,6 @@
             this.picTyping.Size = new System.Drawing.Size(461, 537);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
-            this.picTyping.Resize += new System.EventHandler(this.picTyping_Resize);
-            this.picTyping.Paint += new System.Windows.Forms.PaintEventHandler(this.picTyping_Paint);
             // 
             // btnStart
             // 
@@ -187,7 +185,7 @@
 
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.OpenFileDialog dlgImport;
-        private System.Windows.Forms.PictureBox picTyping;
+        private TypingBox picTyping;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer tmrTimer;

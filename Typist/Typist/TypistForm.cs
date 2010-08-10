@@ -42,8 +42,8 @@ namespace Typist
         private static readonly Theme theme =
             new Theme(Theme.DefaultLarge)
             {
-                FontName = FontNames.FixedWidth.Anonymous,
-                FontSize = 20,
+                FontName = FontNames.FixedWidth.CourierNew,
+                FontSize = 18,
                 BarCursorLineWidth = 4,
                 BeepOnError = false,
             };
@@ -56,6 +56,8 @@ namespace Typist
         public TypistForm(string filePath)
         {
             InitializeComponent();
+
+            initializeTypingBox();
 
             if (Properties.Settings.Default.IsMaximized)
                 WindowState = FormWindowState.Maximized;
@@ -75,8 +77,38 @@ namespace Typist
             ImportFile(filePath);
         }
 
+        private void initializeTypingBox()
+        {
+            picTyping.MarginLeft = marginLeft;
+            picTyping.MarginRight = marginRight;
+            picTyping.MarginTop = marginTop;
+            picTyping.MarginBottom = marginBottom;
+
+            picTyping.Theme = theme;
+
+            picTyping.CursorAsVerticalBar = cursorAsVerticalBar;
+            picTyping.CharCursorChar = charCursorChar;
+
+            picTyping.BarCursorVOffset = barCursorVOffset;
+            picTyping.CharCursorVOffset = charCursorVOffset;
+            picTyping.ErrorBackgroundVOffset = errorBackgroundVOffset;
+
+            picTyping.VisibleNewlines = visibleNewlines;
+            picTyping.ShowCursorWhenPaused = showCursorWhenPaused;
+
+            picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(picTyping_DrawingCursor);
+        }
+
         private void TypistForm_Load(object sender, EventArgs e)
         {
+        }
+
+        private void picTyping_DrawingCursor(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            bool drawCursor = (PracticeMode || showCursorWhenPaused && IsPaused) &&
+                              !IsFinished;
+
+            e.Cancel = !drawCursor;
         }
 
         protected TextBuffer ImportedText
@@ -87,6 +119,9 @@ namespace Typist
                 importedText = value;
 
                 TypedText = new TextBuffer(importedText, countWhitespaceAsWordChars, countErrorsAsWordChars);
+
+                picTyping.ImportedText = value;
+                picTyping.TypedText = TypedText;
 
                 if (theme.BeepOnError)
                     TypedText.Error += new EventHandler(TypedText_Error);
@@ -162,7 +197,6 @@ namespace Typist
         protected bool IsPaused { get { return IsStarted && !PracticeMode; } }
 
         protected bool IsFinished { get { return TypedText.Length >= ImportedText.Length; } }
-
 
         private void btnImport_Click(object sender, EventArgs e)
         {
@@ -262,251 +296,12 @@ namespace Typist
             base.OnClosing(e);
         }
 
-        protected void TypedText_Error(object sender, EventArgs e)
-        {
-            playBeep();
-        }
-
-        private void playBeep()
-        {
-            if (theme.BeepOnError)
-                SystemSounds.Beep.Play();
-        }
-
-        #endregion
-
-
-        #region Paint Event Handler
-
         private void TypistForm_Paint(object sender, PaintEventArgs e)
         {
             repaintNeeded = true;
         }
 
         private bool repaintNeeded = false;
-
-        private void picTyping_Paint(object sender, PaintEventArgs e)
-        {
-            RectangleF typingArea = calcTypingArea(e.Graphics);
-
-            drawImportedText(e.Graphics, typingArea);
-            drawShadowText(e.Graphics, typingArea);
-            drawErrorChars(e.Graphics, typingArea);
-            drawCursor(e.Graphics, typingArea);
-        }
-
-        private RectangleF calcTypingArea(Graphics g)
-        {
-            RectangleF sampleCharArea = getCharArea("_", 0, g, g.ClipBounds);
-
-            return new RectangleF()
-            {
-                X = marginLeft,
-                Y = marginTop,
-                Width = g.ClipBounds.Width - marginLeft - marginRight - sampleCharArea.Width,
-                Height = g.ClipBounds.Height - marginTop - marginBottom,
-            };
-        }
-
-        private void drawImportedText(Graphics g, RectangleF typingArea)
-        {
-            drawText(ImportedText.ToString(), g, theme.ImportedTextColor, typingArea);
-        }
-
-        private void drawShadowText(Graphics g, RectangleF typingArea)
-        {
-            string shadowText = ImportedText.Substring(0, TypedText.Length);
-
-            int lineJumpIndex = findLineJump(ImportedText.ToString(), TypedText.LastIndex,
-                                             g, typingArea);
-            if (lineJumpIndex < TypedText.LastIndex)
-                shadowText = insertSpacesAfterJump(ImportedText.ToString(), shadowText,
-                                                   lineJumpIndex, TypedText.LastIndex,
-                                                   g, typingArea);
-
-            drawText(shadowText, g, theme.TypedTextColor, typingArea);
-        }
-
-        private int findLineJump(string text, int lastIndex, Graphics g, RectangleF typingArea)
-        {
-            RectangleF importedCharArea, shadowCharArea;
-            int lineJumpIndex = lastIndex;
-
-            while (lineJumpIndex >= 0)
-            {
-                importedCharArea = getCharArea(text,
-                                               lineJumpIndex,
-                                               g, typingArea);
-
-                shadowCharArea = getCharArea(text.Substring(0, lineJumpIndex + 1),
-                                             lineJumpIndex,
-                                             g, typingArea);
-
-                if (shadowCharArea.Y == importedCharArea.Y)
-                    return lineJumpIndex;
-
-                lineJumpIndex--;
-            }
-
-            return lastIndex;
-        }
-
-        private string insertSpacesAfterJump(string text, string shadowText, int lineJumpIndex, int lastIndex,
-                                             Graphics g, RectangleF typingArea)
-        {
-            RectangleF importedCharArea = getCharArea(text,
-                                                      lastIndex,
-                                                      g, typingArea);
-
-            RectangleF shadowCharArea;
-            int spaces = 0;
-
-            do
-            {
-                shadowText = shadowText.Insert(lineJumpIndex + 1, " ");
-                spaces++;
-
-                shadowCharArea = getCharArea(shadowText,
-                                             lastIndex + spaces,
-                                             g, typingArea);
-            }
-            while (shadowCharArea.Y < importedCharArea.Y);
-
-            return shadowText;
-        }
-
-        private void drawErrorChars(Graphics g, RectangleF typingArea)
-        {
-            RectangleF[] errorCharAreas = getCharAreas(ImportedText.ToString(),
-                                                       TypedText.ErrorsUncorrected.ToArray(),
-                                                       g, typingArea);
-
-            for (int i = 0; i < TypedText.ErrorsUncorrected.Count; i++)
-            {
-                g.FillRectangle(theme.ErrorBackColor, fracOffsetCharArea(errorCharAreas[i], 0, errorBackgroundVOffset));
-
-                drawChar(TypedText[TypedText.ErrorsUncorrected[i]],
-                         g, theme.ErrorForeColor,
-                         errorCharAreas[i]);
-            }
-        }
-
-        private void drawCursor(Graphics g, RectangleF typingArea)
-        {
-            if ((PracticeMode || showCursorWhenPaused && IsPaused) &&
-                !IsFinished)
-            {
-                RectangleF cursorArea = getCharArea(ImportedText.ToString(),
-                                                    TypedText.LastIndex + 1,
-                                                    g, typingArea);
-
-                cursorArea = fracOffsetCharArea(cursorArea, 0,
-                                                cursorAsVerticalBar ? barCursorVOffset : charCursorVOffset);
-
-                if (cursorAsVerticalBar)
-                    g.FillRectangle(theme.CursorColor, new RectangleF()
-                    {
-                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * theme.BarCursorLineWidth),
-                        Y = cursorArea.Y,
-                        Width = theme.BarCursorLineWidth,
-                        Height = cursorArea.Height,
-                    });
-                else
-                    drawChar(charCursorChar, g, theme.CursorColor, cursorArea);
-            }
-        }
-
-        private RectangleF fracOffsetCharArea(RectangleF charArea, float fracWidth, float fracHeight)
-        {
-            return offsetCharArea(charArea, fracWidth * charArea.Width, fracHeight * charArea.Height);
-        }
-
-        private RectangleF offsetCharArea(RectangleF charArea, float x, float y)
-        {
-            return new RectangleF()
-            {
-                X = charArea.X + x,
-                Y = charArea.Y + y,
-                Width = charArea.Width,
-                Height = charArea.Height,
-            };
-        }
-
-        private char pilcrow = '\xB6';
-
-        private void drawChar(char ch, Graphics g, Brush brush, RectangleF charArea)
-        {
-            if (ch == '\n')
-                ch = pilcrow;
-
-            g.DrawString(ch.ToString(), theme.Font, brush, charArea, SingleCharStringFormat);
-        }
-
-        private void drawText(string text, Graphics g, Brush brush, RectangleF typingArea)
-        {
-            if (visibleNewlines)
-                text = text.Replace("\n", string.Format("{0}\n", pilcrow));
-
-            g.DrawString(text, theme.Font, brush, typingArea, TextStringFormat);
-        }
-
-        private RectangleF getCharArea(string text, int charIndex, Graphics g, RectangleF typingArea)
-        {
-            return getCharAreas(text, new[] { charIndex }, g, typingArea).First();
-        }
-
-        private RectangleF[] getCharAreas(string text, int[] charIndexes, Graphics g, RectangleF typingArea)
-        {
-            charIndexes = charIndexes.Where(i => i < text.Length)
-                                     .ToArray();
-
-            RectangleF[] charAreas = charIndexes.Split(32)
-                                                .SelectMany(grp => getCharAreas32(text, grp.ToArray(),
-                                                                                  g, typingArea))
-                                                .ToArray();
-
-            for (int i = 0; i < charIndexes.Length; i++)
-                if (charAreas[i].IsEmpty)
-                    charAreas[i] = getCharAreas32(text.Insert(charIndexes[i], "-"),
-                                                  new[] { charIndexes[i] },
-                                                  g, typingArea)[0];
-
-            return charAreas;
-        }
-
-        private RectangleF[] getCharAreas32(string text, int[] charIndexes, Graphics g, RectangleF typingArea)
-        {
-            CharacterRange[] ranges = charIndexes.Select(i => new CharacterRange(i, 1)).ToArray();
-
-            StringFormat stringFormat = new StringFormat(TextStringFormat);
-            stringFormat.SetMeasurableCharacterRanges(ranges);
-
-            Region[] regions = g.MeasureCharacterRanges(text, theme.Font, typingArea, stringFormat);
-
-            return regions.Select(r => r.GetBounds(g))
-                          .ToArray();
-        }
-
-        protected readonly static StringFormat TextStringFormat =
-            new StringFormat(StringFormatFlags.LineLimit)
-            {
-                Trimming = StringTrimming.Word,
-                Alignment = StringAlignment.Near,
-                LineAlignment = StringAlignment.Near,
-            };
-
-        protected readonly static StringFormat SingleCharStringFormat =
-            new StringFormat(StringFormatFlags.NoWrap)
-            {
-                Alignment = StringAlignment.Center,
-                LineAlignment = StringAlignment.Far,
-            };
-
-
-        private void picTyping_Resize(object sender, EventArgs e)
-        {
-            picTyping.Invalidate();
-        }
 
         private void TypistForm_Activated(object sender, EventArgs e)
         {
@@ -593,6 +388,17 @@ namespace Typist
         }
 
         private DateTime timeOfLastCharTyped;
+
+        protected void TypedText_Error(object sender, EventArgs e)
+        {
+            playBeep();
+        }
+
+        private void playBeep()
+        {
+            if (theme.BeepOnError)
+                SystemSounds.Beep.Play();
+        }
 
         #endregion
 

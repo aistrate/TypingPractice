@@ -52,6 +52,9 @@
     <Compile Include="Appearance\FontNames.cs" />
     <Compile Include="TextBuffer.cs" />
     <Compile Include="Appearance\Theme.cs" />
+    <Compile Include="TypingBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TypistForm.cs">
       <SubType>Form</SubType>
     </Compile>
