@@ -40,7 +40,7 @@ namespace Typist
         private const int marginBottom = 2;
 
         private static readonly Theme theme =
-            new Theme(Theme.Default)
+            new Theme(Theme.Discreet)
             {
                 FontName = FontNames.FixedWidth.CourierNew,
                 BeepOnError = false,

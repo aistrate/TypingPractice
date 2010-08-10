@@ -87,7 +87,6 @@ namespace Typist.Appearance
 
         public static Theme Discreet = new Theme(Default)
         {
-            ErrorBackColor = Brushes.LightGray,
             CursorColor = Brushes.Black,
             BeepOnError = false,
         };
