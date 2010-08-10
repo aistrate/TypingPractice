@@ -1,16 +1,27 @@
-- avoid the cursor staying in the same place for two consecutive chars (at the beginning of line, after a long line that doesn't fit one more char); if the char has an empty rectangle (zero w/h), that means it's at the end of line, so draw the cursor/error to the right of the prev char, on the same line (leave an empty margin to the right of the form)
-
-- test how it works with two or more spaces at the end of a screen line (but no '\n' char); do all of them have size zero?
-
-- solve bug: with a non-fixed-width font (e.g., Verdana), chars on the last line being typed become misaligned, until typing past the end of the (screen) line
+General:
 
 - refactor the "typing zone" of the form (the PictureBox with its Paint event handler) into a separate user control
+
+- refactor the saving of window size/position/maximized(/minimized) into a reusable user control
 
 - display Unicode chars
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
 
+- scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen
+
+
+
+Paint event handler:
+
+- avoid the cursor staying in the same place for two consecutive chars (at the beginning of line, after a long line that doesn't fit one more char); if the char has an empty rectangle (zero w/h), that means it's at the end of line, so draw the cursor/error to the right of the prev char, on the same line (leave an empty margin to the right of the form)
+
+- test how it works with two or more spaces at the end of a screen line (but no '\n' char); do all of them have size zero?
+
+- bug: with a non-fixed-width font (e.g., Verdana), chars on the last line being typed become misaligned, until typing past the end of the (screen) line
+
 - align error highlight chars better with the rest of the text
+
 
 
 * 'Open With...' from Windows Explorer
