@@ -40,9 +40,11 @@ namespace Typist
         private const int marginBottom = 2;
 
         private static readonly Theme theme =
-            new Theme(Theme.Discreet)
+            new Theme(Theme.DefaultLarge)
             {
-                FontName = FontNames.FixedWidth.CourierNew,
+                FontName = FontNames.FixedWidth.Anonymous,
+                FontSize = 20,
+                BarCursorLineWidth = 4,
                 BeepOnError = false,
             };
 
