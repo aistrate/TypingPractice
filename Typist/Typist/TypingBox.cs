@@ -182,6 +182,9 @@ namespace Typist
 
                 shadowCharArea = getCharArea(text.Substring(0, lineJumpIndex + 1), lineJumpIndex, gc);
 
+                if (importedCharArea.IsEmpty || shadowCharArea.IsEmpty)
+                    return lastIndex;
+
                 if (shadowCharArea.Y == importedCharArea.Y)
                     return lineJumpIndex;
 
