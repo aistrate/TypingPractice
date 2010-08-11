@@ -85,6 +85,13 @@ namespace Typist.Appearance
             BarCursorLineWidth = 3,
         };
 
+        public static Theme DefaultVeryLarge = new Theme(Default)
+        {
+            FontName = FontNames.FixedWidth.BitstreamVeraSansMono,
+            FontSize = 22,
+            BarCursorLineWidth = 4,
+        };
+
         public static Theme Discreet = new Theme(Default)
         {
             CursorColor = Brushes.Black,

@@ -40,11 +40,10 @@ namespace Typist
         private const int marginBottom = 2;
 
         private Theme theme =
-            new Theme(Theme.Default)
+            new Theme(Theme.DefaultVeryLarge)
             {
-                //FontName = FontNames.FixedWidth.CourierNew,
-                //FontSize = 18,
-                //BarCursorLineWidth = 4,
+                FontName = FontNames.FixedWidth.CourierNew,
+                FontStyle = FontStyle.Bold,
                 BeepOnError = false,
             };
 
