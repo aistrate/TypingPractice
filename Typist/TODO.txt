@@ -2,8 +2,6 @@ General:
 
 - scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen
 
-- display Unicode chars
-
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
 
 - refactor the saving of window size/position/maximized(/minimized) into a reusable user control
@@ -22,6 +20,7 @@ Paint event handler:
 
 
 
+* display Unicode chars
 * refactor the "typing zone" of the form (the PictureBox with its Paint event handler) into a separate user control
 * 'Open With...' from Windows Explorer
 * bug: when window is maximized (or just wide), after an error it takes about half a second for the error rectangles to appear on screen (a very noticeable delay); (solved: the cause appears to be a slow audio card; turning theme.BeepOnError = false eliminates the delay)
