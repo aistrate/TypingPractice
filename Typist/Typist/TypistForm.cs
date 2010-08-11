@@ -8,6 +8,7 @@ using System.Media;
 using System.Windows.Forms;
 using Typist.Appearance;
 using System.Configuration;
+using System.Text;
 
 namespace Typist
 {
@@ -40,10 +41,12 @@ namespace Typist
         private const int marginBottom = 2;
 
         private Theme theme =
-            new Theme(Theme.DefaultVeryLarge)
+            new Theme(Theme.Default)
             {
-                FontName = FontNames.FixedWidth.CourierNew,
-                FontStyle = FontStyle.Bold,
+                //FontName = FontNames.FixedWidth.CourierNew,
+                //FontSize = 14,
+                //FontStyle = FontStyle.Bold,
+                //ErrorBackColor = Brushes.White,
                 BeepOnError = false,
             };
 
@@ -214,7 +217,7 @@ namespace Typist
 
                 importedFileName = new FileInfo(filePath).Name;
 
-                using (StreamReader sr = new StreamReader(filePath))
+                using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
                     ImportedText = new TextBuffer(sr.ReadToEnd(), countWhitespaceAsWordChars);
 
                 stopwatch.Reset();
