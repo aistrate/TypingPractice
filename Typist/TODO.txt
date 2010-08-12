@@ -1,3 +1,13 @@
+Main unsolved problems:
+
+- scrolling the text
+
+- precise positioning (of error characters and cursor)
+
+- changing settings at runtime
+
+
+
 General:
 
 - scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen

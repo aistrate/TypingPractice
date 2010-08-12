@@ -47,7 +47,6 @@ namespace Typist
                 //FontSize = 22,
                 //FontStyle = FontStyle.Bold,
                 //ErrorBackColor = Brushes.White,
-                BeepOnError = false,
             };
 
         #endregion
