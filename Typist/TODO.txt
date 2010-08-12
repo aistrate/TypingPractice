@@ -10,6 +10,10 @@ General:
 
 - different "themes", or settings: Article (eliminate multiple spaces), Code (leave spaces alone), Characters (large font)
 
+- create a Setup project; make it install fixed-pitch fonts (Bitstream Vera Sans Mono, Andale Mono, Anonymous, Consolas, etc.), if they don't yet exist on the machine; also, Start menu shortcuts, and right-click menu "Open", if possible
+
+- change the name of the program/project to something more memorable than "Typist"
+
 
 
 Paint event handler:

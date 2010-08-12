@@ -10,7 +10,7 @@ namespace Typist.Appearance
     {
         private Theme()
         {
-            Font = new Font(FontNames.FixedWidth.CourierNew, 10, FontStyle.Regular);
+            Font = new Font(FontNames.FixedPitch.CourierNew, 10, FontStyle.Regular);
 
             ImportedTextColor = Brushes.Black;
             TypedTextColor = new SolidBrush(VsColors.UserTypes);
@@ -87,7 +87,7 @@ namespace Typist.Appearance
 
         public static Theme DefaultVeryLarge = new Theme(Default)
         {
-            FontName = FontNames.FixedWidth.BitstreamVeraSansMono,
+            FontName = FontNames.FixedPitch.BitstreamVeraSansMono,
             FontSize = 22,
             BarCursorLineWidth = 4,
         };
