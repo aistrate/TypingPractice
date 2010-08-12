@@ -97,5 +97,12 @@ namespace Typist.Appearance
             CursorColor = Brushes.Black,
             BeepOnError = false,
         };
+
+        public static Theme RomanianVeryLarge = new Theme(Default)
+        {
+            FontName = FontNames.FixedPitch.AnonymousPro,
+            FontSize = 24,
+            BarCursorLineWidth = 3,
+        };
     }
 }

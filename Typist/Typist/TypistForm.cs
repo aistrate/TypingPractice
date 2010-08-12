@@ -41,10 +41,10 @@ namespace Typist
         private const int marginBottom = 2;
 
         private Theme theme =
-            new Theme(Theme.Default)
+            new Theme(Theme.RomanianVeryLarge)
             {
-                //FontName = FontNames.FixedWidth.BitstreamVeraSansMono,
-                //FontSize = 16,
+                //FontName = FontNames.FixedPitchRomanian.Consolas,
+                //FontSize = 22,
                 //FontStyle = FontStyle.Bold,
                 //ErrorBackColor = Brushes.White,
                 BeepOnError = false,
