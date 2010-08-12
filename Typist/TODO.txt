@@ -6,6 +6,10 @@ General:
 
 - refactor the saving of window size/position/maximized(/minimized) into a reusable user control
 
+- flags: "eliminate multiple spaces" and "eliminate multiple spaces if not at beginning of line" (but leave newlines alone)
+
+- different "themes", or settings: Article (eliminate multiple spaces), Code (leave spaces alone), Characters (large font)
+
 
 
 Paint event handler:
