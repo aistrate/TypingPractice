@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FontInstall", "FontInstall\FontInstall.vdproj", "{DCF5B220-F870-45BD-9B6C-2486FC76B75F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCF5B220-F870-45BD-9B6C-2486FC76B75F}.Debug|Default.ActiveCfg = Debug
+		{DCF5B220-F870-45BD-9B6C-2486FC76B75F}.Debug|Default.Build.0 = Debug
+		{DCF5B220-F870-45BD-9B6C-2486FC76B75F}.Release|Default.ActiveCfg = Release
+		{DCF5B220-F870-45BD-9B6C-2486FC76B75F}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
