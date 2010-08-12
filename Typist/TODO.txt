@@ -24,6 +24,7 @@ Paint event handler:
 
 
 
+* shortcut: Ctrl-F for "Change Font", in dialog
 * display Unicode chars
 * refactor the "typing zone" of the form (the PictureBox with its Paint event handler) into a separate user control
 * 'Open With...' from Windows Explorer

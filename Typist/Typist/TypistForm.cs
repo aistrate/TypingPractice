@@ -43,8 +43,8 @@ namespace Typist
         private Theme theme =
             new Theme(Theme.Default)
             {
-                //FontName = FontNames.FixedWidth.CourierNew,
-                //FontSize = 14,
+                //FontName = FontNames.FixedWidth.BitstreamVeraSansMono,
+                //FontSize = 16,
                 //FontStyle = FontStyle.Bold,
                 //ErrorBackColor = Brushes.White,
                 BeepOnError = false,
@@ -347,6 +347,11 @@ namespace Typist
                         PracticeMode = false;
                         WindowState = FormWindowState.Minimized;
                     }
+                    else if (e.KeyCode == Keys.F)
+                    {
+                        PracticeMode = false;
+                        changeFontDialog();
+                    }
                 }
 
                 if (PracticeMode)
@@ -359,6 +364,31 @@ namespace Typist
 
                 e.SuppressKeyPress = true;
             }
+        }
+
+        private void changeFontDialog()
+        {
+            dlgChangeFont.Font = theme.Font;
+
+            if (dlgChangeFont.ShowDialog() == DialogResult.OK)
+                changeFont();
+        }
+
+        private void dlgChangeFont_Apply(object sender, EventArgs e)
+        {
+            changeFont();
+        }
+
+        private void changeFont()
+        {
+            theme = new Theme(theme)
+            {
+                Font = dlgChangeFont.Font,
+            };
+
+            picTyping.Theme = theme;
+
+            picTyping.Refresh();
         }
 
         private void TypistForm_KeyPress(object sender, KeyPressEventArgs e)

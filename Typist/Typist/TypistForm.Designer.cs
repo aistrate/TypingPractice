@@ -39,6 +39,7 @@
             this.tblLine = new System.Windows.Forms.TableLayoutPanel();
             this.lblErrorCount = new System.Windows.Forms.Label();
             this.lblAccuracy = new System.Windows.Forms.Label();
+            this.dlgChangeFont = new System.Windows.Forms.FontDialog();
             this.picTyping = new Typist.TypingBox();
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).BeginInit();
             this.SuspendLayout();
@@ -133,12 +134,28 @@
             this.lblAccuracy.TabIndex = 11;
             this.lblAccuracy.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // dlgChangeFont
+            // 
+            this.dlgChangeFont.AllowScriptChange = false;
+            this.dlgChangeFont.AllowSimulations = false;
+            this.dlgChangeFont.AllowVerticalFonts = false;
+            this.dlgChangeFont.FixedPitchOnly = true;
+            this.dlgChangeFont.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dlgChangeFont.FontMustExist = true;
+            this.dlgChangeFont.ScriptsOnly = true;
+            this.dlgChangeFont.ShowApply = true;
+            this.dlgChangeFont.ShowEffects = false;
+            this.dlgChangeFont.Apply += new System.EventHandler(this.dlgChangeFont_Apply);
+            // 
             // picTyping
             // 
             this.picTyping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.picTyping.BackColor = System.Drawing.Color.White;
+            this.picTyping.BarCursorVOffset = 0F;
+            this.picTyping.CharCursorVOffset = 0F;
+            this.picTyping.ErrorBackgroundVOffset = 0F;
             this.picTyping.ImportedText = null;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
@@ -196,6 +213,7 @@
         private System.Windows.Forms.TableLayoutPanel tblLine;
         private System.Windows.Forms.Label lblErrorCount;
         private System.Windows.Forms.Label lblAccuracy;
+        private System.Windows.Forms.FontDialog dlgChangeFont;
     }
 }
 
