@@ -20,9 +20,11 @@ General:
 
 - different "themes", or settings: Article (eliminate multiple spaces), Code (leave spaces alone), Characters (large font)
 
-- create a Setup project; make it install fixed-pitch fonts (Bitstream Vera Sans Mono, Andale Mono, Anonymous, Consolas, etc.), if they don't yet exist on the machine; also, Start menu shortcuts, and right-click menu "Open", if possible
+- why is it that some OpenType fonts do not appear in the standard Font Dialog?
 
 - include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
+
+- add to Setup Project: Start menu shortcuts, right-click menu "Open"
 
 - change the name of the program/project to something more memorable than "Typist"
 
@@ -40,6 +42,7 @@ Paint event handler:
 
 
 
+* create a Setup project; make it install fixed-pitch fonts (Anonymous Pro, Bitstream Vera Sans Mono, Andale Mono, etc.), if they don't yet exist on the machine
 * shortcut: Ctrl-F for "Change Font", in dialog
 * display Unicode chars
 * refactor the "typing zone" of the form (the PictureBox with its Paint event handler) into a separate user control
