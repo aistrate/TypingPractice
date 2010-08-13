@@ -12,7 +12,7 @@ General:
 
 - scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen
 
-- allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German)
+- allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German); (for some reason, Alt-<key> combinations don't even arrive at the KeyPress event handler)
 
 - refactor the saving of window size/position/maximized(/minimized) into a reusable user control
 
@@ -21,6 +21,8 @@ General:
 - different "themes", or settings: Article (eliminate multiple spaces), Code (leave spaces alone), Characters (large font)
 
 - create a Setup project; make it install fixed-pitch fonts (Bitstream Vera Sans Mono, Andale Mono, Anonymous, Consolas, etc.), if they don't yet exist on the machine; also, Start menu shortcuts, and right-click menu "Open", if possible
+
+- include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
 
 - change the name of the program/project to something more memorable than "Typist"
 

@@ -60,19 +60,25 @@ namespace Typist.Appearance
         public string FontName
         {
             get { return Font.FontFamily.Name; }
-            set { Font = new Font(value, Font.Size, Font.Style); }
+            set { Font = new Font(value, Font.Size, Font.Style, Font.Unit); }
         }
 
         public float FontSize
         {
             get { return Font.Size; }
-            set { Font = new Font(Font.FontFamily, value, Font.Style); }
+            set { Font = new Font(Font.FontFamily, value, Font.Style, Font.Unit); }
         }
 
         public FontStyle FontStyle
         {
             get { return Font.Style; }
-            set { Font = new Font(Font.FontFamily, Font.Size, value); }
+            set { Font = new Font(Font.FontFamily, Font.Size, value, Font.Unit); }
+        }
+
+        public GraphicsUnit FontUnit
+        {
+            get { return Font.Unit; }
+            set { Font = new Font(Font.FontFamily, Font.Size, Font.Style, value); }
         }
 
 

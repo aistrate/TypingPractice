@@ -43,8 +43,9 @@ namespace Typist
         private Theme theme =
             new Theme(Theme.RomanianVeryLarge)
             {
-                //FontName = FontNames.FixedPitchRomanian.Consolas,
-                //FontSize = 22,
+                //FontName = FontNames.FixedPitchRomanian.DejaVuSansMono,
+                //FontSize = 21.75f,
+                //FontUnit = GraphicsUnit.Point,
                 //FontStyle = FontStyle.Bold,
                 //ErrorBackColor = Brushes.White,
             };
@@ -335,7 +336,7 @@ namespace Typist
 
         private void TypistForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control || e.Alt)
+            if (e.Control)  // || e.Alt)
             {
                 if (e.Control)
                 {
