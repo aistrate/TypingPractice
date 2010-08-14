@@ -379,6 +379,52 @@ namespace Typist
             }
         }
 
+        private void TypistForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (rightAfterImport &&
+                e.KeyChar != ' ' && e.KeyChar != '\b' &&
+                !char.IsControl(e.KeyChar))
+                PracticeMode = true;
+
+            if (PracticeMode)
+            {
+                timeOfLastCharTyped = DateTime.Now;
+
+                if (e.KeyChar == '\b' && (!allowBackspace || TypedText.Length == 0))
+                {
+                    playBeep();
+                    return;
+                }
+
+                TypedText.ProcessKey(e.KeyChar);
+
+                displayErrorCount();
+
+                if (IsFinished)
+                    PracticeMode = false;
+
+                picTyping.Refresh();
+            }
+        }
+
+        private DateTime timeOfLastCharTyped;
+
+        protected void TypedText_Error(object sender, EventArgs e)
+        {
+            playBeep();
+        }
+
+        private void playBeep()
+        {
+            if (theme.BeepOnError)
+                SystemSounds.Beep.Play();
+        }
+
+        #endregion
+
+
+        #region Fonts
+
         private void changeFontDialog()
         {
             dlgChangeFont.Font = picTyping.Theme.Font;
@@ -422,51 +468,11 @@ namespace Typist
 
             picTyping.Refresh();
         }
+
         private int currentFavoriteFontIndex = 0;
         private Font[] favoriteFonts = new Font[] { theme.Font }.Concat(Fonts.Small.All)
                                                                 .Concat(Fonts.Large.All)
                                                                 .ToArray();
-
-        private void TypistForm_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (rightAfterImport &&
-                e.KeyChar != ' ' && e.KeyChar != '\b' &&
-                !char.IsControl(e.KeyChar))
-                PracticeMode = true;
-
-            if (PracticeMode)
-            {
-                timeOfLastCharTyped = DateTime.Now;
-
-                if (e.KeyChar == '\b' && (!allowBackspace || TypedText.Length == 0))
-                {
-                    playBeep();
-                    return;
-                }
-
-                TypedText.ProcessKey(e.KeyChar);
-
-                displayErrorCount();
-
-                if (IsFinished)
-                    PracticeMode = false;
-
-                picTyping.Refresh();
-            }
-        }
-
-        private DateTime timeOfLastCharTyped;
-
-        protected void TypedText_Error(object sender, EventArgs e)
-        {
-            playBeep();
-        }
-
-        private void playBeep()
-        {
-            if (theme.BeepOnError)
-                SystemSounds.Beep.Play();
-        }
 
         #endregion
 

@@ -16,11 +16,15 @@ General:
 
 - refactor the saving of window size/position/maximized(/minimized) into a reusable user control
 
-- flags: "eliminate multiple spaces" and "eliminate multiple spaces if not at beginning of line" (but leave newlines alone)
+- flags: "eliminate multiple spaces" and "eliminate multiple spaces if not at beginning of line" (but leave newlines alone); better name: elimRedundantWhitespaces (or separately: spaces at beginning of line, at end of line, within the line, consecutive newlines)
 
 - different "themes", or settings: Article (eliminate multiple spaces), Code (leave spaces alone), Characters (large font)
 
+- add to the list of favorite fonts only those fonts that are installed on the current machine
+
 - add Consolas font to Setup project
+
+- remove OpenType fonts (and other non-TrueType fonts) from Setup project
 
 - include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
 
