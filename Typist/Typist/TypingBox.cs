@@ -17,9 +17,23 @@ namespace Typist
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public TextBuffer ImportedText { get; set; }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public TextBuffer TypedText { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Font TypingFont { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Theme Theme { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(2)]
+        public int BarCursorLineWidth { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -40,15 +54,6 @@ namespace Typist
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue(0)]
         public int MarginBottom { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Theme Theme { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(2)]
-        public int BarCursorLineWidth { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -280,7 +285,7 @@ namespace Typist
             if (ch == '\n')
                 ch = pilcrow;
 
-            gc.Graphics.DrawString(ch.ToString(), Theme.Font, brush, charArea, SingleCharStringFormat);
+            gc.Graphics.DrawString(ch.ToString(), TypingFont, brush, charArea, SingleCharStringFormat);
         }
 
         private void drawText(string text, GraphicsContext gc, Brush brush)
@@ -288,7 +293,7 @@ namespace Typist
             if (VisibleNewlines)
                 text = text.Replace("\n", string.Format("{0}\n", pilcrow));
 
-            gc.Graphics.DrawString(text, Theme.Font, brush, gc.TypingArea, TextStringFormat);
+            gc.Graphics.DrawString(text, TypingFont, brush, gc.TypingArea, TextStringFormat);
         }
 
         private RectangleF getCharArea(string text, int charIndex, GraphicsContext gc)
@@ -326,7 +331,7 @@ namespace Typist
             StringFormat stringFormat = new StringFormat(TextStringFormat);
             stringFormat.SetMeasurableCharacterRanges(ranges);
 
-            Region[] regions = g.MeasureCharacterRanges(text, Theme.Font, typingArea, stringFormat);
+            Region[] regions = g.MeasureCharacterRanges(text, TypingFont, typingArea, stringFormat);
 
             return regions.Select(r => r.GetBounds(g))
                           .ToArray();

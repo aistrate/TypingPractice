@@ -10,8 +10,6 @@ namespace Typist.Appearance
     {
         private Theme()
         {
-            Font = new Font(FontNames.FixedPitch.CourierNew, 10, FontStyle.Regular);
-
             ImportedTextColor = Brushes.Black;
             TypedTextColor = new SolidBrush(VsColors.UserTypes);
             ErrorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
@@ -21,8 +19,6 @@ namespace Typist.Appearance
 
         public Theme(Theme original)
         {
-            Font = (Font)original.Font.Clone();
-
             ImportedTextColor = original.ImportedTextColor;
             TypedTextColor = original.TypedTextColor;
             ErrorBackColor = original.ErrorBackColor;
@@ -30,80 +26,12 @@ namespace Typist.Appearance
             CursorColor = original.CursorColor;
         }
 
-        public Theme(Theme original, string fontName)
-            : this(original)
-        {
-            FontName = fontName;
-        }
-
-        public Font Font { get; set; }
-
         public Brush ImportedTextColor { get; set; }
         public Brush TypedTextColor { get; set; }
         public Brush ErrorBackColor { get; set; }
         public Brush ErrorForeColor { get; set; }
         public Brush CursorColor { get; set; }
 
-
-        public string FontName
-        {
-            get { return Font.FontFamily.Name; }
-            set { Font = new Font(value, Font.Size, Font.Style, Font.Unit); }
-        }
-
-        public float FontSize
-        {
-            get { return Font.Size; }
-            set { Font = new Font(Font.FontFamily, value, Font.Style, Font.Unit); }
-        }
-
-        public FontStyle FontStyle
-        {
-            get { return Font.Style; }
-            set { Font = new Font(Font.FontFamily, Font.Size, value, Font.Unit); }
-        }
-
-        public GraphicsUnit FontUnit
-        {
-            get { return Font.Unit; }
-            set { Font = new Font(Font.FontFamily, Font.Size, Font.Style, value); }
-        }
-
-        public string FontDescription
-        {
-            get
-            {
-                return string.Format("{0} ({1} {2}{3})",
-                                     FontName,
-                                     FontSize, FontUnit.ToString().ToLower(),
-                                     FontStyle != FontStyle.Regular ? ", " + FontStyle.ToString().ToLower() : "");
-            }
-        }
-
-
         public static Theme Default = new Theme();
-
-        public static Theme DefaultLarge = new Theme(Default)
-        {
-            FontSize = 16,
-            FontStyle = FontStyle.Bold,
-        };
-
-        public static Theme DefaultVeryLarge = new Theme(Default)
-        {
-            FontName = FontNames.FixedPitch.BitstreamVeraSansMono,
-            FontSize = 22,
-        };
-
-        public static Theme Discreet = new Theme(Default)
-        {
-            CursorColor = Brushes.Black,
-        };
-
-        public static Theme RomanianVeryLarge = new Theme(Default)
-        {
-            FontName = FontNames.FixedPitch.AnonymousPro,
-            FontSize = 24,
-        };
     }
 }

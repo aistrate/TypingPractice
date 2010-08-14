@@ -41,20 +41,36 @@ namespace Typist
         private const int marginTop = 2;
         private const int marginBottom = 2;
 
-        private static Theme theme =
-            new Theme(Theme.RomanianVeryLarge)
-            {
-                //Font = new Font("Georgia", 24f),
-                //FontName = FontNames.FixedPitchRomanian.DejaVuSansMono,
-                //FontSize = 21.75f,
-                //FontStyle = FontStyle.Bold,
-                //FontUnit = GraphicsUnit.Point,
-            };
+        private static readonly Font defaultFont =
+            //Fonts.Small.CourierNew;
+            Fonts.Large.AnonymousPro;
+
+        private static readonly Theme theme = new Theme(Theme.Default);
 
         #endregion
 
 
         #region General Behavior
+
+        private void initializeTypingBox()
+        {
+            picTyping.Theme = theme;
+
+            picTyping.MarginLeft = marginLeft;
+            picTyping.MarginRight = marginRight;
+            picTyping.MarginTop = marginTop;
+            picTyping.MarginBottom = marginBottom;
+
+            picTyping.CursorAsVerticalBar = cursorAsVerticalBar;
+            picTyping.CharCursorChar = charCursorChar;
+
+            picTyping.BarCursorVOffset = barCursorVOffset;
+            picTyping.CharCursorVOffset = charCursorVOffset;
+            picTyping.ErrorBackgroundVOffset = errorBackgroundVOffset;
+
+            picTyping.VisibleNewlines = visibleNewlines;
+            picTyping.ShowCursorWhenPaused = showCursorWhenPaused;
+        }
 
         public TypistForm(string filePath)
         {
@@ -74,6 +90,8 @@ namespace Typist
                 Size = new Size(Properties.Settings.Default.WindowWidth, Properties.Settings.Default.WindowHeight);
             }
 
+            CurrentFontIndex = 0;
+
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
 
@@ -81,27 +99,6 @@ namespace Typist
             //    filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
 
             ImportFile(filePath);
-        }
-
-        private void initializeTypingBox()
-        {
-            picTyping.MarginLeft = marginLeft;
-            picTyping.MarginRight = marginRight;
-            picTyping.MarginTop = marginTop;
-            picTyping.MarginBottom = marginBottom;
-
-            picTyping.Theme = theme;
-            CurrentFontIndex = 0;
-
-            picTyping.CursorAsVerticalBar = cursorAsVerticalBar;
-            picTyping.CharCursorChar = charCursorChar;
-
-            picTyping.BarCursorVOffset = barCursorVOffset;
-            picTyping.CharCursorVOffset = charCursorVOffset;
-            picTyping.ErrorBackgroundVOffset = errorBackgroundVOffset;
-
-            picTyping.VisibleNewlines = visibleNewlines;
-            picTyping.ShowCursorWhenPaused = showCursorWhenPaused;
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
@@ -142,6 +139,9 @@ namespace Typist
             {
                 if (!IsImported)
                     value = false;
+
+                if (practiceMode == value)
+                    return;
 
                 practiceMode = value;
 
@@ -375,8 +375,7 @@ namespace Typist
             }
             else if (e.KeyCode == Keys.Escape)
             {
-                if (PracticeMode)
-                    PracticeMode = false;
+                PracticeMode = false;
 
                 e.SuppressKeyPress = true;
             }
@@ -430,13 +429,13 @@ namespace Typist
 
         #region Fonts
 
-        private Font[] favoriteFonts = new Font[] { theme.Font }.Concat(Fonts.Small.All)
-                                                                .Concat(Fonts.Large.All)
-                                                                .ToArray();
+        private Font[] favoriteFonts = new Font[] { defaultFont }.Concat(Fonts.Small.All)
+                                                                 .Concat(Fonts.Large.All)
+                                                                 .ToArray();
 
         protected Font CustomFont
         {
-            get { return picTyping.Theme.Font; }
+            get { return picTyping.TypingFont; }
             set
             {
                 favoriteFonts[0] = value;
@@ -456,22 +455,26 @@ namespace Typist
                 else if (currentFontIndex < 0)
                     currentFontIndex = favoriteFonts.Length - 1;
 
-                picTyping.Theme = new Theme(picTyping.Theme)
-                {
-                    Font = favoriteFonts[currentFontIndex],
-                };
-
+                picTyping.TypingFont = favoriteFonts[currentFontIndex];
                 picTyping.BarCursorLineWidth = favoriteFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3;
 
                 lblStatusBar.Text = string.Format("({0}) {1}Font: {2}",
                                                   currentFontIndex,
                                                   currentFontIndex == 0 ? "Custom " : "",
-                                                  picTyping.Theme.FontDescription);
+                                                  fontDescription(picTyping.TypingFont));
 
                 picTyping.Invalidate();
             }
         }
         private int currentFontIndex = 0;
+
+        private string fontDescription(Font font)
+        {
+            return string.Format("{0} ({1} {2}{3})",
+                                 font.FontFamily.Name,
+                                 font.Size, font.Unit.ToString().ToLower(),
+                                 font.Style != FontStyle.Regular ? ", " + font.Style.ToString().ToLower() : "");
+        }
 
         private void changeFontDialog()
         {
