@@ -40,14 +40,14 @@ namespace Typist
         private const int marginTop = 2;
         private const int marginBottom = 2;
 
-        private Theme theme =
+        private static Theme theme =
             new Theme(Theme.RomanianVeryLarge)
             {
+                //Font = new Font("Georgia", 24f),
                 //FontName = FontNames.FixedPitchRomanian.DejaVuSansMono,
                 //FontSize = 21.75f,
-                //FontUnit = GraphicsUnit.Point,
                 //FontStyle = FontStyle.Bold,
-                //ErrorBackColor = Brushes.White,
+                //FontUnit = GraphicsUnit.Point,
             };
 
         #endregion
@@ -100,8 +100,6 @@ namespace Typist
 
             picTyping.VisibleNewlines = visibleNewlines;
             picTyping.ShowCursorWhenPaused = showCursorWhenPaused;
-
-            picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(picTyping_DrawingCursor);
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
@@ -157,6 +155,10 @@ namespace Typist
                 this.Text = string.Format("{0}Typist{1}",
                                           IsImported && !string.IsNullOrEmpty(importedFileName) ? importedFileName + " - " : "",
                                           IsPaused ? (IsFinished ? " (Finished)" : " (Paused)") : "");
+
+                lblStatusBar.Text =
+                    practiceMode ? "Typing..." :
+                    IsPaused ? (IsFinished ? "Finished" : "Paused") : "";
 
                 if (practiceMode)
                     rightAfterImport = false;
@@ -218,7 +220,8 @@ namespace Typist
                 if (string.IsNullOrEmpty(filePath))
                     return;
 
-                importedFileName = new FileInfo(filePath).Name;
+                FileInfo fileInfo = new FileInfo(filePath);
+                importedFileName = fileInfo.Name;
 
                 using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
                     ImportedText = new TextBuffer(sr.ReadToEnd(), countWhitespaceAsWordChars);
@@ -227,6 +230,8 @@ namespace Typist
 
                 rightAfterImport = true;
                 PracticeMode = false;
+
+                lblStatusBar.Text = string.Format("Imported: {0}", fileInfo.FullName);
             }
             catch (Exception ex)
             {
@@ -355,6 +360,11 @@ namespace Typist
                         PracticeMode = false;
                         changeFontDialog();
                     }
+                    else if (e.KeyCode == Keys.N)
+                    {
+                        PracticeMode = false;
+                        changeToNextFont(e.Shift ? -1 : +1);
+                    }
                 }
 
                 if (PracticeMode)
@@ -371,7 +381,7 @@ namespace Typist
 
         private void changeFontDialog()
         {
-            dlgChangeFont.Font = theme.Font;
+            dlgChangeFont.Font = picTyping.Theme.Font;
 
             if (dlgChangeFont.ShowDialog() == DialogResult.OK)
                 changeFont();
@@ -384,15 +394,38 @@ namespace Typist
 
         private void changeFont()
         {
-            theme = new Theme(theme)
+            picTyping.Theme = new Theme(picTyping.Theme)
             {
                 Font = dlgChangeFont.Font,
             };
 
-            picTyping.Theme = theme;
+            lblStatusBar.Text = string.Format("Font: {0}", picTyping.Theme.FontDescription);
 
             picTyping.Refresh();
         }
+
+        private void changeToNextFont(int inc)
+        {
+            currentFavoriteFontIndex += inc;
+
+            if (currentFavoriteFontIndex >= favoriteFonts.Length)
+                currentFavoriteFontIndex = 0;
+            else if (currentFavoriteFontIndex < 0)
+                currentFavoriteFontIndex = favoriteFonts.Length - 1;
+
+            picTyping.Theme = new Theme(picTyping.Theme)
+            {
+                Font = favoriteFonts[currentFavoriteFontIndex],
+            };
+
+            lblStatusBar.Text = string.Format("({0}) Font: {1}", currentFavoriteFontIndex, picTyping.Theme.FontDescription);
+
+            picTyping.Refresh();
+        }
+        private int currentFavoriteFontIndex = 0;
+        private Font[] favoriteFonts = new Font[] { theme.Font }.Concat(Fonts.Small.All)
+                                                                .Concat(Fonts.Large.All)
+                                                                .ToArray();
 
         private void TypistForm_KeyPress(object sender, KeyPressEventArgs e)
         {

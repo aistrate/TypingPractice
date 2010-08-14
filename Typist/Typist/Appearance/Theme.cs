@@ -81,6 +81,17 @@ namespace Typist.Appearance
             set { Font = new Font(Font.FontFamily, Font.Size, Font.Style, value); }
         }
 
+        public string FontDescription
+        {
+            get
+            {
+                return string.Format("{0} ({1} {2}{3})",
+                                     FontName,
+                                     FontSize, FontUnit.ToString().ToLower(),
+                                     FontStyle != FontStyle.Regular ? ", " + FontStyle.ToString().ToLower() : "");
+            }
+        }
+
 
         public static Theme Default = new Theme();
 

@@ -86,6 +86,10 @@ namespace Typist
                      "or only when the user is actually typing (practice mode).")]
         public bool ShowCursorWhenPaused { get; set; }
 
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        public event CancelEventHandler DrawingCursor;
+
         #endregion
 
 
@@ -95,9 +99,41 @@ namespace Typist
         {
             CursorAsVerticalBar = true;
             CharCursorChar = '_';
+
+            tmrTypingBox = new Timer()
+            {
+                Interval = 100,
+                Enabled = true,
+            };
+            tmrTypingBox.Tick += new EventHandler(tmrTypingBox_Tick);
         }
 
-        public event CancelEventHandler DrawingCursor;
+        private Timer tmrTypingBox;
+
+        private void tmrTypingBox_Tick(object sender, EventArgs e)
+        {
+            if (isDisplaying)
+            {
+                isDisplaying = DateTime.Now - startDisplay < new TimeSpan(0, 0, duration);
+
+                if (!isDisplaying)
+                    Invalidate();
+            }
+        }
+
+        public void DisplayMessage(string message, int duration)
+        {
+            this.message = message;
+            this.duration = duration;
+
+            isDisplaying = true;
+            startDisplay = DateTime.Now;
+        }
+
+        private string message = "";
+        private int duration = 0;
+        private bool isDisplaying = false;
+        private DateTime startDisplay = DateTime.Now;
 
         protected virtual void OnDrawingCursor(CancelEventArgs e)
         {
@@ -128,6 +164,9 @@ namespace Typist
                 drawShadowText(gc);
                 drawErrorChars(gc);
                 drawCursor(gc);
+
+                if (isDisplaying)
+                    drawDebugMessage(message, gc);
             }
         }
 

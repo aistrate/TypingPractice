@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appearance\FontNames.cs" />
+    <Compile Include="Appearance\Fonts.cs" />
     <Compile Include="TextBuffer.cs" />
     <Compile Include="Appearance\Theme.cs" />
     <Compile Include="TypingBox.cs">

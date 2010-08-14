@@ -36,10 +36,12 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.tmrTimer = new System.Windows.Forms.Timer(this.components);
             this.lblWPM = new System.Windows.Forms.Label();
-            this.tblLine = new System.Windows.Forms.TableLayoutPanel();
+            this.tblTopLine = new System.Windows.Forms.TableLayoutPanel();
+            this.tblBottomLine = new System.Windows.Forms.TableLayoutPanel();
             this.lblErrorCount = new System.Windows.Forms.Label();
             this.lblAccuracy = new System.Windows.Forms.Label();
             this.dlgChangeFont = new System.Windows.Forms.FontDialog();
+            this.lblStatusBar = new System.Windows.Forms.Label();
             this.picTyping = new Typist.TypingBox();
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).BeginInit();
             this.SuspendLayout();
@@ -47,9 +49,9 @@
             // btnImport
             // 
             this.btnImport.Location = new System.Drawing.Point(0, 1);
-            this.btnImport.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnImport.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(100, 25);
+            this.btnImport.Size = new System.Drawing.Size(101, 25);
             this.btnImport.TabIndex = 0;
             this.btnImport.Text = "Import...";
             this.btnImport.UseMnemonic = false;
@@ -66,9 +68,9 @@
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Enabled = false;
             this.btnStart.Location = new System.Drawing.Point(361, 1);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(100, 25);
+            this.btnStart.Size = new System.Drawing.Size(101, 25);
             this.btnStart.TabIndex = 1;
             this.btnStart.Text = "Start";
             this.btnStart.UseMnemonic = false;
@@ -81,7 +83,7 @@
             this.lblTime.Location = new System.Drawing.Point(295, 6);
             this.lblTime.Margin = new System.Windows.Forms.Padding(0);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(60, 14);
+            this.lblTime.Size = new System.Drawing.Size(59, 14);
             this.lblTime.TabIndex = 5;
             this.lblTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
@@ -99,20 +101,35 @@
             this.lblWPM.TabIndex = 6;
             this.lblWPM.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // tblLine
+            // tblTopLine
             // 
-            this.tblLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.tblTopLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tblLine.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
-            this.tblLine.ColumnCount = 1;
-            this.tblLine.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblLine.Location = new System.Drawing.Point(0, 26);
-            this.tblLine.Name = "tblLine";
-            this.tblLine.RowCount = 1;
-            this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tblLine.Size = new System.Drawing.Size(463, 2);
-            this.tblLine.TabIndex = 9;
+            this.tblTopLine.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
+            this.tblTopLine.ColumnCount = 1;
+            this.tblTopLine.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblTopLine.Location = new System.Drawing.Point(0, 26);
+            this.tblTopLine.Name = "tblTopLine";
+            this.tblTopLine.RowCount = 1;
+            this.tblTopLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblTopLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tblTopLine.Size = new System.Drawing.Size(463, 2);
+            this.tblTopLine.TabIndex = 9;
+            // 
+            // tblBottomLine
+            // 
+            this.tblBottomLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tblBottomLine.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
+            this.tblBottomLine.ColumnCount = 1;
+            this.tblBottomLine.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblBottomLine.Location = new System.Drawing.Point(0, 548);
+            this.tblBottomLine.Name = "tblBottomLine";
+            this.tblBottomLine.RowCount = 1;
+            this.tblBottomLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblBottomLine.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tblBottomLine.Size = new System.Drawing.Size(463, 2);
+            this.tblBottomLine.TabIndex = 10;
             // 
             // lblErrorCount
             // 
@@ -130,7 +147,7 @@
             this.lblAccuracy.Location = new System.Drawing.Point(239, 6);
             this.lblAccuracy.Margin = new System.Windows.Forms.Padding(0);
             this.lblAccuracy.Name = "lblAccuracy";
-            this.lblAccuracy.Size = new System.Drawing.Size(60, 14);
+            this.lblAccuracy.Size = new System.Drawing.Size(59, 14);
             this.lblAccuracy.TabIndex = 11;
             this.lblAccuracy.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
@@ -142,6 +159,17 @@
             this.dlgChangeFont.ShowApply = true;
             this.dlgChangeFont.ShowEffects = false;
             this.dlgChangeFont.Apply += new System.EventHandler(this.dlgChangeFont_Apply);
+            // 
+            // lblStatusBar
+            // 
+            this.lblStatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatusBar.BackColor = System.Drawing.SystemColors.Control;
+            this.lblStatusBar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatusBar.Location = new System.Drawing.Point(0, 551);
+            this.lblStatusBar.Name = "lblStatusBar";
+            this.lblStatusBar.Size = new System.Drawing.Size(462, 15);
+            this.lblStatusBar.TabIndex = 12;
             // 
             // picTyping
             // 
@@ -155,20 +183,24 @@
             this.picTyping.ImportedText = null;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
-            this.picTyping.Size = new System.Drawing.Size(461, 537);
+            this.picTyping.Size = new System.Drawing.Size(462, 519);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
             this.picTyping.Theme = null;
             this.picTyping.TypedText = null;
+            this.picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(this.picTyping_DrawingCursor);
             // 
             // TypistForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(462, 566);
+            this.Controls.Add(this.lblStatusBar);
+            this.Controls.Add(this.tblBottomLine);
             this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
-            this.Controls.Add(this.tblLine);
+            this.Controls.Add(this.tblTopLine);
             this.Controls.Add(this.lblWPM);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.btnStart);
@@ -178,7 +210,7 @@
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.MinimumSize = new System.Drawing.Size(470, 150);
             this.Name = "TypistForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
@@ -206,10 +238,12 @@
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer tmrTimer;
         private System.Windows.Forms.Label lblWPM;
-        private System.Windows.Forms.TableLayoutPanel tblLine;
+        private System.Windows.Forms.TableLayoutPanel tblTopLine;
         private System.Windows.Forms.Label lblErrorCount;
         private System.Windows.Forms.Label lblAccuracy;
         private System.Windows.Forms.FontDialog dlgChangeFont;
+        private System.Windows.Forms.TableLayoutPanel tblBottomLine;
+        private System.Windows.Forms.Label lblStatusBar;
     }
 }
 

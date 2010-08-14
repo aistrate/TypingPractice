@@ -12,12 +12,22 @@ namespace Typist.Appearance
             public static string AndaleMono { get { return "Andale Mono"; } }
             public static string Anonymous { get { return "Anonymous"; } }
             public static string AnonymousPro { get { return "Anonymous Pro"; } }
+            public static string AudimatMono { get { return "Audimat Mono"; } }
             public static string BitstreamVeraSansMono { get { return "Bitstream Vera Sans Mono"; } }
-            public static string Consolas { get { return "Consolas"; } }
+            public static string BPmono { get { return "BPmono"; } }
+            public static string CodenameCoderFree4F { get { return "Codename Coder Free 4F"; } }
+            public static string Consolas { get { return "Consolas"; } }        /////////
             public static string CourierNew { get { return "Courier New"; } }
             public static string DejaVuSansMono { get { return "DejaVu Sans Mono"; } }
+            public static string DroidSansMono { get { return "Droid Sans Mono"; } }
             public static string EnvyCodeR { get { return "Envy Code R"; } }
+            public static string LucidaConsole { get { return "Lucida Console"; } }
             public static string LuxiMono { get { return "Luxi Mono"; } }
+            public static string MPlus1M { get { return "M+ 1m"; } }
+            public static string MonospaceTypewriter { get { return "MonospaceTypewriter"; } }
+            public static string MSGothic { get { return "MS Gothic"; } }
+            public static string ProFontWindows { get { return "ProFontWindows"; } }
+            public static string SaxMono { get { return "saxMono"; } }
         }
 
         public static class FixedPitchRomanian
