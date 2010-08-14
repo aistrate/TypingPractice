@@ -41,9 +41,9 @@ namespace Typist
         private const int marginTop = 2;
         private const int marginBottom = 2;
 
-        private static readonly Font defaultFont =
-            //Fonts.Small.CourierNew;
-            Fonts.Large.AnonymousPro;
+        private const bool loadStoredTypingFont = true;
+
+        private static readonly Font defaultTypingFont = Fonts.Small.CourierNew;
 
         private static readonly Theme theme = new Theme(Theme.Default);
 
@@ -78,6 +78,20 @@ namespace Typist
 
             initializeTypingBox();
 
+            loadWindowPosition();
+            loadTypingFont();
+
+            ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
+            PracticeMode = false;
+
+            //if (string.IsNullOrEmpty(filePath))
+            //    filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
+
+            ImportFile(filePath);
+        }
+
+        private void loadWindowPosition()
+        {
             if (Properties.Settings.Default.IsMaximized)
                 WindowState = FormWindowState.Maximized;
 
@@ -89,16 +103,22 @@ namespace Typist
                 Location = new Point(Properties.Settings.Default.WindowX, Properties.Settings.Default.WindowY);
                 Size = new Size(Properties.Settings.Default.WindowWidth, Properties.Settings.Default.WindowHeight);
             }
+        }
 
-            CurrentFontIndex = 0;
-
-            ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
-            PracticeMode = false;
-
-            //if (string.IsNullOrEmpty(filePath))
-            //    filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
-
-            ImportFile(filePath);
+        private void loadTypingFont()
+        {
+            if (loadStoredTypingFont &&
+                !string.IsNullOrEmpty(Properties.Settings.Default.TypingFontName) &&
+                Properties.Settings.Default.TypingFontSize > 0 &&
+                Properties.Settings.Default.TypingFontUnit > 0)
+            {
+                CustomFont = new Font(Properties.Settings.Default.TypingFontName,
+                                      Properties.Settings.Default.TypingFontSize,
+                                      (FontStyle)Properties.Settings.Default.TypingFontStyle,
+                                      (GraphicsUnit)Properties.Settings.Default.TypingFontUnit);
+            }
+            else
+                CustomFont = defaultTypingFont;
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
@@ -139,9 +159,6 @@ namespace Typist
             {
                 if (!IsImported)
                     value = false;
-
-                if (practiceMode == value)
-                    return;
 
                 practiceMode = value;
 
@@ -232,7 +249,7 @@ namespace Typist
                 rightAfterImport = true;
                 PracticeMode = false;
 
-                lblStatusBar.Text = string.Format("Imported: {0}", fileInfo.FullName);
+                lblStatusBar.Text = string.Format("Imported file: {0}", fileInfo.FullName);
             }
             catch (Exception ex)
             {
@@ -286,6 +303,17 @@ namespace Typist
                 Properties.Settings.Default.IsMaximized = WindowState == FormWindowState.Maximized;
         }
 
+        private void presaveTypingFont()
+        {
+            if (loadStoredTypingFont)
+            {
+                Properties.Settings.Default.TypingFontName = CustomFont.FontFamily.Name;
+                Properties.Settings.Default.TypingFontSize = CustomFont.Size;
+                Properties.Settings.Default.TypingFontUnit = (int)CustomFont.Unit;
+                Properties.Settings.Default.TypingFontStyle = (int)CustomFont.Style;
+            }
+        }
+
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             if (askBeforeCloseDuringPractice && IsStarted)
@@ -302,6 +330,8 @@ namespace Typist
             }
 
             presaveWindowPosition(true, true);
+            presaveTypingFont();
+
             Properties.Settings.Default.Save();
 
             base.OnClosing(e);
@@ -345,7 +375,7 @@ namespace Typist
 
         private void TypistForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control)
+            if (e.Control || e.Alt)
             {
                 if (e.Control)
                 {
@@ -376,7 +406,6 @@ namespace Typist
             else if (e.KeyCode == Keys.Escape)
             {
                 PracticeMode = false;
-
                 e.SuppressKeyPress = true;
             }
         }
@@ -429,13 +458,13 @@ namespace Typist
 
         #region Fonts
 
-        private Font[] favoriteFonts = new Font[] { defaultFont }.Concat(Fonts.Small.All)
-                                                                 .Concat(Fonts.Large.All)
-                                                                 .ToArray();
+        private Font[] favoriteFonts = new Font[] { null }.Concat(Fonts.Small.All)
+                                                          .Concat(Fonts.Large.All)
+                                                          .ToArray();
 
         protected Font CustomFont
         {
-            get { return picTyping.TypingFont; }
+            get { return favoriteFonts[0]; }
             set
             {
                 favoriteFonts[0] = value;
@@ -458,9 +487,10 @@ namespace Typist
                 picTyping.TypingFont = favoriteFonts[currentFontIndex];
                 picTyping.BarCursorLineWidth = favoriteFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3;
 
-                lblStatusBar.Text = string.Format("({0}) {1}Font: {2}",
-                                                  currentFontIndex,
-                                                  currentFontIndex == 0 ? "Custom " : "",
+                lblStatusBar.Text = string.Format("{0}: {1}",
+                                                  currentFontIndex == 0 ?
+                                                        "Custom Font" :
+                                                        string.Format("Predefined Font ({0})", currentFontIndex),
                                                   fontDescription(picTyping.TypingFont));
 
                 picTyping.Invalidate();
@@ -478,7 +508,9 @@ namespace Typist
 
         private void changeFontDialog()
         {
-            dlgChangeFont.Font = CustomFont;
+            CurrentFontIndex = CurrentFontIndex;
+
+            dlgChangeFont.Font = picTyping.TypingFont;
 
             if (dlgChangeFont.ShowDialog() == DialogResult.OK)
                 CustomFont = dlgChangeFont.Font;
