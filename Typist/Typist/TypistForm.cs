@@ -16,6 +16,7 @@ namespace Typist
     {
         #region Flags and Settings
 
+        private const bool beepOnError = true;
         private const bool allowBackspace = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
@@ -126,8 +127,7 @@ namespace Typist
                 picTyping.ImportedText = value;
                 picTyping.TypedText = TypedText;
 
-                if (theme.BeepOnError)
-                    TypedText.Error += new EventHandler(TypedText_Error);
+                TypedText.Error += new EventHandler(TypedText_Error);
             }
         }
         private TextBuffer importedText;
@@ -420,7 +420,7 @@ namespace Typist
 
         private void playBeep()
         {
-            if (theme.BeepOnError)
+            if (beepOnError)
                 SystemSounds.Beep.Play();
         }
 

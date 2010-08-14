@@ -19,8 +19,6 @@ namespace Typist.Appearance
             CursorColor = Brushes.Crimson;
 
             BarCursorLineWidth = 2;
-
-            BeepOnError = true;
         }
 
         public Theme(Theme original)
@@ -34,8 +32,6 @@ namespace Typist.Appearance
             CursorColor = original.CursorColor;
 
             BarCursorLineWidth = original.BarCursorLineWidth;
-
-            BeepOnError = original.BeepOnError;
         }
 
         public Theme(Theme original, string fontName)
@@ -53,8 +49,6 @@ namespace Typist.Appearance
         public Brush CursorColor { get; set; }
 
         public int BarCursorLineWidth { get; set; }
-
-        public bool BeepOnError { get; set; }
 
 
         public string FontName
@@ -112,7 +106,6 @@ namespace Typist.Appearance
         public static Theme Discreet = new Theme(Default)
         {
             CursorColor = Brushes.Black,
-            BeepOnError = false,
         };
 
         public static Theme RomanianVeryLarge = new Theme(Default)
