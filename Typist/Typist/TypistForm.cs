@@ -344,7 +344,7 @@ namespace Typist
 
         private void TypistForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control)  // || e.Alt)
+            if (e.Control)
             {
                 if (e.Control)
                 {
@@ -363,8 +363,10 @@ namespace Typist
                     else if (e.KeyCode == Keys.N)
                     {
                         PracticeMode = false;
-                        changeToNextFont(e.Shift ? -1 : +1);
+                        CurrentFontIndex += (e.Shift ? -1 : +1);
                     }
+                    else if (e.KeyCode == Keys.S)
+                        CustomFont = favoriteFonts[CurrentFontIndex];
                 }
 
                 if (PracticeMode)
@@ -388,6 +390,8 @@ namespace Typist
 
             if (PracticeMode)
             {
+                lblStatusBar.Text = "Typing...";
+
                 timeOfLastCharTyped = DateTime.Now;
 
                 if (e.KeyChar == '\b' && (!allowBackspace || TypedText.Length == 0))
@@ -425,54 +429,60 @@ namespace Typist
 
         #region Fonts
 
+        private Font[] favoriteFonts = new Font[] { theme.Font }.Concat(Fonts.Small.All)
+                                                                .Concat(Fonts.Large.All)
+                                                                .ToArray();
+
+        protected Font CustomFont
+        {
+            get { return picTyping.Theme.Font; }
+            set
+            {
+                favoriteFonts[0] = value;
+                CurrentFontIndex = 0;
+            }
+        }
+
+        protected int CurrentFontIndex
+        {
+            get { return currentFontIndex; }
+            set
+            {
+                currentFontIndex = value;
+
+                if (currentFontIndex >= favoriteFonts.Length)
+                    currentFontIndex = 0;
+                else if (currentFontIndex < 0)
+                    currentFontIndex = favoriteFonts.Length - 1;
+
+                picTyping.Theme = new Theme(picTyping.Theme)
+                {
+                    Font = favoriteFonts[currentFontIndex],
+                    BarCursorLineWidth = favoriteFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3,
+                };
+
+                lblStatusBar.Text = string.Format("({0}) {1}Font: {2}",
+                                                  currentFontIndex,
+                                                  currentFontIndex == 0 ? "Custom " : "",
+                                                  picTyping.Theme.FontDescription);
+
+                picTyping.Invalidate();
+            }
+        }
+        private int currentFontIndex = 0;
+
         private void changeFontDialog()
         {
-            dlgChangeFont.Font = picTyping.Theme.Font;
+            dlgChangeFont.Font = CustomFont;
 
             if (dlgChangeFont.ShowDialog() == DialogResult.OK)
-                changeFont();
+                CustomFont = dlgChangeFont.Font;
         }
 
         private void dlgChangeFont_Apply(object sender, EventArgs e)
         {
-            changeFont();
+            CustomFont = dlgChangeFont.Font;
         }
-
-        private void changeFont()
-        {
-            picTyping.Theme = new Theme(picTyping.Theme)
-            {
-                Font = dlgChangeFont.Font,
-            };
-
-            lblStatusBar.Text = string.Format("Font: {0}", picTyping.Theme.FontDescription);
-
-            picTyping.Refresh();
-        }
-
-        private void changeToNextFont(int inc)
-        {
-            currentFavoriteFontIndex += inc;
-
-            if (currentFavoriteFontIndex >= favoriteFonts.Length)
-                currentFavoriteFontIndex = 0;
-            else if (currentFavoriteFontIndex < 0)
-                currentFavoriteFontIndex = favoriteFonts.Length - 1;
-
-            picTyping.Theme = new Theme(picTyping.Theme)
-            {
-                Font = favoriteFonts[currentFavoriteFontIndex],
-            };
-
-            lblStatusBar.Text = string.Format("({0}) Font: {1}", currentFavoriteFontIndex, picTyping.Theme.FontDescription);
-
-            picTyping.Refresh();
-        }
-
-        private int currentFavoriteFontIndex = 0;
-        private Font[] favoriteFonts = new Font[] { theme.Font }.Concat(Fonts.Small.All)
-                                                                .Concat(Fonts.Large.All)
-                                                                .ToArray();
 
         #endregion
 
