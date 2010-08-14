@@ -45,17 +45,19 @@ namespace Typist
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Theme Theme { get; set; }
 
-        [Browsable(true)]
-        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(2)]
+        public int BarCursorLineWidth { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue(true)]
-        [Description("Determines whether the cursor will be a vertical bar (true), or a character (false).")]
         public bool CursorAsVerticalBar { get; set; }
 
-        [Browsable(true)]
-        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue('_')]
-        [Description("The character that will represent the cursor, " +
-                     "if in character cursor mode (as opposed to vertical bar cursor mode).")]
         public char CharCursorChar { get; set; }
 
         [Browsable(false)]
@@ -73,17 +75,14 @@ namespace Typist
         [DefaultValue(0)]
         public float ErrorBackgroundVOffset { get; set; }
 
-        [Browsable(true)]
-        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue(false)]
-        [Description("If true, newline characters will be made visible as paragraph signs (pilcrows).")]
         public bool VisibleNewlines { get; set; }
 
-        [Browsable(true)]
-        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue(false)]
-        [Description("Determines whether the cursor is visible when typing is paused, " +
-                     "or only when the user is actually typing (practice mode).")]
         public bool ShowCursorWhenPaused { get; set; }
 
         [Browsable(true)]
@@ -97,6 +96,7 @@ namespace Typist
 
         public TypingBox()
         {
+            BarCursorLineWidth = 2;
             CursorAsVerticalBar = true;
             CharCursorChar = '_';
         }
@@ -247,9 +247,9 @@ namespace Typist
                 if (CursorAsVerticalBar)
                     gc.Graphics.FillRectangle(Theme.CursorColor, new RectangleF()
                     {
-                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * Theme.BarCursorLineWidth),
+                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * BarCursorLineWidth),
                         Y = cursorArea.Y,
-                        Width = Theme.BarCursorLineWidth,
+                        Width = BarCursorLineWidth,
                         Height = cursorArea.Height,
                     });
                 else

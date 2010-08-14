@@ -91,6 +91,7 @@ namespace Typist
             picTyping.MarginBottom = marginBottom;
 
             picTyping.Theme = theme;
+            CurrentFontIndex = 0;
 
             picTyping.CursorAsVerticalBar = cursorAsVerticalBar;
             picTyping.CharCursorChar = charCursorChar;
@@ -458,8 +459,9 @@ namespace Typist
                 picTyping.Theme = new Theme(picTyping.Theme)
                 {
                     Font = favoriteFonts[currentFontIndex],
-                    BarCursorLineWidth = favoriteFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3,
                 };
+
+                picTyping.BarCursorLineWidth = favoriteFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3;
 
                 lblStatusBar.Text = string.Format("({0}) {1}Font: {2}",
                                                   currentFontIndex,

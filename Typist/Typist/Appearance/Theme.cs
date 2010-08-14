@@ -17,8 +17,6 @@ namespace Typist.Appearance
             ErrorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
             ErrorForeColor = new SolidBrush(VsColors.StringLiteral);
             CursorColor = Brushes.Crimson;
-
-            BarCursorLineWidth = 2;
         }
 
         public Theme(Theme original)
@@ -30,8 +28,6 @@ namespace Typist.Appearance
             ErrorBackColor = original.ErrorBackColor;
             ErrorForeColor = original.ErrorForeColor;
             CursorColor = original.CursorColor;
-
-            BarCursorLineWidth = original.BarCursorLineWidth;
         }
 
         public Theme(Theme original, string fontName)
@@ -47,8 +43,6 @@ namespace Typist.Appearance
         public Brush ErrorBackColor { get; set; }
         public Brush ErrorForeColor { get; set; }
         public Brush CursorColor { get; set; }
-
-        public int BarCursorLineWidth { get; set; }
 
 
         public string FontName
@@ -93,14 +87,12 @@ namespace Typist.Appearance
         {
             FontSize = 16,
             FontStyle = FontStyle.Bold,
-            BarCursorLineWidth = 3,
         };
 
         public static Theme DefaultVeryLarge = new Theme(Default)
         {
             FontName = FontNames.FixedPitch.BitstreamVeraSansMono,
             FontSize = 22,
-            BarCursorLineWidth = 4,
         };
 
         public static Theme Discreet = new Theme(Default)
@@ -112,7 +104,6 @@ namespace Typist.Appearance
         {
             FontName = FontNames.FixedPitch.AnonymousPro,
             FontSize = 24,
-            BarCursorLineWidth = 3,
         };
     }
 }
