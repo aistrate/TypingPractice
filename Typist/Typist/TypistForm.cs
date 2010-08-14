@@ -174,9 +174,10 @@ namespace Typist
                                           IsImported && !string.IsNullOrEmpty(importedFileName) ? importedFileName + " - " : "",
                                           IsPaused ? (IsFinished ? " (Finished)" : " (Paused)") : "");
 
-                lblStatusBar.Text =
-                    practiceMode ? "Typing..." :
-                    IsPaused ? (IsFinished ? "Finished" : "Paused") : "";
+                if (practiceMode)
+                    lblStatusBar.Text = "Typing...";
+                else if (IsPaused)
+                    lblStatusBar.Text = IsFinished ? "Finished" : "Paused";
 
                 if (practiceMode)
                     rightAfterImport = false;
@@ -397,7 +398,7 @@ namespace Typist
                         CurrentFontIndex += (e.Shift ? -1 : +1);
                     }
                     else if (e.KeyCode == Keys.S)
-                        CustomFont = favoriteFonts[CurrentFontIndex];
+                        CustomFont = FavoriteFonts[CurrentFontIndex];
                 }
 
                 if (PracticeMode)
@@ -458,16 +459,27 @@ namespace Typist
 
         #region Fonts
 
-        private Font[] favoriteFonts = new Font[] { null }.Concat(Fonts.Small.All)
-                                                          .Concat(Fonts.Large.All)
-                                                          .ToArray();
+        protected Font[] FavoriteFonts
+        {
+            get
+            {
+                if (favoriteFonts == null)
+                    favoriteFonts = new Font[] { null }
+                                            .Concat(Fonts.Small.All)
+                                            .Concat(Fonts.Large.All)
+                                            .ToArray();
+
+                return favoriteFonts;
+            }
+        }
+        private Font[] favoriteFonts;
 
         protected Font CustomFont
         {
-            get { return favoriteFonts[0]; }
+            get { return FavoriteFonts[0]; }
             set
             {
-                favoriteFonts[0] = value;
+                FavoriteFonts[0] = value;
                 CurrentFontIndex = 0;
             }
         }
@@ -479,13 +491,13 @@ namespace Typist
             {
                 currentFontIndex = value;
 
-                if (currentFontIndex >= favoriteFonts.Length)
+                if (currentFontIndex >= FavoriteFonts.Length)
                     currentFontIndex = 0;
                 else if (currentFontIndex < 0)
-                    currentFontIndex = favoriteFonts.Length - 1;
+                    currentFontIndex = FavoriteFonts.Length - 1;
 
-                picTyping.TypingFont = favoriteFonts[currentFontIndex];
-                picTyping.BarCursorLineWidth = favoriteFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3;
+                picTyping.TypingFont = FavoriteFonts[currentFontIndex];
+                picTyping.BarCursorLineWidth = FavoriteFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3;
 
                 lblStatusBar.Text = string.Format("{0}: {1}",
                                                   currentFontIndex == 0 ?
