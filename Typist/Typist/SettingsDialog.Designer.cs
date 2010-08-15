@@ -31,6 +31,8 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.chkBeepOnError = new System.Windows.Forms.CheckBox();
+            this.chkAllowBackspace = new System.Windows.Forms.CheckBox();
+            this.chkVisibleNewlines = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnOk
@@ -66,12 +68,34 @@
             this.chkBeepOnError.Text = "Beep on error";
             this.chkBeepOnError.UseVisualStyleBackColor = false;
             // 
+            // chkAllowBackspace
+            // 
+            this.chkAllowBackspace.AutoSize = true;
+            this.chkAllowBackspace.Location = new System.Drawing.Point(12, 35);
+            this.chkAllowBackspace.Name = "chkAllowBackspace";
+            this.chkAllowBackspace.Size = new System.Drawing.Size(107, 17);
+            this.chkAllowBackspace.TabIndex = 102;
+            this.chkAllowBackspace.Text = "Allow backspace";
+            this.chkAllowBackspace.UseVisualStyleBackColor = false;
+            // 
+            // chkVisibleNewlines
+            // 
+            this.chkVisibleNewlines.AutoSize = true;
+            this.chkVisibleNewlines.Location = new System.Drawing.Point(12, 58);
+            this.chkVisibleNewlines.Name = "chkVisibleNewlines";
+            this.chkVisibleNewlines.Size = new System.Drawing.Size(100, 17);
+            this.chkVisibleNewlines.TabIndex = 103;
+            this.chkVisibleNewlines.Text = "Visible newlines";
+            this.chkVisibleNewlines.UseVisualStyleBackColor = false;
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(316, 137);
+            this.Controls.Add(this.chkVisibleNewlines);
+            this.Controls.Add(this.chkAllowBackspace);
             this.Controls.Add(this.chkBeepOnError);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -96,5 +120,7 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.CheckBox chkBeepOnError;
+        private System.Windows.Forms.CheckBox chkAllowBackspace;
+        private System.Windows.Forms.CheckBox chkVisibleNewlines;
     }
 }

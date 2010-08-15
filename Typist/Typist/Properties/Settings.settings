@@ -29,8 +29,14 @@
     <Setting Name="TypingFontStyle" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="UserSettingsBeepOnError" Type="System.Boolean" Scope="User">
+    <Setting Name="UserSettings_BeepOnError" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UserSettings_AllowBackspace" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UserSettings_VisibleNewlines" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

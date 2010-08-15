@@ -134,12 +134,36 @@ namespace Typist.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UserSettingsBeepOnError {
+        public bool UserSettings_BeepOnError {
             get {
-                return ((bool)(this["UserSettingsBeepOnError"]));
+                return ((bool)(this["UserSettings_BeepOnError"]));
             }
             set {
-                this["UserSettingsBeepOnError"] = value;
+                this["UserSettings_BeepOnError"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UserSettings_AllowBackspace {
+            get {
+                return ((bool)(this["UserSettings_AllowBackspace"]));
+            }
+            set {
+                this["UserSettings_AllowBackspace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UserSettings_VisibleNewlines {
+            get {
+                return ((bool)(this["UserSettings_VisibleNewlines"]));
+            }
+            set {
+                this["UserSettings_VisibleNewlines"] = value;
             }
         }
     }

@@ -33,6 +33,8 @@ namespace Typist
                 userSettings = value;
 
                 chkBeepOnError.Checked = userSettings.BeepOnError;
+                chkAllowBackspace.Checked = userSettings.AllowBackspace;
+                chkVisibleNewlines.Checked = userSettings.VisibleNewlines;
             }
         }
         private UserSettings userSettings = new UserSettings();
@@ -42,6 +44,8 @@ namespace Typist
             userSettings = new UserSettings()
             {
                 BeepOnError = chkBeepOnError.Checked,
+                AllowBackspace = chkAllowBackspace.Checked,
+                VisibleNewlines = chkVisibleNewlines.Checked,
             };
         }
     }

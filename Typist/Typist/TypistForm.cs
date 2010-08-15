@@ -16,8 +16,6 @@ namespace Typist
     {
         #region Flags and Settings
 
-        private const bool allowBackspace = true;
-        private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
         private const bool countErrorsAsWordChars = true;
 
@@ -55,13 +53,13 @@ namespace Typist
         {
             InitializeComponent();
 
-            initializeTypingBox();
-            initializeContextMenuStrip();
-            initializeSettingsDialog();
-
             loadWindowPosition();
             loadTypingFont();
             loadUserSettings();
+
+            initializeTypingBox();
+            initializeContextMenuStrip();
+            initializeSettingsDialog();
 
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
@@ -88,7 +86,7 @@ namespace Typist
             picTyping.CharCursorVOffset = charCursorVOffset;
             picTyping.ErrorBackgroundVOffset = errorBackgroundVOffset;
 
-            picTyping.VisibleNewlines = visibleNewlines;
+            picTyping.VisibleNewlines = userSettings.VisibleNewlines;
             picTyping.ShowCursorWhenPaused = showCursorWhenPaused;
         }
 
@@ -406,7 +404,7 @@ namespace Typist
 
                 timeOfLastCharTyped = DateTime.Now;
 
-                if (e.KeyChar == '\b' && (!allowBackspace || TypedText.Length == 0))
+                if (e.KeyChar == '\b' && (!userSettings.AllowBackspace || TypedText.Length == 0))
                 {
                     playBeep();
                     return;
@@ -784,13 +782,17 @@ namespace Typist
         {
             userSettings = new UserSettings()
             {
-                BeepOnError = Properties.Settings.Default.UserSettingsBeepOnError,
+                BeepOnError = Properties.Settings.Default.UserSettings_BeepOnError,
+                AllowBackspace = Properties.Settings.Default.UserSettings_AllowBackspace,
+                VisibleNewlines = Properties.Settings.Default.UserSettings_VisibleNewlines,
             };
         }
 
         private void presaveUserSettings()
         {
-            Properties.Settings.Default.UserSettingsBeepOnError = userSettings.BeepOnError;
+            Properties.Settings.Default.UserSettings_BeepOnError = userSettings.BeepOnError;
+            Properties.Settings.Default.UserSettings_AllowBackspace = userSettings.AllowBackspace;
+            Properties.Settings.Default.UserSettings_VisibleNewlines = userSettings.VisibleNewlines;
         }
 
         private SettingsDialog dlgSettingsDialog;
@@ -811,7 +813,12 @@ namespace Typist
             dlgSettingsDialog.UserSettings = userSettings;
 
             if (dlgSettingsDialog.ShowDialog() == DialogResult.OK)
+            {
                 userSettings = dlgSettingsDialog.UserSettings;
+
+                picTyping.VisibleNewlines = userSettings.VisibleNewlines;
+                picTyping.Invalidate();
+            }
 
             dlgSettingsDialog.StartPosition = FormStartPosition.Manual;
         }
