@@ -24,7 +24,7 @@ namespace Typist
             {
                 text = Regex.Replace(text, @" +", " ");
                 text = Regex.Replace(text, @" +\n", "\n");
-                text = Regex.Replace(text, @"\n{3,}", "\n\n");
+                text = Regex.Replace(text, @"(^|(?<=.\n))\n{2,}", "\n");
             }
 
             buffer = text.ToCharArray();
