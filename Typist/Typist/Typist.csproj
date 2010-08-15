@@ -51,6 +51,12 @@
   <ItemGroup>
     <Compile Include="Appearance\FontNames.cs" />
     <Compile Include="Appearance\Fonts.cs" />
+    <Compile Include="SettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsDialog.Designer.cs">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="TextBuffer.cs" />
     <Compile Include="Appearance\Theme.cs" />
     <Compile Include="TypingBox.cs">
@@ -64,6 +70,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="SettingsDialog.resx">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="TypistForm.resx">
       <DependentUpon>TypistForm.cs</DependentUpon>
       <SubType>Designer</SubType>

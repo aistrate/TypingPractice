@@ -57,8 +57,8 @@ namespace Typist
             InitializeComponent();
 
             initializeTypingBox();
-
             initializeContextMenuStrip();
+            initializeSettingsDialog();
 
             loadWindowPosition();
             loadTypingFont();
@@ -92,28 +92,6 @@ namespace Typist
             picTyping.ShowCursorWhenPaused = showCursorWhenPaused;
         }
 
-        private void initializeContextMenuStrip()
-        {
-            var favoriteFontEventHandler = new EventHandler(favoriteFontMenuItem_Click);
-
-            predefinedFontsToolStripMenuItem.DropDownItems.AddRange(
-                FavoriteFonts.Select(f =>
-                             {
-                                 var favoriteFontMenuItem = new ToolStripMenuItem(fontDescription(f.Font))
-                                 {
-                                     Enabled = f.IsAvailable,
-                                     Tag = f.IndexInAvailables,
-                                 };
-
-                                 favoriteFontMenuItem.Click += favoriteFontEventHandler;
-
-                                 return favoriteFontMenuItem;
-                             })
-                             .ToArray());
-
-            predefinedFontsToolStripMenuItem.DropDownItems.Insert(2, new ToolStripSeparator());
-        }
-
         private void loadWindowPosition()
         {
             if (Properties.Settings.Default.IsMaximized)
@@ -127,28 +105,6 @@ namespace Typist
                 Location = new Point(Properties.Settings.Default.WindowX, Properties.Settings.Default.WindowY);
                 Size = new Size(Properties.Settings.Default.WindowWidth, Properties.Settings.Default.WindowHeight);
             }
-        }
-
-        private void loadTypingFont()
-        {
-            if (loadStoredTypingFont &&
-                !string.IsNullOrEmpty(Properties.Settings.Default.TypingFontName) &&
-                Properties.Settings.Default.TypingFontSize > 0 &&
-                Properties.Settings.Default.TypingFontUnit > 0)
-            {
-                Font font = new Font(Properties.Settings.Default.TypingFontName,
-                                     Properties.Settings.Default.TypingFontSize,
-                                     (FontStyle)Properties.Settings.Default.TypingFontStyle,
-                                     (GraphicsUnit)Properties.Settings.Default.TypingFontUnit);
-
-                if (isFontAvailable(font))
-                {
-                    CustomFont = font;
-                    return;
-                }
-            }
-
-            CustomFont = defaultTypingFont;
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
@@ -337,17 +293,6 @@ namespace Typist
                 Properties.Settings.Default.IsMaximized = WindowState == FormWindowState.Maximized;
         }
 
-        private void presaveTypingFont()
-        {
-            if (loadStoredTypingFont)
-            {
-                Properties.Settings.Default.TypingFontName = CustomFont.FontFamily.Name;
-                Properties.Settings.Default.TypingFontSize = CustomFont.Size;
-                Properties.Settings.Default.TypingFontUnit = (int)CustomFont.Unit;
-                Properties.Settings.Default.TypingFontStyle = (int)CustomFont.Style;
-            }
-        }
-
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             if (askBeforeCloseDuringPractice && IsStarted)
@@ -495,6 +440,39 @@ namespace Typist
 
         #region Fonts
 
+        private void loadTypingFont()
+        {
+            if (loadStoredTypingFont &&
+                !string.IsNullOrEmpty(Properties.Settings.Default.TypingFontName) &&
+                Properties.Settings.Default.TypingFontSize > 0 &&
+                Properties.Settings.Default.TypingFontUnit > 0)
+            {
+                Font font = new Font(Properties.Settings.Default.TypingFontName,
+                                     Properties.Settings.Default.TypingFontSize,
+                                     (FontStyle)Properties.Settings.Default.TypingFontStyle,
+                                     (GraphicsUnit)Properties.Settings.Default.TypingFontUnit);
+
+                if (isFontAvailable(font))
+                {
+                    CustomFont = font;
+                    return;
+                }
+            }
+
+            CustomFont = defaultTypingFont;
+        }
+
+        private void presaveTypingFont()
+        {
+            if (loadStoredTypingFont)
+            {
+                Properties.Settings.Default.TypingFontName = CustomFont.FontFamily.Name;
+                Properties.Settings.Default.TypingFontSize = CustomFont.Size;
+                Properties.Settings.Default.TypingFontUnit = (int)CustomFont.Unit;
+                Properties.Settings.Default.TypingFontStyle = (int)CustomFont.Style;
+            }
+        }
+
         protected class FavoriteFont
         {
             public int Index;
@@ -550,7 +528,8 @@ namespace Typist
 
         private bool isFontAvailable(Font font)
         {
-            return font.FontFamily.Name.ToLower() == font.OriginalFontName.ToLower();
+            return font.OriginalFontName == null ||
+                   font.FontFamily.Name.ToLower() == font.OriginalFontName.ToLower();
         }
 
         protected Font CustomFont
@@ -605,15 +584,15 @@ namespace Typist
         {
             CurrentFontIndex = CurrentFontIndex;
 
-            dlgChangeFont.Font = picTyping.TypingFont;
+            dlgFontDialog.Font = picTyping.TypingFont;
 
-            if (dlgChangeFont.ShowDialog() == DialogResult.OK)
-                CustomFont = dlgChangeFont.Font;
+            if (dlgFontDialog.ShowDialog() == DialogResult.OK)
+                CustomFont = dlgFontDialog.Font;
         }
 
-        private void dlgChangeFont_Apply(object sender, EventArgs e)
+        private void dlgFontDialog_Apply(object sender, EventArgs e)
         {
-            CustomFont = dlgChangeFont.Font;
+            CustomFont = dlgFontDialog.Font;
         }
 
         #endregion
@@ -695,31 +674,34 @@ namespace Typist
 
         #region Context Menu
 
-        private void pauseResume()
+        private void initializeContextMenuStrip()
         {
-            PracticeMode = !PracticeMode;
+            var favoriteFontEventHandler = new EventHandler(favoriteFontMenuItem_Click);
+
+            predefinedFontsToolStripMenuItem.DropDownItems.AddRange(
+                FavoriteFonts.Select(f =>
+                {
+                    var favoriteFontMenuItem = new ToolStripMenuItem(fontDescription(f.Font))
+                    {
+                        Enabled = f.IsAvailable,
+                        Tag = f.IndexInAvailables,
+                    };
+
+                    favoriteFontMenuItem.Click += favoriteFontEventHandler;
+
+                    return favoriteFontMenuItem;
+                })
+                             .ToArray());
+
+            predefinedFontsToolStripMenuItem.DropDownItems.Insert(2, new ToolStripSeparator());
         }
 
-        private void changeSettings()
+        private void favoriteFontMenuItem_Click(object sender, EventArgs e)
         {
+            var favoriteFontMenuItem = (ToolStripMenuItem)sender;
 
-        }
-
-        private void changeFont()
-        {
             PracticeMode = false;
-            openFontDialog();
-        }
-
-        private void moveToFont(int inc)
-        {
-            PracticeMode = false;
-            CurrentFontIndex += inc;
-        }
-
-        private void saveAsCustomFont()
-        {
-            CustomFont = AvailableFonts[CurrentFontIndex];
+            CurrentFontIndex = (int)favoriteFontMenuItem.Tag;
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -752,7 +734,7 @@ namespace Typist
             saveAsCustomFont();
         }
 
-        private void mnuTypingBox_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        private void mnuContextMenu_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             picTyping.Invalidate();
         }
@@ -762,12 +744,60 @@ namespace Typist
             picTyping.Invalidate();
         }
 
-        private void favoriteFontMenuItem_Click(object sender, EventArgs e)
+        private void pauseResume()
         {
-            var favoriteFontMenuItem = (ToolStripMenuItem)sender;
+            PracticeMode = !PracticeMode;
+        }
 
+        private void changeSettings()
+        {
             PracticeMode = false;
-            CurrentFontIndex = (int)favoriteFontMenuItem.Tag;
+            openSettingsDialog();
+        }
+
+        private void changeFont()
+        {
+            PracticeMode = false;
+            openFontDialog();
+        }
+
+        private void moveToFont(int inc)
+        {
+            PracticeMode = false;
+            CurrentFontIndex += inc;
+        }
+
+        private void saveAsCustomFont()
+        {
+            CustomFont = AvailableFonts[CurrentFontIndex];
+        }
+
+        #endregion
+
+
+        #region Settings Dialog
+
+        private SettingsDialog dlgSettingsDialog;
+
+        private void initializeSettingsDialog()
+        {
+            dlgSettingsDialog = new SettingsDialog();
+            dlgSettingsDialog.Move += new EventHandler(dlgSettingsDialog_Move);
+        }
+
+        private void dlgSettingsDialog_Move(object sender, EventArgs e)
+        {
+            picTyping.Invalidate();
+        }
+
+        private void openSettingsDialog()
+        {
+            if (dlgSettingsDialog.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+
+            dlgSettingsDialog.StartPosition = FormStartPosition.Manual;
         }
 
         #endregion

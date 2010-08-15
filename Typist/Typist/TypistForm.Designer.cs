@@ -40,9 +40,9 @@
             this.tblBottomLine = new System.Windows.Forms.TableLayoutPanel();
             this.lblErrorCount = new System.Windows.Forms.Label();
             this.lblAccuracy = new System.Windows.Forms.Label();
-            this.dlgChangeFont = new System.Windows.Forms.FontDialog();
+            this.dlgFontDialog = new System.Windows.Forms.FontDialog();
             this.lblStatusBar = new System.Windows.Forms.Label();
-            this.mnuTypingBox = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,7 +52,7 @@
             this.saveAsCustomFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.predefinedFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.picTyping = new Typist.TypingBox();
-            this.mnuTypingBox.SuspendLayout();
+            this.mnuContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,14 +161,15 @@
             this.lblAccuracy.TabIndex = 11;
             this.lblAccuracy.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // dlgChangeFont
+            // dlgFontDialog
             // 
-            this.dlgChangeFont.FixedPitchOnly = true;
-            this.dlgChangeFont.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dlgChangeFont.FontMustExist = true;
-            this.dlgChangeFont.ShowApply = true;
-            this.dlgChangeFont.ShowEffects = false;
-            this.dlgChangeFont.Apply += new System.EventHandler(this.dlgChangeFont_Apply);
+            this.dlgFontDialog.AllowScriptChange = false;
+            this.dlgFontDialog.FixedPitchOnly = true;
+            this.dlgFontDialog.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dlgFontDialog.FontMustExist = true;
+            this.dlgFontDialog.ShowApply = true;
+            this.dlgFontDialog.ShowEffects = false;
+            this.dlgFontDialog.Apply += new System.EventHandler(this.dlgFontDialog_Apply);
             // 
             // lblStatusBar
             // 
@@ -181,9 +182,9 @@
             this.lblStatusBar.Size = new System.Drawing.Size(462, 15);
             this.lblStatusBar.TabIndex = 12;
             // 
-            // mnuTypingBox
+            // mnuContextMenu
             // 
-            this.mnuTypingBox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pauseToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.toolStripSeparator3,
@@ -192,9 +193,9 @@
             this.nextFontToolStripMenuItem,
             this.saveAsCustomFontToolStripMenuItem,
             this.predefinedFontsToolStripMenuItem});
-            this.mnuTypingBox.Name = "contextMenuStrip1";
-            this.mnuTypingBox.Size = new System.Drawing.Size(258, 164);
-            this.mnuTypingBox.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuTypingBox_Closed);
+            this.mnuContextMenu.Name = "contextMenuStrip1";
+            this.mnuContextMenu.Size = new System.Drawing.Size(258, 164);
+            this.mnuContextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuContextMenu_Closed);
             // 
             // pauseToolStripMenuItem
             // 
@@ -210,7 +211,6 @@
             this.settingsToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-X";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.settingsToolStripMenuItem.Text = "Settings...";
-            this.settingsToolStripMenuItem.Visible = false;
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
@@ -265,7 +265,7 @@
             this.picTyping.BackColor = System.Drawing.Color.White;
             this.picTyping.BarCursorVOffset = 0F;
             this.picTyping.CharCursorVOffset = 0F;
-            this.picTyping.ContextMenuStrip = this.mnuTypingBox;
+            this.picTyping.ContextMenuStrip = this.mnuContextMenu;
             this.picTyping.ErrorBackgroundVOffset = 0F;
             this.picTyping.ImportedText = null;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
@@ -301,7 +301,7 @@
             this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.MinimumSize = new System.Drawing.Size(470, 150);
             this.Name = "TypistForm";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Typist";
             this.Deactivate += new System.EventHandler(this.TypistForm_Deactivate);
@@ -312,7 +312,7 @@
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TypistForm_KeyPress);
             this.Move += new System.EventHandler(this.TypistForm_Move);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TypistForm_KeyDown);
-            this.mnuTypingBox.ResumeLayout(false);
+            this.mnuContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).EndInit();
             this.ResumeLayout(false);
 
@@ -330,10 +330,10 @@
         private System.Windows.Forms.TableLayoutPanel tblTopLine;
         private System.Windows.Forms.Label lblErrorCount;
         private System.Windows.Forms.Label lblAccuracy;
-        private System.Windows.Forms.FontDialog dlgChangeFont;
+        private System.Windows.Forms.FontDialog dlgFontDialog;
         private System.Windows.Forms.TableLayoutPanel tblBottomLine;
         private System.Windows.Forms.Label lblStatusBar;
-        private System.Windows.Forms.ContextMenuStrip mnuTypingBox;
+        private System.Windows.Forms.ContextMenuStrip mnuContextMenu;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem changeFontToolStripMenuItem;
