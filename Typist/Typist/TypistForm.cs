@@ -112,13 +112,19 @@ namespace Typist
                 Properties.Settings.Default.TypingFontSize > 0 &&
                 Properties.Settings.Default.TypingFontUnit > 0)
             {
-                CustomFont = new Font(Properties.Settings.Default.TypingFontName,
-                                      Properties.Settings.Default.TypingFontSize,
-                                      (FontStyle)Properties.Settings.Default.TypingFontStyle,
-                                      (GraphicsUnit)Properties.Settings.Default.TypingFontUnit);
+                Font font = new Font(Properties.Settings.Default.TypingFontName,
+                                     Properties.Settings.Default.TypingFontSize,
+                                     (FontStyle)Properties.Settings.Default.TypingFontStyle,
+                                     (GraphicsUnit)Properties.Settings.Default.TypingFontUnit);
+
+                if (isFontAvailable(font))
+                {
+                    CustomFont = font;
+                    return;
+                }
             }
-            else
-                CustomFont = defaultTypingFont;
+
+            CustomFont = defaultTypingFont;
         }
 
         private void TypistForm_Load(object sender, EventArgs e)
@@ -398,7 +404,7 @@ namespace Typist
                         CurrentFontIndex += (e.Shift ? -1 : +1);
                     }
                     else if (e.KeyCode == Keys.S)
-                        CustomFont = FavoriteFonts[CurrentFontIndex];
+                        CustomFont = AvailableFonts[CurrentFontIndex];
                 }
 
                 if (PracticeMode)
@@ -459,27 +465,70 @@ namespace Typist
 
         #region Fonts
 
-        protected Font[] FavoriteFonts
+        protected class FavoriteFont
+        {
+            public int Index;
+            public Font Font;
+            public bool IsAvailable;
+            public int IndexInAvailables;
+        }
+
+        protected FavoriteFont[] FavoriteFonts
         {
             get
             {
                 if (favoriteFonts == null)
-                    favoriteFonts = new Font[] { null }
-                                            .Concat(Fonts.Small.All)
-                                            .Concat(Fonts.Large.All)
-                                            .ToArray();
+                {
+                    favoriteFonts = Fonts.Small.All
+                                    .Concat(Fonts.Large.All)
+                                    .Select(f => new FavoriteFont()
+                                    {
+                                        Font = f,
+                                        IsAvailable = isFontAvailable(f),
+                                    })
+                                    .ToArray();
+
+                    int k = 1;
+                    for (int i = 0; i < favoriteFonts.Length; i++)
+                    {
+                        favoriteFonts[i].Index = i;
+
+                        if (favoriteFonts[i].IsAvailable)
+                            favoriteFonts[i].IndexInAvailables = k++;
+                    }
+                }
 
                 return favoriteFonts;
             }
         }
-        private Font[] favoriteFonts;
+        private FavoriteFont[] favoriteFonts;
+
+        protected Font[] AvailableFonts
+        {
+            get
+            {
+                if (availableFonts == null)
+                    availableFonts = new Font[] { null }
+                                            .Concat(FavoriteFonts.Where(f => f.IsAvailable)
+                                                                 .Select(f => f.Font))
+                                            .ToArray();
+
+                return availableFonts;
+            }
+        }
+        private Font[] availableFonts;
+
+        private bool isFontAvailable(Font font)
+        {
+            return font.FontFamily.Name == font.OriginalFontName;
+        }
 
         protected Font CustomFont
         {
-            get { return FavoriteFonts[0]; }
+            get { return AvailableFonts[0]; }
             set
             {
-                FavoriteFonts[0] = value;
+                AvailableFonts[0] = value;
                 CurrentFontIndex = 0;
             }
         }
@@ -491,13 +540,13 @@ namespace Typist
             {
                 currentFontIndex = value;
 
-                if (currentFontIndex >= FavoriteFonts.Length)
+                if (currentFontIndex >= AvailableFonts.Length)
                     currentFontIndex = 0;
                 else if (currentFontIndex < 0)
-                    currentFontIndex = FavoriteFonts.Length - 1;
+                    currentFontIndex = AvailableFonts.Length - 1;
 
-                picTyping.TypingFont = FavoriteFonts[currentFontIndex];
-                picTyping.BarCursorLineWidth = FavoriteFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3;
+                picTyping.TypingFont = AvailableFonts[currentFontIndex];
+                picTyping.BarCursorLineWidth = AvailableFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3;
 
                 lblStatusBar.Text = string.Format("{0}: {1}",
                                                   currentFontIndex == 0 ?

@@ -10,8 +10,6 @@ Main unsolved problems:
 
 General:
 
-- add to the list of favorite fonts only those fonts that are installed on the current machine
-
 - add a right-click menu, containing actions that are now keyboard shortcuts (Ctrl-P, Ctrl-M, Ctrl-F, Ctrl-S, Ctrl-N, Ctrl-Shift-N)
 
 - on the right-click menu: Settings dialog (at least beepOnError, pauseAfterElapsed, and theme.CursorColor, which I change all the time; maybe also allowBackspace, visibleNewlines, countWhitespaceAsWordChars, and eliminateMultipleWhitespace); shortcut: Ctrl-X
@@ -57,7 +55,7 @@ Paint event handler:
 - align error highlight chars better with the rest of the text
 
 
-
+* add to the list of favorite fonts only those fonts that are installed on the current machine
 * why is it that some OpenType fonts do not appear in the standard Font Dialog?
 * create a Setup project; make it install fixed-pitch fonts (Anonymous Pro, Bitstream Vera Sans Mono, Andale Mono, etc.), if they don't yet exist on the machine
 * shortcut: Ctrl-F for "Change Font", in dialog
