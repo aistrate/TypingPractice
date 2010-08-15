@@ -52,6 +52,26 @@ namespace Typist
 
         #region General Behavior
 
+        public TypistForm(string filePath)
+        {
+            InitializeComponent();
+
+            initializeTypingBox();
+
+            initializeContextMenuStrip();
+
+            loadWindowPosition();
+            loadTypingFont();
+
+            ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
+            PracticeMode = false;
+
+            if (string.IsNullOrEmpty(filePath))
+                filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
+
+            ImportFile(filePath);
+        }
+
         private void initializeTypingBox()
         {
             picTyping.Theme = theme;
@@ -72,22 +92,26 @@ namespace Typist
             picTyping.ShowCursorWhenPaused = showCursorWhenPaused;
         }
 
-        public TypistForm(string filePath)
+        private void initializeContextMenuStrip()
         {
-            InitializeComponent();
+            var favoriteFontEventHandler = new EventHandler(favoriteFontMenuItem_Click);
 
-            initializeTypingBox();
+            predefinedFontsToolStripMenuItem.DropDownItems.AddRange(
+                FavoriteFonts.Select(f =>
+                             {
+                                 var favoriteFontMenuItem = new ToolStripMenuItem(fontDescription(f.Font))
+                                 {
+                                     Enabled = f.IsAvailable,
+                                     Tag = f.IndexInAvailables,
+                                 };
 
-            loadWindowPosition();
-            loadTypingFont();
+                                 favoriteFontMenuItem.Click += favoriteFontEventHandler;
 
-            ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
-            PracticeMode = false;
+                                 return favoriteFontMenuItem;
+                             })
+                             .ToArray());
 
-            //if (string.IsNullOrEmpty(filePath))
-            //    filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
-
-            ImportFile(filePath);
+            predefinedFontsToolStripMenuItem.DropDownItems.Insert(2, new ToolStripSeparator());
         }
 
         private void loadWindowPosition()
@@ -175,6 +199,9 @@ namespace Typist
                     practiceMode ? "Pause" :
                     IsStarted ? "Resume" :
                     "Start";
+
+                pauseToolStripMenuItem.Enabled = IsImported;
+                pauseToolStripMenuItem.Text = btnStart.Text + " practice";
 
                 this.Text = string.Format("{0}Typist{1}",
                                           IsImported && !string.IsNullOrEmpty(importedFileName) ? importedFileName + " - " : "",
@@ -267,7 +294,7 @@ namespace Typist
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            PracticeMode = !PracticeMode;
+            pauseResume();
         }
 
         private void TypistForm_Deactivate(object sender, EventArgs e)
@@ -386,25 +413,28 @@ namespace Typist
             {
                 if (e.Control)
                 {
-                    if (e.KeyCode == Keys.P)
-                        PracticeMode = !PracticeMode;
-                    else if (e.KeyCode == Keys.M)
+                    switch (e.KeyCode)
                     {
-                        PracticeMode = false;
-                        WindowState = FormWindowState.Minimized;
+                        case Keys.M:
+                            PracticeMode = false;
+                            WindowState = FormWindowState.Minimized;
+                            break;
+                        case Keys.P:
+                            pauseResume();
+                            break;
+                        case Keys.X:
+                            changeSettings();
+                            break;
+                        case Keys.F:
+                            changeFont();
+                            break;
+                        case Keys.N:
+                            moveToFont(e.Shift ? -1 : +1);
+                            break;
+                        case Keys.S:
+                            saveAsCustomFont();
+                            break;
                     }
-                    else if (e.KeyCode == Keys.F)
-                    {
-                        PracticeMode = false;
-                        changeFontDialog();
-                    }
-                    else if (e.KeyCode == Keys.N)
-                    {
-                        PracticeMode = false;
-                        CurrentFontIndex += (e.Shift ? -1 : +1);
-                    }
-                    else if (e.KeyCode == Keys.S)
-                        CustomFont = AvailableFonts[CurrentFontIndex];
                 }
 
                 if (PracticeMode)
@@ -491,7 +521,7 @@ namespace Typist
                     int k = 1;
                     for (int i = 0; i < favoriteFonts.Length; i++)
                     {
-                        favoriteFonts[i].Index = i;
+                        favoriteFonts[i].Index = i + 1;
 
                         if (favoriteFonts[i].IsAvailable)
                             favoriteFonts[i].IndexInAvailables = k++;
@@ -520,7 +550,7 @@ namespace Typist
 
         private bool isFontAvailable(Font font)
         {
-            return font.FontFamily.Name == font.OriginalFontName;
+            return font.FontFamily.Name.ToLower() == font.OriginalFontName.ToLower();
         }
 
         protected Font CustomFont
@@ -551,7 +581,9 @@ namespace Typist
                 lblStatusBar.Text = string.Format("{0}: {1}",
                                                   currentFontIndex == 0 ?
                                                         "Custom Font" :
-                                                        string.Format("Predefined Font ({0})", currentFontIndex),
+                                                        string.Format("Predefined Font ({0})",
+                                                                      FavoriteFonts.First(f => f.IndexInAvailables == currentFontIndex)
+                                                                                   .Index),
                                                   fontDescription(picTyping.TypingFont));
 
                 picTyping.Invalidate();
@@ -561,13 +593,15 @@ namespace Typist
 
         private string fontDescription(Font font)
         {
+            string fontName = isFontAvailable(font) ? font.FontFamily.Name : font.OriginalFontName;
+
             return string.Format("{0} ({1} {2}{3})",
-                                 font.FontFamily.Name,
+                                 fontName,
                                  font.Size, font.Unit.ToString().ToLower(),
                                  font.Style != FontStyle.Regular ? ", " + font.Style.ToString().ToLower() : "");
         }
 
-        private void changeFontDialog()
+        private void openFontDialog()
         {
             CurrentFontIndex = CurrentFontIndex;
 
@@ -654,6 +688,86 @@ namespace Typist
                 lblErrorCount.Text = "";
                 lblAccuracy.Text = "";
             }
+        }
+
+        #endregion
+
+
+        #region Context Menu
+
+        private void pauseResume()
+        {
+            PracticeMode = !PracticeMode;
+        }
+
+        private void changeSettings()
+        {
+
+        }
+
+        private void changeFont()
+        {
+            PracticeMode = false;
+            openFontDialog();
+        }
+
+        private void moveToFont(int inc)
+        {
+            PracticeMode = false;
+            CurrentFontIndex += inc;
+        }
+
+        private void saveAsCustomFont()
+        {
+            CustomFont = AvailableFonts[CurrentFontIndex];
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pauseResume();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            changeSettings();
+        }
+
+        private void changeFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            changeFont();
+        }
+
+        private void previousFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            moveToFont(-1);
+        }
+
+        private void nextFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            moveToFont(+1);
+        }
+
+        private void saveAsCustomFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveAsCustomFont();
+        }
+
+        private void mnuTypingBox_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            picTyping.Invalidate();
+        }
+
+        private void predefinedFontsToolStripMenuItem_DropDownClosed(object sender, EventArgs e)
+        {
+            picTyping.Invalidate();
+        }
+
+        private void favoriteFontMenuItem_Click(object sender, EventArgs e)
+        {
+            var favoriteFontMenuItem = (ToolStripMenuItem)sender;
+
+            PracticeMode = false;
+            CurrentFontIndex = (int)favoriteFontMenuItem.Tag;
         }
 
         #endregion

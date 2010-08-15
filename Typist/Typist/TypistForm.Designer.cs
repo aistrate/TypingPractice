@@ -42,7 +42,17 @@
             this.lblAccuracy = new System.Windows.Forms.Label();
             this.dlgChangeFont = new System.Windows.Forms.FontDialog();
             this.lblStatusBar = new System.Windows.Forms.Label();
+            this.mnuTypingBox = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.previousFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nextFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsCustomFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.predefinedFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.picTyping = new Typist.TypingBox();
+            this.mnuTypingBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -171,6 +181,82 @@
             this.lblStatusBar.Size = new System.Drawing.Size(462, 15);
             this.lblStatusBar.TabIndex = 12;
             // 
+            // mnuTypingBox
+            // 
+            this.mnuTypingBox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pauseToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.changeFontToolStripMenuItem,
+            this.previousFontToolStripMenuItem,
+            this.nextFontToolStripMenuItem,
+            this.saveAsCustomFontToolStripMenuItem,
+            this.predefinedFontsToolStripMenuItem});
+            this.mnuTypingBox.Name = "contextMenuStrip1";
+            this.mnuTypingBox.Size = new System.Drawing.Size(258, 164);
+            this.mnuTypingBox.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuTypingBox_Closed);
+            // 
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+P";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.pauseToolStripMenuItem.Text = "Pause practice";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-X";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.settingsToolStripMenuItem.Text = "Settings...";
+            this.settingsToolStripMenuItem.Visible = false;
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
+            // 
+            // changeFontToolStripMenuItem
+            // 
+            this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
+            this.changeFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+F";
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.changeFontToolStripMenuItem.Text = "Change Font...";
+            this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
+            // 
+            // previousFontToolStripMenuItem
+            // 
+            this.previousFontToolStripMenuItem.Name = "previousFontToolStripMenuItem";
+            this.previousFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Shift+N";
+            this.previousFontToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.previousFontToolStripMenuItem.Text = "Previous predef. font";
+            this.previousFontToolStripMenuItem.Click += new System.EventHandler(this.previousFontToolStripMenuItem_Click);
+            // 
+            // nextFontToolStripMenuItem
+            // 
+            this.nextFontToolStripMenuItem.Name = "nextFontToolStripMenuItem";
+            this.nextFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-N";
+            this.nextFontToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.nextFontToolStripMenuItem.Text = "Next predef. font";
+            this.nextFontToolStripMenuItem.Click += new System.EventHandler(this.nextFontToolStripMenuItem_Click);
+            // 
+            // saveAsCustomFontToolStripMenuItem
+            // 
+            this.saveAsCustomFontToolStripMenuItem.Name = "saveAsCustomFontToolStripMenuItem";
+            this.saveAsCustomFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-S";
+            this.saveAsCustomFontToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.saveAsCustomFontToolStripMenuItem.Text = "Save as custom font";
+            this.saveAsCustomFontToolStripMenuItem.Click += new System.EventHandler(this.saveAsCustomFontToolStripMenuItem_Click);
+            // 
+            // predefinedFontsToolStripMenuItem
+            // 
+            this.predefinedFontsToolStripMenuItem.Name = "predefinedFontsToolStripMenuItem";
+            this.predefinedFontsToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.predefinedFontsToolStripMenuItem.Text = "Predefined fonts";
+            this.predefinedFontsToolStripMenuItem.DropDownClosed += new System.EventHandler(this.predefinedFontsToolStripMenuItem_DropDownClosed);
+            // 
             // picTyping
             // 
             this.picTyping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -179,6 +265,7 @@
             this.picTyping.BackColor = System.Drawing.Color.White;
             this.picTyping.BarCursorVOffset = 0F;
             this.picTyping.CharCursorVOffset = 0F;
+            this.picTyping.ContextMenuStrip = this.mnuTypingBox;
             this.picTyping.ErrorBackgroundVOffset = 0F;
             this.picTyping.ImportedText = null;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
@@ -188,6 +275,7 @@
             this.picTyping.TabStop = false;
             this.picTyping.Theme = null;
             this.picTyping.TypedText = null;
+            this.picTyping.TypingFont = null;
             this.picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(this.picTyping_DrawingCursor);
             // 
             // TypistForm
@@ -224,6 +312,7 @@
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TypistForm_KeyPress);
             this.Move += new System.EventHandler(this.TypistForm_Move);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TypistForm_KeyDown);
+            this.mnuTypingBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).EndInit();
             this.ResumeLayout(false);
 
@@ -244,6 +333,15 @@
         private System.Windows.Forms.FontDialog dlgChangeFont;
         private System.Windows.Forms.TableLayoutPanel tblBottomLine;
         private System.Windows.Forms.Label lblStatusBar;
+        private System.Windows.Forms.ContextMenuStrip mnuTypingBox;
+        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem changeFontToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem previousFontToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nextFontToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsCustomFontToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem predefinedFontsToolStripMenuItem;
     }
 }
 
