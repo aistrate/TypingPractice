@@ -66,8 +66,8 @@ namespace Typist
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
 
-            if (string.IsNullOrEmpty(filePath))
-                filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
+            //if (string.IsNullOrEmpty(filePath))
+            //    filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
 
             ImportFile(filePath);
         }
