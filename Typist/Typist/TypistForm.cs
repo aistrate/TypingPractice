@@ -16,17 +16,12 @@ namespace Typist
     {
         #region Flags and Settings
 
-        private const bool countErrorsAsWordChars = true;
-
-        private const bool askBeforeCloseDuringPractice = false;
-
         private const int pauseAfterElapsed = 10;
         private const bool pauseOnMinimize = true;
         private const bool pauseOnDeactivate = false;
 
         private const bool cursorAsVerticalBar = true;
         private const char charCursorChar = '_';
-        private const bool showCursorWhenPaused = false;
 
         private const float barCursorVOffset = -0.1f;
         private const float charCursorVOffset = 0;
@@ -86,7 +81,6 @@ namespace Typist
             picTyping.ErrorBackgroundVOffset = errorBackgroundVOffset;
 
             picTyping.VisibleNewlines = userSettings.VisibleNewlines;
-            picTyping.ShowCursorWhenPaused = showCursorWhenPaused;
         }
 
         private void loadWindowPosition()
@@ -110,7 +104,7 @@ namespace Typist
 
         private void picTyping_DrawingCursor(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            bool drawCursor = (PracticeMode || showCursorWhenPaused && IsPaused) &&
+            bool drawCursor = (PracticeMode || userSettings.ShowCursorWhenPaused && IsPaused) &&
                               !IsFinished;
 
             e.Cancel = !drawCursor;
@@ -123,7 +117,9 @@ namespace Typist
             {
                 importedText = value;
 
-                TypedText = new TextBuffer(importedText, userSettings.CountWhitespaceAsWordChars, countErrorsAsWordChars);
+                TypedText = new TextBuffer(importedText,
+                                           userSettings.CountWhitespaceAsWordChars,
+                                           userSettings.CountErrorsAsWordChars);
 
                 picTyping.ImportedText = value;
                 picTyping.TypedText = TypedText;
@@ -292,7 +288,7 @@ namespace Typist
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            if (askBeforeCloseDuringPractice && IsStarted)
+            if (userSettings.AskBeforeCloseDuringPractice && IsStarted)
             {
                 PracticeMode = false;
 
@@ -785,6 +781,9 @@ namespace Typist
                 AllowBackspace = Properties.Settings.Default.UserSettings_AllowBackspace,
                 VisibleNewlines = Properties.Settings.Default.UserSettings_VisibleNewlines,
                 CountWhitespaceAsWordChars = Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars,
+                CountErrorsAsWordChars = Properties.Settings.Default.UserSettings_CountErrorsAsWordChars,
+                AskBeforeCloseDuringPractice = Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice,
+                ShowCursorWhenPaused = Properties.Settings.Default.UserSettings_ShowCursorWhenPaused,
             };
         }
 
@@ -794,6 +793,9 @@ namespace Typist
             Properties.Settings.Default.UserSettings_AllowBackspace = userSettings.AllowBackspace;
             Properties.Settings.Default.UserSettings_VisibleNewlines = userSettings.VisibleNewlines;
             Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
+            Properties.Settings.Default.UserSettings_CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
+            Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice = userSettings.AskBeforeCloseDuringPractice;
+            Properties.Settings.Default.UserSettings_ShowCursorWhenPaused = userSettings.ShowCursorWhenPaused;
         }
 
         private SettingsDialog dlgSettingsDialog;
@@ -817,12 +819,13 @@ namespace Typist
             {
                 userSettings = dlgSettingsDialog.UserSettings;
 
-                picTyping.VisibleNewlines = userSettings.VisibleNewlines;
-                picTyping.Invalidate();
-
                 ImportedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
                 TypedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
+                TypedText.CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
                 displayWPM();
+
+                picTyping.VisibleNewlines = userSettings.VisibleNewlines;
+                picTyping.Invalidate();
             }
 
             dlgSettingsDialog.StartPosition = FormStartPosition.Manual;

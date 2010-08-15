@@ -178,5 +178,41 @@ namespace Typist.Properties {
                 this["UserSettings_CountWhitespaceAsWordChars"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UserSettings_CountErrorsAsWordChars {
+            get {
+                return ((bool)(this["UserSettings_CountErrorsAsWordChars"]));
+            }
+            set {
+                this["UserSettings_CountErrorsAsWordChars"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UserSettings_AskBeforeCloseDuringPractice {
+            get {
+                return ((bool)(this["UserSettings_AskBeforeCloseDuringPractice"]));
+            }
+            set {
+                this["UserSettings_AskBeforeCloseDuringPractice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UserSettings_ShowCursorWhenPaused {
+            get {
+                return ((bool)(this["UserSettings_ShowCursorWhenPaused"]));
+            }
+            set {
+                this["UserSettings_ShowCursorWhenPaused"] = value;
+            }
+        }
     }
 }

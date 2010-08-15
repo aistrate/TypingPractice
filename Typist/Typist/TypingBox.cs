@@ -85,11 +85,6 @@ namespace Typist
         [DefaultValue(false)]
         public bool VisibleNewlines { get; set; }
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(false)]
-        public bool ShowCursorWhenPaused { get; set; }
-
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         public event CancelEventHandler DrawingCursor;

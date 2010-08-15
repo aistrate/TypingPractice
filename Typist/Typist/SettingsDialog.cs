@@ -36,6 +36,9 @@ namespace Typist
                 chkAllowBackspace.Checked = userSettings.AllowBackspace;
                 chkVisibleNewlines.Checked = userSettings.VisibleNewlines;
                 chkCountWhitespaceAsWordChars.Checked = userSettings.CountWhitespaceAsWordChars;
+                chkCountErrorsAsWordChars.Checked = userSettings.CountErrorsAsWordChars;
+                chkAskBeforeCloseDuringPractice.Checked = userSettings.AskBeforeCloseDuringPractice;
+                chkShowCursorWhenPaused.Checked = userSettings.ShowCursorWhenPaused;
             }
         }
         private UserSettings userSettings = new UserSettings();
@@ -48,6 +51,9 @@ namespace Typist
                 AllowBackspace = chkAllowBackspace.Checked,
                 VisibleNewlines = chkVisibleNewlines.Checked,
                 CountWhitespaceAsWordChars = chkCountWhitespaceAsWordChars.Checked,
+                CountErrorsAsWordChars = chkCountErrorsAsWordChars.Checked,
+                AskBeforeCloseDuringPractice = chkAskBeforeCloseDuringPractice.Checked,
+                ShowCursorWhenPaused = chkShowCursorWhenPaused.Checked,
             };
         }
     }
