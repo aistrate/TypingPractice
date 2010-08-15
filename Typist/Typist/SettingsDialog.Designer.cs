@@ -33,13 +33,14 @@
             this.chkBeepOnError = new System.Windows.Forms.CheckBox();
             this.chkAllowBackspace = new System.Windows.Forms.CheckBox();
             this.chkVisibleNewlines = new System.Windows.Forms.CheckBox();
+            this.chkCountWhitespaceAsWordChars = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(148, 102);
+            this.btnOk.Location = new System.Drawing.Point(148, 110);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 100;
@@ -51,7 +52,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(229, 102);
+            this.btnCancel.Location = new System.Drawing.Point(229, 110);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 101;
@@ -88,12 +89,23 @@
             this.chkVisibleNewlines.Text = "Visible newlines";
             this.chkVisibleNewlines.UseVisualStyleBackColor = false;
             // 
+            // chkCountWhitespaceAsWordChars
+            // 
+            this.chkCountWhitespaceAsWordChars.AutoSize = true;
+            this.chkCountWhitespaceAsWordChars.Location = new System.Drawing.Point(12, 81);
+            this.chkCountWhitespaceAsWordChars.Name = "chkCountWhitespaceAsWordChars";
+            this.chkCountWhitespaceAsWordChars.Size = new System.Drawing.Size(204, 17);
+            this.chkCountWhitespaceAsWordChars.TabIndex = 104;
+            this.chkCountWhitespaceAsWordChars.Text = "Count whitespace as word characters";
+            this.chkCountWhitespaceAsWordChars.UseVisualStyleBackColor = false;
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(316, 137);
+            this.ClientSize = new System.Drawing.Size(316, 145);
+            this.Controls.Add(this.chkCountWhitespaceAsWordChars);
             this.Controls.Add(this.chkVisibleNewlines);
             this.Controls.Add(this.chkAllowBackspace);
             this.Controls.Add(this.chkBeepOnError);
@@ -122,5 +134,6 @@
         private System.Windows.Forms.CheckBox chkBeepOnError;
         private System.Windows.Forms.CheckBox chkAllowBackspace;
         private System.Windows.Forms.CheckBox chkVisibleNewlines;
+        private System.Windows.Forms.CheckBox chkCountWhitespaceAsWordChars;
     }
 }

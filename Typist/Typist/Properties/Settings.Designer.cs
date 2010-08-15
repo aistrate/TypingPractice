@@ -166,5 +166,17 @@ namespace Typist.Properties {
                 this["UserSettings_VisibleNewlines"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UserSettings_CountWhitespaceAsWordChars {
+            get {
+                return ((bool)(this["UserSettings_CountWhitespaceAsWordChars"]));
+            }
+            set {
+                this["UserSettings_CountWhitespaceAsWordChars"] = value;
+            }
+        }
     }
 }

@@ -16,7 +16,6 @@ namespace Typist
     {
         #region Flags and Settings
 
-        private const bool countWhitespaceAsWordChars = true;
         private const bool countErrorsAsWordChars = true;
 
         private const bool askBeforeCloseDuringPractice = false;
@@ -61,7 +60,7 @@ namespace Typist
             initializeContextMenuStrip();
             initializeSettingsDialog();
 
-            ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
+            ImportedText = new TextBuffer("", userSettings.CountWhitespaceAsWordChars);
             PracticeMode = false;
 
             //if (string.IsNullOrEmpty(filePath))
@@ -124,7 +123,7 @@ namespace Typist
             {
                 importedText = value;
 
-                TypedText = new TextBuffer(importedText, countWhitespaceAsWordChars, countErrorsAsWordChars);
+                TypedText = new TextBuffer(importedText, userSettings.CountWhitespaceAsWordChars, countErrorsAsWordChars);
 
                 picTyping.ImportedText = value;
                 picTyping.TypedText = TypedText;
@@ -230,7 +229,7 @@ namespace Typist
                 importedFileName = fileInfo.Name;
 
                 using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
-                    ImportedText = new TextBuffer(sr.ReadToEnd(), countWhitespaceAsWordChars);
+                    ImportedText = new TextBuffer(sr.ReadToEnd(), userSettings.CountWhitespaceAsWordChars);
 
                 stopwatch.Reset();
 
@@ -785,6 +784,7 @@ namespace Typist
                 BeepOnError = Properties.Settings.Default.UserSettings_BeepOnError,
                 AllowBackspace = Properties.Settings.Default.UserSettings_AllowBackspace,
                 VisibleNewlines = Properties.Settings.Default.UserSettings_VisibleNewlines,
+                CountWhitespaceAsWordChars = Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars,
             };
         }
 
@@ -793,6 +793,7 @@ namespace Typist
             Properties.Settings.Default.UserSettings_BeepOnError = userSettings.BeepOnError;
             Properties.Settings.Default.UserSettings_AllowBackspace = userSettings.AllowBackspace;
             Properties.Settings.Default.UserSettings_VisibleNewlines = userSettings.VisibleNewlines;
+            Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
         }
 
         private SettingsDialog dlgSettingsDialog;
@@ -818,6 +819,10 @@ namespace Typist
 
                 picTyping.VisibleNewlines = userSettings.VisibleNewlines;
                 picTyping.Invalidate();
+
+                ImportedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
+                TypedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
+                displayWPM();
             }
 
             dlgSettingsDialog.StartPosition = FormStartPosition.Manual;

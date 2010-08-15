@@ -35,6 +35,7 @@ namespace Typist
                 chkBeepOnError.Checked = userSettings.BeepOnError;
                 chkAllowBackspace.Checked = userSettings.AllowBackspace;
                 chkVisibleNewlines.Checked = userSettings.VisibleNewlines;
+                chkCountWhitespaceAsWordChars.Checked = userSettings.CountWhitespaceAsWordChars;
             }
         }
         private UserSettings userSettings = new UserSettings();
@@ -46,6 +47,7 @@ namespace Typist
                 BeepOnError = chkBeepOnError.Checked,
                 AllowBackspace = chkAllowBackspace.Checked,
                 VisibleNewlines = chkVisibleNewlines.Checked,
+                CountWhitespaceAsWordChars = chkCountWhitespaceAsWordChars.Checked,
             };
         }
     }

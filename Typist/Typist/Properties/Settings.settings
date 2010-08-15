@@ -38,5 +38,8 @@
     <Setting Name="UserSettings_VisibleNewlines" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="UserSettings_CountWhitespaceAsWordChars" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
