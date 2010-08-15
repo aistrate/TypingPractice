@@ -39,6 +39,9 @@ namespace Typist
                 chkCountErrorsAsWordChars.Checked = userSettings.CountErrorsAsWordChars;
                 chkAskBeforeCloseDuringPractice.Checked = userSettings.AskBeforeCloseDuringPractice;
                 chkShowCursorWhenPaused.Checked = userSettings.ShowCursorWhenPaused;
+
+                chkPauseAfterElapsed.Checked = userSettings.PauseAfterElapsed > 0;
+                displayPauseAfterElapsed();
             }
         }
         private UserSettings userSettings = new UserSettings();
@@ -54,7 +57,44 @@ namespace Typist
                 CountErrorsAsWordChars = chkCountErrorsAsWordChars.Checked,
                 AskBeforeCloseDuringPractice = chkAskBeforeCloseDuringPractice.Checked,
                 ShowCursorWhenPaused = chkShowCursorWhenPaused.Checked,
+
+                PauseAfterElapsed = chkPauseAfterElapsed.Checked ? readInt(txtPauseAfterElapsed) : 0,
             };
+        }
+
+        private void chkPauseAfterElapsed_CheckedChanged(object sender, EventArgs e)
+        {
+            displayPauseAfterElapsed();
+        }
+
+        private void displayPauseAfterElapsed()
+        {
+            txtPauseAfterElapsed.Enabled = chkPauseAfterElapsed.Checked;
+
+            if (chkPauseAfterElapsed.Checked && userSettings.PauseAfterElapsed > 0)
+                txtPauseAfterElapsed.Text = userSettings.PauseAfterElapsed.ToString();
+            else
+                txtPauseAfterElapsed.Text = "";
+        }
+
+        private int readInt(TextBox textBox)
+        {
+            int number;
+            int.TryParse(textBox.Text, out number);
+            number = Math.Max(0, number);
+
+            textBox.Text = number > 0 ? number.ToString() : "";
+            return number;
+        }
+
+        private void txtPauseAfterElapsed_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar));
+        }
+
+        private void txtPauseAfterElapsed_Leave(object sender, EventArgs e)
+        {
+            readInt(txtPauseAfterElapsed);
         }
     }
 }

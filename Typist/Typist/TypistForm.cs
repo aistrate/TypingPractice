@@ -16,7 +16,6 @@ namespace Typist
     {
         #region Flags and Settings
 
-        private const int pauseAfterElapsed = 10;
         private const bool pauseOnMinimize = true;
         private const bool pauseOnDeactivate = false;
 
@@ -609,7 +608,8 @@ namespace Typist
                 if (timeChanged)
                     displayWPM();
 
-                if (pauseAfterElapsed > 0 && DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, pauseAfterElapsed))
+                if (userSettings.PauseAfterElapsed > 0 &&
+                    DateTime.Now - timeOfLastCharTyped >= new TimeSpan(0, 0, userSettings.PauseAfterElapsed))
                     PracticeMode = false;
             }
         }
@@ -784,6 +784,7 @@ namespace Typist
                 CountErrorsAsWordChars = Properties.Settings.Default.UserSettings_CountErrorsAsWordChars,
                 AskBeforeCloseDuringPractice = Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice,
                 ShowCursorWhenPaused = Properties.Settings.Default.UserSettings_ShowCursorWhenPaused,
+                PauseAfterElapsed = Properties.Settings.Default.UserSettings_PauseAfterElapsed,
             };
         }
 
@@ -796,6 +797,7 @@ namespace Typist
             Properties.Settings.Default.UserSettings_CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
             Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice = userSettings.AskBeforeCloseDuringPractice;
             Properties.Settings.Default.UserSettings_ShowCursorWhenPaused = userSettings.ShowCursorWhenPaused;
+            Properties.Settings.Default.UserSettings_PauseAfterElapsed = userSettings.PauseAfterElapsed;
         }
 
         private SettingsDialog dlgSettingsDialog;

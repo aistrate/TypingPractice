@@ -14,5 +14,6 @@ namespace Typist
         public bool CountErrorsAsWordChars { get; set; }
         public bool AskBeforeCloseDuringPractice { get; set; }
         public bool ShowCursorWhenPaused { get; set; }
+        public int PauseAfterElapsed { get; set; }
     }
 }

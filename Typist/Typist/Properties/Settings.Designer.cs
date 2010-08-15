@@ -214,5 +214,17 @@ namespace Typist.Properties {
                 this["UserSettings_ShowCursorWhenPaused"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int UserSettings_PauseAfterElapsed {
+            get {
+                return ((int)(this["UserSettings_PauseAfterElapsed"]));
+            }
+            set {
+                this["UserSettings_PauseAfterElapsed"] = value;
+            }
+        }
     }
 }

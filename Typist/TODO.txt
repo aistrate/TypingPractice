@@ -15,7 +15,7 @@ General:
 - on the right-click menu: Settings dialog (at least beepOnError, pauseAfterElapsed, and theme.CursorColor, which I change all the time; maybe also allowBackspace, visibleNewlines, countWhitespaceAsWordChars, and eliminateMultipleWhitespace); shortcut: Ctrl-X
 
 **beepOnError
---pauseAfterElapsed
+**pauseAfterElapsed
 --theme.CursorColor
 
 **allowBackspace

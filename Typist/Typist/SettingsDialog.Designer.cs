@@ -37,13 +37,16 @@
             this.chkCountErrorsAsWordChars = new System.Windows.Forms.CheckBox();
             this.chkAskBeforeCloseDuringPractice = new System.Windows.Forms.CheckBox();
             this.chkShowCursorWhenPaused = new System.Windows.Forms.CheckBox();
+            this.chkPauseAfterElapsed = new System.Windows.Forms.CheckBox();
+            this.txtPauseAfterElapsed = new System.Windows.Forms.TextBox();
+            this.lblSeconds = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(148, 188);
+            this.btnOk.Location = new System.Drawing.Point(148, 202);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 100;
@@ -55,7 +58,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(229, 188);
+            this.btnCancel.Location = new System.Drawing.Point(229, 202);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 101;
@@ -132,12 +135,47 @@
             this.chkShowCursorWhenPaused.Text = "Show cursor when paused";
             this.chkShowCursorWhenPaused.UseVisualStyleBackColor = false;
             // 
+            // chkPauseAfterElapsed
+            // 
+            this.chkPauseAfterElapsed.AutoSize = true;
+            this.chkPauseAfterElapsed.Location = new System.Drawing.Point(12, 173);
+            this.chkPauseAfterElapsed.Name = "chkPauseAfterElapsed";
+            this.chkPauseAfterElapsed.Size = new System.Drawing.Size(80, 17);
+            this.chkPauseAfterElapsed.TabIndex = 108;
+            this.chkPauseAfterElapsed.Text = "Pause after";
+            this.chkPauseAfterElapsed.UseVisualStyleBackColor = false;
+            this.chkPauseAfterElapsed.CheckedChanged += new System.EventHandler(this.chkPauseAfterElapsed_CheckedChanged);
+            // 
+            // txtPauseAfterElapsed
+            // 
+            this.txtPauseAfterElapsed.Location = new System.Drawing.Point(90, 171);
+            this.txtPauseAfterElapsed.MaxLength = 4;
+            this.txtPauseAfterElapsed.Name = "txtPauseAfterElapsed";
+            this.txtPauseAfterElapsed.ShortcutsEnabled = false;
+            this.txtPauseAfterElapsed.Size = new System.Drawing.Size(36, 20);
+            this.txtPauseAfterElapsed.TabIndex = 109;
+            this.txtPauseAfterElapsed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPauseAfterElapsed.Leave += new System.EventHandler(this.txtPauseAfterElapsed_Leave);
+            this.txtPauseAfterElapsed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPauseAfterElapsed_KeyPress);
+            // 
+            // lblSeconds
+            // 
+            this.lblSeconds.AutoSize = true;
+            this.lblSeconds.Location = new System.Drawing.Point(127, 174);
+            this.lblSeconds.Name = "lblSeconds";
+            this.lblSeconds.Size = new System.Drawing.Size(103, 13);
+            this.lblSeconds.TabIndex = 110;
+            this.lblSeconds.Text = "seconds of inactivity";
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(316, 223);
+            this.ClientSize = new System.Drawing.Size(316, 237);
+            this.Controls.Add(this.lblSeconds);
+            this.Controls.Add(this.txtPauseAfterElapsed);
+            this.Controls.Add(this.chkPauseAfterElapsed);
             this.Controls.Add(this.chkShowCursorWhenPaused);
             this.Controls.Add(this.chkAskBeforeCloseDuringPractice);
             this.Controls.Add(this.chkCountErrorsAsWordChars);
@@ -174,5 +212,8 @@
         private System.Windows.Forms.CheckBox chkCountErrorsAsWordChars;
         private System.Windows.Forms.CheckBox chkAskBeforeCloseDuringPractice;
         private System.Windows.Forms.CheckBox chkShowCursorWhenPaused;
+        private System.Windows.Forms.CheckBox chkPauseAfterElapsed;
+        private System.Windows.Forms.TextBox txtPauseAfterElapsed;
+        private System.Windows.Forms.Label lblSeconds;
     }
 }
