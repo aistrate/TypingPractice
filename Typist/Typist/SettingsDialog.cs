@@ -15,5 +15,34 @@ namespace Typist
         {
             InitializeComponent();
         }
+
+        private void SettingsDialog_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void SettingsDialog_VisibleChanged(object sender, EventArgs e)
+        {
+            btnOk.Focus();
+        }
+
+        public UserSettings UserSettings
+        {
+            get { return userSettings; }
+            set
+            {
+                userSettings = value;
+
+                chkBeepOnError.Checked = userSettings.BeepOnError;
+            }
+        }
+        private UserSettings userSettings = new UserSettings();
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            userSettings = new UserSettings()
+            {
+                BeepOnError = chkBeepOnError.Checked,
+            };
+        }
     }
 }

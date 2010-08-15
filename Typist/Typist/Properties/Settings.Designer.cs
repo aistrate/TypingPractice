@@ -74,12 +74,12 @@ namespace Typist.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsMaximized {
+        public bool WindowIsMaximized {
             get {
-                return ((bool)(this["IsMaximized"]));
+                return ((bool)(this["WindowIsMaximized"]));
             }
             set {
-                this["IsMaximized"] = value;
+                this["WindowIsMaximized"] = value;
             }
         }
         
@@ -128,6 +128,18 @@ namespace Typist.Properties {
             }
             set {
                 this["TypingFontStyle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UserSettingsBeepOnError {
+            get {
+                return ((bool)(this["UserSettingsBeepOnError"]));
+            }
+            set {
+                this["UserSettingsBeepOnError"] = value;
             }
         }
     }

@@ -30,35 +30,49 @@
         {
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkBeepOnError = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnOk
             // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(192, 191);
+            this.btnOk.Location = new System.Drawing.Point(148, 102);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(101, 25);
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 100;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(299, 191);
+            this.btnCancel.Location = new System.Drawing.Point(229, 102);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(101, 25);
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 101;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // chkBeepOnError
+            // 
+            this.chkBeepOnError.AutoSize = true;
+            this.chkBeepOnError.Location = new System.Drawing.Point(12, 12);
+            this.chkBeepOnError.Name = "chkBeepOnError";
+            this.chkBeepOnError.Size = new System.Drawing.Size(90, 17);
+            this.chkBeepOnError.TabIndex = 0;
+            this.chkBeepOnError.Text = "Beep on error";
+            this.chkBeepOnError.UseVisualStyleBackColor = false;
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(412, 228);
+            this.ClientSize = new System.Drawing.Size(316, 137);
+            this.Controls.Add(this.chkBeepOnError);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -70,7 +84,10 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
+            this.Load += new System.EventHandler(this.SettingsDialog_Load);
+            this.VisibleChanged += new System.EventHandler(this.SettingsDialog_VisibleChanged);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -78,5 +95,6 @@
 
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.CheckBox chkBeepOnError;
     }
 }

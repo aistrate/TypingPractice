@@ -14,7 +14,7 @@
     <Setting Name="WindowHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="IsMaximized" Type="System.Boolean" Scope="User">
+    <Setting Name="WindowIsMaximized" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TypingFontName" Type="System.String" Scope="User">
@@ -28,6 +28,9 @@
     </Setting>
     <Setting Name="TypingFontStyle" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="UserSettingsBeepOnError" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

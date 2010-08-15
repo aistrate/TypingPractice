@@ -16,7 +16,6 @@ namespace Typist
     {
         #region Flags and Settings
 
-        private const bool beepOnError = true;
         private const bool allowBackspace = true;
         private const bool visibleNewlines = false;
         private const bool countWhitespaceAsWordChars = true;
@@ -62,6 +61,7 @@ namespace Typist
 
             loadWindowPosition();
             loadTypingFont();
+            loadUserSettings();
 
             ImportedText = new TextBuffer("", countWhitespaceAsWordChars);
             PracticeMode = false;
@@ -94,7 +94,7 @@ namespace Typist
 
         private void loadWindowPosition()
         {
-            if (Properties.Settings.Default.IsMaximized)
+            if (Properties.Settings.Default.WindowIsMaximized)
                 WindowState = FormWindowState.Maximized;
 
             if (Properties.Settings.Default.WindowX == 0 && Properties.Settings.Default.WindowY == 0 &&
@@ -290,7 +290,7 @@ namespace Typist
             }
 
             if (WindowState != FormWindowState.Minimized)
-                Properties.Settings.Default.IsMaximized = WindowState == FormWindowState.Maximized;
+                Properties.Settings.Default.WindowIsMaximized = WindowState == FormWindowState.Maximized;
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
@@ -310,6 +310,7 @@ namespace Typist
 
             presaveWindowPosition(true, true);
             presaveTypingFont();
+            presaveUserSettings();
 
             Properties.Settings.Default.Save();
 
@@ -431,7 +432,7 @@ namespace Typist
 
         private void playBeep()
         {
-            if (beepOnError)
+            if (userSettings.BeepOnError)
                 SystemSounds.Beep.Play();
         }
 
@@ -775,7 +776,22 @@ namespace Typist
         #endregion
 
 
-        #region Settings Dialog
+        #region User Settings
+
+        private UserSettings userSettings;
+
+        private void loadUserSettings()
+        {
+            userSettings = new UserSettings()
+            {
+                BeepOnError = Properties.Settings.Default.UserSettingsBeepOnError,
+            };
+        }
+
+        private void presaveUserSettings()
+        {
+            Properties.Settings.Default.UserSettingsBeepOnError = userSettings.BeepOnError;
+        }
 
         private SettingsDialog dlgSettingsDialog;
 
@@ -792,10 +808,10 @@ namespace Typist
 
         private void openSettingsDialog()
         {
-            if (dlgSettingsDialog.ShowDialog() == DialogResult.OK)
-            {
+            dlgSettingsDialog.UserSettings = userSettings;
 
-            }
+            if (dlgSettingsDialog.ShowDialog() == DialogResult.OK)
+                userSettings = dlgSettingsDialog.UserSettings;
 
             dlgSettingsDialog.StartPosition = FormStartPosition.Manual;
         }

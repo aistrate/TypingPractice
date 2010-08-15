@@ -14,6 +14,8 @@ General:
 
 - on the right-click menu: Settings dialog (at least beepOnError, pauseAfterElapsed, and theme.CursorColor, which I change all the time; maybe also allowBackspace, visibleNewlines, countWhitespaceAsWordChars, and eliminateMultipleWhitespace); shortcut: Ctrl-X
 
+- use StatusStrip instead of Label for a status bar
+
 - scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen
 
 - change the name of the program/project to something more memorable than "Typist"
