@@ -16,8 +16,6 @@ namespace Typist
     {
         #region Flags and Settings
 
-        private const bool removeMultipleWhitespace = true;
-
         private const bool pauseOnMinimize = true;
         private const bool pauseOnDeactivate = false;
 
@@ -34,7 +32,6 @@ namespace Typist
         private const int marginBottom = 2;
 
         private const bool loadStoredTypingFont = true;
-
         private static readonly Font defaultTypingFont = Fonts.Small.CourierNew;
 
         private static readonly Theme theme = new Theme(Theme.Default);
@@ -56,7 +53,7 @@ namespace Typist
             initializeContextMenuStrip();
             initializeSettingsDialog();
 
-            ImportedText = new TextBuffer("", userSettings.CountWhitespaceAsWordChars, removeMultipleWhitespace);
+            ImportedText = new TextBuffer("", userSettings.CountWhitespaceAsWordChars, userSettings.RemoveMultipleWhitespace);
             PracticeMode = false;
 
             //if (string.IsNullOrEmpty(filePath))
@@ -228,14 +225,14 @@ namespace Typist
                 using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
                     ImportedText = new TextBuffer(sr.ReadToEnd(),
                                                   userSettings.CountWhitespaceAsWordChars,
-                                                  removeMultipleWhitespace);
+                                                  userSettings.RemoveMultipleWhitespace);
 
                 stopwatch.Reset();
 
                 rightAfterImport = true;
                 PracticeMode = false;
 
-                lblStatusBar.Text = string.Format("Imported file: {0}", fileInfo.FullName);
+                lblStatusBar.Text = string.Format("Imported: {0}", fileInfo.FullName);
             }
             catch (Exception ex)
             {
@@ -784,6 +781,7 @@ namespace Typist
                 BeepOnError = Properties.Settings.Default.UserSettings_BeepOnError,
                 AllowBackspace = Properties.Settings.Default.UserSettings_AllowBackspace,
                 VisibleNewlines = Properties.Settings.Default.UserSettings_VisibleNewlines,
+                RemoveMultipleWhitespace = Properties.Settings.Default.UserSettings_RemoveMultipleWhitespace,
                 CountWhitespaceAsWordChars = Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars,
                 CountErrorsAsWordChars = Properties.Settings.Default.UserSettings_CountErrorsAsWordChars,
                 AskBeforeCloseDuringPractice = Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice,
@@ -797,6 +795,7 @@ namespace Typist
             Properties.Settings.Default.UserSettings_BeepOnError = userSettings.BeepOnError;
             Properties.Settings.Default.UserSettings_AllowBackspace = userSettings.AllowBackspace;
             Properties.Settings.Default.UserSettings_VisibleNewlines = userSettings.VisibleNewlines;
+            Properties.Settings.Default.UserSettings_RemoveMultipleWhitespace = userSettings.RemoveMultipleWhitespace;
             Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
             Properties.Settings.Default.UserSettings_CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
             Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice = userSettings.AskBeforeCloseDuringPractice;

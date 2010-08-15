@@ -10,6 +10,7 @@ namespace Typist
         public bool BeepOnError { get; set; }
         public bool AllowBackspace { get; set; }
         public bool VisibleNewlines { get; set; }
+        public bool RemoveMultipleWhitespace { get; set; }
         public bool CountWhitespaceAsWordChars { get; set; }
         public bool CountErrorsAsWordChars { get; set; }
         public bool AskBeforeCloseDuringPractice { get; set; }
