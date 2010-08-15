@@ -16,6 +16,8 @@ namespace Typist
     {
         #region Flags and Settings
 
+        private const bool removeMultipleWhitespace = true;
+
         private const bool pauseOnMinimize = true;
         private const bool pauseOnDeactivate = false;
 
@@ -54,7 +56,7 @@ namespace Typist
             initializeContextMenuStrip();
             initializeSettingsDialog();
 
-            ImportedText = new TextBuffer("", userSettings.CountWhitespaceAsWordChars);
+            ImportedText = new TextBuffer("", userSettings.CountWhitespaceAsWordChars, removeMultipleWhitespace);
             PracticeMode = false;
 
             //if (string.IsNullOrEmpty(filePath))
@@ -224,7 +226,9 @@ namespace Typist
                 importedFileName = fileInfo.Name;
 
                 using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
-                    ImportedText = new TextBuffer(sr.ReadToEnd(), userSettings.CountWhitespaceAsWordChars);
+                    ImportedText = new TextBuffer(sr.ReadToEnd(),
+                                                  userSettings.CountWhitespaceAsWordChars,
+                                                  removeMultipleWhitespace);
 
                 stopwatch.Reset();
 

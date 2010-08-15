@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Typist
 {
     public class TextBuffer
     {
-        public TextBuffer(string text, bool countWhitespaceAsWordChars)
+        public TextBuffer(string text, bool countWhitespaceAsWordChars, bool removeMultipleWhitespace)
             : this(countWhitespaceAsWordChars)
         {
             string allowedWhitespace = " \n";
@@ -19,6 +19,13 @@ namespace Typist
                        .Where(c => !char.IsWhiteSpace(c) || allowedWhitespace.IndexOf(c) >= 0)
                        .AsString()
                        .TrimEnd(allowedWhitespace.ToCharArray());
+
+            if (removeMultipleWhitespace)
+            {
+                text = Regex.Replace(text, @" +", " ");
+                text = Regex.Replace(text, @" +\n", "\n");
+                text = Regex.Replace(text, @"\n{3,}", "\n\n");
+            }
 
             buffer = text.ToCharArray();
             Length = text.Length;
