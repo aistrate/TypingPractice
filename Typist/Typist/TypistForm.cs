@@ -148,7 +148,7 @@ namespace Typist
                     "Start";
 
                 pauseToolStripMenuItem.Enabled = IsImported;
-                pauseToolStripMenuItem.Text = btnStart.Text + " practice";
+                pauseToolStripMenuItem.Text = btnStart.Text + " Typing Practice";
 
                 this.Text = string.Format("{0}Typist{1}",
                                           IsImported && !string.IsNullOrEmpty(importedFileName) ? importedFileName + " - " : "",

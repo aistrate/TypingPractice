@@ -189,72 +189,73 @@
             this.settingsToolStripMenuItem,
             this.toolStripSeparator3,
             this.changeFontToolStripMenuItem,
+            this.saveAsCustomFontToolStripMenuItem,
             this.previousFontToolStripMenuItem,
             this.nextFontToolStripMenuItem,
-            this.saveAsCustomFontToolStripMenuItem,
             this.predefinedFontsToolStripMenuItem});
             this.mnuContextMenu.Name = "contextMenuStrip1";
-            this.mnuContextMenu.Size = new System.Drawing.Size(258, 164);
+            this.mnuContextMenu.Size = new System.Drawing.Size(276, 186);
             this.mnuContextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuContextMenu_Closed);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
             this.pauseToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+P";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.pauseToolStripMenuItem.Text = "Pause practice";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.pauseToolStripMenuItem.Text = "Pause Typing Practice";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-X";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.settingsToolStripMenuItem.Text = "Settings...";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(272, 6);
             // 
             // changeFontToolStripMenuItem
             // 
             this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
             this.changeFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+F";
-            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.changeFontToolStripMenuItem.Text = "Change Font...";
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.changeFontToolStripMenuItem.Text = "Font Properties...";
             this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
             // 
             // previousFontToolStripMenuItem
             // 
             this.previousFontToolStripMenuItem.Name = "previousFontToolStripMenuItem";
             this.previousFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Shift+N";
-            this.previousFontToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.previousFontToolStripMenuItem.Text = "Previous predef. font";
+            this.previousFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.previousFontToolStripMenuItem.Text = "Previous Predefined Font";
+            this.previousFontToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.previousFontToolStripMenuItem.Click += new System.EventHandler(this.previousFontToolStripMenuItem_Click);
             // 
             // nextFontToolStripMenuItem
             // 
             this.nextFontToolStripMenuItem.Name = "nextFontToolStripMenuItem";
             this.nextFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-N";
-            this.nextFontToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.nextFontToolStripMenuItem.Text = "Next predef. font";
+            this.nextFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.nextFontToolStripMenuItem.Text = "Next Predefined Font";
             this.nextFontToolStripMenuItem.Click += new System.EventHandler(this.nextFontToolStripMenuItem_Click);
             // 
             // saveAsCustomFontToolStripMenuItem
             // 
             this.saveAsCustomFontToolStripMenuItem.Name = "saveAsCustomFontToolStripMenuItem";
             this.saveAsCustomFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-S";
-            this.saveAsCustomFontToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.saveAsCustomFontToolStripMenuItem.Text = "Save as custom font";
+            this.saveAsCustomFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.saveAsCustomFontToolStripMenuItem.Text = "Save As Custom Font";
             this.saveAsCustomFontToolStripMenuItem.Click += new System.EventHandler(this.saveAsCustomFontToolStripMenuItem_Click);
             // 
             // predefinedFontsToolStripMenuItem
             // 
             this.predefinedFontsToolStripMenuItem.Name = "predefinedFontsToolStripMenuItem";
-            this.predefinedFontsToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.predefinedFontsToolStripMenuItem.Text = "Predefined fonts";
+            this.predefinedFontsToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.predefinedFontsToolStripMenuItem.Text = "Predefined Fonts";
             this.predefinedFontsToolStripMenuItem.DropDownClosed += new System.EventHandler(this.predefinedFontsToolStripMenuItem_DropDownClosed);
             // 
             // picTyping
