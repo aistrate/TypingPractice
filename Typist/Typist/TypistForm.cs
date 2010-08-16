@@ -537,6 +537,9 @@ namespace Typist
             {
                 AvailableFonts[0] = value;
                 CurrentFontIndex = 0;
+
+                viewCustomFontToolStripMenuItem.Text = string.Format("Custom Font: {0}",
+                                                                     fontDescription(value));
             }
         }
 
@@ -545,6 +548,8 @@ namespace Typist
             get { return currentFontIndex; }
             set
             {
+                getMenuItem(currentFontIndex).Checked = false;
+
                 currentFontIndex = value;
 
                 if (currentFontIndex >= AvailableFonts.Length)
@@ -563,10 +568,22 @@ namespace Typist
                                                                                    .Index),
                                                   fontDescription(picTyping.TypingFont));
 
+                getMenuItem(currentFontIndex).Checked = true;
+
                 picTyping.Invalidate();
             }
         }
         private int currentFontIndex = 0;
+
+        private ToolStripMenuItem getMenuItem(int availableFontIndex)
+        {
+            if (availableFontIndex == 0)
+                return viewCustomFontToolStripMenuItem;
+            else
+                return predefinedFontsToolStripMenuItem.DropDownItems
+                                                       .OfType<ToolStripMenuItem>()
+                                                       .First(item => (int)item.Tag == availableFontIndex);
+        }
 
         private string fontDescription(Font font)
         {

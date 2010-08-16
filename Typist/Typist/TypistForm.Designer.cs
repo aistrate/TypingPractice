@@ -277,7 +277,7 @@
             this.viewCustomFontToolStripMenuItem.Name = "viewCustomFontToolStripMenuItem";
             this.viewCustomFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+C";
             this.viewCustomFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
-            this.viewCustomFontToolStripMenuItem.Text = "View Custom Font";
+            this.viewCustomFontToolStripMenuItem.Text = "Custom Font";
             this.viewCustomFontToolStripMenuItem.Click += new System.EventHandler(this.viewCustomFontToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
