@@ -683,7 +683,7 @@ namespace Typist
                 })
                              .ToArray());
 
-            predefinedFontsToolStripMenuItem.DropDownItems.Insert(2, new ToolStripSeparator());
+            predefinedFontsToolStripMenuItem.DropDownItems.Insert(Fonts.Small.Length, new ToolStripSeparator());
         }
 
         private void predefinedFontMenuItem_Click(object sender, EventArgs e)

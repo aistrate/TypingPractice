@@ -15,6 +15,7 @@ namespace Typist.Appearance
         {
             new FontInfo(FontNames.FixedPitch.CourierNew, 9.75f),
             new FontInfo(FontNames.FixedPitch.AnonymousPro, 11.25f),
+            new FontInfo(FontNames.FixedPitch.PixelCarnageMonoTT, 12),
         };
 
         public static FontInfo[] Large = new FontInfo[]

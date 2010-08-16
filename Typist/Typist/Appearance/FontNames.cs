@@ -26,6 +26,7 @@ namespace Typist.Appearance
             public static string MPlus1M { get { return "M+ 1m"; } }
             public static string MonospaceTypewriter { get { return "MonospaceTypewriter"; } }          // does not show in FontDialog
             public static string MSGothic { get { return "MS Gothic"; } }
+            public static string PixelCarnageMonoTT { get { return "PixelCarnageMonoTT"; } }
             public static string ProFontWindows { get { return "ProFontWindows"; } }
             public static string SaxMono { get { return "saxMono"; } }
             public static string Telegrama { get { return "Telegrama"; } }

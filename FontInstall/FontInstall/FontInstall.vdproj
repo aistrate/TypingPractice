@@ -513,6 +513,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DB59B28D5FAD43F28F9B2DD29298AB35"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DC4E0F84F3AD4C7FA02A88125B9FB4FB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -2323,6 +2329,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DB59B28D5FAD43F28F9B2DD29298AB35"
+            {
+            "SourcePath" = "8:..\\..\\Fonts\\Proggy\\PixelCarnageMono.ttf"
+            "TargetName" = "8:PixelCarnageMono.ttf"
+            "Tag" = "8:"
+            "Folder" = "8:_B41E198246AF4308997B21E479F46255"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:5"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DC4E0F84F3AD4C7FA02A88125B9FB4FB"
             {
             "SourcePath" = "8:..\\..\\Fonts\\ProFontWindows\\ProFontWindows.ttf"
@@ -2591,7 +2617,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FontInstall"
         "ProductCode" = "8:{7E0F62AB-B90E-46CB-8CAC-B0534E8EDA77}"
-        "PackageCode" = "8:{54DAB3E2-0B54-4E20-A69D-F7618E4AD07C}"
+        "PackageCode" = "8:{DBF6A57A-8E55-4C4E-80C5-340A58D3B234}"
         "UpgradeCode" = "8:{13929650-1A10-4CE5-A300-8382BE7BFD17}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
