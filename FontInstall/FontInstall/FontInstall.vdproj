@@ -585,7 +585,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\FontInstall.msi"
+        "OutputFilename" = "8:..\\Msi\\FontInstall.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -597,18 +597,13 @@
         "InstallerBootstrapper" = "3:2"
             "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
             {
-            "Enabled" = "11:TRUE"
+            "Enabled" = "11:FALSE"
             "PromptEnabled" = "11:TRUE"
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
-                    {
-                    "Name" = "8:Windows Installer 3.1"
-                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
-                    }
                 }
             }
         }
@@ -2617,7 +2612,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FontInstall"
         "ProductCode" = "8:{7E0F62AB-B90E-46CB-8CAC-B0534E8EDA77}"
-        "PackageCode" = "8:{DBF6A57A-8E55-4C4E-80C5-340A58D3B234}"
+        "PackageCode" = "8:{9228E28D-8DA8-49D5-B003-0BF32A8E5C7F}"
         "UpgradeCode" = "8:{13929650-1A10-4CE5-A300-8382BE7BFD17}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"

@@ -190,8 +190,8 @@
             // 
             this.mnuContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pauseToolStripMenuItem,
-            this.importFileToolStripMenuItem,
             this.pauseAndMinimizeToolStripMenuItem,
+            this.importFileToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.toolStripSeparator3,
             this.changeFontToolStripMenuItem,

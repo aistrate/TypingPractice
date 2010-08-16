@@ -10,8 +10,6 @@ Main unsolved problems:
 
 General:
 
-- include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
-
 - disable certain context menu items and/or keyboard shortcuts, when in practice mode
 
 - add user setting: theme.CursorColor (or the theme name, e.g., "Default")
@@ -52,6 +50,7 @@ Paint event handler:
 
 
 
+* include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
 * rename class Fonts to PredefinedFonts, with 3 static properties: Small, Large, and All; rename property FavoriteFonts (TypistForm) to PredefinedFonts (also, class FavoriteFont to PredefinedFont)
 * add Consolas font to Setup project
 * on the right-click menu: Settings dialog (at least beepOnError, pauseAfterElapsed, and theme.CursorColor, which I change all the time; maybe also allowBackspace, visibleNewlines, countWhitespaceAsWordChars, and eliminateMultipleWhitespace); shortcut: Ctrl-X
