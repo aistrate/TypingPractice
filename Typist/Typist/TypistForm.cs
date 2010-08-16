@@ -354,24 +354,28 @@ namespace Typist
                 {
                     switch (e.KeyCode)
                     {
-                        case Keys.M:
-                            PracticeMode = false;
-                            WindowState = FormWindowState.Minimized;
-                            break;
                         case Keys.P:
                             pauseResume();
+                            break;
+                        case Keys.M:
+                            pauseAndMinimize();
                             break;
                         case Keys.X:
                             changeSettings();
                             break;
+
                         case Keys.F:
                             changeFont();
                             break;
-                        case Keys.N:
-                            moveToFont(e.Shift ? -1 : +1);
-                            break;
                         case Keys.S:
                             saveAsCustomFont();
+                            break;
+                        case Keys.C:
+                            viewCustomFont();
+                            break;
+
+                        case Keys.N:
+                            moveToFont(e.Shift ? -1 : +1);
                             break;
                     }
                 }
@@ -704,6 +708,11 @@ namespace Typist
             pauseResume();
         }
 
+        private void pauseAndMinimizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pauseAndMinimize();
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             changeSettings();
@@ -714,6 +723,16 @@ namespace Typist
             changeFont();
         }
 
+        private void saveAsCustomFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveAsCustomFont();
+        }
+
+        private void viewCustomFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            viewCustomFont();
+        }
+
         private void previousFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             moveToFont(-1);
@@ -722,11 +741,6 @@ namespace Typist
         private void nextFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             moveToFont(+1);
-        }
-
-        private void saveAsCustomFontToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveAsCustomFont();
         }
 
         private void mnuContextMenu_Closed(object sender, ToolStripDropDownClosedEventArgs e)
@@ -744,6 +758,12 @@ namespace Typist
             PracticeMode = !PracticeMode;
         }
 
+        private void pauseAndMinimize()
+        {
+            PracticeMode = false;
+            WindowState = FormWindowState.Minimized;
+        }
+
         private void changeSettings()
         {
             PracticeMode = false;
@@ -756,15 +776,20 @@ namespace Typist
             openFontDialog();
         }
 
+        private void saveAsCustomFont()
+        {
+            CustomFont = AvailableFonts[CurrentFontIndex];
+        }
+
+        private void viewCustomFont()
+        {
+            CurrentFontIndex = 0;
+        }
+
         private void moveToFont(int inc)
         {
             PracticeMode = false;
             CurrentFontIndex += inc;
-        }
-
-        private void saveAsCustomFont()
-        {
-            CustomFont = AvailableFonts[CurrentFontIndex];
         }
 
         #endregion

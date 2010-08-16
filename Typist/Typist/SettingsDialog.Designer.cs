@@ -91,9 +91,9 @@
             this.chkVisibleNewlines.AutoSize = true;
             this.chkVisibleNewlines.Location = new System.Drawing.Point(12, 58);
             this.chkVisibleNewlines.Name = "chkVisibleNewlines";
-            this.chkVisibleNewlines.Size = new System.Drawing.Size(152, 17);
+            this.chkVisibleNewlines.Size = new System.Drawing.Size(115, 17);
             this.chkVisibleNewlines.TabIndex = 103;
-            this.chkVisibleNewlines.Text = "Make newlines visible as ¶";
+            this.chkVisibleNewlines.Text = "Show newline as ¶";
             this.chkVisibleNewlines.UseVisualStyleBackColor = false;
             // 
             // chkCountWhitespaceAsWordChars
