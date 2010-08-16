@@ -25,7 +25,7 @@ namespace Typist.Appearance
             new FontInfo(FontNames.FixedPitch.AnonymousPro, 24),
             new FontInfo(FontNames.FixedPitch.AudimatMono, 24),
             new FontInfo(FontNames.FixedPitch.BitstreamVeraSansMono, 21),
-            new FontInfo(FontNames.FixedPitch.BPmono, 24),
+            new FontInfo(FontNames.FixedPitch.BPmono, 18.75f),
             new FontInfo(FontNames.FixedPitch.CodenameCoderFree4F, 24.75f, FontStyle.Bold),
             new FontInfo(FontNames.FixedPitch.Consolas, 21.75f),
             new FontInfo(FontNames.FixedPitch.CourierNew, 21, FontStyle.Bold),
