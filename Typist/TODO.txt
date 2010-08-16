@@ -10,6 +10,8 @@ Main unsolved problems:
 
 General:
 
+- include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
+
 - add user setting: theme.CursorColor (or the theme name, e.g., "Default")
 
 - use StatusStrip instead of Label as a status bar
@@ -22,16 +24,6 @@ General:
 
 
 
-At work:
-
-- add Consolas font to Setup project
-
-- remove OpenType fonts (and other non-TrueType fonts) from Setup project
-
-- include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
-
-
-
 Low priority:
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German); (for some reason, Alt-<key> combinations don't even arrive at the KeyPress event handler)
@@ -39,6 +31,8 @@ Low priority:
 - different "themes", or settings: Article (eliminate multiple spaces), Code (leave spaces alone), Characters (large font)
 
 - refactor the saving of window size/position/maximized(/minimized) into a reusable user control
+
+- remove OpenType fonts (and other non-TrueType fonts) from Setup project
 
 - add to Setup project: Start menu shortcuts, right-click menu "Open"
 
@@ -55,6 +49,9 @@ Paint event handler:
 - align error highlight chars better with the rest of the text
 
 
+
+* rename class Fonts to PredefinedFonts, with 3 static properties: Small, Large, and All; rename property FavoriteFonts (TypistForm) to PredefinedFonts (also, class FavoriteFont to PredefinedFont)
+* add Consolas font to Setup project
 * on the right-click menu: Settings dialog (at least beepOnError, pauseAfterElapsed, and theme.CursorColor, which I change all the time; maybe also allowBackspace, visibleNewlines, countWhitespaceAsWordChars, and eliminateMultipleWhitespace); shortcut: Ctrl-X
 * flags: "eliminate multiple spaces" and "eliminate multiple spaces if not at beginning of line" (but leave newlines alone); better name: elimRedundantWhitespaces (or separately: spaces at beginning of line, at end of line, within the line, consecutive newlines)
 * add a right-click menu, containing actions that are now keyboard shortcuts (Ctrl-P, Ctrl-M, Ctrl-F, Ctrl-S, Ctrl-N, Ctrl-Shift-N)
@@ -80,5 +77,6 @@ Paint event handler:
 * error: typing a printable char instead of a newline (show the char at the end of the line, in red)
 * retrieve 32 rectangles at a time when displaying all uncorrected errors
 
+*(o) set default font to Lucida Console (large)
 *(o) allow button mnemonics (& in labels) only when Alt is pressed at the same time as the key (NOT: Alt, pause, key)
 *(o) keep a MissingNewlines property in class TextBuffer; insert all missing newlines before showing TypedText on the screen, so that typed chars will always display on top of the originals (even after typing a printable char for a newline in the original)

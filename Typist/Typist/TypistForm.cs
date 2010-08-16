@@ -32,7 +32,7 @@ namespace Typist
         private const int marginBottom = 2;
 
         private const bool loadStoredTypingFont = true;
-        private static readonly Font defaultTypingFont = Fonts.Small.CourierNew;
+        private static readonly FontInfo defaultTypingFont = Fonts.GenericMonospace;
 
         private static readonly Theme theme = new Theme(Theme.Default);
 
@@ -442,19 +442,15 @@ namespace Typist
                 Properties.Settings.Default.TypingFontSize > 0 &&
                 Properties.Settings.Default.TypingFontUnit > 0)
             {
-                Font font = new Font(Properties.Settings.Default.TypingFontName,
-                                     Properties.Settings.Default.TypingFontSize,
-                                     (FontStyle)Properties.Settings.Default.TypingFontStyle,
-                                     (GraphicsUnit)Properties.Settings.Default.TypingFontUnit);
+                FontInfo fontInfo = new FontInfo(Properties.Settings.Default.TypingFontName,
+                                                 Properties.Settings.Default.TypingFontSize,
+                                                 (FontStyle)Properties.Settings.Default.TypingFontStyle,
+                                                 (GraphicsUnit)Properties.Settings.Default.TypingFontUnit);
 
-                if (isFontAvailable(font))
-                {
-                    CustomFont = font;
-                    return;
-                }
+                CustomFont = fontInfo.Font;
             }
-
-            CustomFont = defaultTypingFont;
+            else
+                CustomFont = defaultTypingFont.Font;
         }
 
         private void presaveTypingFont()
@@ -468,43 +464,40 @@ namespace Typist
             }
         }
 
-        protected class FavoriteFont
+        protected class PredefinedFont
         {
             public int Index;
-            public Font Font;
-            public bool IsAvailable;
+            public FontInfo FontInfo;
             public int IndexInAvailables;
         }
 
-        protected FavoriteFont[] FavoriteFonts
+        protected PredefinedFont[] PredefinedFonts
         {
             get
             {
-                if (favoriteFonts == null)
+                if (predefinedFonts == null)
                 {
-                    favoriteFonts = Fonts.Small.All
-                                    .Concat(Fonts.Large.All)
-                                    .Select(f => new FavoriteFont()
-                                    {
-                                        Font = f,
-                                        IsAvailable = isFontAvailable(f),
-                                    })
-                                    .ToArray();
+                    predefinedFonts = Fonts.All
+                                           .Select(f => new PredefinedFont()
+                                           {
+                                               FontInfo = f,
+                                               IndexInAvailables = -1,
+                                           })
+                                           .ToArray();
 
-                    int k = 1;
-                    for (int i = 0; i < favoriteFonts.Length; i++)
+                    for (int i = 0, k = 1; i < predefinedFonts.Length; i++)
                     {
-                        favoriteFonts[i].Index = i + 1;
+                        predefinedFonts[i].Index = i + 1;
 
-                        if (favoriteFonts[i].IsAvailable)
-                            favoriteFonts[i].IndexInAvailables = k++;
+                        if (predefinedFonts[i].FontInfo.IsAvailable)
+                            predefinedFonts[i].IndexInAvailables = k++;
                     }
                 }
 
-                return favoriteFonts;
+                return predefinedFonts;
             }
         }
-        private FavoriteFont[] favoriteFonts;
+        private PredefinedFont[] predefinedFonts;
 
         protected Font[] AvailableFonts
         {
@@ -512,20 +505,14 @@ namespace Typist
             {
                 if (availableFonts == null)
                     availableFonts = new Font[] { null }
-                                            .Concat(FavoriteFonts.Where(f => f.IsAvailable)
-                                                                 .Select(f => f.Font))
+                                            .Concat(PredefinedFonts.Where(f => f.FontInfo.IsAvailable)
+                                                                   .Select(f => f.FontInfo.Font))
                                             .ToArray();
 
                 return availableFonts;
             }
         }
         private Font[] availableFonts;
-
-        private bool isFontAvailable(Font font)
-        {
-            return font.OriginalFontName == null ||
-                   font.FontFamily.Name.ToLower() == font.OriginalFontName.ToLower();
-        }
 
         protected Font CustomFont
         {
@@ -535,8 +522,8 @@ namespace Typist
                 AvailableFonts[0] = value;
                 CurrentFontIndex = 0;
 
-                viewCustomFontToolStripMenuItem.Text = string.Format("Custom Font: {0}",
-                                                                     fontDescription(value));
+                viewCustomFontToolStripMenuItem.Text = string.Format("Custom Font ({0})",
+                                                                     FontInfo.GetDescription(value));
             }
         }
 
@@ -561,9 +548,9 @@ namespace Typist
                                                   currentFontIndex == 0 ?
                                                         "Custom Font" :
                                                         string.Format("Predefined Font ({0})",
-                                                                      FavoriteFonts.First(f => f.IndexInAvailables == currentFontIndex)
-                                                                                   .Index),
-                                                  fontDescription(picTyping.TypingFont));
+                                                                      PredefinedFonts.First(f => f.IndexInAvailables == currentFontIndex)
+                                                                                     .Index),
+                                                  FontInfo.GetDescription(picTyping.TypingFont));
 
                 getMenuItem(currentFontIndex).Checked = true;
 
@@ -580,16 +567,6 @@ namespace Typist
                 return predefinedFontsToolStripMenuItem.DropDownItems
                                                        .OfType<ToolStripMenuItem>()
                                                        .First(item => (int)item.Tag == availableFontIndex);
-        }
-
-        private string fontDescription(Font font)
-        {
-            string fontName = isFontAvailable(font) ? font.FontFamily.Name : font.OriginalFontName;
-
-            return string.Format("{0} ({1} {2}{3})",
-                                 fontName,
-                                 font.Size, font.Unit.ToString().ToLower(),
-                                 font.Style != FontStyle.Regular ? ", " + font.Style.ToString().ToLower() : "");
         }
 
         private void openFontDialog()
@@ -689,32 +666,32 @@ namespace Typist
 
         private void initializeContextMenuStrip()
         {
-            var favoriteFontEventHandler = new EventHandler(favoriteFontMenuItem_Click);
+            var predefinedFontEventHandler = new EventHandler(predefinedFontMenuItem_Click);
 
             predefinedFontsToolStripMenuItem.DropDownItems.AddRange(
-                FavoriteFonts.Select(f =>
+                PredefinedFonts.Select(f =>
                 {
-                    var favoriteFontMenuItem = new ToolStripMenuItem(fontDescription(f.Font))
+                    var predefinedFontMenuItem = new ToolStripMenuItem(f.FontInfo.OriginalDescription)
                     {
-                        Enabled = f.IsAvailable,
+                        Enabled = f.FontInfo.IsAvailable,
                         Tag = f.IndexInAvailables,
                     };
 
-                    favoriteFontMenuItem.Click += favoriteFontEventHandler;
+                    predefinedFontMenuItem.Click += predefinedFontEventHandler;
 
-                    return favoriteFontMenuItem;
+                    return predefinedFontMenuItem;
                 })
                              .ToArray());
 
             predefinedFontsToolStripMenuItem.DropDownItems.Insert(2, new ToolStripSeparator());
         }
 
-        private void favoriteFontMenuItem_Click(object sender, EventArgs e)
+        private void predefinedFontMenuItem_Click(object sender, EventArgs e)
         {
-            var favoriteFontMenuItem = (ToolStripMenuItem)sender;
+            var predefinedFontMenuItem = (ToolStripMenuItem)sender;
 
             PracticeMode = false;
-            CurrentFontIndex = (int)favoriteFontMenuItem.Tag;
+            CurrentFontIndex = (int)predefinedFontMenuItem.Tag;
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
