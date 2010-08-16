@@ -38,6 +38,7 @@ namespace Typist.Appearance
             new FontInfo(FontNames.FixedPitch.MSGothic, 24.75f),
             new FontInfo(FontNames.FixedPitch.ProFontWindows, 24.75f),
             new FontInfo(FontNames.FixedPitch.SaxMono, 20.25f),
+            new FontInfo(FontNames.FixedPitch.Telegrama, 20.25f),
         };
 
         public static FontInfo[] All = Small.Concat(Large).ToArray();

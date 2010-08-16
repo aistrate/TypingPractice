@@ -28,6 +28,7 @@ namespace Typist.Appearance
             public static string MSGothic { get { return "MS Gothic"; } }
             public static string ProFontWindows { get { return "ProFontWindows"; } }
             public static string SaxMono { get { return "saxMono"; } }
+            public static string Telegrama { get { return "Telegrama"; } }
         }
 
         public static class FixedPitchRomanian
