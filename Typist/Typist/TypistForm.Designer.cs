@@ -45,6 +45,7 @@
             this.mnuContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseAndMinimizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -189,6 +190,7 @@
             // 
             this.mnuContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pauseToolStripMenuItem,
+            this.importFileToolStripMenuItem,
             this.pauseAndMinimizeToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.toolStripSeparator3,
@@ -200,7 +202,7 @@
             this.nextFontToolStripMenuItem,
             this.predefinedFontsToolStripMenuItem});
             this.mnuContextMenu.Name = "contextMenuStrip1";
-            this.mnuContextMenu.Size = new System.Drawing.Size(276, 214);
+            this.mnuContextMenu.Size = new System.Drawing.Size(276, 258);
             this.mnuContextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuContextMenu_Closed);
             // 
             // pauseToolStripMenuItem
@@ -218,6 +220,14 @@
             this.pauseAndMinimizeToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.pauseAndMinimizeToolStripMenuItem.Text = "Pause and Minimize";
             this.pauseAndMinimizeToolStripMenuItem.Click += new System.EventHandler(this.pauseAndMinimizeToolStripMenuItem_Click);
+            // 
+            // importFileToolStripMenuItem
+            // 
+            this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
+            this.importFileToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+I";
+            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.importFileToolStripMenuItem.Text = "Import File...";
+            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -372,6 +382,7 @@
         private System.Windows.Forms.ToolStripMenuItem pauseAndMinimizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewCustomFontToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem importFileToolStripMenuItem;
     }
 }
 

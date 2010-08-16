@@ -139,8 +139,6 @@ namespace Typist
 
                 practiceMode = value;
 
-                btnImport.Enabled = !value;
-
                 btnStart.Enabled = IsImported;
                 btnStart.Text =
                     practiceMode ? "Pause" :
@@ -206,10 +204,7 @@ namespace Typist
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-            PracticeMode = false;
-
-            if (dlgImport.ShowDialog() == DialogResult.OK)
-                ImportFile(dlgImport.FileName);
+            importFile();
         }
 
         public void ImportFile(string filePath)
@@ -359,6 +354,9 @@ namespace Typist
                             break;
                         case Keys.M:
                             pauseAndMinimize();
+                            break;
+                        case Keys.I:
+                            importFile();
                             break;
                         case Keys.X:
                             changeSettings();
@@ -704,6 +702,11 @@ namespace Typist
             pauseAndMinimize();
         }
 
+        private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            importFile();
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             changeSettings();
@@ -753,6 +756,13 @@ namespace Typist
         {
             PracticeMode = false;
             WindowState = FormWindowState.Minimized;
+        }
+
+        private void importFile()
+        {
+            PracticeMode = false;
+            if (dlgImport.ShowDialog() == DialogResult.OK)
+                ImportFile(dlgImport.FileName);
         }
 
         private void changeSettings()

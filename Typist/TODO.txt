@@ -12,6 +12,8 @@ General:
 
 - include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
 
+- disable certain context menu items and/or keyboard shortcuts, when in practice mode
+
 - add user setting: theme.CursorColor (or the theme name, e.g., "Default")
 
 - use StatusStrip instead of Label as a status bar
