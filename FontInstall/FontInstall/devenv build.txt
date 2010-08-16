@@ -1,0 +1,3 @@
+devenv C:\Users\Adrian\Samples\C#\TypingPractice\FontInstall\FontInstall.sln /build Debug /project C:\Users\Adrian\Samples\C#\TypingPractice\FontInstall\FontInstall\FontInstall.vdproj
+
+VCSExpress.exe
