@@ -384,10 +384,7 @@ namespace Typist
                     e.SuppressKeyPress = true;
             }
             else if (e.KeyCode == Keys.Escape)
-            {
-                PracticeMode = false;
                 e.SuppressKeyPress = true;
-            }
         }
 
         private void TypistForm_KeyPress(object sender, KeyPressEventArgs e)
