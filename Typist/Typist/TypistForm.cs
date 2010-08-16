@@ -31,6 +31,8 @@ namespace Typist
         private const int marginTop = 2;
         private const int marginBottom = 2;
 
+        private const float largeFontScalingFactor = 1f;
+
         private const bool loadStoredTypingFont = true;
         private static readonly FontInfo defaultTypingFont = Fonts.GenericMonospace;
 
@@ -475,13 +477,13 @@ namespace Typist
             {
                 if (predefinedFonts == null)
                 {
-                    predefinedFonts = Fonts.All
-                                           .Select(f => new PredefinedFont()
-                                           {
-                                               FontInfo = f,
-                                               IndexInAvailables = -1,
-                                           })
-                                           .ToArray();
+                    predefinedFonts = Fonts.Small.Concat(Fonts.Large.Select(f => f.ScaleBy(largeFontScalingFactor)))
+                                                 .Select(f => new PredefinedFont()
+                                                 {
+                                                     FontInfo = f,
+                                                     IndexInAvailables = -1,
+                                                 })
+                                                 .ToArray();
 
                     for (int i = 0, k = 1; i < predefinedFonts.Length; i++)
                     {

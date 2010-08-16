@@ -97,5 +97,14 @@ namespace Typist.Appearance
         {
             return new FontInfo(Font.Name, Font.SizeInPoints, Font.Style, GraphicsUnit.Point);
         }
+
+        public FontInfo ScaleBy(float factor)
+        {
+            double multiplier = Unit == GraphicsUnit.Point ? 4.0 : 1.0;
+
+            float size = (float)(Math.Round(Size * multiplier * factor, 0) / multiplier);
+
+            return new FontInfo(Name, size, Style, Unit);
+        }
     }
 }

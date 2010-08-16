@@ -23,7 +23,7 @@ namespace Typist.Appearance
             new FontInfo(FontNames.FixedPitch.AndaleMono, 21.75f),
             new FontInfo(FontNames.FixedPitch.Anonymous, 20),
             new FontInfo(FontNames.FixedPitch.AnonymousPro, 24),
-            new FontInfo(FontNames.FixedPitch.AudimatMono, 23),
+            new FontInfo(FontNames.FixedPitch.AudimatMono, 24),
             new FontInfo(FontNames.FixedPitch.BitstreamVeraSansMono, 21),
             new FontInfo(FontNames.FixedPitch.BPmono, 24),
             new FontInfo(FontNames.FixedPitch.CodenameCoderFree4F, 24.75f, FontStyle.Bold),
