@@ -85,12 +85,25 @@ namespace Typist.Appearance
             return GetDescription(font.Name, font.Size, font.Style, font.Unit);
         }
 
+        public static string GetDescription(Font font, string nameAndPropertiesFormat)
+        {
+            return GetDescription(font.Name, font.Size, font.Style, font.Unit, nameAndPropertiesFormat);
+        }
+
         public static string GetDescription(string name, float size, FontStyle style, GraphicsUnit unit)
         {
-            return string.Format("{0} ({1} {2}{3})",
-                                 name,
-                                 size, unit.ToString().ToLower(),
-                                 style != FontStyle.Regular ? ", " + style.ToString().ToLower() : "");
+            return GetDescription(name, size, style, unit, "{0} ({1})");
+        }
+
+        public static string GetDescription(string name, float size, FontStyle style, GraphicsUnit unit,
+                                            string nameAndPropertiesFormat)
+        {
+            string properties = string.Format("{0} {1}{2}",
+                                              size,
+                                              unit.ToString().ToLower(),
+                                              style != FontStyle.Regular ? ", " + style.ToString().ToLower() : "");
+
+            return string.Format(nameAndPropertiesFormat, name, properties);
         }
 
         public FontInfo ToSizeInPoints()

@@ -523,7 +523,7 @@ namespace Typist
                 CurrentFontIndex = 0;
 
                 viewCustomFontToolStripMenuItem.Text = string.Format("Custom Font ({0})",
-                                                                     FontInfo.GetDescription(value));
+                                                                     FontInfo.GetDescription(value, "{0}, {1}"));
             }
         }
 
