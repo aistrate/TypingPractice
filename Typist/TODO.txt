@@ -4,23 +4,24 @@ Main unsolved problems:
 
 - precise positioning (of error characters and cursor)
 
-- changing settings at runtime
+* changing settings at runtime
 
 
 
 General:
 
-- disable certain context menu items and/or keyboard shortcuts, when in practice mode
-
 - font-related shortcuts: Ctrl +/- to make the font larger/smaller by 0.25pt, Ctrl+B an Ctrl+I to turn Bold and Italic on/off (change shortcut for Import to Ctrl+O)
 
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L)
 
-- option: center text (horizontally)
+- add user setting: center text horizontally
 
 - add user setting: theme.CursorColor (or the theme name, e.g., "Default")
 
 - use StatusStrip instead of Label as a status bar
+
+- disable certain context menu items and/or keyboard shortcuts, when in practice mode
+
 
 - bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text
 
