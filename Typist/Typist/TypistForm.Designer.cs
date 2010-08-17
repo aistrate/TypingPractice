@@ -219,6 +219,7 @@
             this.pauseAndMinimizeToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+M";
             this.pauseAndMinimizeToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.pauseAndMinimizeToolStripMenuItem.Text = "Pause and Minimize";
+            this.pauseAndMinimizeToolStripMenuItem.Visible = false;
             this.pauseAndMinimizeToolStripMenuItem.Click += new System.EventHandler(this.pauseAndMinimizeToolStripMenuItem_Click);
             // 
             // importFileToolStripMenuItem
@@ -270,6 +271,7 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator1.Visible = false;
             // 
             // previousFontToolStripMenuItem
             // 
@@ -278,6 +280,7 @@
             this.previousFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.previousFontToolStripMenuItem.Text = "Previous Predefined Font";
             this.previousFontToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.previousFontToolStripMenuItem.Visible = false;
             this.previousFontToolStripMenuItem.Click += new System.EventHandler(this.previousFontToolStripMenuItem_Click);
             // 
             // nextFontToolStripMenuItem
@@ -286,6 +289,7 @@
             this.nextFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
             this.nextFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.nextFontToolStripMenuItem.Text = "Next Predefined Font";
+            this.nextFontToolStripMenuItem.Visible = false;
             this.nextFontToolStripMenuItem.Click += new System.EventHandler(this.nextFontToolStripMenuItem_Click);
             // 
             // predefinedFontsToolStripMenuItem
