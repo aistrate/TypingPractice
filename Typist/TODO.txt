@@ -16,6 +16,8 @@ General:
 
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L)
 
+- option: center text (horizontally)
+
 - add user setting: theme.CursorColor (or the theme name, e.g., "Default")
 
 - use StatusStrip instead of Label as a status bar
@@ -29,6 +31,8 @@ General:
 
 
 Low priority:
+
+- Blind mode: text color is white (Imported, Typed, and Error ForeColor, but Error BackColor is gray [or not?]); detect errors by beep alone; (maybe cursor is also white?); optionally, user can set a time interval after which some clues are shown (e.g., 3 seconds), perhaps the whole text in normal colors
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German); (for some reason, Alt-<key> combinations don't even arrive at the KeyPress event handler)
 
