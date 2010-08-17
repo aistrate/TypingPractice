@@ -14,6 +14,8 @@ General:
 
 - font-related shortcuts: Ctrl +/- to make the font larger/smaller by 0.25pt, Ctrl+B an Ctrl+I to turn Bold and Italic on/off (change shortcut for Import to Ctrl+O)
 
+- file reload (menu item and shortcut, Ctrl+R or Ctrl+L)
+
 - add user setting: theme.CursorColor (or the theme name, e.g., "Default")
 
 - use StatusStrip instead of Label as a status bar
