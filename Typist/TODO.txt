@@ -12,6 +12,8 @@ General:
 
 - disable certain context menu items and/or keyboard shortcuts, when in practice mode
 
+- font-related shortcuts: Ctrl +/- to make the font larger/smaller by 0.25pt, Ctrl+B an Ctrl+I to turn Bold and Italic on/off (change shortcut for Import to Ctrl+O)
+
 - add user setting: theme.CursorColor (or the theme name, e.g., "Default")
 
 - use StatusStrip instead of Label as a status bar
