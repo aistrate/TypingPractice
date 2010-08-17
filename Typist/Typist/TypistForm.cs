@@ -370,7 +370,7 @@ namespace Typist
                         case Keys.S:
                             saveAsCustomFont();
                             break;
-                        case Keys.C:
+                        case Keys.T:
                             viewCustomFont();
                             break;
 

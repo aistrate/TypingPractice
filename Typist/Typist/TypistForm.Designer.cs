@@ -256,13 +256,13 @@
             this.saveAsCustomFontToolStripMenuItem.Name = "saveAsCustomFontToolStripMenuItem";
             this.saveAsCustomFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+S";
             this.saveAsCustomFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
-            this.saveAsCustomFontToolStripMenuItem.Text = "Save As Custom Font";
+            this.saveAsCustomFontToolStripMenuItem.Text = "Set As Custom Font";
             this.saveAsCustomFontToolStripMenuItem.Click += new System.EventHandler(this.saveAsCustomFontToolStripMenuItem_Click);
             // 
             // viewCustomFontToolStripMenuItem
             // 
             this.viewCustomFontToolStripMenuItem.Name = "viewCustomFontToolStripMenuItem";
-            this.viewCustomFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+C";
+            this.viewCustomFontToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+T";
             this.viewCustomFontToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.viewCustomFontToolStripMenuItem.Text = "Custom Font";
             this.viewCustomFontToolStripMenuItem.Click += new System.EventHandler(this.viewCustomFontToolStripMenuItem_Click);
