@@ -422,11 +422,10 @@ namespace Typist
             get
             {
                 if (textStringFormat == null)
-                    textStringFormat = new StringFormat(StringFormatFlags.LineLimit)
+                    textStringFormat = new StringFormat(StringFormat.GenericTypographic)
                     {
-                        Trimming = StringTrimming.Word,
-                        Alignment = StringAlignment.Near,
-                        LineAlignment = StringAlignment.Near,
+                        FormatFlags = StringFormat.GenericTypographic.FormatFlags |
+                                      StringFormatFlags.MeasureTrailingSpaces,
                     };
 
                 return textStringFormat;
