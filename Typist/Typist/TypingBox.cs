@@ -150,7 +150,7 @@ namespace Typist
 
             float rowHeight = sampleCharAreas[1].IsEmpty ? sampleCharAreas[0].Height : (sampleCharAreas[1].Y - sampleCharAreas[0].Y);
 
-            float vOffset = rowHeight * calcOffsetByRows(g, typingArea, rowHeight);
+            float vOffset = rowHeight * calculateRowOffset(g, typingArea, rowHeight);
 
             return new GraphicsContext()
             {
@@ -161,7 +161,7 @@ namespace Typist
             };
         }
 
-        private int calcOffsetByRows(Graphics g, RectangleF typingArea, float rowHeight)
+        private int calculateRowOffset(Graphics g, RectangleF typingArea, float rowHeight)
         {
             if (ImportedText.Length == 0 || rowHeight == 0)
                 return 0;
@@ -196,11 +196,6 @@ namespace Typist
 
             int visibleRows = Math.Max(1, (int)Math.Floor((double)typingArea.Height / rowHeight));
 
-            drawDebugMessage(string.Format("                  {0}, {1}, {2}",
-                                           cursorRow, lastDocumentRow, visibleRows),
-                             new GraphicsContext() { Graphics = g, TypingArea = typingArea, },
-                             false);
-
             if (lastDocumentRow < visibleRows ||
                 cursorRow <= visibleRows / 2)
                 return 0;
@@ -214,36 +209,6 @@ namespace Typist
         {
             return (int)Math.Round((double)(charY - typingAreaY) / rowHeight, 0);
         }
-
-        //private int calcLastVisibleRow(Graphics g, RectangleF typingArea, float rowHeight)
-        //{
-        //    if (rowHeight == 0)
-        //        return 0;
-
-        //    int approxLastVisibleRow = Math.Max(0, (int)Math.Floor((double)typingArea.Height / rowHeight) - 1);
-
-        //    return approxLastVisibleRow;
-
-        //    const int searchDist = 1;
-
-        //    string lines = new string(Enumerable.Repeat("gh\n", approxLastVisibleRow + searchDist + 1)
-        //                                        .SelectMany(c => c)
-        //                                        .ToArray());
-
-        //    RectangleF[] charAreas = getCharAreas(lines,
-        //                                          Enumerable.Range(approxLastVisibleRow - searchDist, 2 * searchDist + 1)
-        //                                                    .Where(i => i >= 0)
-        //                                                    .Select(i => 3 * i)
-        //                                                    .ToArray(),
-        //                                          new GraphicsContext() { Graphics = g, DocumentArea = typingArea, });
-
-        //    int index = charAreas.Reverse()
-        //                         .ToList()
-        //                         .FindIndex(a => !a.IsEmpty);
-        //    int diff = index >= 0 ? searchDist - index : 0;
-
-        //    return approxLastVisibleRow + diff;
-        //}
 
         private void drawImportedText(GraphicsContext gc)
         {
