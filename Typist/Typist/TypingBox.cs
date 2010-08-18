@@ -136,17 +136,18 @@ namespace Typist
 
         private GraphicsContext getGraphicsContext(Graphics g)
         {
+            RectangleF[] sampleCharAreas = getCharAreas32("m\nm", new[] { 0, 2 }, g, g.ClipBounds);
+
+            int marginLeftRight = (int)Math.Round(sampleCharAreas[0].Width / 4, 0),
+                marginTopBottom = (int)Math.Round(sampleCharAreas[0].Height / 8, 0);
+
             RectangleF typingArea = new RectangleF()
             {
-                X = MarginLeft,
-                Y = MarginTop,
-                Width = g.ClipBounds.Width - (MarginLeft + MarginRight),
-                Height = g.ClipBounds.Height - (MarginTop + MarginBottom),
+                X = marginLeftRight,
+                Y = marginTopBottom,
+                Width = g.ClipBounds.Width - 2 * marginLeftRight - sampleCharAreas[0].Width,
+                Height = g.ClipBounds.Height - 2 * marginTopBottom,
             };
-
-            RectangleF[] sampleCharAreas = getCharAreas32("m\nm", new[] { 0, 2 }, g, typingArea);
-
-            typingArea.Width -= sampleCharAreas[0].Width;
 
             float rowHeight = sampleCharAreas[1].IsEmpty ? sampleCharAreas[0].Height : (sampleCharAreas[1].Y - sampleCharAreas[0].Y);
 
@@ -397,7 +398,7 @@ namespace Typist
                 X = 0,
                 Y = 0,
                 Width = gc.Graphics.ClipBounds.Width,
-                Height = MarginTop + 1,
+                Height = gc.TypingArea.Y + 1,
             });
         }
 
