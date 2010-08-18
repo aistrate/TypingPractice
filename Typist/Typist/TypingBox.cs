@@ -371,12 +371,6 @@ namespace Typist
                                                 .SelectMany(grp => getCharAreas32(text, grp.ToArray(), g, documentArea))
                                                 .ToArray();
 
-            for (int i = 0; i < charIndexes.Length; i++)
-                if (charAreas[i].IsEmpty)
-                    charAreas[i] = getCharAreas32(text.Insert(charIndexes[i], "-"),
-                                                  new[] { charIndexes[i] },
-                                                  g, documentArea)[0];
-
             return charAreas;
         }
 
