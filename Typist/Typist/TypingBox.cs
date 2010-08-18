@@ -143,7 +143,7 @@ namespace Typist
 
             RectangleF typingArea = new RectangleF()
             {
-                X = marginLeftRight,
+                X = marginLeftRight + 1,
                 Y = marginTopBottom,
                 Width = g.ClipBounds.Width - 2 * marginLeftRight - sampleCharAreas[0].Width,
                 Height = g.ClipBounds.Height - 2 * marginTopBottom,
@@ -175,19 +175,13 @@ namespace Typist
                 Height = 10000000f,
             };
 
-            GraphicsContext unlimitedContext = new GraphicsContext()
-            {
-                Graphics = g,
-                DocumentArea = unlimitedArea,
-            };
-
             RectangleF[] charAreas = getCharAreas(ImportedText.ToString(),
                                                   new int[]
                                                   {
                                                       ImportedText.LastIndex,
                                                       TypedText.LastIndex + 1,
                                                   },
-                                                  unlimitedContext);
+                                                  g, unlimitedArea);
 
             int lastDocumentRow = getRow(charAreas[0].Y, unlimitedArea.Y, rowHeight);
 
@@ -357,25 +351,25 @@ namespace Typist
 
         private RectangleF[] getCharAreas(string text, int[] charIndexes, GraphicsContext gc)
         {
+            return getCharAreas(text, charIndexes, gc.Graphics, gc.DocumentArea);
+        }
+
+        private RectangleF[] getCharAreas(string text, int[] charIndexes, Graphics g, RectangleF documentArea)
+        {
             charIndexes = charIndexes.Where(i => i < text.Length)
                                      .ToArray();
 
             RectangleF[] charAreas = charIndexes.Split(32)
-                                                .SelectMany(grp => getCharAreas32(text, grp.ToArray(), gc))
+                                                .SelectMany(grp => getCharAreas32(text, grp.ToArray(), g, documentArea))
                                                 .ToArray();
 
             for (int i = 0; i < charIndexes.Length; i++)
                 if (charAreas[i].IsEmpty)
                     charAreas[i] = getCharAreas32(text.Insert(charIndexes[i], "-"),
                                                   new[] { charIndexes[i] },
-                                                  gc)[0];
+                                                  g, documentArea)[0];
 
             return charAreas;
-        }
-
-        private RectangleF[] getCharAreas32(string text, int[] charIndexes, GraphicsContext gc)
-        {
-            return getCharAreas32(text, charIndexes, gc.Graphics, gc.DocumentArea);
         }
 
         private RectangleF[] getCharAreas32(string text, int[] charIndexes, Graphics g, RectangleF documentArea)
