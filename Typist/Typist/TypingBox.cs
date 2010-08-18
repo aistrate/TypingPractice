@@ -175,19 +175,22 @@ namespace Typist
                 Height = 10000000f,
             };
 
-            RectangleF[] charAreas = getCharAreas(ImportedText.ToString(),
-                                                  new int[]
-                                                  {
-                                                      ImportedText.LastIndex,
-                                                      TypedText.LastIndex + 1,
-                                                  },
-                                                  g, unlimitedArea);
+            RectangleF lastDocumentCharArea = getCharArea(ImportedText.ToString(),
+                                                          ImportedText.LastIndex,
+                                                          g, unlimitedArea);
 
-            int lastDocumentRow = getRow(charAreas[0].Y, unlimitedArea.Y, rowHeight);
+            int lastDocumentRow = getRow(lastDocumentCharArea.Y, unlimitedArea.Y, rowHeight);
 
-            int cursorRow = TypedText.LastIndex < ImportedText.LastIndex ?
-                                getRow(charAreas[1].Y, unlimitedArea.Y, rowHeight) :
-                                lastDocumentRow;
+            int cursorRow = lastDocumentRow;
+
+            if (TypedText.LastIndex < ImportedText.LastIndex)
+            {
+                RectangleF cursorCharArea = getCharArea(ImportedText.ToString(),
+                                                        TypedText.LastIndex + 1,
+                                                        g, unlimitedArea);
+
+                cursorRow = getRow(cursorCharArea.Y, unlimitedArea.Y, rowHeight);
+            }
 
             int visibleRows = Math.Max(1, (int)Math.Floor((double)typingArea.Height / rowHeight));
 
@@ -346,7 +349,12 @@ namespace Typist
 
         private RectangleF getCharArea(string text, int charIndex, GraphicsContext gc)
         {
-            return getCharAreas(text, new[] { charIndex }, gc).First();
+            return getCharArea(text, charIndex, gc.Graphics, gc.DocumentArea);
+        }
+
+        private RectangleF getCharArea(string text, int charIndex, Graphics g, RectangleF documentArea)
+        {
+            return getCharAreas(text, new[] { charIndex }, g, documentArea).First();
         }
 
         private RectangleF[] getCharAreas(string text, int[] charIndexes, GraphicsContext gc)
