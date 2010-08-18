@@ -751,6 +751,7 @@ namespace Typist
 
         private void pauseResume()
         {
+            picTyping.ShowMessage = true;
             PracticeMode = !PracticeMode;
         }
 

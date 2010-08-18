@@ -118,6 +118,9 @@ namespace Typist
 
         #region Paint event handler
 
+        internal bool ShowMessage = false;
+        private string message = "";
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
@@ -125,6 +128,26 @@ namespace Typist
             if (!DesignMode)
             {
                 GraphicsContext gc  = getGraphicsContext(pe.Graphics);
+
+                if (ShowMessage)
+                {
+                    RectangleF[] charAreas = getCharAreas(ImportedText.ToString(), Enumerable.Range(0, ImportedText.Length).ToArray(), gc);
+
+                    //int emptyCount = charAreas.Count(r => Math.Abs(r.Width) <= 2f);
+                    //message = string.Format("{0} / {1}", emptyCount, ImportedText.Length);
+
+                    RectangleF[] narrowChars = charAreas.Where(r => Math.Abs(r.Width) <= 2f).ToArray();
+                    //message = string.Join(", ", narrowChars.Select(r => r.ToString()).ToArray());
+
+                    RectangleF a = narrowChars[1],
+                               copyA = new RectangleF(a.X, a.Y, a.Width, a.Height);
+                    copyA.Intersect(gc.TypingArea);
+                    message = string.Format("{0}, {1}", copyA, a == copyA);
+
+                    ShowMessage = false;
+                }
+
+                drawDebugMessage(message, gc);
 
                 drawImportedText(gc);
                 drawShadowText(gc);
