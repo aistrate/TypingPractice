@@ -13,7 +13,7 @@ namespace Typist.Appearance
             ImportedTextColor = Brushes.Black;
             TypedTextColor = new SolidBrush(VsColors.UserTypes);
             ErrorBackColor = new SolidBrush(VsColors.SelectedTextBackColor);
-            ErrorForeColor = new SolidBrush(VsColors.StringLiteral);
+            ErrorForeColor = Brushes.DarkSlateGray;
             CursorColor = Brushes.Crimson;
         }
 
