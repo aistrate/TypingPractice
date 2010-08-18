@@ -10,6 +10,8 @@ Main unsolved problems:
 
 General:
 
+- add a lateral scroll bar (and a label with progress percentage)
+
 - font-related shortcuts: Ctrl +/- to make the font larger/smaller by 0.25pt, Ctrl+B an Ctrl+I to turn Bold and Italic on/off (change shortcut for Import to Ctrl+O)
 
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L)
