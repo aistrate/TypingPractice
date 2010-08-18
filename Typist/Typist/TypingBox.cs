@@ -148,23 +148,102 @@ namespace Typist
 
             typingArea.Width -= sampleCharAreas[0].Width;
 
-            int offsetByRows = 0;
-
             float rowHeight = sampleCharAreas[1].IsEmpty ? sampleCharAreas[0].Height : (sampleCharAreas[1].Y - sampleCharAreas[0].Y);
-            float vOffset = offsetByRows * rowHeight;
+
+            float vOffset = rowHeight * calcOffsetByRows(g, typingArea, rowHeight);
 
             return new GraphicsContext()
             {
                 Graphics = g,
                 TypingArea = typingArea,
-                FirstCharArea = sampleCharAreas[0],
-
-                OffsetByRows = offsetByRows,
-                RowHeight = rowHeight,
                 DocumentArea = new RectangleF(typingArea.X, typingArea.Y + vOffset,
                                               typingArea.Width, typingArea.Height - vOffset),
             };
         }
+
+        private int calcOffsetByRows(Graphics g, RectangleF typingArea, float rowHeight)
+        {
+            if (ImportedText.Length == 0 || rowHeight == 0)
+                return 0;
+
+            RectangleF unlimitedArea = new RectangleF()
+            {
+                X = typingArea.X,
+                Y = typingArea.Y,
+                Width = typingArea.Width,
+                Height = 10000000f,
+            };
+
+            GraphicsContext unlimitedContext = new GraphicsContext()
+            {
+                Graphics = g,
+                DocumentArea = unlimitedArea,
+            };
+
+            RectangleF[] charAreas = getCharAreas(ImportedText.ToString(),
+                                                  new int[]
+                                                  {
+                                                      ImportedText.LastIndex,
+                                                      TypedText.LastIndex + 1,
+                                                  },
+                                                  unlimitedContext);
+
+            int lastDocumentRow = getRow(charAreas[0].Y, unlimitedArea.Y, rowHeight);
+
+            int cursorRow = TypedText.LastIndex < ImportedText.LastIndex ?
+                                getRow(charAreas[1].Y, unlimitedArea.Y, rowHeight) :
+                                lastDocumentRow;
+
+            int visibleRows = Math.Max(1, (int)Math.Floor((double)typingArea.Height / rowHeight));
+
+            drawDebugMessage(string.Format("                  {0}, {1}, {2}",
+                                           cursorRow, lastDocumentRow, visibleRows),
+                             new GraphicsContext() { Graphics = g, TypingArea = typingArea, },
+                             false);
+
+            if (lastDocumentRow < visibleRows ||
+                cursorRow <= visibleRows / 2)
+                return 0;
+            else if (lastDocumentRow - cursorRow >= visibleRows / 2)
+                return -cursorRow + visibleRows / 2;
+            else
+                return visibleRows - 1 - lastDocumentRow;
+        }
+
+        private int getRow(float charY, float typingAreaY, float rowHeight)
+        {
+            return (int)Math.Round((double)(charY - typingAreaY) / rowHeight, 0);
+        }
+
+        //private int calcLastVisibleRow(Graphics g, RectangleF typingArea, float rowHeight)
+        //{
+        //    if (rowHeight == 0)
+        //        return 0;
+
+        //    int approxLastVisibleRow = Math.Max(0, (int)Math.Floor((double)typingArea.Height / rowHeight) - 1);
+
+        //    return approxLastVisibleRow;
+
+        //    const int searchDist = 1;
+
+        //    string lines = new string(Enumerable.Repeat("gh\n", approxLastVisibleRow + searchDist + 1)
+        //                                        .SelectMany(c => c)
+        //                                        .ToArray());
+
+        //    RectangleF[] charAreas = getCharAreas(lines,
+        //                                          Enumerable.Range(approxLastVisibleRow - searchDist, 2 * searchDist + 1)
+        //                                                    .Where(i => i >= 0)
+        //                                                    .Select(i => 3 * i)
+        //                                                    .ToArray(),
+        //                                          new GraphicsContext() { Graphics = g, DocumentArea = typingArea, });
+
+        //    int index = charAreas.Reverse()
+        //                         .ToList()
+        //                         .FindIndex(a => !a.IsEmpty);
+        //    int diff = index >= 0 ? searchDist - index : 0;
+
+        //    return approxLastVisibleRow + diff;
+        //}
 
         private void drawImportedText(GraphicsContext gc)
         {
@@ -175,11 +254,14 @@ namespace Typist
         {
             string shadowText = ImportedText.Substring(0, TypedText.Length);
 
-            int lineJumpIndex = findLineJump(ImportedText.ToString(), TypedText.LastIndex, gc);
-            if (lineJumpIndex < TypedText.LastIndex)
-                shadowText = insertSpacesAfterJump(ImportedText.ToString(), shadowText,
-                                                   lineJumpIndex, TypedText.LastIndex,
-                                                   gc);
+            if (TypedText.Length > 0 && !char.IsWhiteSpace(ImportedText[TypedText.LastIndex]))
+            {
+                int lineJumpIndex = findLineJump(ImportedText.ToString(), TypedText.LastIndex, gc);
+                if (lineJumpIndex < TypedText.LastIndex)
+                    shadowText = insertSpacesAfterJump(ImportedText.ToString(), shadowText,
+                                                       lineJumpIndex, TypedText.LastIndex,
+                                                       gc);
+            }
 
             drawText(shadowText, gc, Theme.TypedTextColor);
         }
@@ -356,7 +438,14 @@ namespace Typist
 
         private void drawDebugMessage(string message, GraphicsContext gc)
         {
-            RectangleF position = new RectangleF(gc.TypingArea.X, gc.TypingArea.Y + gc.TypingArea.Height - 16, 
+            drawDebugMessage(message, gc, true);
+        }
+
+        private void drawDebugMessage(string message, GraphicsContext gc, bool atBottom)
+        {
+            float y = atBottom ? (gc.TypingArea.Y + gc.TypingArea.Height - 16) : gc.TypingArea.Y;
+
+            RectangleF position = new RectangleF(gc.TypingArea.X, y,
                                                  gc.TypingArea.Width, 16);
 
             using (Font font = new Font("Courier New", 10))
@@ -400,10 +489,6 @@ namespace Typist
         {
             public Graphics Graphics;
             public RectangleF TypingArea;
-            public RectangleF FirstCharArea;
-
-            public int OffsetByRows;
-            public float RowHeight;
             public RectangleF DocumentArea;
         }
 

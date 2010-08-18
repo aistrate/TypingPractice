@@ -1,6 +1,6 @@
 Main unsolved problems:
 
-- scrolling the text
+* scrolling the text
 
 - precise positioning (of error characters and cursor)
 
@@ -24,8 +24,6 @@ General:
 
 
 - bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text
-
-- scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen
 
 - change the name of the program/project to something more memorable than "Typist"
 
@@ -59,6 +57,7 @@ Paint event handler:
 
 
 
+* scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen
 * include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
 * rename class Fonts to PredefinedFonts, with 3 static properties: Small, Large, and All; rename property FavoriteFonts (TypistForm) to PredefinedFonts (also, class FavoriteFont to PredefinedFont)
 * add Consolas font to Setup project
