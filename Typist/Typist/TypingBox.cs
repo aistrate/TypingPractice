@@ -367,17 +367,31 @@ namespace Typist
             charIndexes = charIndexes.Where(i => i < text.Length)
                                      .ToArray();
 
-            RectangleF[] charAreas = charIndexes.Split(32)
-                                                .SelectMany(grp => getCharAreas32(text, grp.ToArray(), g, documentArea))
-                                                .ToArray();
+            Dictionary<int, int> lineBeginnings = charIndexes.ToDictionary(i => i, i => getFirstOnLine(text, i));
+
+            int[] newCharIndexes = charIndexes.Concat(lineBeginnings.Values.Except(charIndexes))
+                                              .ToArray();
+
+            RectangleF[] charAreas = newCharIndexes.Split(32)
+                                                   .SelectMany(grp => getCharAreas32(text, grp.ToArray(), g, documentArea))
+                                                   .ToArray();
+
+            RectangleF[] originalCharAreas = charAreas.Take(charIndexes.Length).ToArray();
+
+            Dictionary<int, RectangleF> lineBeginningCharAreas =
+                lineBeginnings.Values
+                              .Distinct()
+                              .ToDictionary(b => b, b => charAreas[Array.IndexOf(newCharIndexes, b)]);
 
             for (int i = 0; i < charIndexes.Length; i++)
-                if (charAreas[i].IsEmpty)
-                    charAreas[i] = getCharAreas32(text.Insert(charIndexes[i], "-"),
-                                                  new[] { charIndexes[i] },
-                                                  g, documentArea)[0];
+                if (lineBeginnings[charIndexes[i]] != charIndexes[i])
+                {
+                    RectangleF lineBeginningCharArea = lineBeginningCharAreas[lineBeginnings[charIndexes[i]]];
 
-            return charAreas;
+                    originalCharAreas[i].Y = lineBeginningCharArea.Y;
+                }
+
+            return originalCharAreas;
         }
 
         private RectangleF[] getCharAreas32(string text, int[] charIndexes, Graphics g, RectangleF documentArea)
@@ -391,6 +405,18 @@ namespace Typist
 
             return regions.Select(r => r.GetBounds(g))
                           .ToArray();
+        }
+
+        private int getFirstOnLine(string text, int index)
+        {
+            if (index == 0)
+                return 0;
+
+            int nlIndex = text.LastIndexOf('\n', index - 1);
+            if (nlIndex == -1)
+                return 0;
+            else
+                return nlIndex + 1;
         }
 
         private void drawTopMargin(GraphicsContext gc)
