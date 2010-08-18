@@ -130,6 +130,7 @@ namespace Typist
                 drawShadowText(gc);
                 drawErrorChars(gc);
                 drawCursor(gc);
+                drawTopMargin(gc);
             }
         }
 
@@ -143,15 +144,25 @@ namespace Typist
                 Height = g.ClipBounds.Height - (MarginTop + MarginBottom),
             };
 
-            RectangleF firstCharArea = getCharAreas32("_", new[] { 0 }, g, typingArea).First();
+            RectangleF[] sampleCharAreas = getCharAreas32("m\nm", new[] { 0, 2 }, g, typingArea);
 
-            typingArea.Width -= firstCharArea.Width;
+            typingArea.Width -= sampleCharAreas[0].Width;
+
+            int offsetByRows = 0;
+
+            float rowHeight = sampleCharAreas[1].IsEmpty ? sampleCharAreas[0].Height : (sampleCharAreas[1].Y - sampleCharAreas[0].Y);
+            float vOffset = offsetByRows * rowHeight;
 
             return new GraphicsContext()
             {
                 Graphics = g,
                 TypingArea = typingArea,
-                FirstCharArea = firstCharArea,
+                FirstCharArea = sampleCharAreas[0],
+
+                OffsetByRows = offsetByRows,
+                RowHeight = rowHeight,
+                DocumentArea = new RectangleF(typingArea.X, typingArea.Y + vOffset,
+                                              typingArea.Width, typingArea.Height - vOffset),
             };
         }
 
@@ -288,7 +299,7 @@ namespace Typist
             if (VisibleNewlines)
                 text = text.Replace("\n", string.Format("{0}\n", pilcrow));
 
-            gc.Graphics.DrawString(text, TypingFont, brush, gc.TypingArea, TextStringFormat);
+            gc.Graphics.DrawString(text, TypingFont, brush, gc.DocumentArea, TextStringFormat);
         }
 
         private RectangleF getCharArea(string text, int charIndex, GraphicsContext gc)
@@ -316,20 +327,31 @@ namespace Typist
 
         private RectangleF[] getCharAreas32(string text, int[] charIndexes, GraphicsContext gc)
         {
-            return getCharAreas32(text, charIndexes, gc.Graphics, gc.TypingArea);
+            return getCharAreas32(text, charIndexes, gc.Graphics, gc.DocumentArea);
         }
 
-        private RectangleF[] getCharAreas32(string text, int[] charIndexes, Graphics g, RectangleF typingArea)
+        private RectangleF[] getCharAreas32(string text, int[] charIndexes, Graphics g, RectangleF documentArea)
         {
             CharacterRange[] ranges = charIndexes.Select(i => new CharacterRange(i, 1)).ToArray();
 
             StringFormat stringFormat = new StringFormat(TextStringFormat);
             stringFormat.SetMeasurableCharacterRanges(ranges);
 
-            Region[] regions = g.MeasureCharacterRanges(text, TypingFont, typingArea, stringFormat);
+            Region[] regions = g.MeasureCharacterRanges(text, TypingFont, documentArea, stringFormat);
 
             return regions.Select(r => r.GetBounds(g))
                           .ToArray();
+        }
+
+        private void drawTopMargin(GraphicsContext gc)
+        {
+            gc.Graphics.FillRectangle(Brushes.White, new RectangleF()
+            {
+                X = 0,
+                Y = 0,
+                Width = gc.Graphics.ClipBounds.Width,
+                Height = MarginTop + 1,
+            });
         }
 
         private void drawDebugMessage(string message, GraphicsContext gc)
@@ -379,6 +401,10 @@ namespace Typist
             public Graphics Graphics;
             public RectangleF TypingArea;
             public RectangleF FirstCharArea;
+
+            public int OffsetByRows;
+            public float RowHeight;
+            public RectangleF DocumentArea;
         }
 
         #endregion
