@@ -30,7 +30,7 @@ General:
 - disable certain context menu items and/or keyboard shortcuts, when in practice mode
 
 
-- bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text
+- bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
 
 - change the name of the program/project to something more memorable than "Typist"
 
