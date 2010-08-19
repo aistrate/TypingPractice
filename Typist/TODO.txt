@@ -14,6 +14,8 @@ General:
 
 - add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
 
+- calculate the vertical offset of the cursor and the error rectangle based on font size (instead of using constants, barCursorVOffset and errorBackgroundVOffset)
+
 
 - font-related shortcuts: Ctrl +/- to make the font larger/smaller by 0.25pt, Ctrl+B an Ctrl+I to turn Bold and Italic on/off (change shortcut for Import to Ctrl+O)
 
