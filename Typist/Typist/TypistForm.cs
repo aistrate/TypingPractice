@@ -22,9 +22,9 @@ namespace Typist
         private const bool cursorAsVerticalBar = true;
         private const char charCursorChar = '_';
 
-        private const float barCursorVOffset = -0.1f;
+        private const float barCursorVOffset = 0; //-0.1f;
         private const float charCursorVOffset = 0;
-        private const float errorBackgroundVOffset = -0.1f;
+        private const float errorBackgroundVOffset = 0; //-0.1f;
 
         private const int marginLeft = 1;
         private const int marginRight = 1;
