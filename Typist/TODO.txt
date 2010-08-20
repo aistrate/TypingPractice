@@ -10,8 +10,6 @@ Main unsolved problems:
 
 General:
 
-- bar cursor line width should depend more closely on font size
-
 - separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
 
 - separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
@@ -70,6 +68,7 @@ Paint event handler:
 
 
 
+* bar cursor line width should depend more closely on font size
 * font-related shortcut: Ctrl +/- to make the font larger/smaller by 0.25pt
 * display debug messages from the TypingBox on the status bar (label) of the form
 * scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen

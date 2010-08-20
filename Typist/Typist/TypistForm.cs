@@ -21,6 +21,8 @@ namespace Typist
         private const bool cursorAsVerticalBar = true;
         private const char charCursorChar = '_';
 
+        private const float barCursorRelativeWidth = 0.125f;
+
         private const float barCursorVOffset = 0;
         private const float charCursorVOffset = 0;
         private const float errorBackgroundVOffset = 0;
@@ -72,6 +74,8 @@ namespace Typist
 
             picTyping.CursorAsVerticalBar = cursorAsVerticalBar;
             picTyping.CharCursorChar = charCursorChar;
+
+            picTyping.BarCursorRelativeWidth = barCursorRelativeWidth;
 
             picTyping.BarCursorVOffset = barCursorVOffset;
             picTyping.CharCursorVOffset = charCursorVOffset;
@@ -382,11 +386,11 @@ namespace Typist
 
                         case Keys.Oemplus:
                             if (e.Shift)
-                                changeFontSizeBy(+0.25f);
+                                changeFontSize(+1);
                             break;
                         case Keys.OemMinus:
                             if (!e.Shift)
-                                changeFontSizeBy(-0.25f);
+                                changeFontSize(-1);
                             break;
                     }
                 }
@@ -553,7 +557,6 @@ namespace Typist
                     currentFontIndex = AvailableFonts.Length - 1;
 
                 picTyping.TypingFont = AvailableFonts[currentFontIndex];
-                picTyping.BarCursorLineWidth = AvailableFonts[currentFontIndex].SizeInPoints < 14.5 ? 2 : 3;
 
                 lblStatusBar.Text = string.Format("{0}: {1}",
                                                   currentFontIndex == 0 ?
@@ -595,12 +598,14 @@ namespace Typist
             CustomFont = dlgFontDialog.Font;
         }
 
-        private void changeFontSizeBy(float delta)
+        private void changeFontSize(int delta)
         {
             PracticeMode = false;
 
             Font font = picTyping.TypingFont;
-            float size = Math.Max(6.0f, font.Size + delta);
+
+            float size = font.Unit == GraphicsUnit.Point ? Math.Max(6, font.Size + 0.25f * delta) :
+                                                           Math.Max(1, font.Size + delta);
 
             CustomFont = new Font(font.Name, size, font.Style, font.Unit);
         }

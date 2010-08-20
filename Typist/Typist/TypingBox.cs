@@ -49,8 +49,8 @@ namespace Typist
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(2)]
-        public int BarCursorLineWidth { get; set; }
+        [DefaultValue(0)]
+        public float BarCursorRelativeWidth { get; set; }
 
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -101,7 +101,7 @@ namespace Typist
 
         public TypingBox()
         {
-            BarCursorLineWidth = 2;
+            BarCursorRelativeWidth = 0;
             CursorAsVerticalBar = true;
             CharCursorChar = '_';
             TextMargin = new Padding(0);
@@ -177,7 +177,7 @@ namespace Typist
                 X = left,
                 Y = top,
                 Width = Math.Max(right - left, averageCharWidth - 1),
-                Height = Math.Max(bottom - top, (float)Math.Ceiling(rowHeight)),
+                Height = Math.Max(bottom - top, (float)Math.Ceiling(rowHeight)) + 5,
             };
 
             float vOffset = rowHeight * calculateRowOffset(g, typingArea, rowHeight);
@@ -185,6 +185,7 @@ namespace Typist
             return new GraphicsContext()
             {
                 Graphics = g,
+                FirstCharArea = sampleCharAreas[0],
                 TypingArea = typingArea,
                 DocumentArea = new RectangleF(typingArea.X, typingArea.Y + vOffset,
                                               typingArea.Width, typingArea.Height - vOffset),
@@ -335,13 +336,17 @@ namespace Typist
                                                 CursorAsVerticalBar ? BarCursorVOffset : CharCursorVOffset);
 
                 if (CursorAsVerticalBar)
+                {
+                    int barCursorWidth = Math.Max(1, 1 + (int)Math.Round(gc.FirstCharArea.Width * BarCursorRelativeWidth, 0));
+
                     gc.Graphics.FillRectangle(Theme.CursorColor, new RectangleF()
                     {
-                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * BarCursorLineWidth),
+                        X = cursorArea.X - (0.125f * cursorArea.Width) - (0.5f * barCursorWidth),
                         Y = cursorArea.Y,
-                        Width = BarCursorLineWidth,
+                        Width = barCursorWidth,
                         Height = cursorArea.Height,
                     });
+                }
                 else
                     drawChar(CharCursorChar, gc, Theme.CursorColor, cursorArea);
             }
@@ -483,6 +488,7 @@ namespace Typist
         private class GraphicsContext
         {
             public Graphics Graphics;
+            public RectangleF FirstCharArea;
             public RectangleF TypingArea;
             public RectangleF DocumentArea;
         }
