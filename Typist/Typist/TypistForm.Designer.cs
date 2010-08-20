@@ -179,6 +179,7 @@
             // 
             this.lblStatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatusBar.AutoEllipsis = true;
             this.lblStatusBar.BackColor = System.Drawing.SystemColors.Control;
             this.lblStatusBar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatusBar.Location = new System.Drawing.Point(0, 551);

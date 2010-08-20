@@ -349,7 +349,7 @@ namespace Typist
         {
             if (e.Control || e.Alt)
             {
-                if (e.Control)
+                if (e.Control && !e.Alt)
                 {
                     switch (e.KeyCode)
                     {
@@ -378,6 +378,15 @@ namespace Typist
 
                         case Keys.N:
                             moveToFont(e.Shift ? -1 : +1);
+                            break;
+
+                        case Keys.Oemplus:
+                            if (e.Shift)
+                                changeFontSizeBy(+0.25f);
+                            break;
+                        case Keys.OemMinus:
+                            if (!e.Shift)
+                                changeFontSizeBy(-0.25f);
                             break;
                     }
                 }
@@ -584,6 +593,16 @@ namespace Typist
         private void dlgFontDialog_Apply(object sender, EventArgs e)
         {
             CustomFont = dlgFontDialog.Font;
+        }
+
+        private void changeFontSizeBy(float delta)
+        {
+            PracticeMode = false;
+
+            Font font = picTyping.TypingFont;
+            float size = Math.Max(6.0f, font.Size + delta);
+
+            CustomFont = new Font(font.Name, size, font.Style, font.Unit);
         }
 
         #endregion
