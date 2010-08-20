@@ -285,7 +285,7 @@ namespace Typist
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            if (userSettings.AskBeforeCloseDuringPractice && IsStarted)
+            if (userSettings.AskBeforeCloseDuringPractice && IsStarted && !IsFinished)
             {
                 PracticeMode = false;
 
