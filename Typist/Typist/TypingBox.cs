@@ -10,6 +10,23 @@ using Typist.Appearance;
 
 namespace Typist
 {
+    #region StatusChanged Event Handler
+
+    public class StatusChangedEventArgs : EventArgs
+    {
+        public StatusChangedEventArgs(string statusMessage)
+        {
+            StatusMessage = statusMessage;
+        }
+
+        public string StatusMessage { get; private set; }
+    }
+
+    public delegate void StatusChangedEventHandler(object sender, StatusChangedEventArgs e);
+
+    #endregion
+
+
     public class TypingBox : PictureBox
     {
         #region Properties
@@ -35,25 +52,9 @@ namespace Typist
         [DefaultValue(2)]
         public int BarCursorLineWidth { get; set; }
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(0)]
-        public int MarginLeft { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(0)]
-        public int MarginRight { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(0)]
-        public int MarginTop { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(0)]
-        public int MarginBottom { get; set; }
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        public Padding TextMargin { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -89,6 +90,10 @@ namespace Typist
         [EditorBrowsable(EditorBrowsableState.Always)]
         public event CancelEventHandler DrawingCursor;
 
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        public event StatusChangedEventHandler StatusChanged;
+
         #endregion
 
 
@@ -99,6 +104,13 @@ namespace Typist
             BarCursorLineWidth = 2;
             CursorAsVerticalBar = true;
             CharCursorChar = '_';
+            TextMargin = new Padding(0);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            this.Invalidate();
+            base.OnResize(e);
         }
 
         protected virtual void OnDrawingCursor(CancelEventArgs e)
@@ -107,10 +119,20 @@ namespace Typist
                 DrawingCursor(this, e);
         }
 
-        protected override void OnResize(EventArgs e)
+        protected virtual void OnStatusChanged(StatusChangedEventArgs e)
         {
-            this.Invalidate();
-            base.OnResize(e);
+            if (StatusChanged != null)
+                StatusChanged(this, e);
+        }
+
+        protected void ShowStatusMessage(string message)
+        {
+            OnStatusChanged(new StatusChangedEventArgs(message));
+        }
+
+        protected void ShowStatusMessage(string format, params object[] args)
+        {
+            ShowStatusMessage(string.Format(format, args));
         }
 
         #endregion
@@ -136,20 +158,27 @@ namespace Typist
 
         private GraphicsContext getGraphicsContext(Graphics g)
         {
-            RectangleF[] sampleCharAreas = getCharAreas32("m\nm", new[] { 0, 2 }, g, g.ClipBounds);
+            RectangleF[] sampleCharAreas = getCharAreas32("mm\nm", new[] { 0, 1, 3 },
+                                                          g, unlimitedHeightArea(g.ClipBounds));
 
-            int marginLeftRight = (int)Math.Round(sampleCharAreas[0].Width / 4, 0),
-                marginTopBottom = (int)Math.Round(sampleCharAreas[0].Height / 8, 0);
+            float rowHeight = sampleCharAreas[2].Y - sampleCharAreas[0].Y;
+
+            int charMarginLeftRight = (int)Math.Round(sampleCharAreas[0].Width / 4, 0),
+                charMarginTopBottom = (int)Math.Round(sampleCharAreas[0].Height / 8, 0),
+                averageCharWidth = (int)Math.Round(sampleCharAreas[1].Width, 0);
+
+            float left = TextMargin.Left + charMarginLeftRight + 1,
+                  top = TextMargin.Top + charMarginTopBottom,
+                  right = g.ClipBounds.Width - TextMargin.Right - charMarginLeftRight - averageCharWidth,
+                  bottom = g.ClipBounds.Height - TextMargin.Bottom - charMarginTopBottom;
 
             RectangleF typingArea = new RectangleF()
             {
-                X = marginLeftRight + 1,
-                Y = marginTopBottom,
-                Width = g.ClipBounds.Width - 2 * marginLeftRight - sampleCharAreas[0].Width,
-                Height = g.ClipBounds.Height - 2 * marginTopBottom,
+                X = left,
+                Y = top,
+                Width = Math.Max(right - left, averageCharWidth - 1),
+                Height = Math.Max(bottom - top, (float)Math.Ceiling(rowHeight)),
             };
-
-            float rowHeight = sampleCharAreas[1].IsEmpty ? sampleCharAreas[0].Height : (sampleCharAreas[1].Y - sampleCharAreas[0].Y);
 
             float vOffset = rowHeight * calculateRowOffset(g, typingArea, rowHeight);
 
@@ -167,13 +196,7 @@ namespace Typist
             if (ImportedText.Length == 0 || rowHeight == 0)
                 return 0;
 
-            RectangleF unlimitedArea = new RectangleF()
-            {
-                X = typingArea.X,
-                Y = typingArea.Y,
-                Width = typingArea.Width,
-                Height = 10000000f,
-            };
+            RectangleF unlimitedArea = unlimitedHeightArea(typingArea);
 
             RectangleF lastDocumentCharArea = getCharArea(ImportedText.ToString(),
                                                           ImportedText.LastIndex,
@@ -201,6 +224,17 @@ namespace Typist
                 return -cursorRow + visibleRows / 2;
             else
                 return visibleRows - 1 - lastDocumentRow;
+        }
+
+        private RectangleF unlimitedHeightArea(RectangleF area)
+        {
+            return new RectangleF()
+            {
+                X = area.X,
+                Y = area.Y,
+                Width = area.Width,
+                Height = float.MaxValue,
+            };
         }
 
         private int getRow(float charY, float typingAreaY, float rowHeight)

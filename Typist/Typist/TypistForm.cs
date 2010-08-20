@@ -1,14 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 using System.Media;
+using System.Text;
 using System.Windows.Forms;
 using Typist.Appearance;
-using System.Configuration;
-using System.Text;
 
 namespace Typist
 {
@@ -22,9 +21,9 @@ namespace Typist
         private const bool cursorAsVerticalBar = true;
         private const char charCursorChar = '_';
 
-        private const float barCursorVOffset = 0; //-0.1f;
+        private const float barCursorVOffset = 0;
         private const float charCursorVOffset = 0;
-        private const float errorBackgroundVOffset = 0; //-0.1f;
+        private const float errorBackgroundVOffset = 0;
 
         private const int marginLeft = 1;
         private const int marginRight = 1;
@@ -59,7 +58,8 @@ namespace Typist
             PracticeMode = false;
 
             //if (string.IsNullOrEmpty(filePath))
-            //    filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
+            //    filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\SingleParagraph\European Wildcat.txt";
+            //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
 
             ImportFile(filePath);
         }
@@ -68,10 +68,7 @@ namespace Typist
         {
             picTyping.Theme = theme;
 
-            picTyping.MarginLeft = marginLeft;
-            picTyping.MarginRight = marginRight;
-            picTyping.MarginTop = marginTop;
-            picTyping.MarginBottom = marginBottom;
+            picTyping.TextMargin = new Padding(marginLeft, marginTop, marginRight, marginBottom);
 
             picTyping.CursorAsVerticalBar = cursorAsVerticalBar;
             picTyping.CharCursorChar = charCursorChar;
@@ -102,12 +99,17 @@ namespace Typist
         {
         }
 
-        private void picTyping_DrawingCursor(object sender, System.ComponentModel.CancelEventArgs e)
+        private void picTyping_DrawingCursor(object sender, CancelEventArgs e)
         {
             bool drawCursor = (PracticeMode || userSettings.ShowCursorWhenPaused && IsPaused) &&
                               !IsFinished;
 
             e.Cancel = !drawCursor;
+        }
+
+        private void picTyping_StatusChanged(object sender, StatusChangedEventArgs e)
+        {
+            lblStatusBar.Text = e.StatusMessage;
         }
 
         protected TextBuffer ImportedText
@@ -283,7 +285,7 @@ namespace Typist
                 Properties.Settings.Default.WindowIsMaximized = WindowState == FormWindowState.Maximized;
         }
 
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
             if (userSettings.AskBeforeCloseDuringPractice && IsStarted && !IsFinished)
             {

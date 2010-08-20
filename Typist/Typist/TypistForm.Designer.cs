@@ -202,7 +202,7 @@
             this.nextFontToolStripMenuItem,
             this.predefinedFontsToolStripMenuItem});
             this.mnuContextMenu.Name = "contextMenuStrip1";
-            this.mnuContextMenu.Size = new System.Drawing.Size(276, 258);
+            this.mnuContextMenu.Size = new System.Drawing.Size(276, 236);
             this.mnuContextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuContextMenu_Closed);
             // 
             // pauseToolStripMenuItem
@@ -315,9 +315,11 @@
             this.picTyping.Size = new System.Drawing.Size(462, 519);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
+            this.picTyping.TextMargin = new System.Windows.Forms.Padding(20);
             this.picTyping.Theme = null;
             this.picTyping.TypedText = null;
             this.picTyping.TypingFont = null;
+            this.picTyping.StatusChanged += new Typist.StatusChangedEventHandler(this.picTyping_StatusChanged);
             this.picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(this.picTyping_DrawingCursor);
             // 
             // TypistForm

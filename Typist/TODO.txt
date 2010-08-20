@@ -10,13 +10,7 @@ Main unsolved problems:
 
 General:
 
-- round rowHeight value, if not an integer
-
-- calculate the vertical offset of the cursor and the error rectangle based on font size (instead of using constants, barCursorVOffset and errorBackgroundVOffset)
-
-- cursor size should depend more closely on font size
-
-- display debug messages from the TypingBox on the status bar (label) of the form
+- bar cursor line width should depend more closely on font size
 
 - separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
 
@@ -76,6 +70,7 @@ Paint event handler:
 
 
 
+* display debug messages from the TypingBox on the status bar (label) of the form
 * scroll the text up as the user is typing, if not all of it fits on the screen; keep the position of the current line around the middle of the screen
 * include the .msi file into the Git repository (VS 2008 Express Edition cannot open/build Setup projects)
 * rename class Fonts to PredefinedFonts, with 3 static properties: Small, Large, and All; rename property FavoriteFonts (TypistForm) to PredefinedFonts (also, class FavoriteFont to PredefinedFont)
@@ -105,6 +100,8 @@ Paint event handler:
 * error: typing a printable char instead of a newline (show the char at the end of the line, in red)
 * retrieve 32 rectangles at a time when displaying all uncorrected errors
 
+*(o) calculate the vertical offset of the cursor and the error rectangle based on font size (instead of using constants, barCursorVOffset and errorBackgroundVOffset)
+*(o) round rowHeight value, if not an integer
 *(o) remove OpenType fonts (and other non-TrueType fonts) from Setup project
 *(o) refactor the saving of window size/position/maximized(/minimized) into a reusable user control
 *(o) set default font to Lucida Console (large)
