@@ -10,27 +10,43 @@ Main unsolved problems:
 
 General:
 
+- round rowHeight value, if not an integer
+
+- calculate the vertical offset of the cursor and the error rectangle based on font size (instead of using constants, barCursorVOffset and errorBackgroundVOffset)
+
+- cursor size should depend more closely on font size
+
+- display debug messages from the TypingBox on the status bar (label) of the form
+
+- separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
+
+- separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
+
+
 - add a lateral scroll bar (and a label with the progress percentage)
 
 - add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
 
-- calculate the vertical offset of the cursor and the error rectangle based on font size (instead of using constants, barCursorVOffset and errorBackgroundVOffset)
+- use StatusStrip instead of Label as a status bar
 
+- bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
 
 - font-related shortcuts: Ctrl +/- to make the font larger/smaller by 0.25pt, Ctrl+B an Ctrl+I to turn Bold and Italic on/off (change shortcut for Import to Ctrl+O)
 
-- file reload (menu item and shortcut, Ctrl+R or Ctrl+L)
+- file reload (menu item and shortcut, Ctrl+R or Ctrl+L); ask for confirmation, if current text is unfinished (maybe a user setting, "Ask before reloading, if unfinished")
+
+- show a small dialog with shortcuts that are not on the menu ("Other shortcuts...")
+
+
+- predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 
 - add user setting: center text horizontally
 
 - add user setting: theme.CursorColor (or the theme name, e.g., "Default")
 
-- use StatusStrip instead of Label as a status bar
+- save theme(s); multiple predefined themes
 
 - disable certain context menu items and/or keyboard shortcuts, when in practice mode
-
-
-- bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
 
 - change the name of the program/project to something more memorable than "Typist"
 
@@ -38,15 +54,11 @@ General:
 
 Low priority:
 
+- switch from Windows Forms (GDI+) to WPF, for better Font support (sharper-looking font display, access to OpenType fonts)
+
 - Blind mode: text color is white (Imported, Typed, and Error ForeColor, but Error BackColor is gray [or not?]); detect errors by beep alone; (maybe cursor is also white?); optionally, user can set a time interval after which some clues are shown (e.g., 3 seconds), perhaps the whole text in normal colors
 
 - allow non-ASCII input chars (including ALT-<key> combinations); test with Romanian chars (and French, and German); (for some reason, Alt-<key> combinations don't even arrive at the KeyPress event handler)
-
-- different "themes", or settings: Article (eliminate multiple spaces), Code (leave spaces alone), Characters (large font)
-
-- refactor the saving of window size/position/maximized(/minimized) into a reusable user control
-
-- remove OpenType fonts (and other non-TrueType fonts) from Setup project
 
 - add to Setup project: Start menu shortcuts, right-click menu "Open"
 
@@ -93,6 +105,8 @@ Paint event handler:
 * error: typing a printable char instead of a newline (show the char at the end of the line, in red)
 * retrieve 32 rectangles at a time when displaying all uncorrected errors
 
+*(o) remove OpenType fonts (and other non-TrueType fonts) from Setup project
+*(o) refactor the saving of window size/position/maximized(/minimized) into a reusable user control
 *(o) set default font to Lucida Console (large)
 *(o) allow button mnemonics (& in labels) only when Alt is pressed at the same time as the key (NOT: Alt, pause, key)
 *(o) keep a MissingNewlines property in class TextBuffer; insert all missing newlines before showing TypedText on the screen, so that typed chars will always display on top of the originals (even after typing a printable char for a newline in the original)
