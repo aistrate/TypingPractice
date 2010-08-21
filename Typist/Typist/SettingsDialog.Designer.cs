@@ -82,7 +82,7 @@
             this.chkAllowBackspace.Location = new System.Drawing.Point(12, 35);
             this.chkAllowBackspace.Name = "chkAllowBackspace";
             this.chkAllowBackspace.Size = new System.Drawing.Size(107, 17);
-            this.chkAllowBackspace.TabIndex = 102;
+            this.chkAllowBackspace.TabIndex = 1;
             this.chkAllowBackspace.Text = "Allow backspace";
             this.chkAllowBackspace.UseVisualStyleBackColor = false;
             // 
@@ -92,7 +92,7 @@
             this.chkVisibleNewlines.Location = new System.Drawing.Point(12, 58);
             this.chkVisibleNewlines.Name = "chkVisibleNewlines";
             this.chkVisibleNewlines.Size = new System.Drawing.Size(120, 17);
-            this.chkVisibleNewlines.TabIndex = 103;
+            this.chkVisibleNewlines.TabIndex = 2;
             this.chkVisibleNewlines.Text = "Show newlines as ¶";
             this.chkVisibleNewlines.UseVisualStyleBackColor = false;
             // 
@@ -102,7 +102,7 @@
             this.chkCountWhitespaceAsWordChars.Location = new System.Drawing.Point(12, 104);
             this.chkCountWhitespaceAsWordChars.Name = "chkCountWhitespaceAsWordChars";
             this.chkCountWhitespaceAsWordChars.Size = new System.Drawing.Size(204, 17);
-            this.chkCountWhitespaceAsWordChars.TabIndex = 104;
+            this.chkCountWhitespaceAsWordChars.TabIndex = 4;
             this.chkCountWhitespaceAsWordChars.Text = "Count whitespace as word characters";
             this.chkCountWhitespaceAsWordChars.UseVisualStyleBackColor = false;
             // 
@@ -112,7 +112,7 @@
             this.chkCountErrorsAsWordChars.Location = new System.Drawing.Point(12, 127);
             this.chkCountErrorsAsWordChars.Name = "chkCountErrorsAsWordChars";
             this.chkCountErrorsAsWordChars.Size = new System.Drawing.Size(176, 17);
-            this.chkCountErrorsAsWordChars.TabIndex = 105;
+            this.chkCountErrorsAsWordChars.TabIndex = 5;
             this.chkCountErrorsAsWordChars.Text = "Count errors as word characters";
             this.chkCountErrorsAsWordChars.UseVisualStyleBackColor = false;
             // 
@@ -122,7 +122,7 @@
             this.chkAskBeforeCloseDuringPractice.Location = new System.Drawing.Point(12, 150);
             this.chkAskBeforeCloseDuringPractice.Name = "chkAskBeforeCloseDuringPractice";
             this.chkAskBeforeCloseDuringPractice.Size = new System.Drawing.Size(186, 17);
-            this.chkAskBeforeCloseDuringPractice.TabIndex = 106;
+            this.chkAskBeforeCloseDuringPractice.TabIndex = 6;
             this.chkAskBeforeCloseDuringPractice.Text = "Ask before closing during practice";
             this.chkAskBeforeCloseDuringPractice.UseVisualStyleBackColor = false;
             // 
@@ -132,7 +132,7 @@
             this.chkShowCursorWhenPaused.Location = new System.Drawing.Point(12, 173);
             this.chkShowCursorWhenPaused.Name = "chkShowCursorWhenPaused";
             this.chkShowCursorWhenPaused.Size = new System.Drawing.Size(152, 17);
-            this.chkShowCursorWhenPaused.TabIndex = 107;
+            this.chkShowCursorWhenPaused.TabIndex = 7;
             this.chkShowCursorWhenPaused.Text = "Show cursor when paused";
             this.chkShowCursorWhenPaused.UseVisualStyleBackColor = false;
             // 
@@ -142,7 +142,7 @@
             this.chkPauseAfterElapsed.Location = new System.Drawing.Point(12, 196);
             this.chkPauseAfterElapsed.Name = "chkPauseAfterElapsed";
             this.chkPauseAfterElapsed.Size = new System.Drawing.Size(80, 17);
-            this.chkPauseAfterElapsed.TabIndex = 108;
+            this.chkPauseAfterElapsed.TabIndex = 8;
             this.chkPauseAfterElapsed.Text = "Pause after";
             this.chkPauseAfterElapsed.UseVisualStyleBackColor = false;
             this.chkPauseAfterElapsed.CheckedChanged += new System.EventHandler(this.chkPauseAfterElapsed_CheckedChanged);
@@ -154,7 +154,7 @@
             this.txtPauseAfterElapsed.Name = "txtPauseAfterElapsed";
             this.txtPauseAfterElapsed.ShortcutsEnabled = false;
             this.txtPauseAfterElapsed.Size = new System.Drawing.Size(36, 20);
-            this.txtPauseAfterElapsed.TabIndex = 109;
+            this.txtPauseAfterElapsed.TabIndex = 9;
             this.txtPauseAfterElapsed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtPauseAfterElapsed.Leave += new System.EventHandler(this.txtPauseAfterElapsed_Leave);
             this.txtPauseAfterElapsed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPauseAfterElapsed_KeyPress);
@@ -174,7 +174,7 @@
             this.chkRemoveMultipleWhitespace.Location = new System.Drawing.Point(12, 81);
             this.chkRemoveMultipleWhitespace.Name = "chkRemoveMultipleWhitespace";
             this.chkRemoveMultipleWhitespace.Size = new System.Drawing.Size(235, 17);
-            this.chkRemoveMultipleWhitespace.TabIndex = 111;
+            this.chkRemoveMultipleWhitespace.TabIndex = 3;
             this.chkRemoveMultipleWhitespace.Text = "Remove multiple whitespace when importing";
             this.chkRemoveMultipleWhitespace.UseVisualStyleBackColor = false;
             // 
