@@ -52,6 +52,7 @@
     <Compile Include="Appearance\FontNames.cs" />
     <Compile Include="Appearance\FontInfo.cs" />
     <Compile Include="Appearance\Fonts.cs" />
+    <Compile Include="EventHandlers.cs" />
     <Compile Include="SettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>

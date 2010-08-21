@@ -351,10 +351,10 @@
             // 
             this.pgsTypingProgress.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.pgsTypingProgress.AutoSize = false;
-            this.pgsTypingProgress.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.pgsTypingProgress.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.pgsTypingProgress.Name = "pgsTypingProgress";
             this.pgsTypingProgress.Padding = new System.Windows.Forms.Padding(4, 0, 3, 0);
-            this.pgsTypingProgress.Size = new System.Drawing.Size(100, 14);
+            this.pgsTypingProgress.Size = new System.Drawing.Size(100, 16);
             this.pgsTypingProgress.Step = 1;
             // 
             // lblStatusBarSep3
@@ -375,6 +375,8 @@
             this.scrTypingVertical.Name = "scrTypingVertical";
             this.scrTypingVertical.Size = new System.Drawing.Size(17, 515);
             this.scrTypingVertical.TabIndex = 14;
+            this.scrTypingVertical.Value = 10;
+            this.scrTypingVertical.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrTypingVertical_Scroll);
             // 
             // picTyping
             // 
@@ -395,6 +397,7 @@
             this.picTyping.TypingFont = null;
             this.picTyping.StatusChanged += new Typist.StatusChangedEventHandler(this.picTyping_StatusChanged);
             this.picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(this.picTyping_DrawingCursor);
+            this.picTyping.VisibleRegionChanged += new Typist.VisibleRegionChangedEventHandler(this.picTyping_VisibleRegionChanged);
             // 
             // TypistForm
             // 

@@ -10,23 +10,6 @@ using Typist.Appearance;
 
 namespace Typist
 {
-    #region StatusChanged Event Handler
-
-    public class StatusChangedEventArgs : EventArgs
-    {
-        public StatusChangedEventArgs(string statusMessage)
-        {
-            StatusMessage = statusMessage;
-        }
-
-        public string StatusMessage { get; private set; }
-    }
-
-    public delegate void StatusChangedEventHandler(object sender, StatusChangedEventArgs e);
-
-    #endregion
-
-
     public class TypingBox : PictureBox
     {
         #region Properties
@@ -94,6 +77,10 @@ namespace Typist
         [EditorBrowsable(EditorBrowsableState.Always)]
         public event StatusChangedEventHandler StatusChanged;
 
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        public event VisibleRegionChangedEventHandler VisibleRegionChanged;
+
         #endregion
 
 
@@ -132,6 +119,12 @@ namespace Typist
         protected void ShowStatusMessage(string format, params object[] args)
         {
             ShowStatusMessage(string.Format(format, args));
+        }
+
+        protected virtual void OnVisibleRegionChanged(VisibleRegionChangedEventArgs e)
+        {
+            if (VisibleRegionChanged != null)
+                VisibleRegionChanged(this, e);
         }
 
         #endregion
@@ -203,7 +196,10 @@ namespace Typist
         private int calculateRowOffset(Graphics g, RectangleF typingArea, float rowHeight)
         {
             if (ImportedText.Length == 0 || rowHeight == 0)
+            {
+                OnVisibleRegionChanged(new VisibleRegionChangedEventArgs(0, -1, 0));
                 return 0;
+            }
 
             RectangleF unlimitedArea = unlimitedHeightArea(typingArea);
 
@@ -226,13 +222,23 @@ namespace Typist
 
             int visibleRows = Math.Max(1, (int)Math.Floor((double)typingArea.Height / rowHeight));
 
+            int rowOffset;
+
             if (lastDocumentRow < visibleRows ||
                 cursorRow <= visibleRows / 2)
-                return 0;
+                rowOffset = 0;
             else if (lastDocumentRow - cursorRow >= visibleRows / 2)
-                return -cursorRow + visibleRows / 2;
+                rowOffset = -cursorRow + visibleRows / 2;
             else
-                return visibleRows - 1 - lastDocumentRow;
+                rowOffset = visibleRows - 1 - lastDocumentRow;
+
+            int firstVisibleRow = -rowOffset,
+                lastVisibleRow = Math.Min(firstVisibleRow + visibleRows - 1, lastDocumentRow),
+                totalRowCount = lastDocumentRow + 1;
+
+            OnVisibleRegionChanged(new VisibleRegionChangedEventArgs(firstVisibleRow, lastVisibleRow, totalRowCount));
+
+            return rowOffset;
         }
 
         private RectangleF unlimitedHeightArea(RectangleF area)

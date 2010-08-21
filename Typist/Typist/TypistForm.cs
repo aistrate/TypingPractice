@@ -116,6 +116,35 @@ namespace Typist
             lblStatusBarMain.Text = e.StatusMessage;
         }
 
+        private void picTyping_VisibleRegionChanged(object sender, VisibleRegionChangedEventArgs e)
+        {
+            firstVisibleRow = e.FirstVisibleRow;
+
+            if (e.FirstVisibleRow == 0 && e.LastVisibleRow == e.TotalRowCount - 1)
+                scrTypingVertical.Enabled = false;
+            else
+            {
+                scrTypingVertical.Enabled = true;
+
+                scrTypingVertical.Minimum = 0;
+                scrTypingVertical.Maximum = e.TotalRowCount - 1;
+
+                scrTypingVertical.LargeChange = e.LastVisibleRow - e.FirstVisibleRow + 1;
+                scrTypingVertical.Value = e.FirstVisibleRow;
+
+                lblStatusBarMain.Text =
+                    string.Format("{0}, {1}, {2}",
+                                  scrTypingVertical.Value, scrTypingVertical.LargeChange, scrTypingVertical.Maximum);
+            }
+        }
+
+        private int firstVisibleRow;
+
+        private void scrTypingVertical_Scroll(object sender, ScrollEventArgs e)
+        {
+            e.NewValue = firstVisibleRow;
+        }
+
         protected TextBuffer ImportedText
         {
             get { return importedText; }
