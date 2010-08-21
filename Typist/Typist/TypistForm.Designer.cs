@@ -56,6 +56,7 @@
             this.predefinedFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.staStatusBar = new System.Windows.Forms.StatusStrip();
             this.lblStatusBar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pgsTypingProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.picTyping = new Typist.TypingBox();
             this.mnuContextMenu.SuspendLayout();
             this.staStatusBar.SuspendLayout();
@@ -294,7 +295,8 @@
             // 
             this.staStatusBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.staStatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatusBar});
+            this.lblStatusBar,
+            this.pgsTypingProgress});
             this.staStatusBar.Location = new System.Drawing.Point(0, 544);
             this.staStatusBar.Name = "staStatusBar";
             this.staStatusBar.Size = new System.Drawing.Size(462, 22);
@@ -305,9 +307,17 @@
             this.lblStatusBar.AutoSize = false;
             this.lblStatusBar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblStatusBar.Name = "lblStatusBar";
-            this.lblStatusBar.Size = new System.Drawing.Size(447, 17);
+            this.lblStatusBar.Size = new System.Drawing.Size(314, 17);
             this.lblStatusBar.Spring = true;
             this.lblStatusBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pgsTypingProgress
+            // 
+            this.pgsTypingProgress.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.pgsTypingProgress.AutoSize = false;
+            this.pgsTypingProgress.Name = "pgsTypingProgress";
+            this.pgsTypingProgress.Size = new System.Drawing.Size(100, 16);
+            this.pgsTypingProgress.Step = 1;
             // 
             // picTyping
             // 
@@ -315,11 +325,7 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.picTyping.BackColor = System.Drawing.Color.White;
-            this.picTyping.BarCursorRelativeWidth = 0F;
-            this.picTyping.BarCursorVOffset = 0F;
-            this.picTyping.CharCursorVOffset = 0F;
             this.picTyping.ContextMenuStrip = this.mnuContextMenu;
-            this.picTyping.ErrorBackgroundVOffset = 0F;
             this.picTyping.ImportedText = null;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
@@ -404,6 +410,7 @@
         private System.Windows.Forms.ToolStripMenuItem importFileToolStripMenuItem;
         private System.Windows.Forms.StatusStrip staStatusBar;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBar;
+        private System.Windows.Forms.ToolStripProgressBar pgsTypingProgress;
     }
 }
 

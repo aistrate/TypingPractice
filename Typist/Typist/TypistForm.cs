@@ -177,6 +177,7 @@ namespace Typist
                 displayTimeElapsed();
                 displayWPM();
                 displayErrorCount();
+                displayTypingProgressBar();
 
                 if (practiceMode || IsFinished)
                     picTyping.Focus();
@@ -426,6 +427,7 @@ namespace Typist
                 TypedText.ProcessKey(e.KeyChar);
 
                 displayErrorCount();
+                displayTypingProgressBar();
 
                 if (IsFinished)
                     PracticeMode = false;
@@ -685,6 +687,14 @@ namespace Typist
                 lblErrorCount.Text = "";
                 lblAccuracy.Text = "";
             }
+        }
+
+        private void displayTypingProgressBar()
+        {
+            if (IsImported)
+                pgsTypingProgress.ProgressBar.Value = 100 * TypedText.Length / ImportedText.Length ;
+            else
+                pgsTypingProgress.Value = 0;
         }
 
         #endregion
