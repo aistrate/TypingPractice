@@ -49,7 +49,7 @@ namespace Typist
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(0)]
+        [DefaultValue(0f)]
         public float BarCursorRelativeWidth { get; set; }
 
         [Browsable(true)]
@@ -68,17 +68,17 @@ namespace Typist
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(0)]
+        [DefaultValue(0f)]
         public float BarCursorVOffset { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(0)]
+        [DefaultValue(0f)]
         public float CharCursorVOffset { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(0)]
+        [DefaultValue(0f)]
         public float ErrorBackgroundVOffset { get; set; }
 
         [Browsable(false)]
@@ -101,7 +101,6 @@ namespace Typist
 
         public TypingBox()
         {
-            BarCursorRelativeWidth = 0;
             CursorAsVerticalBar = true;
             CharCursorChar = '_';
             TextMargin = new Padding(0);
@@ -167,7 +166,7 @@ namespace Typist
                 charMarginTopBottom = (int)Math.Round(sampleCharAreas[0].Height / 8, 0),
                 averageCharWidth = (int)Math.Round(sampleCharAreas[1].Width, 0);
 
-            float left = TextMargin.Left + charMarginLeftRight + 1,
+            float left = TextMargin.Left + charMarginLeftRight,
                   top = TextMargin.Top + charMarginTopBottom,
                   right = g.ClipBounds.Width - TextMargin.Right - charMarginLeftRight - averageCharWidth,
                   bottom = g.ClipBounds.Height - TextMargin.Bottom - charMarginTopBottom;
@@ -177,7 +176,7 @@ namespace Typist
                 X = left,
                 Y = top,
                 Width = Math.Max(right - left, averageCharWidth - 1),
-                Height = Math.Max(bottom - top, (float)Math.Ceiling(rowHeight)) + 5,
+                Height = Math.Max(bottom - top, (float)Math.Ceiling(rowHeight) + 3),
             };
 
             float vOffset = rowHeight * calculateRowOffset(g, typingArea, rowHeight);

@@ -41,7 +41,6 @@
             this.lblErrorCount = new System.Windows.Forms.Label();
             this.lblAccuracy = new System.Windows.Forms.Label();
             this.dlgFontDialog = new System.Windows.Forms.FontDialog();
-            this.lblStatusBar = new System.Windows.Forms.Label();
             this.mnuContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseAndMinimizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,8 +54,11 @@
             this.previousFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nextFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.predefinedFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.staStatusBar = new System.Windows.Forms.StatusStrip();
+            this.lblStatusBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.picTyping = new Typist.TypingBox();
             this.mnuContextMenu.SuspendLayout();
+            this.staStatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).BeginInit();
             this.SuspendLayout();
             // 
@@ -175,18 +177,6 @@
             this.dlgFontDialog.ShowEffects = false;
             this.dlgFontDialog.Apply += new System.EventHandler(this.dlgFontDialog_Apply);
             // 
-            // lblStatusBar
-            // 
-            this.lblStatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatusBar.AutoEllipsis = true;
-            this.lblStatusBar.BackColor = System.Drawing.SystemColors.Control;
-            this.lblStatusBar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatusBar.Location = new System.Drawing.Point(0, 551);
-            this.lblStatusBar.Name = "lblStatusBar";
-            this.lblStatusBar.Size = new System.Drawing.Size(462, 15);
-            this.lblStatusBar.TabIndex = 12;
-            // 
             // mnuContextMenu
             // 
             this.mnuContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -300,12 +290,32 @@
             this.predefinedFontsToolStripMenuItem.Text = "Predefined Fonts";
             this.predefinedFontsToolStripMenuItem.DropDownClosed += new System.EventHandler(this.predefinedFontsToolStripMenuItem_DropDownClosed);
             // 
+            // staStatusBar
+            // 
+            this.staStatusBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
+            this.staStatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatusBar});
+            this.staStatusBar.Location = new System.Drawing.Point(0, 544);
+            this.staStatusBar.Name = "staStatusBar";
+            this.staStatusBar.Size = new System.Drawing.Size(462, 22);
+            this.staStatusBar.TabIndex = 13;
+            // 
+            // lblStatusBar
+            // 
+            this.lblStatusBar.AutoSize = false;
+            this.lblStatusBar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.lblStatusBar.Name = "lblStatusBar";
+            this.lblStatusBar.Size = new System.Drawing.Size(447, 17);
+            this.lblStatusBar.Spring = true;
+            this.lblStatusBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // picTyping
             // 
             this.picTyping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.picTyping.BackColor = System.Drawing.Color.White;
+            this.picTyping.BarCursorRelativeWidth = 0F;
             this.picTyping.BarCursorVOffset = 0F;
             this.picTyping.CharCursorVOffset = 0F;
             this.picTyping.ContextMenuStrip = this.mnuContextMenu;
@@ -313,10 +323,10 @@
             this.picTyping.ImportedText = null;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
-            this.picTyping.Size = new System.Drawing.Size(462, 519);
+            this.picTyping.Size = new System.Drawing.Size(462, 515);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
-            this.picTyping.TextMargin = new System.Windows.Forms.Padding(20);
+            this.picTyping.TextMargin = new System.Windows.Forms.Padding(0);
             this.picTyping.Theme = null;
             this.picTyping.TypedText = null;
             this.picTyping.TypingFont = null;
@@ -328,7 +338,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(462, 566);
-            this.Controls.Add(this.lblStatusBar);
+            this.Controls.Add(this.staStatusBar);
             this.Controls.Add(this.tblBottomLine);
             this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
@@ -336,14 +346,14 @@
             this.Controls.Add(this.lblWPM);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.picTyping);
             this.Controls.Add(this.btnImport);
+            this.Controls.Add(this.picTyping);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.MinimumSize = new System.Drawing.Size(470, 150);
+            this.MinimumSize = new System.Drawing.Size(470, 153);
             this.Name = "TypistForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -357,8 +367,11 @@
             this.Move += new System.EventHandler(this.TypistForm_Move);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TypistForm_KeyDown);
             this.mnuContextMenu.ResumeLayout(false);
+            this.staStatusBar.ResumeLayout(false);
+            this.staStatusBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -376,7 +389,6 @@
         private System.Windows.Forms.Label lblAccuracy;
         private System.Windows.Forms.FontDialog dlgFontDialog;
         private System.Windows.Forms.TableLayoutPanel tblBottomLine;
-        private System.Windows.Forms.Label lblStatusBar;
         private System.Windows.Forms.ContextMenuStrip mnuContextMenu;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -390,6 +402,8 @@
         private System.Windows.Forms.ToolStripMenuItem viewCustomFontToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem importFileToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip staStatusBar;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatusBar;
     }
 }
 

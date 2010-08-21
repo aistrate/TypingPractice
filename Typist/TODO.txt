@@ -10,18 +10,16 @@ Main unsolved problems:
 
 General:
 
-- separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
-
-- separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
-
-
 - add a lateral scroll bar (and a label with the progress percentage)
 
 - add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
 
-- use StatusStrip instead of Label as a status bar
 
 - bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
+
+- separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
+
+- separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
 
 - font-related shortcuts: Ctrl+B an Ctrl+I to turn Bold and Italic on/off (change shortcut for Import to Ctrl+O)
 
@@ -68,6 +66,7 @@ Paint event handler:
 
 
 
+* use StatusStrip instead of Label as a status bar
 * bar cursor line width should depend more closely on font size
 * font-related shortcut: Ctrl +/- to make the font larger/smaller by 0.25pt
 * display debug messages from the TypingBox on the status bar (label) of the form

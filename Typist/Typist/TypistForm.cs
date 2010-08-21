@@ -168,7 +168,7 @@ namespace Typist
                 if (practiceMode)
                     rightAfterImport = false;
 
-                picTyping.Refresh();
+                picTyping.Invalidate();
 
                 timeOfLastCharTyped = DateTime.Now;
 
@@ -257,6 +257,8 @@ namespace Typist
 
         private void TypistForm_SizeChanged(object sender, EventArgs e)
         {
+            picTyping.Invalidate();
+
             if (pauseOnMinimize && WindowState == FormWindowState.Minimized)
                 PracticeMode = false;
 
@@ -428,7 +430,7 @@ namespace Typist
                 if (IsFinished)
                     PracticeMode = false;
 
-                picTyping.Refresh();
+                picTyping.Invalidate();
             }
         }
 
