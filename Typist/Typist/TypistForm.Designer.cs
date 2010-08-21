@@ -55,8 +55,12 @@
             this.nextFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.predefinedFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.staStatusBar = new System.Windows.Forms.StatusStrip();
-            this.lblStatusBar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatusBarMain = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatusBarSep1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatusBarStats = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatusBarSep2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.pgsTypingProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.lblStatusBarSep3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.picTyping = new Typist.TypingBox();
             this.mnuContextMenu.SuspendLayout();
             this.staStatusBar.SuspendLayout();
@@ -161,7 +165,7 @@
             // lblAccuracy
             // 
             this.lblAccuracy.BackColor = System.Drawing.SystemColors.Control;
-            this.lblAccuracy.Location = new System.Drawing.Point(239, 6);
+            this.lblAccuracy.Location = new System.Drawing.Point(240, 6);
             this.lblAccuracy.Margin = new System.Windows.Forms.Padding(0);
             this.lblAccuracy.Name = "lblAccuracy";
             this.lblAccuracy.Size = new System.Drawing.Size(59, 14);
@@ -295,29 +299,72 @@
             // 
             this.staStatusBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.staStatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatusBar,
-            this.pgsTypingProgress});
+            this.lblStatusBarMain,
+            this.lblStatusBarSep1,
+            this.lblStatusBarStats,
+            this.lblStatusBarSep2,
+            this.pgsTypingProgress,
+            this.lblStatusBarSep3});
             this.staStatusBar.Location = new System.Drawing.Point(0, 544);
             this.staStatusBar.Name = "staStatusBar";
             this.staStatusBar.Size = new System.Drawing.Size(462, 22);
             this.staStatusBar.TabIndex = 13;
             // 
-            // lblStatusBar
+            // lblStatusBarMain
             // 
-            this.lblStatusBar.AutoSize = false;
-            this.lblStatusBar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.lblStatusBar.Name = "lblStatusBar";
-            this.lblStatusBar.Size = new System.Drawing.Size(314, 17);
-            this.lblStatusBar.Spring = true;
-            this.lblStatusBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblStatusBarMain.AutoSize = false;
+            this.lblStatusBarMain.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.lblStatusBarMain.Margin = new System.Windows.Forms.Padding(0, 3, 5, 2);
+            this.lblStatusBarMain.Name = "lblStatusBarMain";
+            this.lblStatusBarMain.Size = new System.Drawing.Size(325, 17);
+            this.lblStatusBarMain.Spring = true;
+            this.lblStatusBarMain.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblStatusBarSep1
+            // 
+            this.lblStatusBarSep1.AutoSize = false;
+            this.lblStatusBarSep1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.lblStatusBarSep1.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.lblStatusBarSep1.Name = "lblStatusBarSep1";
+            this.lblStatusBarSep1.Size = new System.Drawing.Size(2, 17);
+            this.lblStatusBarSep1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblStatusBarStats
+            // 
+            this.lblStatusBarStats.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.lblStatusBarStats.Name = "lblStatusBarStats";
+            this.lblStatusBarStats.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.lblStatusBarStats.Size = new System.Drawing.Size(10, 17);
+            this.lblStatusBarStats.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblStatusBarSep2
+            // 
+            this.lblStatusBarSep2.AutoSize = false;
+            this.lblStatusBarSep2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.lblStatusBarSep2.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.lblStatusBarSep2.Name = "lblStatusBarSep2";
+            this.lblStatusBarSep2.Size = new System.Drawing.Size(2, 17);
+            this.lblStatusBarSep2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // pgsTypingProgress
             // 
             this.pgsTypingProgress.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.pgsTypingProgress.AutoSize = false;
+            this.pgsTypingProgress.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.pgsTypingProgress.Name = "pgsTypingProgress";
-            this.pgsTypingProgress.Size = new System.Drawing.Size(100, 16);
+            this.pgsTypingProgress.Padding = new System.Windows.Forms.Padding(4, 0, 3, 0);
+            this.pgsTypingProgress.Size = new System.Drawing.Size(100, 14);
             this.pgsTypingProgress.Step = 1;
+            // 
+            // lblStatusBarSep3
+            // 
+            this.lblStatusBarSep3.AutoSize = false;
+            this.lblStatusBarSep3.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.lblStatusBarSep3.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.lblStatusBarSep3.Margin = new System.Windows.Forms.Padding(0, 3, 1, 2);
+            this.lblStatusBarSep3.Name = "lblStatusBarSep3";
+            this.lblStatusBarSep3.Size = new System.Drawing.Size(2, 17);
+            this.lblStatusBarSep3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // picTyping
             // 
@@ -409,8 +456,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem importFileToolStripMenuItem;
         private System.Windows.Forms.StatusStrip staStatusBar;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatusBar;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatusBarMain;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep1;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep2;
         private System.Windows.Forms.ToolStripProgressBar pgsTypingProgress;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep3;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatusBarStats;
     }
 }
 

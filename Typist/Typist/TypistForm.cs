@@ -113,7 +113,7 @@ namespace Typist
 
         private void picTyping_StatusChanged(object sender, StatusChangedEventArgs e)
         {
-            lblStatusBar.Text = e.StatusMessage;
+            lblStatusBarMain.Text = e.StatusMessage;
         }
 
         protected TextBuffer ImportedText
@@ -161,9 +161,9 @@ namespace Typist
                                           IsPaused ? (IsFinished ? " (Finished)" : " (Paused)") : "");
 
                 if (practiceMode)
-                    lblStatusBar.Text = "Typing...";
+                    lblStatusBarMain.Text = "Typing...";
                 else if (IsPaused)
-                    lblStatusBar.Text = IsFinished ? "Finished" : "Paused";
+                    lblStatusBarMain.Text = IsFinished ? "Finished" : "Paused";
 
                 if (practiceMode)
                     rightAfterImport = false;
@@ -236,7 +236,7 @@ namespace Typist
                 rightAfterImport = true;
                 PracticeMode = false;
 
-                lblStatusBar.Text = string.Format("Imported: {0}", fileInfo.FullName);
+                lblStatusBarMain.Text = string.Format("Imported: {0}", fileInfo.FullName);
             }
             catch (Exception ex)
             {
@@ -414,7 +414,7 @@ namespace Typist
 
             if (PracticeMode)
             {
-                lblStatusBar.Text = "Typing...";
+                lblStatusBarMain.Text = "Typing...";
 
                 timeOfLastCharTyped = DateTime.Now;
 
@@ -562,7 +562,7 @@ namespace Typist
 
                 picTyping.TypingFont = AvailableFonts[currentFontIndex];
 
-                lblStatusBar.Text = string.Format("{0}: {1}",
+                lblStatusBarMain.Text = string.Format("{0}: {1}",
                                                   currentFontIndex == 0 ?
                                                         "Custom Font" :
                                                         string.Format("Predefined Font ({0})",
@@ -691,10 +691,10 @@ namespace Typist
 
         private void displayTypingProgressBar()
         {
-            if (IsImported)
-                pgsTypingProgress.ProgressBar.Value = 100 * TypedText.Length / ImportedText.Length ;
-            else
-                pgsTypingProgress.Value = 0;
+            int progress = IsImported ? 100 * TypedText.Length / ImportedText.Length : 0;
+
+            pgsTypingProgress.Value = progress;
+            lblStatusBarStats.Text = string.Format("{0} %", progress);
         }
 
         #endregion
