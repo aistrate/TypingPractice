@@ -131,10 +131,6 @@ namespace Typist
 
                 scrTypingVertical.LargeChange = e.LastVisibleRow - e.FirstVisibleRow + 1;
                 scrTypingVertical.Value = e.FirstVisibleRow;
-
-                lblStatusBarMain.Text =
-                    string.Format("{0}, {1}, {2}",
-                                  scrTypingVertical.Value, scrTypingVertical.LargeChange, scrTypingVertical.Maximum);
             }
         }
 

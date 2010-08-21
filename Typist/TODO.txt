@@ -14,6 +14,8 @@ General:
 
 - bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
 
+- on the status bar: add SplitButton/DropDownButton that selects statistic to be displayed next to progress bar: percentage typed, typed/imported ratio, typed only, imported only
+
 - add a "traffic light" to the status bar, indicating: gray for not started, green for practice mode, yellow for paused, red for finished
 
 - separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes

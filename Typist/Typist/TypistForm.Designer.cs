@@ -375,7 +375,6 @@
             this.scrTypingVertical.Name = "scrTypingVertical";
             this.scrTypingVertical.Size = new System.Drawing.Size(17, 515);
             this.scrTypingVertical.TabIndex = 14;
-            this.scrTypingVertical.Value = 10;
             this.scrTypingVertical.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrTypingVertical_Scroll);
             // 
             // picTyping
