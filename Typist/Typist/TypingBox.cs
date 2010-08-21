@@ -157,8 +157,16 @@ namespace Typist
 
         private GraphicsContext getGraphicsContext(Graphics g)
         {
+            RectangleF controlBounds = new RectangleF()
+            {
+                X = 0,
+                Y = 0,
+                Width = this.Width,
+                Height = this.Height,
+            };
+
             RectangleF[] sampleCharAreas = getCharAreas32("mm\nm", new[] { 0, 1, 3 },
-                                                          g, unlimitedHeightArea(g.ClipBounds));
+                                                          g, unlimitedHeightArea(controlBounds));
 
             float rowHeight = sampleCharAreas[2].Y - sampleCharAreas[0].Y;
 
@@ -168,8 +176,8 @@ namespace Typist
 
             float left = TextMargin.Left + charMarginLeftRight,
                   top = TextMargin.Top + charMarginTopBottom,
-                  right = g.ClipBounds.Width - TextMargin.Right - charMarginLeftRight - averageCharWidth,
-                  bottom = g.ClipBounds.Height - TextMargin.Bottom - charMarginTopBottom;
+                  right = controlBounds.Width - TextMargin.Right - charMarginLeftRight - averageCharWidth,
+                  bottom = controlBounds.Height - TextMargin.Bottom - charMarginTopBottom;
 
             RectangleF typingArea = new RectangleF()
             {
@@ -184,6 +192,7 @@ namespace Typist
             return new GraphicsContext()
             {
                 Graphics = g,
+                ControlBounds = controlBounds,
                 FirstCharArea = sampleCharAreas[0],
                 TypingArea = typingArea,
                 DocumentArea = new RectangleF(typingArea.X, typingArea.Y + vOffset,
@@ -431,7 +440,7 @@ namespace Typist
             {
                 X = 0,
                 Y = 0,
-                Width = gc.Graphics.ClipBounds.Width,
+                Width = gc.ControlBounds.Width,
                 Height = gc.TypingArea.Y + 1,
             });
         }
@@ -487,6 +496,7 @@ namespace Typist
         private class GraphicsContext
         {
             public Graphics Graphics;
+            public RectangleF ControlBounds;
             public RectangleF FirstCharArea;
             public RectangleF TypingArea;
             public RectangleF DocumentArea;
