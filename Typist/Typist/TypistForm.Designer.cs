@@ -61,6 +61,7 @@
             this.lblStatusBarSep2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.pgsTypingProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatusBarSep3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.scrTypingVertical = new System.Windows.Forms.VScrollBar();
             this.picTyping = new Typist.TypingBox();
             this.mnuContextMenu.SuspendLayout();
             this.staStatusBar.SuspendLayout();
@@ -366,6 +367,15 @@
             this.lblStatusBarSep3.Size = new System.Drawing.Size(2, 17);
             this.lblStatusBarSep3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // scrTypingVertical
+            // 
+            this.scrTypingVertical.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.scrTypingVertical.Location = new System.Drawing.Point(445, 29);
+            this.scrTypingVertical.Name = "scrTypingVertical";
+            this.scrTypingVertical.Size = new System.Drawing.Size(17, 515);
+            this.scrTypingVertical.TabIndex = 14;
+            // 
             // picTyping
             // 
             this.picTyping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -376,7 +386,7 @@
             this.picTyping.ImportedText = null;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
-            this.picTyping.Size = new System.Drawing.Size(462, 515);
+            this.picTyping.Size = new System.Drawing.Size(445, 515);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
             this.picTyping.TextMargin = new System.Windows.Forms.Padding(0);
@@ -393,6 +403,7 @@
             this.ClientSize = new System.Drawing.Size(462, 566);
             this.Controls.Add(this.staStatusBar);
             this.Controls.Add(this.tblBottomLine);
+            this.Controls.Add(this.scrTypingVertical);
             this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
             this.Controls.Add(this.tblTopLine);
@@ -462,6 +473,7 @@
         private System.Windows.Forms.ToolStripProgressBar pgsTypingProgress;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep3;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarStats;
+        private System.Windows.Forms.VScrollBar scrTypingVertical;
     }
 }
 
