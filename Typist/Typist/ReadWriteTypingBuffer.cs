@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Typist
 {
-    public class ReadWriteTextBuffer : TextBuffer
+    public class ReadWriteTypingBuffer : TypingBuffer
     {
-        public ReadWriteTextBuffer(ReadOnlyTextBuffer original, bool countErrorsAsWordChars)
+        public ReadWriteTypingBuffer(ReadOnlyTypingBuffer original, bool countErrorsAsWordChars)
         {
             if (original == null)
                 throw new ArgumentNullException("original.", "Original TextBuffer cannot be null.");
@@ -21,7 +21,7 @@ namespace Typist
             ErrorsUncorrected = new List<int>();
         }
 
-        public ReadOnlyTextBuffer Original { get; private set; }
+        public ReadOnlyTypingBuffer Original { get; private set; }
 
         public override bool ExpandNewlines
         {
@@ -43,8 +43,7 @@ namespace Typist
 
         public List<int> ErrorsUncorrected { get; private set; }
 
-
-        public ReadWriteTextBuffer RemoveLast()
+        public ReadWriteTypingBuffer RemoveLast()
         {
             if (Length > 0 && !IsLastSameAsOriginal)
                 ErrorsUncorrected.RemoveAt(ErrorsUncorrected.Count - 1);
@@ -54,7 +53,7 @@ namespace Typist
             return this;
         }
 
-        public ReadWriteTextBuffer Append(char ch)
+        public ReadWriteTypingBuffer Append(char ch)
         {
             Buffer[Length++] = ch;
 
@@ -79,7 +78,7 @@ namespace Typist
             return index <= Original.LastIndex && this[index] == Original[index];
         }
 
-        public ReadWriteTextBuffer ProcessKey(char ch)
+        public ReadWriteTypingBuffer ProcessKey(char ch)
         {
             if (ch == '\b')
                 return RemoveLast();
@@ -97,7 +96,7 @@ namespace Typist
                 return Append(ch);
         }
 
-        public ReadWriteTextBuffer ExpandTab()
+        public ReadWriteTypingBuffer ExpandTab()
         {
             Append(' ');
 
@@ -154,7 +153,7 @@ namespace Typist
             get { return Original.ExpandedIndex(this.Length); }
         }
 
-        public int[] ErrorsUncorrectedExpanded
+        public int[] ExpandedErrorsUncorrected
         {
             get { return ErrorsUncorrected.Select(i => Original.ExpandedIndex(i)).ToArray(); }
         }

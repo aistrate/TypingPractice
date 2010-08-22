@@ -3,9 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace Typist
 {
-    public class ReadOnlyTextBuffer : TextBuffer
+    public class ReadOnlyTypingBuffer : TypingBuffer
     {
-        public ReadOnlyTextBuffer(string text, bool removeMultipleWhitespace, bool expandNewlines, bool countWhitespaceAsWordChars)
+        public ReadOnlyTypingBuffer(string text, bool removeMultipleWhitespace, bool expandNewlines, bool countWhitespaceAsWordChars)
         {
             string allowedWhitespace = " \n";
 
@@ -31,7 +31,7 @@ namespace Typist
             CountWhitespaceAsWordChars = countWhitespaceAsWordChars;
         }
 
-        public ReadOnlyTextBuffer Expanded
+        public TextBuffer Expanded
         {
             get
             {
@@ -52,21 +52,17 @@ namespace Typist
 
         private const char pilcrow = '\xB6';
 
-        protected ReadOnlyTextBuffer ActualExpanded
+        protected TextBuffer ActualExpanded
         {
             get
             {
                 if (actualExpanded == null)
-                {
-                    string actualExpandedText = this.ToString().Replace("\n", string.Format("{0}\n", pilcrow));
-
-                    actualExpanded = new ReadOnlyTextBuffer(actualExpandedText, false, false, false);
-                }
+                    actualExpanded = new TextBuffer(this.ToString().Replace("\n", string.Format("{0}\n", pilcrow)));
 
                 return actualExpanded;
             }
         }
-        private ReadOnlyTextBuffer actualExpanded;
+        private TextBuffer actualExpanded;
 
         protected int[] ActualExpandedIndexes
         {

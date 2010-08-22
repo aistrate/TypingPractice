@@ -56,10 +56,10 @@ namespace Typist
             initializeContextMenuStrip();
             initializeSettingsDialog();
 
-            ImportedText = new ReadOnlyTextBuffer("",
-                                                  userSettings.RemoveMultipleWhitespace,
-                                                  userSettings.VisibleNewlines,
-                                                  userSettings.CountWhitespaceAsWordChars);
+            ImportedText = new ReadOnlyTypingBuffer("",
+                                                    userSettings.RemoveMultipleWhitespace,
+                                                    userSettings.VisibleNewlines,
+                                                    userSettings.CountWhitespaceAsWordChars);
 
             PracticeMode = false;
 
@@ -144,14 +144,14 @@ namespace Typist
             e.NewValue = firstVisibleRow;
         }
 
-        protected ReadOnlyTextBuffer ImportedText
+        protected ReadOnlyTypingBuffer ImportedText
         {
             get { return importedText; }
             private set
             {
                 importedText = value;
 
-                TypedText = new ReadWriteTextBuffer(importedText, userSettings.CountErrorsAsWordChars);
+                TypedText = new ReadWriteTypingBuffer(importedText, userSettings.CountErrorsAsWordChars);
 
                 picTyping.ImportedText = value;
                 picTyping.TypedText = TypedText;
@@ -159,9 +159,9 @@ namespace Typist
                 TypedText.Error += new EventHandler(TypedText_Error);
             }
         }
-        private ReadOnlyTextBuffer importedText;
+        private ReadOnlyTypingBuffer importedText;
 
-        protected ReadWriteTextBuffer TypedText { get; private set; }
+        protected ReadWriteTypingBuffer TypedText { get; private set; }
 
         protected bool PracticeMode
         {
@@ -253,10 +253,10 @@ namespace Typist
                 importedFileName = fileInfo.Name;
 
                 using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
-                    ImportedText = new ReadOnlyTextBuffer(sr.ReadToEnd(),
-                                                          userSettings.RemoveMultipleWhitespace,
-                                                          userSettings.VisibleNewlines,
-                                                          userSettings.CountWhitespaceAsWordChars);
+                    ImportedText = new ReadOnlyTypingBuffer(sr.ReadToEnd(),
+                                                            userSettings.RemoveMultipleWhitespace,
+                                                            userSettings.VisibleNewlines,
+                                                            userSettings.CountWhitespaceAsWordChars);
 
                 stopwatch.Reset();
 

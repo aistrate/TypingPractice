@@ -53,8 +53,8 @@
     <Compile Include="Appearance\FontInfo.cs" />
     <Compile Include="Appearance\Fonts.cs" />
     <Compile Include="EventHandlers.cs" />
-    <Compile Include="ReadOnlyTextBuffer.cs" />
-    <Compile Include="ReadWriteTextBuffer.cs" />
+    <Compile Include="ReadOnlyTypingBuffer.cs" />
+    <Compile Include="ReadWriteTypingBuffer.cs" />
     <Compile Include="SettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +66,7 @@
     <Compile Include="TypingBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TypingBuffer.cs" />
     <Compile Include="TypistForm.cs">
       <SubType>Form</SubType>
     </Compile>

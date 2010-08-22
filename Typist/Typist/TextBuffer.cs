@@ -2,25 +2,25 @@
 
 namespace Typist
 {
-    public abstract class TextBuffer
+    public class TextBuffer
     {
-        protected TextBuffer()
+        public TextBuffer(string text)
         {
+            text = text ?? string.Empty;
+
+            Buffer = text.ToCharArray();
+            Length = text.Length;
         }
+
+        protected TextBuffer() { }
 
         protected char[] Buffer;
 
         public int Length { get; protected set; }
 
-        public virtual bool ExpandNewlines { get; set; }
-
-        public virtual bool CountWhitespaceAsWordChars { get; set; }
-
-
         public char this[int index] { get { return Buffer[index]; } }
 
         public int LastIndex { get { return Length - 1; } }
-
 
         public string Substring(int startIndex)
         {
@@ -35,16 +35,6 @@ namespace Typist
         public override string ToString()
         {
             return new string(Buffer, 0, Length);
-        }
-
-        protected virtual bool IsWordChar(int index, char c)
-        {
-            return CountWhitespaceAsWordChars || !char.IsWhiteSpace(c);
-        }
-
-        public int WordCount
-        {
-            get { return Count(IsWordChar) / 5; }
         }
 
         public int Count(Func<char, bool> predicate)

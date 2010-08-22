@@ -13,11 +13,11 @@ namespace Typist
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ReadOnlyTextBuffer ImportedText { get; set; }
+        public ReadOnlyTypingBuffer ImportedText { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ReadWriteTextBuffer TypedText { get; set; }
+        public ReadWriteTypingBuffer TypedText { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -318,7 +318,7 @@ namespace Typist
         private void drawErrorChars(GraphicsContext gc)
         {
             RectangleF[] errorCharAreas = getCharAreas(ImportedText.Expanded.ToString(),
-                                                       TypedText.ErrorsUncorrectedExpanded,
+                                                       TypedText.ExpandedErrorsUncorrected,
                                                        gc);
 
             for (int i = 0; i < TypedText.ErrorsUncorrected.Count; i++)
