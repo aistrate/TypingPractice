@@ -492,7 +492,7 @@
             this.txtOutputFolder.Name = "txtOutputFolder";
             this.txtOutputFolder.Size = new System.Drawing.Size(395, 21);
             this.txtOutputFolder.TabIndex = 34;
-            this.txtOutputFolder.Text = "C:\\Documents and Settings\\Adrian\\Desktop\\Practice\\Characters\\New";
+            this.txtOutputFolder.Text = "C:\\Documents and Settings\\Adrian\\Desktop\\TypingPracticeTexts\\Characters\\New";
             // 
             // btnBrowse
             // 

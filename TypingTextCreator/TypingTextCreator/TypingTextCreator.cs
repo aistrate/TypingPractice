@@ -62,7 +62,8 @@ namespace TypingTextCreator
                     title = headings[0].InnerText;
                     text = title + "\r\n\r\n";
 
-                    txtFileName.Text = string.Format(@"C:\Typing\English\New\{0}.txt", replaceNonAscii(title));
+                    txtFileName.Text = string.Format(@"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\New\{0}.txt",
+                                                     replaceNonAscii(title));
                 }
 
                 //var divs = doc.DocumentNode.SelectNodes(string.Format("//body{0}", repeatString("/div", divCount + 1)));
