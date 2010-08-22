@@ -1,4 +1,4 @@
-﻿namespace Typist
+﻿namespace Typist.TextBuffers
 {
     public abstract class TypingBuffer : TextBuffer
     {

@@ -8,6 +8,7 @@ using System.Media;
 using System.Text;
 using System.Windows.Forms;
 using Typist.Appearance;
+using Typist.TextBuffers;
 
 namespace Typist
 {

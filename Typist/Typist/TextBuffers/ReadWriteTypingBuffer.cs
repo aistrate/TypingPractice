@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Typist
+namespace Typist.TextBuffers
 {
     public class ReadWriteTypingBuffer : TypingBuffer
     {

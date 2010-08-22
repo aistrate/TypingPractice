@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Typist
+namespace Typist.TextBuffers
 {
     public class TextBuffer
     {

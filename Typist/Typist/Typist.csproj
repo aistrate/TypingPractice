@@ -53,8 +53,8 @@
     <Compile Include="Appearance\FontInfo.cs" />
     <Compile Include="Appearance\Fonts.cs" />
     <Compile Include="EventHandlers.cs" />
-    <Compile Include="ReadOnlyTypingBuffer.cs" />
-    <Compile Include="ReadWriteTypingBuffer.cs" />
+    <Compile Include="TextBuffers\ReadOnlyTypingBuffer.cs" />
+    <Compile Include="TextBuffers\ReadWriteTypingBuffer.cs" />
     <Compile Include="SettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,11 +62,11 @@
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Appearance\Theme.cs" />
-    <Compile Include="TextBuffer.cs" />
+    <Compile Include="TextBuffers\TextBuffer.cs" />
     <Compile Include="TypingBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TypingBuffer.cs" />
+    <Compile Include="TextBuffers\TypingBuffer.cs" />
     <Compile Include="TypistForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Typist
+namespace Typist.TextBuffers
 {
     public class ReadOnlyTypingBuffer : TypingBuffer
     {
