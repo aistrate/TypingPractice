@@ -56,12 +56,17 @@ namespace Typist
             initializeContextMenuStrip();
             initializeSettingsDialog();
 
-            ImportedText = new TextBuffer("", userSettings.CountWhitespaceAsWordChars, userSettings.RemoveMultipleWhitespace);
+            ImportedText = new ReadOnlyTextBuffer("",
+                                                  userSettings.RemoveMultipleWhitespace,
+                                                  userSettings.VisibleNewlines,
+                                                  userSettings.CountWhitespaceAsWordChars);
+
             PracticeMode = false;
 
             //if (string.IsNullOrEmpty(filePath))
-            //    filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\SingleParagraph\European Wildcat.txt";
+            //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\SingleParagraph\European Wildcat.txt";
             //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
+            //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Honore de Balzac.txt";
 
             ImportFile(filePath);
         }
@@ -80,8 +85,6 @@ namespace Typist
             picTyping.BarCursorVOffset = barCursorVOffset;
             picTyping.CharCursorVOffset = charCursorVOffset;
             picTyping.ErrorBackgroundVOffset = errorBackgroundVOffset;
-
-            picTyping.VisibleNewlines = userSettings.VisibleNewlines;
         }
 
         private void loadWindowPosition()
@@ -141,16 +144,14 @@ namespace Typist
             e.NewValue = firstVisibleRow;
         }
 
-        protected TextBuffer ImportedText
+        protected ReadOnlyTextBuffer ImportedText
         {
             get { return importedText; }
             private set
             {
                 importedText = value;
 
-                TypedText = new TextBuffer(importedText,
-                                           userSettings.CountWhitespaceAsWordChars,
-                                           userSettings.CountErrorsAsWordChars);
+                TypedText = new ReadWriteTextBuffer(importedText, userSettings.CountErrorsAsWordChars);
 
                 picTyping.ImportedText = value;
                 picTyping.TypedText = TypedText;
@@ -158,9 +159,9 @@ namespace Typist
                 TypedText.Error += new EventHandler(TypedText_Error);
             }
         }
-        private TextBuffer importedText;
+        private ReadOnlyTextBuffer importedText;
 
-        protected TextBuffer TypedText { get; private set; }
+        protected ReadWriteTextBuffer TypedText { get; private set; }
 
         protected bool PracticeMode
         {
@@ -252,9 +253,10 @@ namespace Typist
                 importedFileName = fileInfo.Name;
 
                 using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
-                    ImportedText = new TextBuffer(sr.ReadToEnd(),
-                                                  userSettings.CountWhitespaceAsWordChars,
-                                                  userSettings.RemoveMultipleWhitespace);
+                    ImportedText = new ReadOnlyTextBuffer(sr.ReadToEnd(),
+                                                          userSettings.RemoveMultipleWhitespace,
+                                                          userSettings.VisibleNewlines,
+                                                          userSettings.CountWhitespaceAsWordChars);
 
                 stopwatch.Reset();
 
@@ -915,12 +917,12 @@ namespace Typist
             {
                 userSettings = dlgSettingsDialog.UserSettings;
 
+                ImportedText.VisibleNewlines = userSettings.VisibleNewlines;
+
                 ImportedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
-                TypedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
                 TypedText.CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
                 displayWPM();
 
-                picTyping.VisibleNewlines = userSettings.VisibleNewlines;
                 picTyping.Invalidate();
             }
 

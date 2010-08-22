@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using Typist.Appearance;
 
@@ -16,11 +13,11 @@ namespace Typist
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public TextBuffer ImportedText { get; set; }
+        public ReadOnlyTextBuffer ImportedText { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public TextBuffer TypedText { get; set; }
+        public ReadWriteTextBuffer TypedText { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -63,11 +60,6 @@ namespace Typist
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue(0f)]
         public float ErrorBackgroundVOffset { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(false)]
-        public bool VisibleNewlines { get; set; }
 
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -394,8 +386,7 @@ namespace Typist
 
         private void drawText(string text, GraphicsContext gc, Brush brush)
         {
-            if (VisibleNewlines)
-                text = text.Replace("\n", string.Format("{0}\n", pilcrow));
+            // text = text.Replace("\n", string.Format("{0}\n", pilcrow));
 
             gc.Graphics.DrawString(text, TypingFont, brush, gc.DocumentArea, TextStringFormat);
         }
