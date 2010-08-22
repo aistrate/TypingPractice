@@ -32,6 +32,8 @@ General:
 - show a small dialog with shortcuts that are not on the menu ("Other shortcuts...")
 
 
+- for the three generator projects (chars, code, Wikipedia): save the local source/destination folders picked by the user in Properties.Settings.Default
+
 - predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 
 - add user setting: center text horizontally
