@@ -12,7 +12,7 @@ General:
 
 - add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
 
-- on the status bar: add SplitButton/DropDownButton that selects statistic to be displayed next to progress bar: percentage typed, typed/imported ratio, typed only, imported only
+- on the status bar: add SplitButton/DropDownButton that selects the statistic to be displayed next to the progress bar: percentage typed, typed/imported ratio, typed only, imported only
 
 
 - add a "traffic light" to the status bar, indicating: gray for not started, green for practice mode, yellow for paused, red for finished

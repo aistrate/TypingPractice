@@ -52,7 +52,7 @@
     <Compile Include="Appearance\FontNames.cs" />
     <Compile Include="Appearance\FontInfo.cs" />
     <Compile Include="Appearance\Fonts.cs" />
-    <Compile Include="EventHandlers.cs" />
+    <Compile Include="Util\EventHandlers.cs" />
     <Compile Include="TextBuffers\ReadOnlyTypingBuffer.cs" />
     <Compile Include="TextBuffers\ReadWriteTypingBuffer.cs" />
     <Compile Include="SettingsDialog.cs">
@@ -102,8 +102,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="UserSettings.cs" />
-    <Compile Include="Util.cs" />
+    <Compile Include="Util\UserSettings.cs" />
+    <Compile Include="Util\Util.cs" />
     <Compile Include="Appearance\VsColors.cs" />
   </ItemGroup>
   <ItemGroup>

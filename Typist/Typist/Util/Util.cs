@@ -17,6 +17,7 @@ namespace Typist
         }
 
         public static bool IsOneOf<T>(this T elem, params T[] list)
+            where T : struct
         {
             return list.Contains(elem);
         }
