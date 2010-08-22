@@ -14,14 +14,16 @@ General:
 
 - on the status bar: add SplitButton/DropDownButton that selects the statistic to be displayed next to the progress bar: percentage typed, typed/imported ratio, typed only, imported only
 
-
 - add a "traffic light" to the status bar, indicating: gray for not started, green for practice mode, yellow for paused, red for finished
+
+- font-related shortcut: Ctrl+B to turn Bold on/off
+
+
+- allow scrollbars (vertical and horizontal) to be moved by the user, to take a peek at the rest of the text (two Paint modes: 'follow the cursor' and 'follow the scrollbars')
 
 - separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
 
 - separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
-
-- font-related shortcut: Ctrl+B to turn Bold on/off
 
 - font-related shortcut: Ctrl+I to turn Italic on/off (change shortcut for Import to Ctrl+O)
 
