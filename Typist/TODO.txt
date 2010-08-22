@@ -10,11 +10,12 @@ Main unsolved problems:
 
 General:
 
-- add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
-
 - bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
 
+- add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
+
 - on the status bar: add SplitButton/DropDownButton that selects statistic to be displayed next to progress bar: percentage typed, typed/imported ratio, typed only, imported only
+
 
 - add a "traffic light" to the status bar, indicating: gray for not started, green for practice mode, yellow for paused, red for finished
 
@@ -22,7 +23,9 @@ General:
 
 - separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
 
-- font-related shortcuts: Ctrl+B an Ctrl+I to turn Bold and Italic on/off (change shortcut for Import to Ctrl+O)
+- font-related shortcut: Ctrl+B to turn Bold on/off
+
+- font-related shortcut: Ctrl+I to turn Italic on/off (change shortcut for Import to Ctrl+O)
 
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L); ask for confirmation, if current text is unfinished (maybe a user setting, "Ask before reloading, if unfinished")
 
