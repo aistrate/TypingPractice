@@ -10,8 +10,6 @@ Main unsolved problems:
 
 General:
 
-- bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
-
 - add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
 
 - on the status bar: add SplitButton/DropDownButton that selects statistic to be displayed next to progress bar: percentage typed, typed/imported ratio, typed only, imported only
@@ -72,6 +70,7 @@ Paint event handler:
 
 
 
+* bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
 * add a lateral scroll bar (and a label with the progress percentage)
 * use StatusStrip instead of Label as a status bar
 * bar cursor line width should depend more closely on font size

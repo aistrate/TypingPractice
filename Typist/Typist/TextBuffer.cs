@@ -12,7 +12,7 @@ namespace Typist
 
         public int Length { get; protected set; }
 
-        public virtual bool VisibleNewlines { get; set; }
+        public virtual bool ExpandNewlines { get; set; }
 
         public virtual bool CountWhitespaceAsWordChars { get; set; }
 
@@ -36,7 +36,6 @@ namespace Typist
         {
             return new string(Buffer, 0, Length);
         }
-
 
         protected virtual bool IsWordChar(int index, char c)
         {

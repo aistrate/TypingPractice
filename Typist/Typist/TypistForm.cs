@@ -66,7 +66,7 @@ namespace Typist
             //if (string.IsNullOrEmpty(filePath))
             //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\SingleParagraph\European Wildcat.txt";
             //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
-            //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Honore de Balzac.txt";
+                //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
 
             ImportFile(filePath);
         }
@@ -917,7 +917,7 @@ namespace Typist
             {
                 userSettings = dlgSettingsDialog.UserSettings;
 
-                ImportedText.VisibleNewlines = userSettings.VisibleNewlines;
+                ImportedText.ExpandNewlines = userSettings.VisibleNewlines;
 
                 ImportedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
                 TypedText.CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;

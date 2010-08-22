@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Typist
 {
@@ -22,10 +23,10 @@ namespace Typist
 
         public ReadOnlyTextBuffer Original { get; private set; }
 
-        public override bool VisibleNewlines
+        public override bool ExpandNewlines
         {
-            get { return Original.VisibleNewlines; }
-            set { Original.VisibleNewlines = value; }
+            get { return Original.ExpandNewlines; }
+            set { Original.ExpandNewlines = value; }
         }
 
         public override bool CountWhitespaceAsWordChars
@@ -141,6 +142,21 @@ namespace Typist
         {
             if (Error != null)
                 Error(this, e);
+        }
+
+        public int ExpandedLastIndex
+        {
+            get { return Original.ExpandedIndex(this.LastIndex); }
+        }
+
+        public int ExpandedLength
+        {
+            get { return Original.ExpandedIndex(this.Length); }
+        }
+
+        public int[] ErrorsUncorrectedExpanded
+        {
+            get { return ErrorsUncorrected.Select(i => Original.ExpandedIndex(i)).ToArray(); }
         }
     }
 }

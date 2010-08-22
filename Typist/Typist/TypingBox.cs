@@ -195,8 +195,8 @@ namespace Typist
 
             RectangleF unlimitedArea = unlimitedHeightArea(typingArea);
 
-            RectangleF lastDocumentCharArea = getCharArea(ImportedText.ToString(),
-                                                          ImportedText.LastIndex,
+            RectangleF lastDocumentCharArea = getCharArea(ImportedText.Expanded.ToString(),
+                                                          ImportedText.Expanded.Length - 1,
                                                           g, unlimitedArea);
 
             int lastDocumentRow = getRow(lastDocumentCharArea.Y, unlimitedArea.Y, rowHeight);
@@ -205,8 +205,8 @@ namespace Typist
 
             if (TypedText.LastIndex < ImportedText.LastIndex)
             {
-                RectangleF cursorCharArea = getCharArea(ImportedText.ToString(),
-                                                        TypedText.LastIndex + 1,
+                RectangleF cursorCharArea = getCharArea(ImportedText.Expanded.ToString(),
+                                                        TypedText.ExpandedLength,
                                                         g, unlimitedArea);
 
                 cursorRow = getRow(cursorCharArea.Y, unlimitedArea.Y, rowHeight);
@@ -251,19 +251,22 @@ namespace Typist
 
         private void drawImportedText(GraphicsContext gc)
         {
-            drawText(ImportedText.ToString(), gc, Theme.ImportedTextColor);
+            drawText(ImportedText.Expanded.ToString(), gc, Theme.ImportedTextColor);
         }
 
         private void drawShadowText(GraphicsContext gc)
         {
-            string shadowText = ImportedText.Substring(0, TypedText.Length);
+            string shadowText = ImportedText.Expanded.Substring(0, TypedText.ExpandedLength);
 
             if (TypedText.Length > 0 && !char.IsWhiteSpace(ImportedText[TypedText.LastIndex]))
             {
-                int lineJumpIndex = findLineJump(ImportedText.ToString(), TypedText.LastIndex, gc);
-                if (lineJumpIndex < TypedText.LastIndex)
-                    shadowText = insertSpacesAfterJump(ImportedText.ToString(), shadowText,
-                                                       lineJumpIndex, TypedText.LastIndex,
+                string importedText = ImportedText.Expanded.ToString();
+                int lastIndex = TypedText.ExpandedLength - 1;
+
+                int lineJumpIndex = findLineJump(importedText, lastIndex, gc);
+                if (lineJumpIndex < lastIndex)
+                    shadowText = insertSpacesAfterJump(importedText, shadowText,
+                                                       lineJumpIndex, lastIndex,
                                                        gc);
             }
 
@@ -314,8 +317,9 @@ namespace Typist
 
         private void drawErrorChars(GraphicsContext gc)
         {
-            RectangleF[] errorCharAreas = getCharAreas(ImportedText.ToString(),
-                                                       TypedText.ErrorsUncorrected.ToArray(), gc);
+            RectangleF[] errorCharAreas = getCharAreas(ImportedText.Expanded.ToString(),
+                                                       TypedText.ErrorsUncorrectedExpanded,
+                                                       gc);
 
             for (int i = 0; i < TypedText.ErrorsUncorrected.Count; i++)
             {
@@ -335,8 +339,8 @@ namespace Typist
 
             if (!e.Cancel)
             {
-                RectangleF cursorArea = getCharArea(ImportedText.ToString(),
-                                                    TypedText.LastIndex + 1, gc);
+                RectangleF cursorArea = getCharArea(ImportedText.Expanded.ToString(),
+                                                    TypedText.ExpandedLength, gc);
 
                 cursorArea = fracOffsetCharArea(cursorArea, 0,
                                                 CursorAsVerticalBar ? BarCursorVOffset : CharCursorVOffset);
@@ -374,7 +378,7 @@ namespace Typist
             };
         }
 
-        private char pilcrow = '\xB6';
+        private const char pilcrow = '\xB6';
 
         private void drawChar(char ch, GraphicsContext gc, Brush brush, RectangleF charArea)
         {
@@ -386,8 +390,6 @@ namespace Typist
 
         private void drawText(string text, GraphicsContext gc, Brush brush)
         {
-            // text = text.Replace("\n", string.Format("{0}\n", pilcrow));
-
             gc.Graphics.DrawString(text, TypingFont, brush, gc.DocumentArea, TextStringFormat);
         }
 
