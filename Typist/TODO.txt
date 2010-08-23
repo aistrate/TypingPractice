@@ -21,6 +21,10 @@ General:
 
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L); ask for confirmation, if current text is unfinished (maybe a user setting, "Ask before reloading, if unfinished")
 
+- remove the two big buttons at the top (Import and Start), and add an application menu (a more extended version of the context menu, with the status bar menu added in etc.); also, and a toolbar at the top, with nice icons (and optional text), showing the most used commands (Open, Start/Pause/Resume, many font commands, Settings etc.)
+
+- put the statistics now at the top (WPM, Errors, Accuracy, Time) into a FlowLayoutPanel, so that all of them will be visible even when the window becomes very narrow; show a label next to each; decouple them definitively from the two buttons (Import and Start)
+
 - show a small dialog with shortcuts that are not on the menu ("Other shortcuts...")
 
 
