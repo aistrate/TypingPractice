@@ -68,8 +68,11 @@ namespace Typist
             //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\SingleParagraph\European Wildcat.txt";
             //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
                 //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
+                //filePath = @"C:\Users\Adrian\Samples\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
 
             ImportFile(filePath);
+
+            loadStatisticsMode();
         }
 
         private void initializeTypingBox()
@@ -341,6 +344,7 @@ namespace Typist
 
             presaveWindowPosition(true, true);
             presaveTypingFont();
+            presaveStatisticsMode();
             presaveUserSettings();
 
             Properties.Settings.Default.Save();
@@ -817,6 +821,21 @@ namespace Typist
             }
         }
         private ToolStripMenuItem[] statisticsMenuItems;
+
+        private void loadStatisticsMode()
+        {
+            int statisticsMode = Properties.Settings.Default.StatisticsMode;
+
+            if (statisticsMode >= StatisticsMenuItems.Length)
+                statisticsMode = 0;
+
+            StatisticsMode = (StatisticsModes)statisticsMode;
+        }
+
+        private void presaveStatisticsMode()
+        {
+            Properties.Settings.Default.StatisticsMode = (int)StatisticsMode;
+        }
 
         #endregion
 
