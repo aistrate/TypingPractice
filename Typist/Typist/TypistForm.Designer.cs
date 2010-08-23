@@ -61,6 +61,7 @@
             this.lblStatusBarSep2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.pgsTypingProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatusBarSep3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblTrafficLight = new System.Windows.Forms.ToolStripStatusLabel();
             this.scrTypingVertical = new System.Windows.Forms.VScrollBar();
             this.picTyping = new Typist.TypingBox();
             this.mnuContextMenu.SuspendLayout();
@@ -305,7 +306,8 @@
             this.lblStatusBarStats,
             this.lblStatusBarSep2,
             this.pgsTypingProgress,
-            this.lblStatusBarSep3});
+            this.lblStatusBarSep3,
+            this.lblTrafficLight});
             this.staStatusBar.Location = new System.Drawing.Point(0, 544);
             this.staStatusBar.Name = "staStatusBar";
             this.staStatusBar.Size = new System.Drawing.Size(462, 22);
@@ -317,7 +319,7 @@
             this.lblStatusBarMain.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblStatusBarMain.Margin = new System.Windows.Forms.Padding(0, 3, 5, 2);
             this.lblStatusBarMain.Name = "lblStatusBarMain";
-            this.lblStatusBarMain.Size = new System.Drawing.Size(325, 17);
+            this.lblStatusBarMain.Size = new System.Drawing.Size(288, 17);
             this.lblStatusBarMain.Spring = true;
             this.lblStatusBarMain.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -366,6 +368,17 @@
             this.lblStatusBarSep3.Name = "lblStatusBarSep3";
             this.lblStatusBarSep3.Size = new System.Drawing.Size(2, 17);
             this.lblStatusBarSep3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTrafficLight
+            // 
+            this.lblTrafficLight.AutoSize = false;
+            this.lblTrafficLight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.lblTrafficLight.Image = global::Typist.Properties.Resources.Gray;
+            this.lblTrafficLight.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTrafficLight.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.lblTrafficLight.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
+            this.lblTrafficLight.Name = "lblTrafficLight";
+            this.lblTrafficLight.Size = new System.Drawing.Size(22, 17);
             // 
             // scrTypingVertical
             // 
@@ -476,6 +489,7 @@
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep3;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarStats;
         private System.Windows.Forms.VScrollBar scrTypingVertical;
+        private System.Windows.Forms.ToolStripStatusLabel lblTrafficLight;
     }
 }
 

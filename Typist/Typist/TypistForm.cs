@@ -192,6 +192,12 @@ namespace Typist
                 else if (IsPaused)
                     lblStatusBarMain.Text = IsFinished ? "Finished" : "Paused";
 
+                lblTrafficLight.Image =
+                    practiceMode ? Typist.Properties.Resources.Green :
+                    IsPaused     ? (IsFinished ? Typist.Properties.Resources.Red :
+                                                 Typist.Properties.Resources.Yellow) :
+                                   Typist.Properties.Resources.Gray;
+
                 if (practiceMode)
                     rightAfterImport = false;
 

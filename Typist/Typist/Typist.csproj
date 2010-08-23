@@ -91,6 +91,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
@@ -111,7 +112,7 @@
     <Content Include="Images\TrafficLights\12x12\Green.png" />
     <Content Include="Images\TrafficLights\12x12\Red.png" />
     <Content Include="Images\TrafficLights\12x12\Yellow.png" />
-    <Content Include="Images\TrafficLights\14x14\Gray.png" />
+    <EmbeddedResource Include="Images\TrafficLights\14x14\Gray.png" />
     <Content Include="Images\TrafficLights\14x14\Green.png" />
     <Content Include="Images\TrafficLights\14x14\Red.png" />
     <Content Include="Images\TrafficLights\14x14\Yellow.png" />
