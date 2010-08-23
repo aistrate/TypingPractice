@@ -259,7 +259,7 @@ namespace Typist
         {
             string shadowText = ImportedText.Expanded.Substring(0, TypedText.ExpandedLength);
 
-            if (TypedText.Length > 0 && !char.IsWhiteSpace(ImportedText[TypedText.LastIndex]))
+            if (TypedText.Length > 0)
             {
                 string importedText = ImportedText.Expanded.ToString();
                 int lastIndex = TypedText.ExpandedLength - 1;
