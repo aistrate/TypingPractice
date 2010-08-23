@@ -400,7 +400,7 @@ namespace Typist
                         case Keys.M:
                             pauseAndMinimize();
                             break;
-                        case Keys.I:
+                        case Keys.O:
                             importFile();
                             break;
                         case Keys.X:
@@ -430,7 +430,10 @@ namespace Typist
                                 changeFontSize(-1);
                             break;
                         case Keys.B:
-                            toggleFontBold();
+                            toggleFontStyle(FontStyle.Bold);
+                            break;
+                        case Keys.I:
+                            toggleFontStyle(FontStyle.Italic);
                             break;
                     }
                 }
@@ -651,11 +654,11 @@ namespace Typist
             CustomFont = new Font(font.Name, size, font.Style, font.Unit);
         }
 
-        private void toggleFontBold()
+        private void toggleFontStyle(FontStyle styleFlag)
         {
             Font font = picTyping.TypingFont;
 
-            FontStyle newStyle = font.Style ^ FontStyle.Bold;
+            FontStyle newStyle = font.Style ^ styleFlag;
 
             if (font.FontFamily.IsStyleAvailable(newStyle))
                 CustomFont = new Font(font.Name, font.Size, newStyle, font.Unit);

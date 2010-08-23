@@ -223,7 +223,7 @@
             // importFileToolStripMenuItem
             // 
             this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
-            this.importFileToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+I";
+            this.importFileToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+O";
             this.importFileToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.importFileToolStripMenuItem.Text = "Import File...";
             this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);

@@ -21,8 +21,6 @@ General:
 
 - separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
 
-- font-related shortcut: Ctrl+I to turn Italic on/off (change shortcut for Import to Ctrl+O)
-
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L); ask for confirmation, if current text is unfinished (maybe a user setting, "Ask before reloading, if unfinished")
 
 - show a small dialog with shortcuts that are not on the menu ("Other shortcuts...")
@@ -68,6 +66,7 @@ Paint event handler:
 
 
 
+* font-related shortcut: Ctrl+I to turn Italic on/off (change shortcut for Import to Ctrl+O)
 * font-related shortcut: Ctrl+B to turn Bold on/off
 * add a "traffic light" to the status bar, indicating: gray for not started, green for practice mode, yellow for paused, red for finished
 * bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
