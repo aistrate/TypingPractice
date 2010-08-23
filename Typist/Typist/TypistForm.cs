@@ -210,7 +210,7 @@ namespace Typist
                 displayTimeElapsed();
                 displayWPM();
                 displayErrorCount();
-                displayTypingProgressBar();
+                displayProgressStatistics();
 
                 if (practiceMode || IsFinished)
                     picTyping.Focus();
@@ -269,8 +269,6 @@ namespace Typist
 
                 rightAfterImport = true;
                 PracticeMode = false;
-
-                lblStatusBarMain.Text = string.Format("Imported: {0}", fileInfo.FullName);
             }
             catch (Exception ex)
             {
@@ -467,7 +465,7 @@ namespace Typist
                 TypedText.ProcessKey(e.KeyChar);
 
                 displayErrorCount();
-                displayTypingProgressBar();
+                displayProgressStatistics();
 
                 if (IsFinished)
                     PracticeMode = false;
@@ -739,13 +737,86 @@ namespace Typist
             }
         }
 
-        private void displayTypingProgressBar()
+        private void displayProgressStatistics()
         {
             int progress = IsImported ? 100 * TypedText.Length / ImportedText.Length : 0;
 
             pgsTypingProgress.Value = progress;
-            lblStatusBarStats.Text = string.Format("{0} %", progress);
+
+            switch (StatisticsMode)
+            {
+                case StatisticsModes.Percentage:
+                    btnStatistics.Text = string.Format("{0} %", progress);
+                    break;
+                case StatisticsModes.TypedPerTotal:
+                    btnStatistics.Text = string.Format("{0} / {1}", TypedText.Length, ImportedText.Length);
+                    break;
+                case StatisticsModes.Typed:
+                    btnStatistics.Text = string.Format("{0}", TypedText.Length);
+                    break;
+                case StatisticsModes.Total:
+                    btnStatistics.Text = string.Format("{0}", ImportedText.Length);
+                    break;
+                default:
+                    btnStatistics.Text = "";
+                    break;
+            }
         }
+
+        private void btnStatistics_ButtonClick(object sender, EventArgs e)
+        {
+            StatisticsMode = (StatisticsModes)(((int)StatisticsMode + 1) % StatisticsMenuItems.Length);
+        }
+
+        private void btnStatisticsMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem selectedItem = (ToolStripMenuItem)sender;
+
+            StatisticsMode = (StatisticsModes)int.Parse((string)selectedItem.Tag);
+        }
+
+        protected StatisticsModes StatisticsMode
+        {
+            get { return statisticsMode; }
+            set
+            {
+                statisticsMode = value;
+
+                foreach (var item in StatisticsMenuItems)
+                    item.Checked = false;
+
+                StatisticsMenuItems[(int)statisticsMode].Checked = true;
+
+                displayProgressStatistics();
+            }
+        }
+        private StatisticsModes statisticsMode;
+
+        public enum StatisticsModes
+        {
+            Percentage = 0,
+            TypedPerTotal = 1,
+            Typed = 2,
+            Total = 3,
+        }
+
+        protected ToolStripMenuItem[] StatisticsMenuItems
+        {
+            get
+            {
+                if (statisticsMenuItems == null)
+                    statisticsMenuItems = new ToolStripMenuItem[]
+                    {
+                        toolStripPercentage,
+                        toolStripTypedPerTotal,
+                        toolStripTyped,
+                        toolStripTotal,
+                    };
+
+                return statisticsMenuItems;
+            }
+        }
+        private ToolStripMenuItem[] statisticsMenuItems;
 
         #endregion
 

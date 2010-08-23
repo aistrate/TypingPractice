@@ -12,8 +12,6 @@ General:
 
 - add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
 
-- on the status bar: add SplitButton/DropDownButton that selects the statistic to be displayed next to the progress bar: percentage typed, typed/imported ratio, typed only, imported only
-
 
 - allow scrollbars (vertical and horizontal) to be moved by the user, to take a peek at the rest of the text (two Paint modes: 'follow the cursor' and 'follow the scrollbars')
 
@@ -66,6 +64,7 @@ Paint event handler:
 
 
 
+* on the status bar: add SplitButton/DropDownButton that selects the statistic to be displayed next to the progress bar: percentage typed, typed/imported ratio, typed only, imported only
 * font-related shortcut: Ctrl+I to turn Italic on/off (change shortcut for Import to Ctrl+O)
 * font-related shortcut: Ctrl+B to turn Bold on/off
 * add a "traffic light" to the status bar, indicating: gray for not started, green for practice mode, yellow for paused, red for finished

@@ -57,8 +57,12 @@
             this.staStatusBar = new System.Windows.Forms.StatusStrip();
             this.lblStatusBarMain = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblStatusBarSep1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblStatusBarStats = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblStatusBarSep2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnStatistics = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripPercentage = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripTypedPerTotal = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTyped = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTotal = new System.Windows.Forms.ToolStripMenuItem();
             this.pgsTypingProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatusBarSep3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblTrafficLight = new System.Windows.Forms.ToolStripStatusLabel();
@@ -303,8 +307,7 @@
             this.staStatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatusBarMain,
             this.lblStatusBarSep1,
-            this.lblStatusBarStats,
-            this.lblStatusBarSep2,
+            this.btnStatistics,
             this.pgsTypingProgress,
             this.lblStatusBarSep3,
             this.lblTrafficLight});
@@ -319,7 +322,7 @@
             this.lblStatusBarMain.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblStatusBarMain.Margin = new System.Windows.Forms.Padding(0, 3, 5, 2);
             this.lblStatusBarMain.Name = "lblStatusBarMain";
-            this.lblStatusBarMain.Size = new System.Drawing.Size(288, 17);
+            this.lblStatusBarMain.Size = new System.Drawing.Size(195, 17);
             this.lblStatusBarMain.Spring = true;
             this.lblStatusBarMain.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -332,22 +335,66 @@
             this.lblStatusBarSep1.Size = new System.Drawing.Size(2, 17);
             this.lblStatusBarSep1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lblStatusBarStats
+            // btnStatistics
             // 
-            this.lblStatusBarStats.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.lblStatusBarStats.Name = "lblStatusBarStats";
-            this.lblStatusBarStats.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.lblStatusBarStats.Size = new System.Drawing.Size(10, 17);
-            this.lblStatusBarStats.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStatistics.AutoSize = false;
+            this.btnStatistics.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnStatistics.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripPercentage,
+            this.toolStripSeparator2,
+            this.toolStripTypedPerTotal,
+            this.toolStripTyped,
+            this.toolStripTotal});
+            this.btnStatistics.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStatistics.Margin = new System.Windows.Forms.Padding(5, 2, 0, 0);
+            this.btnStatistics.Name = "btnStatistics";
+            this.btnStatistics.Size = new System.Drawing.Size(85, 20);
+            this.btnStatistics.Text = "0 %";
+            this.btnStatistics.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStatistics.ButtonClick += new System.EventHandler(this.btnStatistics_ButtonClick);
             // 
-            // lblStatusBarSep2
+            // toolStripPercentage
             // 
-            this.lblStatusBarSep2.AutoSize = false;
-            this.lblStatusBarSep2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.lblStatusBarSep2.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.lblStatusBarSep2.Name = "lblStatusBarSep2";
-            this.lblStatusBarSep2.Size = new System.Drawing.Size(2, 17);
-            this.lblStatusBarSep2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripPercentage.Checked = true;
+            this.toolStripPercentage.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripPercentage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripPercentage.Name = "toolStripPercentage";
+            this.toolStripPercentage.Size = new System.Drawing.Size(152, 22);
+            this.toolStripPercentage.Tag = "0";
+            this.toolStripPercentage.Text = "Percentage";
+            this.toolStripPercentage.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // toolStripTypedPerTotal
+            // 
+            this.toolStripTypedPerTotal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripTypedPerTotal.Name = "toolStripTypedPerTotal";
+            this.toolStripTypedPerTotal.Size = new System.Drawing.Size(152, 22);
+            this.toolStripTypedPerTotal.Tag = "1";
+            this.toolStripTypedPerTotal.Text = "Typed / Total";
+            this.toolStripTypedPerTotal.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
+            // 
+            // toolStripTyped
+            // 
+            this.toolStripTyped.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripTyped.Name = "toolStripTyped";
+            this.toolStripTyped.Size = new System.Drawing.Size(152, 22);
+            this.toolStripTyped.Tag = "2";
+            this.toolStripTyped.Text = "Typed";
+            this.toolStripTyped.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
+            // 
+            // toolStripTotal
+            // 
+            this.toolStripTotal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripTotal.Name = "toolStripTotal";
+            this.toolStripTotal.Size = new System.Drawing.Size(152, 22);
+            this.toolStripTotal.Tag = "3";
+            this.toolStripTotal.Text = "Total";
+            this.toolStripTotal.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
             // 
             // pgsTypingProgress
             // 
@@ -355,8 +402,8 @@
             this.pgsTypingProgress.AutoSize = false;
             this.pgsTypingProgress.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.pgsTypingProgress.Name = "pgsTypingProgress";
-            this.pgsTypingProgress.Padding = new System.Windows.Forms.Padding(4, 0, 3, 0);
-            this.pgsTypingProgress.Size = new System.Drawing.Size(100, 16);
+            this.pgsTypingProgress.Padding = new System.Windows.Forms.Padding(0, 0, 15, 0);
+            this.pgsTypingProgress.Size = new System.Drawing.Size(115, 16);
             this.pgsTypingProgress.Step = 1;
             // 
             // lblStatusBarSep3
@@ -484,12 +531,16 @@
         private System.Windows.Forms.StatusStrip staStatusBar;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarMain;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep1;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep2;
         private System.Windows.Forms.ToolStripProgressBar pgsTypingProgress;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep3;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatusBarStats;
         private System.Windows.Forms.VScrollBar scrTypingVertical;
         private System.Windows.Forms.ToolStripStatusLabel lblTrafficLight;
+        private System.Windows.Forms.ToolStripSplitButton btnStatistics;
+        private System.Windows.Forms.ToolStripMenuItem toolStripPercentage;
+        private System.Windows.Forms.ToolStripMenuItem toolStripTyped;
+        private System.Windows.Forms.ToolStripMenuItem toolStripTotal;
+        private System.Windows.Forms.ToolStripMenuItem toolStripTypedPerTotal;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 
