@@ -14,8 +14,6 @@ General:
 
 - on the status bar: add SplitButton/DropDownButton that selects the statistic to be displayed next to the progress bar: percentage typed, typed/imported ratio, typed only, imported only
 
-- font-related shortcut: Ctrl+B to turn Bold on/off
-
 
 - allow scrollbars (vertical and horizontal) to be moved by the user, to take a peek at the rest of the text (two Paint modes: 'follow the cursor' and 'follow the scrollbars')
 
@@ -70,6 +68,7 @@ Paint event handler:
 
 
 
+* font-related shortcut: Ctrl+B to turn Bold on/off
 * add a "traffic light" to the status bar, indicating: gray for not started, green for practice mode, yellow for paused, red for finished
 * bug: when VisibleNewlines is true, if the pilcrow makes a paragraph one line longer, the cursor and the errors will appear one line too high compared to the text; (make VisibleNewlines a property of TextBuffer)
 * add a lateral scroll bar (and a label with the progress percentage)

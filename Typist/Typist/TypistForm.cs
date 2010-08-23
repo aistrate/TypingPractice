@@ -429,6 +429,9 @@ namespace Typist
                             if (!e.Shift)
                                 changeFontSize(-1);
                             break;
+                        case Keys.B:
+                            toggleFontBold();
+                            break;
                     }
                 }
 
@@ -646,6 +649,16 @@ namespace Typist
                                                            Math.Max(1, font.Size + delta);
 
             CustomFont = new Font(font.Name, size, font.Style, font.Unit);
+        }
+
+        private void toggleFontBold()
+        {
+            Font font = picTyping.TypingFont;
+
+            FontStyle newStyle = font.Style ^ FontStyle.Bold;
+
+            if (font.FontFamily.IsStyleAvailable(newStyle))
+                CustomFont = new Font(font.Name, font.Size, newStyle, font.Unit);
         }
 
         #endregion
