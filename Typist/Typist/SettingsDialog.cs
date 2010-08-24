@@ -34,6 +34,7 @@ namespace Typist
 
                 chkBeepOnError.Checked = userSettings.BeepOnError;
                 chkAllowBackspace.Checked = userSettings.AllowBackspace;
+                chkWordWrap.Checked = userSettings.WordWrap;
                 chkVisibleNewlines.Checked = userSettings.VisibleNewlines;
                 chkRemoveMultipleWhitespace.Checked = userSettings.RemoveMultipleWhitespace;
                 chkCountWhitespaceAsWordChars.Checked = userSettings.CountWhitespaceAsWordChars;
@@ -53,6 +54,7 @@ namespace Typist
             {
                 BeepOnError = chkBeepOnError.Checked,
                 AllowBackspace = chkAllowBackspace.Checked,
+                WordWrap = chkWordWrap.Checked,
                 VisibleNewlines = chkVisibleNewlines.Checked,
                 RemoveMultipleWhitespace = chkRemoveMultipleWhitespace.Checked,
                 CountWhitespaceAsWordChars = chkCountWhitespaceAsWordChars.Checked,

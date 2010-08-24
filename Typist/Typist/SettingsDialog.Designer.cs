@@ -41,13 +41,14 @@
             this.txtPauseAfterElapsed = new System.Windows.Forms.TextBox();
             this.lblSeconds = new System.Windows.Forms.Label();
             this.chkRemoveMultipleWhitespace = new System.Windows.Forms.CheckBox();
+            this.chkWordWrap = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(111, 231);
+            this.btnOk.Location = new System.Drawing.Point(111, 254);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 100;
@@ -59,7 +60,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(192, 231);
+            this.btnCancel.Location = new System.Drawing.Point(192, 254);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 101;
@@ -89,7 +90,7 @@
             // chkVisibleNewlines
             // 
             this.chkVisibleNewlines.AutoSize = true;
-            this.chkVisibleNewlines.Location = new System.Drawing.Point(12, 58);
+            this.chkVisibleNewlines.Location = new System.Drawing.Point(12, 81);
             this.chkVisibleNewlines.Name = "chkVisibleNewlines";
             this.chkVisibleNewlines.Size = new System.Drawing.Size(120, 17);
             this.chkVisibleNewlines.TabIndex = 2;
@@ -99,7 +100,7 @@
             // chkCountWhitespaceAsWordChars
             // 
             this.chkCountWhitespaceAsWordChars.AutoSize = true;
-            this.chkCountWhitespaceAsWordChars.Location = new System.Drawing.Point(12, 104);
+            this.chkCountWhitespaceAsWordChars.Location = new System.Drawing.Point(12, 127);
             this.chkCountWhitespaceAsWordChars.Name = "chkCountWhitespaceAsWordChars";
             this.chkCountWhitespaceAsWordChars.Size = new System.Drawing.Size(204, 17);
             this.chkCountWhitespaceAsWordChars.TabIndex = 4;
@@ -109,7 +110,7 @@
             // chkCountErrorsAsWordChars
             // 
             this.chkCountErrorsAsWordChars.AutoSize = true;
-            this.chkCountErrorsAsWordChars.Location = new System.Drawing.Point(12, 127);
+            this.chkCountErrorsAsWordChars.Location = new System.Drawing.Point(12, 150);
             this.chkCountErrorsAsWordChars.Name = "chkCountErrorsAsWordChars";
             this.chkCountErrorsAsWordChars.Size = new System.Drawing.Size(176, 17);
             this.chkCountErrorsAsWordChars.TabIndex = 5;
@@ -119,7 +120,7 @@
             // chkAskBeforeCloseDuringPractice
             // 
             this.chkAskBeforeCloseDuringPractice.AutoSize = true;
-            this.chkAskBeforeCloseDuringPractice.Location = new System.Drawing.Point(12, 150);
+            this.chkAskBeforeCloseDuringPractice.Location = new System.Drawing.Point(12, 173);
             this.chkAskBeforeCloseDuringPractice.Name = "chkAskBeforeCloseDuringPractice";
             this.chkAskBeforeCloseDuringPractice.Size = new System.Drawing.Size(186, 17);
             this.chkAskBeforeCloseDuringPractice.TabIndex = 6;
@@ -129,7 +130,7 @@
             // chkShowCursorWhenPaused
             // 
             this.chkShowCursorWhenPaused.AutoSize = true;
-            this.chkShowCursorWhenPaused.Location = new System.Drawing.Point(12, 173);
+            this.chkShowCursorWhenPaused.Location = new System.Drawing.Point(12, 196);
             this.chkShowCursorWhenPaused.Name = "chkShowCursorWhenPaused";
             this.chkShowCursorWhenPaused.Size = new System.Drawing.Size(152, 17);
             this.chkShowCursorWhenPaused.TabIndex = 7;
@@ -139,7 +140,7 @@
             // chkPauseAfterElapsed
             // 
             this.chkPauseAfterElapsed.AutoSize = true;
-            this.chkPauseAfterElapsed.Location = new System.Drawing.Point(12, 196);
+            this.chkPauseAfterElapsed.Location = new System.Drawing.Point(12, 219);
             this.chkPauseAfterElapsed.Name = "chkPauseAfterElapsed";
             this.chkPauseAfterElapsed.Size = new System.Drawing.Size(80, 17);
             this.chkPauseAfterElapsed.TabIndex = 8;
@@ -149,7 +150,7 @@
             // 
             // txtPauseAfterElapsed
             // 
-            this.txtPauseAfterElapsed.Location = new System.Drawing.Point(90, 194);
+            this.txtPauseAfterElapsed.Location = new System.Drawing.Point(90, 217);
             this.txtPauseAfterElapsed.MaxLength = 4;
             this.txtPauseAfterElapsed.Name = "txtPauseAfterElapsed";
             this.txtPauseAfterElapsed.ShortcutsEnabled = false;
@@ -162,7 +163,7 @@
             // lblSeconds
             // 
             this.lblSeconds.AutoSize = true;
-            this.lblSeconds.Location = new System.Drawing.Point(127, 197);
+            this.lblSeconds.Location = new System.Drawing.Point(127, 220);
             this.lblSeconds.Name = "lblSeconds";
             this.lblSeconds.Size = new System.Drawing.Size(103, 13);
             this.lblSeconds.TabIndex = 110;
@@ -171,19 +172,30 @@
             // chkRemoveMultipleWhitespace
             // 
             this.chkRemoveMultipleWhitespace.AutoSize = true;
-            this.chkRemoveMultipleWhitespace.Location = new System.Drawing.Point(12, 81);
+            this.chkRemoveMultipleWhitespace.Location = new System.Drawing.Point(12, 104);
             this.chkRemoveMultipleWhitespace.Name = "chkRemoveMultipleWhitespace";
             this.chkRemoveMultipleWhitespace.Size = new System.Drawing.Size(235, 17);
             this.chkRemoveMultipleWhitespace.TabIndex = 3;
             this.chkRemoveMultipleWhitespace.Text = "Remove multiple whitespace when importing";
             this.chkRemoveMultipleWhitespace.UseVisualStyleBackColor = false;
             // 
+            // chkWordWrap
+            // 
+            this.chkWordWrap.AutoSize = true;
+            this.chkWordWrap.Location = new System.Drawing.Point(12, 58);
+            this.chkWordWrap.Name = "chkWordWrap";
+            this.chkWordWrap.Size = new System.Drawing.Size(78, 17);
+            this.chkWordWrap.TabIndex = 111;
+            this.chkWordWrap.Text = "Word wrap";
+            this.chkWordWrap.UseVisualStyleBackColor = false;
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(279, 266);
+            this.ClientSize = new System.Drawing.Size(279, 289);
+            this.Controls.Add(this.chkWordWrap);
             this.Controls.Add(this.chkRemoveMultipleWhitespace);
             this.Controls.Add(this.lblSeconds);
             this.Controls.Add(this.txtPauseAfterElapsed);
@@ -228,5 +240,6 @@
         private System.Windows.Forms.TextBox txtPauseAfterElapsed;
         private System.Windows.Forms.Label lblSeconds;
         private System.Windows.Forms.CheckBox chkRemoveMultipleWhitespace;
+        private System.Windows.Forms.CheckBox chkWordWrap;
     }
 }

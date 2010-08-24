@@ -157,6 +157,18 @@ namespace Typist.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UserSettings_WordWrap {
+            get {
+                return ((bool)(this["UserSettings_WordWrap"]));
+            }
+            set {
+                this["UserSettings_WordWrap"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool UserSettings_VisibleNewlines {
             get {

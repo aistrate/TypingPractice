@@ -35,6 +35,9 @@
     <Setting Name="UserSettings_AllowBackspace" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="UserSettings_WordWrap" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
     <Setting Name="UserSettings_VisibleNewlines" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

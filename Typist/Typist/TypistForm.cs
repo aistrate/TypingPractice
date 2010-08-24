@@ -79,6 +79,8 @@ namespace Typist
         {
             picTyping.Theme = theme;
 
+            picTyping.WordWrap = userSettings.WordWrap;
+
             picTyping.TextMargin = new Padding(marginLeft, marginTop, marginRight, marginBottom);
 
             picTyping.CursorAsVerticalBar = cursorAsVerticalBar;
@@ -986,6 +988,7 @@ namespace Typist
             {
                 BeepOnError = Properties.Settings.Default.UserSettings_BeepOnError,
                 AllowBackspace = Properties.Settings.Default.UserSettings_AllowBackspace,
+                WordWrap = Properties.Settings.Default.UserSettings_WordWrap,
                 VisibleNewlines = Properties.Settings.Default.UserSettings_VisibleNewlines,
                 RemoveMultipleWhitespace = Properties.Settings.Default.UserSettings_RemoveMultipleWhitespace,
                 CountWhitespaceAsWordChars = Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars,
@@ -1000,6 +1003,7 @@ namespace Typist
         {
             Properties.Settings.Default.UserSettings_BeepOnError = userSettings.BeepOnError;
             Properties.Settings.Default.UserSettings_AllowBackspace = userSettings.AllowBackspace;
+            Properties.Settings.Default.UserSettings_WordWrap = userSettings.WordWrap;
             Properties.Settings.Default.UserSettings_VisibleNewlines = userSettings.VisibleNewlines;
             Properties.Settings.Default.UserSettings_RemoveMultipleWhitespace = userSettings.RemoveMultipleWhitespace;
             Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
@@ -1035,6 +1039,8 @@ namespace Typist
                 ImportedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
                 TypedText.CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
                 displayWPM();
+
+                picTyping.WordWrap = userSettings.WordWrap;
 
                 picTyping.Invalidate();
             }

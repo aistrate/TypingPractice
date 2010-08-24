@@ -10,7 +10,7 @@ namespace Typist
 {
     public class TypingBox : PictureBox
     {
-        #region Properties
+        #region Public properties
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -61,6 +61,20 @@ namespace Typist
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue(0f)]
         public float ErrorBackgroundVOffset { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(true)]
+        public bool WordWrap
+        {
+            get { return wordWrap; }
+            set
+            {
+                wordWrap = value;
+                textStringFormat = null;
+            }
+        }
+        private bool wordWrap = true;
 
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -466,12 +480,17 @@ namespace Typist
             get
             {
                 if (textStringFormat == null)
+                {
+                    StringFormatFlags noWrap = WordWrap ? 0 : StringFormatFlags.NoWrap;
+
                     textStringFormat = new StringFormat(StringFormat.GenericTypographic)
                     {
                         FormatFlags = StringFormat.GenericTypographic.FormatFlags |
                                       StringFormatFlags.MeasureTrailingSpaces |
-                                      StringFormatFlags.NoFontFallback,
+                                      StringFormatFlags.NoFontFallback |
+                                      noWrap,
                     };
+                }
 
                 return textStringFormat;
             }
