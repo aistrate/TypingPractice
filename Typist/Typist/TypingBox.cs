@@ -469,7 +469,8 @@ namespace Typist
                     textStringFormat = new StringFormat(StringFormat.GenericTypographic)
                     {
                         FormatFlags = StringFormat.GenericTypographic.FormatFlags |
-                                      StringFormatFlags.MeasureTrailingSpaces,
+                                      StringFormatFlags.MeasureTrailingSpaces |
+                                      StringFormatFlags.NoFontFallback,
                     };
 
                 return textStringFormat;
