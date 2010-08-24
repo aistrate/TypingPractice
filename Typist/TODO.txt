@@ -17,6 +17,10 @@ General:
 - predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 
 
+- the Backspace key should delete all spaces back to a non-space char (similar to the way the Tab key works)
+
+- correct calculation of TotalErrors to better account for the multiple spaces expanded/deleted by Tab/Backspace
+
 - allow scrollbars (vertical and horizontal) to be moved by the user, to take a peek at the rest of the text (two Paint modes: 'follow the cursor' and 'follow the scrollbars')
 
 - separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
