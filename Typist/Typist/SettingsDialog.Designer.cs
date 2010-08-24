@@ -88,6 +88,16 @@
             this.chkAllowBackspace.Text = "Allow backspace";
             this.chkAllowBackspace.UseVisualStyleBackColor = false;
             // 
+            // chkWordWrap
+            // 
+            this.chkWordWrap.AutoSize = true;
+            this.chkWordWrap.Location = new System.Drawing.Point(12, 58);
+            this.chkWordWrap.Name = "chkWordWrap";
+            this.chkWordWrap.Size = new System.Drawing.Size(78, 17);
+            this.chkWordWrap.TabIndex = 111;
+            this.chkWordWrap.Text = "Word wrap";
+            this.chkWordWrap.UseVisualStyleBackColor = false;
+            // 
             // chkVisibleNewlines
             // 
             this.chkVisibleNewlines.AutoSize = true;
@@ -97,6 +107,26 @@
             this.chkVisibleNewlines.TabIndex = 2;
             this.chkVisibleNewlines.Text = "Show newlines as ¶";
             this.chkVisibleNewlines.UseVisualStyleBackColor = false;
+            // 
+            // chkRemoveEndOfLineSpaces
+            // 
+            this.chkRemoveEndOfLineSpaces.AutoSize = true;
+            this.chkRemoveEndOfLineSpaces.Location = new System.Drawing.Point(12, 104);
+            this.chkRemoveEndOfLineSpaces.Name = "chkRemoveEndOfLineSpaces";
+            this.chkRemoveEndOfLineSpaces.Size = new System.Drawing.Size(229, 17);
+            this.chkRemoveEndOfLineSpaces.TabIndex = 112;
+            this.chkRemoveEndOfLineSpaces.Text = "Remove end-of-line spaces when importing";
+            this.chkRemoveEndOfLineSpaces.UseVisualStyleBackColor = false;
+            // 
+            // chkRemoveMultipleWhitespace
+            // 
+            this.chkRemoveMultipleWhitespace.AutoSize = true;
+            this.chkRemoveMultipleWhitespace.Location = new System.Drawing.Point(12, 127);
+            this.chkRemoveMultipleWhitespace.Name = "chkRemoveMultipleWhitespace";
+            this.chkRemoveMultipleWhitespace.Size = new System.Drawing.Size(235, 17);
+            this.chkRemoveMultipleWhitespace.TabIndex = 3;
+            this.chkRemoveMultipleWhitespace.Text = "Remove multiple whitespace when importing";
+            this.chkRemoveMultipleWhitespace.UseVisualStyleBackColor = false;
             // 
             // chkCountWhitespaceAsWordChars
             // 
@@ -169,36 +199,6 @@
             this.lblSeconds.Size = new System.Drawing.Size(103, 13);
             this.lblSeconds.TabIndex = 110;
             this.lblSeconds.Text = "seconds of inactivity";
-            // 
-            // chkRemoveMultipleWhitespace
-            // 
-            this.chkRemoveMultipleWhitespace.AutoSize = true;
-            this.chkRemoveMultipleWhitespace.Location = new System.Drawing.Point(12, 104);
-            this.chkRemoveMultipleWhitespace.Name = "chkRemoveMultipleWhitespace";
-            this.chkRemoveMultipleWhitespace.Size = new System.Drawing.Size(235, 17);
-            this.chkRemoveMultipleWhitespace.TabIndex = 3;
-            this.chkRemoveMultipleWhitespace.Text = "Remove multiple whitespace when importing";
-            this.chkRemoveMultipleWhitespace.UseVisualStyleBackColor = false;
-            // 
-            // chkWordWrap
-            // 
-            this.chkWordWrap.AutoSize = true;
-            this.chkWordWrap.Location = new System.Drawing.Point(12, 58);
-            this.chkWordWrap.Name = "chkWordWrap";
-            this.chkWordWrap.Size = new System.Drawing.Size(78, 17);
-            this.chkWordWrap.TabIndex = 111;
-            this.chkWordWrap.Text = "Word wrap";
-            this.chkWordWrap.UseVisualStyleBackColor = false;
-            // 
-            // chkRemoveEndOfLineSpaces
-            // 
-            this.chkRemoveEndOfLineSpaces.AutoSize = true;
-            this.chkRemoveEndOfLineSpaces.Location = new System.Drawing.Point(12, 127);
-            this.chkRemoveEndOfLineSpaces.Name = "chkRemoveEndOfLineSpaces";
-            this.chkRemoveEndOfLineSpaces.Size = new System.Drawing.Size(229, 17);
-            this.chkRemoveEndOfLineSpaces.TabIndex = 112;
-            this.chkRemoveEndOfLineSpaces.Text = "Remove end-of-line spaces when importing";
-            this.chkRemoveEndOfLineSpaces.UseVisualStyleBackColor = false;
             // 
             // SettingsDialog
             // 

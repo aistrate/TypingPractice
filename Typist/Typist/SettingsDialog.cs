@@ -36,8 +36,8 @@ namespace Typist
                 chkAllowBackspace.Checked = userSettings.AllowBackspace;
                 chkWordWrap.Checked = userSettings.WordWrap;
                 chkVisibleNewlines.Checked = userSettings.VisibleNewlines;
-                chkRemoveMultipleWhitespace.Checked = userSettings.RemoveMultipleWhitespace;
                 chkRemoveEndOfLineSpaces.Checked = userSettings.RemoveEndOfLineSpaces;
+                chkRemoveMultipleWhitespace.Checked = userSettings.RemoveMultipleWhitespace;
                 chkCountWhitespaceAsWordChars.Checked = userSettings.CountWhitespaceAsWordChars;
                 chkCountErrorsAsWordChars.Checked = userSettings.CountErrorsAsWordChars;
                 chkAskBeforeCloseDuringPractice.Checked = userSettings.AskBeforeCloseDuringPractice;
@@ -57,8 +57,8 @@ namespace Typist
                 AllowBackspace = chkAllowBackspace.Checked,
                 WordWrap = chkWordWrap.Checked,
                 VisibleNewlines = chkVisibleNewlines.Checked,
-                RemoveMultipleWhitespace = chkRemoveMultipleWhitespace.Checked,
                 RemoveEndOfLineSpaces = chkRemoveEndOfLineSpaces.Checked,
+                RemoveMultipleWhitespace = chkRemoveMultipleWhitespace.Checked,
                 CountWhitespaceAsWordChars = chkCountWhitespaceAsWordChars.Checked,
                 CountErrorsAsWordChars = chkCountErrorsAsWordChars.Checked,
                 AskBeforeCloseDuringPractice = chkAskBeforeCloseDuringPractice.Checked,

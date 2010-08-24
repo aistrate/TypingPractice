@@ -6,7 +6,7 @@ namespace Typist.TextBuffers
     public class ReadOnlyTypingBuffer : TypingBuffer
     {
         public ReadOnlyTypingBuffer(string text, bool expandNewlines, bool countWhitespaceAsWordChars,
-                                    bool removeMultipleWhitespace, bool removeEndOfLineSpaces)
+                                    bool removeEndOfLineSpaces, bool removeMultipleWhitespace)
         {
             string allowedWhitespace = " \n";
 
