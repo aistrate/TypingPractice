@@ -5,7 +5,8 @@ namespace Typist.TextBuffers
 {
     public class ReadOnlyTypingBuffer : TypingBuffer
     {
-        public ReadOnlyTypingBuffer(string text, bool removeMultipleWhitespace, bool expandNewlines, bool countWhitespaceAsWordChars)
+        public ReadOnlyTypingBuffer(string text, bool expandNewlines, bool countWhitespaceAsWordChars,
+                                    bool removeMultipleWhitespace, bool removeEndOfLineSpaces)
         {
             string allowedWhitespace = " \n";
 
@@ -17,10 +18,12 @@ namespace Typist.TextBuffers
                        .AsString()
                        .TrimEnd(allowedWhitespace.ToCharArray());
 
+            if (removeEndOfLineSpaces)
+                text = Regex.Replace(text, @" +\n", "\n");
+
             if (removeMultipleWhitespace)
             {
-                text = Regex.Replace(text, @" +", " ");
-                text = Regex.Replace(text, @" +\n", "\n");
+                text = Regex.Replace(text, @" {2,}", " ");
                 text = Regex.Replace(text, @"(^|(?<=.\n))\n{2,}", "\n");
             }
 

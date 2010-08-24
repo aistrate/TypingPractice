@@ -193,6 +193,18 @@ namespace Typist.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UserSettings_RemoveEndOfLineSpaces {
+            get {
+                return ((bool)(this["UserSettings_RemoveEndOfLineSpaces"]));
+            }
+            set {
+                this["UserSettings_RemoveEndOfLineSpaces"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool UserSettings_CountWhitespaceAsWordChars {
             get {

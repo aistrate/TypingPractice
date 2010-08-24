@@ -44,6 +44,9 @@
     <Setting Name="UserSettings_RemoveMultipleWhitespace" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="UserSettings_RemoveEndOfLineSpaces" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="UserSettings_CountWhitespaceAsWordChars" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>

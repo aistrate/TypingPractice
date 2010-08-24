@@ -58,9 +58,10 @@ namespace Typist
             initializeSettingsDialog();
 
             ImportedText = new ReadOnlyTypingBuffer("",
-                                                    userSettings.RemoveMultipleWhitespace,
                                                     userSettings.VisibleNewlines,
-                                                    userSettings.CountWhitespaceAsWordChars);
+                                                    userSettings.CountWhitespaceAsWordChars,
+                                                    userSettings.RemoveMultipleWhitespace,
+                                                    userSettings.RemoveEndOfLineSpaces);
 
             PracticeMode = false;
 
@@ -266,9 +267,10 @@ namespace Typist
 
                 using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
                     ImportedText = new ReadOnlyTypingBuffer(sr.ReadToEnd(),
-                                                            userSettings.RemoveMultipleWhitespace,
                                                             userSettings.VisibleNewlines,
-                                                            userSettings.CountWhitespaceAsWordChars);
+                                                            userSettings.CountWhitespaceAsWordChars,
+                                                            userSettings.RemoveMultipleWhitespace,
+                                                            userSettings.RemoveEndOfLineSpaces);
 
                 stopwatch.Reset();
 
@@ -991,6 +993,7 @@ namespace Typist
                 WordWrap = Properties.Settings.Default.UserSettings_WordWrap,
                 VisibleNewlines = Properties.Settings.Default.UserSettings_VisibleNewlines,
                 RemoveMultipleWhitespace = Properties.Settings.Default.UserSettings_RemoveMultipleWhitespace,
+                RemoveEndOfLineSpaces = Properties.Settings.Default.UserSettings_RemoveEndOfLineSpaces,
                 CountWhitespaceAsWordChars = Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars,
                 CountErrorsAsWordChars = Properties.Settings.Default.UserSettings_CountErrorsAsWordChars,
                 AskBeforeCloseDuringPractice = Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice,
@@ -1006,6 +1009,7 @@ namespace Typist
             Properties.Settings.Default.UserSettings_WordWrap = userSettings.WordWrap;
             Properties.Settings.Default.UserSettings_VisibleNewlines = userSettings.VisibleNewlines;
             Properties.Settings.Default.UserSettings_RemoveMultipleWhitespace = userSettings.RemoveMultipleWhitespace;
+            Properties.Settings.Default.UserSettings_RemoveEndOfLineSpaces = userSettings.RemoveEndOfLineSpaces;
             Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
             Properties.Settings.Default.UserSettings_CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
             Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice = userSettings.AskBeforeCloseDuringPractice;
