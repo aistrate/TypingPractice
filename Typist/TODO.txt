@@ -12,6 +12,8 @@ General:
 
 - add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)
 
+- when word wrap = true: new property on ROTypingBuffer, MultipleSpaceIndexes (int[]); an element in this list is the index of the last space in a group (of two or more); use it to calculate the max width of the text, and scroll text to the left when typing these spaces, if they fall at the right edge of the TypingBox; but don't necessarily enable the horizontal scroll bar when scrolling like this
+
 
 - allow scrollbars (vertical and horizontal) to be moved by the user, to take a peek at the rest of the text (two Paint modes: 'follow the cursor' and 'follow the scrollbars')
 
