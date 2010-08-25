@@ -46,6 +46,20 @@ namespace Typist.TextBuffers
         }
         private string[] lines;
 
+        public int LongestLineLength
+        {
+            get
+            {
+                if (longestLineLength == null)
+                    longestLineLength = Lines.Select(l => l.Length)
+                                             .Concat(new[] { 0 })
+                                             .Max();
+
+                return (int)longestLineLength;
+            }
+        }
+        private int? longestLineLength;
+
         public TextBuffer Expanded
         {
             get

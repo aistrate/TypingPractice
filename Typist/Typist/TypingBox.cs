@@ -167,80 +167,103 @@ namespace Typist
                 Height = this.Height,
             };
 
-            RectangleF[] sampleCharAreas = getCharAreas32("mm\nm", new[] { 0, 1, 3 },
-                                                          g, unlimitedHeightArea(controlBounds));
+            SizeF cellSize = getCellSize(g, controlBounds);
 
-            float charWidth = sampleCharAreas[0].Width,
-                  rowHeight = sampleCharAreas[2].Y - sampleCharAreas[0].Y;
-
-            int charMarginLeftRight = (int)Math.Round(sampleCharAreas[0].Width / 4, 0),
-                charMarginTopBottom = (int)Math.Round(sampleCharAreas[0].Height / 8, 0),
-                roundedCharWidth = (int)Math.Round(sampleCharAreas[0].Width, 0);
-
-            float left = TextMargin.Left + charMarginLeftRight,
-                  top = TextMargin.Top + charMarginTopBottom,
-                  right = controlBounds.Width - TextMargin.Right - charMarginLeftRight - roundedCharWidth,
-                  bottom = controlBounds.Height - TextMargin.Bottom - charMarginTopBottom;
-
-            RectangleF typingArea = new RectangleF()
-            {
-                X = left,
-                Y = top,
-                Width = Math.Max(right - left, roundedCharWidth - 1),
-                Height = Math.Max(bottom - top, (float)Math.Ceiling(rowHeight) + 3),
-            };
-
-            float hOffset = charWidth * calcColumnOffset(g, typingArea, charWidth),
-                  vOffset = rowHeight * calcRowOffset(g, typingArea, rowHeight);
+            RectangleF typingArea = getTypingArea(g, controlBounds, cellSize),
+                       documentArea = getDocumentArea(g, typingArea, cellSize);
 
             return new GraphicsContext()
             {
                 Graphics = g,
                 ControlBounds = controlBounds,
-                FirstCharArea = sampleCharAreas[0],
+                CellSize = cellSize,
                 TypingArea = typingArea,
-                DocumentArea = new RectangleF(typingArea.X + hOffset,
-                                              typingArea.Y + vOffset,
-                                              typingArea.Width,
-                                              typingArea.Height - vOffset),
+                DocumentArea = documentArea,
             };
         }
 
-        private int calcColumnOffset(Graphics g, RectangleF typingArea, float charWidth)
+        private SizeF getCellSize(Graphics g, RectangleF controlBounds)
         {
-            int visibleColumns = Math.Max(1, (int)Math.Floor((double)typingArea.Width / charWidth));
+            RectangleF[] sampleCharAreas = getCharAreas32("mm\nm", new[] { 0, 1, 3 },
+                                                          g, getUnlimitedHeightArea(controlBounds));
 
-            return 0;
+            return new SizeF(sampleCharAreas[0].Width,
+                             sampleCharAreas[2].Y - sampleCharAreas[0].Y);
         }
 
-        private int calcRowOffset(Graphics g, RectangleF typingArea, float rowHeight)
+        private RectangleF getTypingArea(Graphics g, RectangleF controlBounds, SizeF cellSize)
         {
-            if (ImportedText.Length == 0 || rowHeight == 0)
+            int charMarginLeftRight = (int)Math.Round(cellSize.Width / 4, 0),
+                charMarginTopBottom = (int)Math.Round(cellSize.Height / 8, 0),
+                roundedColWidth = (int)Math.Round(cellSize.Width, 0);
+
+            float left = TextMargin.Left + charMarginLeftRight,
+                  top = TextMargin.Top + charMarginTopBottom,
+                  right = controlBounds.Width - TextMargin.Right - charMarginLeftRight - roundedColWidth,
+                  bottom = controlBounds.Height - TextMargin.Bottom - charMarginTopBottom;
+
+            return new RectangleF()
+            {
+                X = left,
+                Y = top,
+                Width = Math.Max(right - left, roundedColWidth - 1),
+                Height = Math.Max(bottom - top, (float)Math.Ceiling(cellSize.Height) + 3),
+            };
+        }
+
+        private RectangleF getDocumentArea(Graphics g, RectangleF typingArea, SizeF cellSize)
+        {
+            RectangleF unlimitedHeightArea = getUnlimitedHeightArea(typingArea);
+
+            RectangleF cursorArea = getCursorCharArea(g, unlimitedHeightArea);
+            RectangleF lastDocumentCharArea = getLastDocumentCharArea(g, unlimitedHeightArea);
+
+            Point cursorColumnRow = getColumnRow(cursorArea.Location, unlimitedHeightArea.Location, cellSize);
+
+            Size documentColumnsRows =
+                new Size(ImportedText.LongestLineLength - 1,
+                         getColumnRow(lastDocumentCharArea.Location, unlimitedHeightArea.Location, cellSize).Y);
+
+            Size visibleColumnsRows = getVisibleColumnsRows(typingArea.Size, cellSize);
+
+            float hOffset = cellSize.Width * calcColumnOffset(g, cursorColumnRow.X, visibleColumnsRows.Width, documentColumnsRows.Width),
+                  vOffset = cellSize.Height * calcRowOffset(g, cursorColumnRow.Y, visibleColumnsRows.Height, documentColumnsRows.Height);
+
+            return new RectangleF(typingArea.X + hOffset,
+                                  typingArea.Y + vOffset,
+                                  typingArea.Width,
+                                  typingArea.Height - vOffset);
+        }
+
+        private int calcColumnOffset(Graphics g, int cursorColumn, int visibleColumns, int lastDocumentColumn)
+        {
+            if (ImportedText.Length == 0 || WordWrap)
+                return 0;
+
+            int columnOffset;
+
+            if (lastDocumentColumn < visibleColumns ||
+                cursorColumn <= visibleColumns / 2)
+                columnOffset = 0;
+            else if (lastDocumentColumn - cursorColumn >= visibleColumns / 2)
+                columnOffset = -cursorColumn + visibleColumns / 2;
+            else
+                columnOffset = visibleColumns - 1 - lastDocumentColumn;
+
+            int firstVisibleColumn = -columnOffset,
+                lastVisibleColumn = Math.Min(firstVisibleColumn + visibleColumns - 1, lastDocumentColumn),
+                totalColumnCount = lastDocumentColumn + 1;
+
+            return columnOffset;
+        }
+
+        private int calcRowOffset(Graphics g, int cursorRow, int visibleRows, int lastDocumentRow)
+        {
+            if (ImportedText.Length == 0)
             {
                 OnVisibleRegionChanged(new VisibleRegionChangedEventArgs(0, -1, 0));
                 return 0;
             }
-
-            RectangleF unlimitedArea = unlimitedHeightArea(typingArea);
-
-            RectangleF lastDocumentCharArea = getCharArea(ImportedText.Expanded.ToString(),
-                                                          ImportedText.Expanded.Length - 1,
-                                                          g, unlimitedArea);
-
-            int lastDocumentRow = getRow(lastDocumentCharArea.Y, unlimitedArea.Y, rowHeight);
-
-            int cursorRow = lastDocumentRow;
-
-            if (TypedText.LastIndex < ImportedText.LastIndex)
-            {
-                RectangleF cursorCharArea = getCharArea(ImportedText.Expanded.ToString(),
-                                                        TypedText.ExpandedLength,
-                                                        g, unlimitedArea);
-
-                cursorRow = getRow(cursorCharArea.Y, unlimitedArea.Y, rowHeight);
-            }
-
-            int visibleRows = Math.Max(1, (int)Math.Floor((double)typingArea.Height / rowHeight));
 
             int rowOffset;
 
@@ -261,7 +284,33 @@ namespace Typist
             return rowOffset;
         }
 
-        private RectangleF unlimitedHeightArea(RectangleF area)
+        private RectangleF getCursorCharArea(Graphics g, RectangleF unlimitedHeightArea)
+        {
+            return getCharArea(ImportedText.Expanded.ToString() + " ",
+                               Math.Min(TypedText.ExpandedLength, ImportedText.Expanded.Length),
+                               g, unlimitedHeightArea);
+        }
+
+        private RectangleF getLastDocumentCharArea(Graphics g, RectangleF unlimitedHeightArea)
+        {
+            return getCharArea(ImportedText.Expanded.ToString(),
+                               ImportedText.Expanded.Length - 1,
+                               g, unlimitedHeightArea);
+        }
+
+        private Size getVisibleColumnsRows(SizeF typingAreaSize, SizeF cellSize)
+        {
+            return new Size(Math.Max(1, (int)Math.Floor((double)typingAreaSize.Width / cellSize.Width)),
+                            Math.Max(1, (int)Math.Floor((double)typingAreaSize.Height / cellSize.Height)));
+        }
+
+        private Point getColumnRow(PointF charLocation, PointF origin, SizeF cellSize)
+        {
+            return new Point((int)Math.Round((double)(charLocation.X - origin.X) / cellSize.Width, 0),
+                             (int)Math.Round((double)(charLocation.Y - origin.Y) / cellSize.Height, 0));
+        }
+
+        private RectangleF getUnlimitedHeightArea(RectangleF area)
         {
             return new RectangleF()
             {
@@ -270,11 +319,6 @@ namespace Typist
                 Width = area.Width,
                 Height = float.MaxValue,
             };
-        }
-
-        private int getRow(float charY, float typingAreaY, float rowHeight)
-        {
-            return (int)Math.Round((double)(charY - typingAreaY) / rowHeight, 0);
         }
 
         private void drawImportedText(GraphicsContext gc)
@@ -375,7 +419,7 @@ namespace Typist
 
                 if (CursorAsVerticalBar)
                 {
-                    int barCursorWidth = Math.Max(1, 1 + (int)Math.Round(gc.FirstCharArea.Width * BarCursorRelativeWidth, 0));
+                    int barCursorWidth = Math.Max(1, 1 + (int)Math.Round(gc.CellSize.Width * BarCursorRelativeWidth, 0));
 
                     gc.Graphics.FillRectangle(Theme.CursorColor, new RectangleF()
                     {
@@ -538,7 +582,7 @@ namespace Typist
         {
             public Graphics Graphics;
             public RectangleF ControlBounds;
-            public RectangleF FirstCharArea;
+            public SizeF CellSize;
             public RectangleF TypingArea;
             public RectangleF DocumentArea;
         }
