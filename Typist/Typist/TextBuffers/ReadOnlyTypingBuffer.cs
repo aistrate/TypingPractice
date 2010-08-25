@@ -34,6 +34,18 @@ namespace Typist.TextBuffers
             CountWhitespaceAsWordChars = countWhitespaceAsWordChars;
         }
 
+        public string[] Lines
+        {
+            get
+            {
+                if (lines == null)
+                    lines = this.ToString().Split('\n');
+
+                return lines;
+            }
+        }
+        private string[] lines;
+
         public TextBuffer Expanded
         {
             get

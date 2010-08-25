@@ -149,9 +149,11 @@ namespace Typist
 
                 drawImportedText(gc);
                 drawShadowText(gc);
+
                 drawErrorChars(gc);
+                drawClipMargins(gc);
+
                 drawCursor(gc);
-                drawTopMargin(gc);
             }
         }
 
@@ -168,26 +170,28 @@ namespace Typist
             RectangleF[] sampleCharAreas = getCharAreas32("mm\nm", new[] { 0, 1, 3 },
                                                           g, unlimitedHeightArea(controlBounds));
 
-            float rowHeight = sampleCharAreas[2].Y - sampleCharAreas[0].Y;
+            float charWidth = sampleCharAreas[0].Width,
+                  rowHeight = sampleCharAreas[2].Y - sampleCharAreas[0].Y;
 
             int charMarginLeftRight = (int)Math.Round(sampleCharAreas[0].Width / 4, 0),
                 charMarginTopBottom = (int)Math.Round(sampleCharAreas[0].Height / 8, 0),
-                averageCharWidth = (int)Math.Round(sampleCharAreas[1].Width, 0);
+                roundedCharWidth = (int)Math.Round(sampleCharAreas[0].Width, 0);
 
             float left = TextMargin.Left + charMarginLeftRight,
                   top = TextMargin.Top + charMarginTopBottom,
-                  right = controlBounds.Width - TextMargin.Right - charMarginLeftRight - averageCharWidth,
+                  right = controlBounds.Width - TextMargin.Right - charMarginLeftRight - roundedCharWidth,
                   bottom = controlBounds.Height - TextMargin.Bottom - charMarginTopBottom;
 
             RectangleF typingArea = new RectangleF()
             {
                 X = left,
                 Y = top,
-                Width = Math.Max(right - left, averageCharWidth - 1),
+                Width = Math.Max(right - left, roundedCharWidth - 1),
                 Height = Math.Max(bottom - top, (float)Math.Ceiling(rowHeight) + 3),
             };
 
-            float vOffset = rowHeight * calculateRowOffset(g, typingArea, rowHeight);
+            float hOffset = charWidth * calcColumnOffset(g, typingArea, charWidth),
+                  vOffset = rowHeight * calcRowOffset(g, typingArea, rowHeight);
 
             return new GraphicsContext()
             {
@@ -195,12 +199,21 @@ namespace Typist
                 ControlBounds = controlBounds,
                 FirstCharArea = sampleCharAreas[0],
                 TypingArea = typingArea,
-                DocumentArea = new RectangleF(typingArea.X, typingArea.Y + vOffset,
-                                              typingArea.Width, typingArea.Height - vOffset),
+                DocumentArea = new RectangleF(typingArea.X + hOffset,
+                                              typingArea.Y + vOffset,
+                                              typingArea.Width,
+                                              typingArea.Height - vOffset),
             };
         }
 
-        private int calculateRowOffset(Graphics g, RectangleF typingArea, float rowHeight)
+        private int calcColumnOffset(Graphics g, RectangleF typingArea, float charWidth)
+        {
+            int visibleColumns = Math.Max(1, (int)Math.Floor((double)typingArea.Width / charWidth));
+
+            return 0;
+        }
+
+        private int calcRowOffset(Graphics g, RectangleF typingArea, float rowHeight)
         {
             if (ImportedText.Length == 0 || rowHeight == 0)
             {
@@ -448,7 +461,7 @@ namespace Typist
                           .ToArray();
         }
 
-        private void drawTopMargin(GraphicsContext gc)
+        private void drawClipMargins(GraphicsContext gc)
         {
             gc.Graphics.FillRectangle(Brushes.White, new RectangleF()
             {
@@ -456,6 +469,14 @@ namespace Typist
                 Y = 0,
                 Width = gc.ControlBounds.Width,
                 Height = gc.TypingArea.Y + 1,
+            });
+
+            gc.Graphics.FillRectangle(Brushes.White, new RectangleF()
+            {
+                X = 0,
+                Y = 0,
+                Width = gc.TypingArea.X,
+                Height = gc.ControlBounds.Height,
             });
         }
 

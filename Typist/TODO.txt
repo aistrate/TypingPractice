@@ -14,12 +14,12 @@ General:
 
 - when word wrap = true: new property on ROTypingBuffer, MultipleSpaceIndexes (int[]); an element in this list is the index of the last space in a group (of two or more); use it to calculate the max width of the text, and scroll text to the left when typing these spaces, if they fall at the right edge of the TypingBox; but don't necessarily enable the horizontal scroll bar when scrolling like this
 
-- predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
-
-
 - the Backspace key should delete all spaces back to a non-space char (similar to the way the Tab key works)
 
 - correct calculation of TotalErrors to better account for the multiple spaces expanded/deleted by Tab/Backspace
+
+
+- predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 
 - add user setting: "Show visual glyphs for word wrap" (as in VS); or, alternatively: show visual glyphs when "Word wrap" is off, for lines that go beyond the right edge of the screen
 
