@@ -237,15 +237,7 @@ namespace Typist
             if (ImportedText.Length == 0 || WordWrap)
                 return 0;
 
-            int columnOffset;
-
-            if (documentColumns <= visibleColumns ||
-                cursorColumn <= visibleColumns / 2)
-                columnOffset = 0;
-            else if (documentColumns - 1 - cursorColumn >= visibleColumns / 2)
-                columnOffset = -cursorColumn + visibleColumns / 2;
-            else
-                columnOffset = visibleColumns - documentColumns;
+            int columnOffset = calculateOffset(cursorColumn, visibleColumns, documentColumns);
 
             int firstVisibleColumn = -columnOffset,
                 lastVisibleColumn = Math.Min(firstVisibleColumn + visibleColumns - 1, documentColumns - 1),
@@ -262,15 +254,7 @@ namespace Typist
                 return 0;
             }
 
-            int rowOffset;
-
-            if (documentRows <= visibleRows ||
-                cursorRow <= visibleRows / 2)
-                rowOffset = 0;
-            else if (documentRows - 1 - cursorRow >= visibleRows / 2)
-                rowOffset = -cursorRow + visibleRows / 2;
-            else
-                rowOffset = visibleRows - documentRows;
+            int rowOffset = calculateOffset(cursorRow, visibleRows, documentRows);
 
             int firstVisibleRow = -rowOffset,
                 lastVisibleRow = Math.Min(firstVisibleRow + visibleRows - 1, documentRows - 1),
@@ -283,7 +267,13 @@ namespace Typist
 
         private int calculateOffset(int cursorLocation, int visibleSize, int documentSize)
         {
-            return 0;
+            if (documentSize <= visibleSize ||
+                cursorLocation <= visibleSize / 2)
+                return 0;
+            else if (documentSize - 1 - cursorLocation >= visibleSize / 2)
+                return -cursorLocation + visibleSize / 2;
+            else
+                return visibleSize - documentSize;
         }
 
         private RectangleF getCursorCharArea(Graphics g, RectangleF unlimitedHeightArea)
