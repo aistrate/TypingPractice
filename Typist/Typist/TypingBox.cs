@@ -216,18 +216,15 @@ namespace Typist
             RectangleF unlimitedHeightArea = getUnlimitedHeightArea(typingArea);
 
             RectangleF cursorArea = getCursorCharArea(g, unlimitedHeightArea);
-            RectangleF lastDocumentCharArea = getLastDocumentCharArea(g, unlimitedHeightArea);
-
             Point cursorColumnRow = getColumnRow(cursorArea.Location, unlimitedHeightArea.Location, cellSize);
 
-            Size documentColumnsRows =
-                new Size(ImportedText.LongestLineLength - 1,
-                         getColumnRow(lastDocumentCharArea.Location, unlimitedHeightArea.Location, cellSize).Y);
+            Size documentColumnsRows = new Size(ImportedText.LongestLineLength,
+                                                getDocumentRows(g, unlimitedHeightArea, cellSize));
 
             Size visibleColumnsRows = getVisibleColumnsRows(typingArea.Size, cellSize);
 
-            float hOffset = cellSize.Width * calcColumnOffset(g, cursorColumnRow.X, visibleColumnsRows.Width, documentColumnsRows.Width),
-                  vOffset = cellSize.Height * calcRowOffset(g, cursorColumnRow.Y, visibleColumnsRows.Height, documentColumnsRows.Height);
+            float hOffset = cellSize.Width * calcColumnOffset(cursorColumnRow.X, visibleColumnsRows.Width, documentColumnsRows.Width),
+                  vOffset = cellSize.Height * calcRowOffset(cursorColumnRow.Y, visibleColumnsRows.Height, documentColumnsRows.Height);
 
             return new RectangleF(typingArea.X + hOffset,
                                   typingArea.Y + vOffset,
@@ -235,29 +232,29 @@ namespace Typist
                                   typingArea.Height - vOffset);
         }
 
-        private int calcColumnOffset(Graphics g, int cursorColumn, int visibleColumns, int lastDocumentColumn)
+        private int calcColumnOffset(int cursorColumn, int visibleColumns, int documentColumns)
         {
             if (ImportedText.Length == 0 || WordWrap)
                 return 0;
 
             int columnOffset;
 
-            if (lastDocumentColumn < visibleColumns ||
+            if (documentColumns <= visibleColumns ||
                 cursorColumn <= visibleColumns / 2)
                 columnOffset = 0;
-            else if (lastDocumentColumn - cursorColumn >= visibleColumns / 2)
+            else if (documentColumns - 1 - cursorColumn >= visibleColumns / 2)
                 columnOffset = -cursorColumn + visibleColumns / 2;
             else
-                columnOffset = visibleColumns - 1 - lastDocumentColumn;
+                columnOffset = visibleColumns - documentColumns;
 
             int firstVisibleColumn = -columnOffset,
-                lastVisibleColumn = Math.Min(firstVisibleColumn + visibleColumns - 1, lastDocumentColumn),
-                totalColumnCount = lastDocumentColumn + 1;
+                lastVisibleColumn = Math.Min(firstVisibleColumn + visibleColumns - 1, documentColumns - 1),
+                totalColumnCount = documentColumns;
 
             return columnOffset;
         }
 
-        private int calcRowOffset(Graphics g, int cursorRow, int visibleRows, int lastDocumentRow)
+        private int calcRowOffset(int cursorRow, int visibleRows, int documentRows)
         {
             if (ImportedText.Length == 0)
             {
@@ -267,21 +264,26 @@ namespace Typist
 
             int rowOffset;
 
-            if (lastDocumentRow < visibleRows ||
+            if (documentRows <= visibleRows ||
                 cursorRow <= visibleRows / 2)
                 rowOffset = 0;
-            else if (lastDocumentRow - cursorRow >= visibleRows / 2)
+            else if (documentRows - 1 - cursorRow >= visibleRows / 2)
                 rowOffset = -cursorRow + visibleRows / 2;
             else
-                rowOffset = visibleRows - 1 - lastDocumentRow;
+                rowOffset = visibleRows - documentRows;
 
             int firstVisibleRow = -rowOffset,
-                lastVisibleRow = Math.Min(firstVisibleRow + visibleRows - 1, lastDocumentRow),
-                totalRowCount = lastDocumentRow + 1;
+                lastVisibleRow = Math.Min(firstVisibleRow + visibleRows - 1, documentRows - 1),
+                totalRowCount = documentRows;
 
             OnVisibleRegionChanged(new VisibleRegionChangedEventArgs(firstVisibleRow, lastVisibleRow, totalRowCount));
 
             return rowOffset;
+        }
+
+        private int calculateOffset(int cursorLocation, int visibleSize, int documentSize)
+        {
+            return 0;
         }
 
         private RectangleF getCursorCharArea(Graphics g, RectangleF unlimitedHeightArea)
@@ -291,11 +293,18 @@ namespace Typist
                                g, unlimitedHeightArea);
         }
 
-        private RectangleF getLastDocumentCharArea(Graphics g, RectangleF unlimitedHeightArea)
+        private int getDocumentRows(Graphics g, RectangleF unlimitedHeightArea, SizeF cellSize)
         {
-            return getCharArea(ImportedText.Expanded.ToString(),
-                               ImportedText.Expanded.Length - 1,
-                               g, unlimitedHeightArea);
+            if (ImportedText.Expanded.Length > 0)
+            {
+                RectangleF lastDocumentCharArea = getCharArea(ImportedText.Expanded.ToString(),
+                                                              ImportedText.Expanded.Length - 1,
+                                                              g, unlimitedHeightArea);
+
+                return getColumnRow(lastDocumentCharArea.Location, unlimitedHeightArea.Location, cellSize).Y + 1;
+            }
+            else
+                return 0;
         }
 
         private Size getVisibleColumnsRows(SizeF typingAreaSize, SizeF cellSize)
