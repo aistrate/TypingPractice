@@ -248,20 +248,24 @@ namespace Typist
         private int calcColumnOffset(int cursorColumn, int visibleColumns, int documentColumns, int currentLineColumns)
         {
             int columnOffset;
-            VisibleRegionChangedEventArgs horizontalEventArgs;
 
             if (WordWrap)
             {
-                columnOffset = 0;
+                visibleColumns += 1;
 
-                horizontalEventArgs = new VisibleRegionChangedEventArgs(0, -1, 0);
+                columnOffset = Math.Min(0, visibleColumns - 1 - cursorColumn);
+
+                int extraColumns = 0;
+
+                if (cursorColumn >= visibleColumns - 1)
+                    extraColumns = -columnOffset + Math.Max(0, ImportedText.CountSpaces(TypedText.Length) - 1);
+
+                documentColumns = visibleColumns + extraColumns;
             }
             else
-            {
                 columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns);
 
-                horizontalEventArgs = createVisibleRegionChangedEventArgs(columnOffset, visibleColumns, documentColumns);
-            }
+            var horizontalEventArgs = createVisibleRegionChangedEventArgs(columnOffset, visibleColumns, documentColumns);
 
             oldHorizontalEventArgs = Util.RaiseIfEventArgsChanged(OnHorizontalVisibleRegionChanged,
                                                                   horizontalEventArgs,

@@ -52,5 +52,15 @@ namespace Typist.TextBuffers
 
             return count;
         }
+
+        public int CountSpaces(int index)
+        {
+            int spaces = 0;
+
+            for (int i = index; i < Length && this[i] == ' '; i++)
+                spaces++;
+
+            return spaces;
+        }
     }
 }

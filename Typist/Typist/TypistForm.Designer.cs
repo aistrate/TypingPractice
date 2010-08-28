@@ -494,7 +494,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.MinimumSize = new System.Drawing.Size(470, 153);
+            this.MinimumSize = new System.Drawing.Size(470, 170);
             this.Name = "TypistForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
