@@ -66,8 +66,9 @@
             this.pgsTypingProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatusBarSep3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblTrafficLight = new System.Windows.Forms.ToolStripStatusLabel();
-            this.scrTypingVertical = new System.Windows.Forms.VScrollBar();
+            this.scrVTyping = new System.Windows.Forms.VScrollBar();
             this.picTyping = new Typist.TypingBox();
+            this.scrHTyping = new System.Windows.Forms.HScrollBar();
             this.mnuContextMenu.SuspendLayout();
             this.staStatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTyping)).BeginInit();
@@ -427,16 +428,16 @@
             this.lblTrafficLight.Name = "lblTrafficLight";
             this.lblTrafficLight.Size = new System.Drawing.Size(22, 17);
             // 
-            // scrTypingVertical
+            // scrVTyping
             // 
-            this.scrTypingVertical.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.scrVTyping.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.scrTypingVertical.Enabled = false;
-            this.scrTypingVertical.Location = new System.Drawing.Point(445, 29);
-            this.scrTypingVertical.Name = "scrTypingVertical";
-            this.scrTypingVertical.Size = new System.Drawing.Size(17, 515);
-            this.scrTypingVertical.TabIndex = 14;
-            this.scrTypingVertical.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrTypingVertical_Scroll);
+            this.scrVTyping.Enabled = false;
+            this.scrVTyping.Location = new System.Drawing.Point(445, 29);
+            this.scrVTyping.Name = "scrVTyping";
+            this.scrVTyping.Size = new System.Drawing.Size(17, 498);
+            this.scrVTyping.TabIndex = 14;
+            this.scrVTyping.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrVTyping_Scroll);
             // 
             // picTyping
             // 
@@ -448,7 +449,7 @@
             this.picTyping.ImportedText = null;
             this.picTyping.Location = new System.Drawing.Point(0, 29);
             this.picTyping.Name = "picTyping";
-            this.picTyping.Size = new System.Drawing.Size(445, 515);
+            this.picTyping.Size = new System.Drawing.Size(445, 498);
             this.picTyping.TabIndex = 2;
             this.picTyping.TabStop = false;
             this.picTyping.TextMargin = new System.Windows.Forms.Padding(0);
@@ -460,14 +461,26 @@
             this.picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(this.picTyping_DrawingCursor);
             this.picTyping.VerticalVisibleRegionChanged += new Typist.VisibleRegionChangedEventHandler(this.picTyping_VerticalVisibleRegionChanged);
             // 
+            // scrHTyping
+            // 
+            this.scrHTyping.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.scrHTyping.Enabled = false;
+            this.scrHTyping.Location = new System.Drawing.Point(0, 527);
+            this.scrHTyping.Name = "scrHTyping";
+            this.scrHTyping.Size = new System.Drawing.Size(445, 17);
+            this.scrHTyping.TabIndex = 15;
+            this.scrHTyping.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrHTyping_Scroll);
+            // 
             // TypistForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(462, 566);
+            this.Controls.Add(this.scrHTyping);
             this.Controls.Add(this.staStatusBar);
             this.Controls.Add(this.tblBottomLine);
-            this.Controls.Add(this.scrTypingVertical);
+            this.Controls.Add(this.scrVTyping);
             this.Controls.Add(this.lblAccuracy);
             this.Controls.Add(this.lblErrorCount);
             this.Controls.Add(this.tblTopLine);
@@ -535,7 +548,7 @@
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep1;
         private System.Windows.Forms.ToolStripProgressBar pgsTypingProgress;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusBarSep3;
-        private System.Windows.Forms.VScrollBar scrTypingVertical;
+        private System.Windows.Forms.VScrollBar scrVTyping;
         private System.Windows.Forms.ToolStripStatusLabel lblTrafficLight;
         private System.Windows.Forms.ToolStripSplitButton btnStatistics;
         private System.Windows.Forms.ToolStripMenuItem toolStripPercentage;
@@ -543,6 +556,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripTotal;
         private System.Windows.Forms.ToolStripMenuItem toolStripTypedPerTotal;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.HScrollBar scrHTyping;
     }
 }
 

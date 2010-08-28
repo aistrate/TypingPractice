@@ -129,18 +129,26 @@ namespace Typist
 
         private void picTyping_HorizontalVisibleRegionChanged(object sender, VisibleRegionChangedEventArgs e)
         {
+            firstVisibleColumn = e.FirstVisibleIndex;
+
+            setScrollBarRegion(scrHTyping, e);
+        }
+        private int firstVisibleColumn;
+
+        private void scrHTyping_Scroll(object sender, ScrollEventArgs e)
+        {
+            e.NewValue = firstVisibleColumn;
         }
 
         private void picTyping_VerticalVisibleRegionChanged(object sender, VisibleRegionChangedEventArgs e)
         {
             firstVisibleRow = e.FirstVisibleIndex;
 
-            setScrollBarRegion(scrTypingVertical, e);
+            setScrollBarRegion(scrVTyping, e);
         }
-
         private int firstVisibleRow;
 
-        private void scrTypingVertical_Scroll(object sender, ScrollEventArgs e)
+        private void scrVTyping_Scroll(object sender, ScrollEventArgs e)
         {
             e.NewValue = firstVisibleRow;
         }
