@@ -237,7 +237,7 @@ namespace Typist
 
         private int calcColumnOffset(int cursorColumn, int visibleColumns, int documentColumns, int currentLineColumns)
         {
-            if (ImportedText.Length == 0 || WordWrap)
+            if (WordWrap)
                 return 0;
 
             int columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns);
@@ -251,12 +251,6 @@ namespace Typist
 
         private int calcRowOffset(int cursorRow, int visibleRows, int documentRows)
         {
-            if (ImportedText.Length == 0)
-            {
-                OnVisibleRegionChanged(new VisibleRegionChangedEventArgs(0, -1, 0));
-                return 0;
-            }
-
             int rowOffset = calculateOffset(cursorRow, visibleRows, documentRows);
 
             int firstVisibleRow = -rowOffset,
