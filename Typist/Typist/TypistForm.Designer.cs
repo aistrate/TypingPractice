@@ -456,7 +456,8 @@
             this.picTyping.TypingFont = null;
             this.picTyping.StatusChanged += new Typist.StatusChangedEventHandler(this.picTyping_StatusChanged);
             this.picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(this.picTyping_DrawingCursor);
-            this.picTyping.VisibleRegionChanged += new Typist.VisibleRegionChangedEventHandler(this.picTyping_VisibleRegionChanged);
+            this.picTyping.HorizontalVisibleRegionChanged += new Typist.VisibleRegionChangedEventHandler(this.picTyping_HorizontalVisibleRegionChanged);
+            this.picTyping.VerticalVisibleRegionChanged += new Typist.VisibleRegionChangedEventHandler(this.picTyping_VerticalVisibleRegionChanged);
             // 
             // TypistForm
             // 

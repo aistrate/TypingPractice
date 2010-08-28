@@ -26,16 +26,16 @@ namespace Typist
 
     public class VisibleRegionChangedEventArgs : EventArgs
     {
-        public VisibleRegionChangedEventArgs(int firstVisibleRow, int lastVisibleRow, int totalRowCount)
+        public VisibleRegionChangedEventArgs(int firstVisibleIndex, int lastVisibleIndex, int totalLength)
         {
-            FirstVisibleRow = firstVisibleRow;
-            LastVisibleRow = lastVisibleRow;
-            TotalRowCount = totalRowCount;
+            FirstVisibleIndex = firstVisibleIndex;
+            LastVisibleIndex = lastVisibleIndex;
+            TotalLength = totalLength;
         }
 
-        public int FirstVisibleRow { get; private set; }
-        public int LastVisibleRow { get; private set; }
-        public int TotalRowCount { get; private set; }
+        public int FirstVisibleIndex { get; private set; }
+        public int LastVisibleIndex { get; private set; }
+        public int TotalLength { get; private set; }
     }
 
     public delegate void VisibleRegionChangedEventHandler(object sender, VisibleRegionChangedEventArgs e);

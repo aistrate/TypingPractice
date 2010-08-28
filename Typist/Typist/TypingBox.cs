@@ -86,7 +86,11 @@ namespace Typist
 
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        public event VisibleRegionChangedEventHandler VisibleRegionChanged;
+        public event VisibleRegionChangedEventHandler HorizontalVisibleRegionChanged;
+
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        public event VisibleRegionChangedEventHandler VerticalVisibleRegionChanged;
 
         #endregion
 
@@ -128,10 +132,16 @@ namespace Typist
             ShowStatusMessage(string.Format(format, args));
         }
 
-        protected virtual void OnVisibleRegionChanged(VisibleRegionChangedEventArgs e)
+        protected virtual void OnHorizontalVisibleRegionChanged(VisibleRegionChangedEventArgs e)
         {
-            if (VisibleRegionChanged != null)
-                VisibleRegionChanged(this, e);
+            if (HorizontalVisibleRegionChanged != null)
+                HorizontalVisibleRegionChanged(this, e);
+        }
+
+        protected virtual void OnVerticalVisibleRegionChanged(VisibleRegionChangedEventArgs e)
+        {
+            if (VerticalVisibleRegionChanged != null)
+                VerticalVisibleRegionChanged(this, e);
         }
 
         #endregion
@@ -242,9 +252,7 @@ namespace Typist
 
             int columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns);
 
-            int firstVisibleColumn = -columnOffset,
-                lastVisibleColumn = Math.Min(firstVisibleColumn + visibleColumns - 1, documentColumns - 1),
-                totalColumnCount = documentColumns;
+            OnHorizontalVisibleRegionChanged(getVisibleRegionChangedEventArgs(columnOffset, visibleColumns, documentColumns));
 
             return columnOffset;
         }
@@ -253,11 +261,7 @@ namespace Typist
         {
             int rowOffset = calculateOffset(cursorRow, visibleRows, documentRows);
 
-            int firstVisibleRow = -rowOffset,
-                lastVisibleRow = Math.Min(firstVisibleRow + visibleRows - 1, documentRows - 1),
-                totalRowCount = documentRows;
-
-            OnVisibleRegionChanged(new VisibleRegionChangedEventArgs(firstVisibleRow, lastVisibleRow, totalRowCount));
+            OnVerticalVisibleRegionChanged(getVisibleRegionChangedEventArgs(rowOffset, visibleRows, documentRows));
 
             return rowOffset;
         }
@@ -271,6 +275,15 @@ namespace Typist
                 return -cursorLocation + visibleSize / 2;
             else
                 return visibleSize - documentSize;
+        }
+
+        private VisibleRegionChangedEventArgs getVisibleRegionChangedEventArgs(int offset, int visibleSize, int documentSize)
+        {
+            int firstVisibleIndex = -offset,
+                lastVisibleIndex = Math.Min(firstVisibleIndex + visibleSize - 1, documentSize - 1),
+                totalLength = documentSize;
+
+            return new VisibleRegionChangedEventArgs(firstVisibleIndex, lastVisibleIndex, totalLength);
         }
 
         private RectangleF getCursorCharArea(Graphics g, RectangleF unlimitedHeightArea)

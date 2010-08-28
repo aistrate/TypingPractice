@@ -68,8 +68,9 @@ namespace Typist
             //if (string.IsNullOrEmpty(filePath))
             //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\SingleParagraph\European Wildcat.txt";
             //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
-                //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
-                //filePath = @"C:\Users\Adrian\Samples\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
+            //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
+            //filePath = @"C:\Users\Adrian\Samples\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
+                //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Code\C\Done\pretty.c.08.txt";
 
             ImportFile(filePath);
 
@@ -126,22 +127,15 @@ namespace Typist
             lblStatusBarMain.Text = e.StatusMessage;
         }
 
-        private void picTyping_VisibleRegionChanged(object sender, VisibleRegionChangedEventArgs e)
+        private void picTyping_HorizontalVisibleRegionChanged(object sender, VisibleRegionChangedEventArgs e)
         {
-            firstVisibleRow = e.FirstVisibleRow;
+        }
 
-            if (e.FirstVisibleRow == 0 && e.LastVisibleRow == e.TotalRowCount - 1)
-                scrTypingVertical.Enabled = false;
-            else
-            {
-                scrTypingVertical.Enabled = true;
+        private void picTyping_VerticalVisibleRegionChanged(object sender, VisibleRegionChangedEventArgs e)
+        {
+            firstVisibleRow = e.FirstVisibleIndex;
 
-                scrTypingVertical.Minimum = 0;
-                scrTypingVertical.Maximum = e.TotalRowCount - 1;
-
-                scrTypingVertical.LargeChange = e.LastVisibleRow - e.FirstVisibleRow + 1;
-                scrTypingVertical.Value = e.FirstVisibleRow;
-            }
+            setScrollBarRegion(scrTypingVertical, e);
         }
 
         private int firstVisibleRow;
@@ -149,6 +143,22 @@ namespace Typist
         private void scrTypingVertical_Scroll(object sender, ScrollEventArgs e)
         {
             e.NewValue = firstVisibleRow;
+        }
+
+        private void setScrollBarRegion(ScrollBar scrollBar, VisibleRegionChangedEventArgs e)
+        {
+            if (e.FirstVisibleIndex == 0 && e.LastVisibleIndex == e.TotalLength - 1)
+                scrollBar.Enabled = false;
+            else
+            {
+                scrollBar.Enabled = true;
+
+                scrollBar.Minimum = 0;
+                scrollBar.Maximum = e.TotalLength - 1;
+
+                scrollBar.LargeChange = e.LastVisibleIndex - e.FirstVisibleIndex + 1;
+                scrollBar.Value = e.FirstVisibleIndex;
+            }
         }
 
         protected ReadOnlyTypingBuffer ImportedText
