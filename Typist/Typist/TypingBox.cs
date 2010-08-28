@@ -254,10 +254,11 @@ namespace Typist
             else
                 columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns);
 
-            oldHorizontalEventArgs = Util.RaiseIfEventArgsChanged(
-                OnHorizontalVisibleRegionChanged,
-                createVisibleRegionChangedEventArgs(columnOffset, visibleColumns, documentColumns),
-                oldHorizontalEventArgs);
+            var horizontalEventArgs = createVisibleRegionChangedEventArgs(columnOffset, visibleColumns, documentColumns);
+
+            oldHorizontalEventArgs = Util.RaiseIfEventArgsChanged(OnHorizontalVisibleRegionChanged,
+                                                                  horizontalEventArgs,
+                                                                  oldHorizontalEventArgs);
 
             return columnOffset;
         }
@@ -267,10 +268,11 @@ namespace Typist
         {
             int rowOffset = calculateOffset(cursorRow, visibleRows, documentRows);
 
-            oldVerticalEventArgs = Util.RaiseIfEventArgsChanged(
-                OnVerticalVisibleRegionChanged,
-                createVisibleRegionChangedEventArgs(rowOffset, visibleRows, documentRows),
-                oldVerticalEventArgs);
+            var verticalEventArgs = createVisibleRegionChangedEventArgs(rowOffset, visibleRows, documentRows);
+
+            oldVerticalEventArgs = Util.RaiseIfEventArgsChanged(OnVerticalVisibleRegionChanged,
+                                                                verticalEventArgs,
+                                                                oldVerticalEventArgs);
 
             return rowOffset;
         }
