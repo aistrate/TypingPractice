@@ -218,12 +218,15 @@ namespace Typist
             RectangleF cursorArea = getCursorCharArea(g, unlimitedHeightArea);
             Point cursorColumnRow = getColumnRow(cursorArea.Location, unlimitedHeightArea.Location, cellSize);
 
+            int currentLineColumns = ImportedText.LineLength(TypedText.Length);
+
             Size documentColumnsRows = new Size(ImportedText.LongestLineLength,
                                                 getDocumentRows(g, unlimitedHeightArea, cellSize));
 
             Size visibleColumnsRows = getVisibleColumnsRows(typingArea.Size, cellSize);
 
-            float hOffset = cellSize.Width * calcColumnOffset(cursorColumnRow.X, visibleColumnsRows.Width, documentColumnsRows.Width),
+            float hOffset = cellSize.Width * calcColumnOffset(cursorColumnRow.X, visibleColumnsRows.Width, documentColumnsRows.Width,
+                                                              currentLineColumns),
                   vOffset = cellSize.Height * calcRowOffset(cursorColumnRow.Y, visibleColumnsRows.Height, documentColumnsRows.Height);
 
             return new RectangleF(typingArea.X + hOffset,
@@ -232,12 +235,12 @@ namespace Typist
                                   typingArea.Height - vOffset);
         }
 
-        private int calcColumnOffset(int cursorColumn, int visibleColumns, int documentColumns)
+        private int calcColumnOffset(int cursorColumn, int visibleColumns, int documentColumns, int currentLineColumns)
         {
             if (ImportedText.Length == 0 || WordWrap)
                 return 0;
 
-            int columnOffset = calculateOffset(cursorColumn, visibleColumns, documentColumns);
+            int columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns);
 
             int firstVisibleColumn = -columnOffset,
                 lastVisibleColumn = Math.Min(firstVisibleColumn + visibleColumns - 1, documentColumns - 1),

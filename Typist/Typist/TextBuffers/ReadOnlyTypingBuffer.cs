@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Typist.TextBuffers
@@ -59,6 +60,33 @@ namespace Typist.TextBuffers
             }
         }
         private int? longestLineLength;
+
+        public int[] LineNumbers
+        {
+            get
+            {
+                if (lineNumbers == null)
+                {
+                    var list = new List<int>();
+
+                    for (int i = 0; i < Lines.Length; i++)
+                        list.AddRange(Enumerable.Repeat(i, Lines[i].Length + 1));
+
+                    lineNumbers = list.ToArray();
+                }
+
+                return lineNumbers;
+            }
+        }
+        private int[] lineNumbers;
+
+        public int LineLength(int index)
+        {
+            if (Length > 0)
+                return Lines[LineNumbers[index]].Length;
+            else
+                return 0;
+        }
 
         public TextBuffer Expanded
         {
