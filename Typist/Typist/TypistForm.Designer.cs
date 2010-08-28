@@ -359,7 +359,7 @@
             this.toolStripPercentage.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripPercentage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripPercentage.Name = "toolStripPercentage";
-            this.toolStripPercentage.Size = new System.Drawing.Size(152, 22);
+            this.toolStripPercentage.Size = new System.Drawing.Size(149, 22);
             this.toolStripPercentage.Tag = "0";
             this.toolStripPercentage.Text = "Percentage";
             this.toolStripPercentage.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
@@ -367,13 +367,13 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(146, 6);
             // 
             // toolStripTypedPerTotal
             // 
             this.toolStripTypedPerTotal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripTypedPerTotal.Name = "toolStripTypedPerTotal";
-            this.toolStripTypedPerTotal.Size = new System.Drawing.Size(152, 22);
+            this.toolStripTypedPerTotal.Size = new System.Drawing.Size(149, 22);
             this.toolStripTypedPerTotal.Tag = "1";
             this.toolStripTypedPerTotal.Text = "Typed / Total";
             this.toolStripTypedPerTotal.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
@@ -382,7 +382,7 @@
             // 
             this.toolStripTyped.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripTyped.Name = "toolStripTyped";
-            this.toolStripTyped.Size = new System.Drawing.Size(152, 22);
+            this.toolStripTyped.Size = new System.Drawing.Size(149, 22);
             this.toolStripTyped.Tag = "2";
             this.toolStripTyped.Text = "Typed";
             this.toolStripTyped.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
@@ -391,7 +391,7 @@
             // 
             this.toolStripTotal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripTotal.Name = "toolStripTotal";
-            this.toolStripTotal.Size = new System.Drawing.Size(152, 22);
+            this.toolStripTotal.Size = new System.Drawing.Size(149, 22);
             this.toolStripTotal.Tag = "3";
             this.toolStripTotal.Text = "Total";
             this.toolStripTotal.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
@@ -431,6 +431,7 @@
             // 
             this.scrTypingVertical.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.scrTypingVertical.Enabled = false;
             this.scrTypingVertical.Location = new System.Drawing.Point(445, 29);
             this.scrTypingVertical.Name = "scrTypingVertical";
             this.scrTypingVertical.Size = new System.Drawing.Size(17, 515);
@@ -455,8 +456,8 @@
             this.picTyping.TypedText = null;
             this.picTyping.TypingFont = null;
             this.picTyping.StatusChanged += new Typist.StatusChangedEventHandler(this.picTyping_StatusChanged);
-            this.picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(this.picTyping_DrawingCursor);
             this.picTyping.HorizontalVisibleRegionChanged += new Typist.VisibleRegionChangedEventHandler(this.picTyping_HorizontalVisibleRegionChanged);
+            this.picTyping.DrawingCursor += new System.ComponentModel.CancelEventHandler(this.picTyping_DrawingCursor);
             this.picTyping.VerticalVisibleRegionChanged += new Typist.VisibleRegionChangedEventHandler(this.picTyping_VerticalVisibleRegionChanged);
             // 
             // TypistForm

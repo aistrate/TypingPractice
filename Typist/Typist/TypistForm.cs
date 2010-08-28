@@ -282,6 +282,8 @@ namespace Typist
                                                             userSettings.RemoveEndOfLineSpaces,
                                                             userSettings.RemoveMultipleWhitespace);
 
+                lblStatusBarMain.Text = "Imported";
+
                 stopwatch.Reset();
 
                 rightAfterImport = true;

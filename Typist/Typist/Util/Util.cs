@@ -39,5 +39,14 @@ namespace Typist
                                 .OfType<T>()
                                 .ToArray();
         }
+
+        public static A RaiseIfEventArgsChanged<A>(Action<A> raiseEvent, A newEventArgs, A oldEventArgs)
+            where A : EventArgs
+        {
+            if (!newEventArgs.Equals(oldEventArgs))
+                raiseEvent(newEventArgs);
+
+            return newEventArgs;
+        }
     }
 }

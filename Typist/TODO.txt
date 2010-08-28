@@ -18,6 +18,8 @@ General:
 
 - correct calculation of TotalErrors to better account for the multiple spaces expanded/deleted by Tab/Backspace
 
+- new statistics on the status bar: row/column, row (only), column (only)
+
 
 - predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 

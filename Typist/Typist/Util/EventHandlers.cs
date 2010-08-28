@@ -36,6 +36,16 @@ namespace Typist
         public int FirstVisibleIndex { get; private set; }
         public int LastVisibleIndex { get; private set; }
         public int TotalLength { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            VisibleRegionChangedEventArgs other = obj as VisibleRegionChangedEventArgs;
+
+            return other != null &&
+                   this.FirstVisibleIndex == other.FirstVisibleIndex &&
+                   this.LastVisibleIndex == other.LastVisibleIndex &&
+                   this.TotalLength == other.TotalLength;
+        }
     }
 
     public delegate void VisibleRegionChangedEventHandler(object sender, VisibleRegionChangedEventArgs e);

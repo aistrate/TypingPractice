@@ -247,24 +247,34 @@ namespace Typist
 
         private int calcColumnOffset(int cursorColumn, int visibleColumns, int documentColumns, int currentLineColumns)
         {
+            int columnOffset;
+
             if (WordWrap)
-                return 0;
+                columnOffset = 0;
+            else
+                columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns);
 
-            int columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns);
-
-            OnHorizontalVisibleRegionChanged(getVisibleRegionChangedEventArgs(columnOffset, visibleColumns, documentColumns));
+            oldHorizontalEventArgs = Util.RaiseIfEventArgsChanged(
+                OnHorizontalVisibleRegionChanged,
+                createVisibleRegionChangedEventArgs(columnOffset, visibleColumns, documentColumns),
+                oldHorizontalEventArgs);
 
             return columnOffset;
         }
+        private VisibleRegionChangedEventArgs oldHorizontalEventArgs;
 
         private int calcRowOffset(int cursorRow, int visibleRows, int documentRows)
         {
             int rowOffset = calculateOffset(cursorRow, visibleRows, documentRows);
 
-            OnVerticalVisibleRegionChanged(getVisibleRegionChangedEventArgs(rowOffset, visibleRows, documentRows));
+            oldVerticalEventArgs = Util.RaiseIfEventArgsChanged(
+                OnVerticalVisibleRegionChanged,
+                createVisibleRegionChangedEventArgs(rowOffset, visibleRows, documentRows),
+                oldVerticalEventArgs);
 
             return rowOffset;
         }
+        private VisibleRegionChangedEventArgs oldVerticalEventArgs;
 
         private int calculateOffset(int cursorLocation, int visibleSize, int documentSize)
         {
@@ -277,7 +287,7 @@ namespace Typist
                 return visibleSize - documentSize;
         }
 
-        private VisibleRegionChangedEventArgs getVisibleRegionChangedEventArgs(int offset, int visibleSize, int documentSize)
+        private VisibleRegionChangedEventArgs createVisibleRegionChangedEventArgs(int offset, int visibleSize, int documentSize)
         {
             int firstVisibleIndex = -offset,
                 lastVisibleIndex = Math.Min(firstVisibleIndex + visibleSize - 1, documentSize - 1),
