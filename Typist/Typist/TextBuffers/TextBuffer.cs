@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Typist.TextBuffers
 {
@@ -61,6 +63,56 @@ namespace Typist.TextBuffers
                 spaces++;
 
             return spaces;
+        }
+
+
+        public virtual string[] Lines
+        {
+            get { return lines ?? (lines = GetLines()); }
+        }
+        private string[] lines;
+
+        public virtual int LongestLineLength
+        {
+            get { return (int)(longestLineLength ?? (longestLineLength = GetLongestLineLength())); }
+        }
+        private int? longestLineLength;
+
+        public virtual int[] LineNumbers
+        {
+            get { return lineNumbers ?? (lineNumbers = GetLineNumbers()); }
+        }
+        private int[] lineNumbers;
+
+
+        protected string[] GetLines()
+        {
+            return this.ToString().Split('\n');
+        }
+
+        protected int GetLongestLineLength()
+        {
+            return Lines.Select(l => l.Length)
+                        .Concat(new[] { 0 })
+                        .Max();
+        }
+
+        protected int[] GetLineNumbers()
+        {
+            var list = new List<int>();
+
+            for (int i = 0; i < Lines.Length; i++)
+                list.AddRange(Enumerable.Repeat(i, Lines[i].Length + 1));
+
+            return list.ToArray();
+        }
+
+        public int LineLength(int index)
+        {
+            if (Length > 0)
+                return Lines[LineNumbers[index]].Length;
+            else
+                return 0;
         }
     }
 }

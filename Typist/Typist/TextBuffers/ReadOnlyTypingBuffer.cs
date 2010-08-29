@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Typist.TextBuffers
@@ -33,59 +32,6 @@ namespace Typist.TextBuffers
 
             ExpandNewlines = expandNewlines;
             CountWhitespaceAsWordChars = countWhitespaceAsWordChars;
-        }
-
-        public string[] Lines
-        {
-            get
-            {
-                if (lines == null)
-                    lines = this.ToString().Split('\n');
-
-                return lines;
-            }
-        }
-        private string[] lines;
-
-        public int LongestLineLength
-        {
-            get
-            {
-                if (longestLineLength == null)
-                    longestLineLength = Lines.Select(l => l.Length)
-                                             .Concat(new[] { 0 })
-                                             .Max();
-
-                return (int)longestLineLength;
-            }
-        }
-        private int? longestLineLength;
-
-        public int[] LineNumbers
-        {
-            get
-            {
-                if (lineNumbers == null)
-                {
-                    var list = new List<int>();
-
-                    for (int i = 0; i < Lines.Length; i++)
-                        list.AddRange(Enumerable.Repeat(i, Lines[i].Length + 1));
-
-                    lineNumbers = list.ToArray();
-                }
-
-                return lineNumbers;
-            }
-        }
-        private int[] lineNumbers;
-
-        public int LineLength(int index)
-        {
-            if (Length > 0)
-                return Lines[LineNumbers[index]].Length;
-            else
-                return 0;
         }
 
         public TextBuffer Expanded

@@ -43,6 +43,12 @@ namespace Typist.TextBuffers
 
         public List<int> ErrorsUncorrected { get; private set; }
 
+        public override string[] Lines { get { return GetLines(); } }
+
+        public override int LongestLineLength { get { return GetLongestLineLength(); } }
+
+        public override int[] LineNumbers { get { return GetLineNumbers(); } }
+
         public ReadWriteTypingBuffer RemoveLast()
         {
             if (Length > 0 && !IsLastSameAsOriginal)
