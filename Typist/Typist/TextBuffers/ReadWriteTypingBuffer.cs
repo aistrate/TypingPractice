@@ -37,7 +37,9 @@ namespace Typist.TextBuffers
 
         public bool CountErrorsAsWordChars { get; set; }
 
-        public int TotalKeys { get; private set; }
+        public int ForwardKeys { get; private set; }
+
+        public int BackspaceKeys { get; private set; }
 
         public int ErrorsCommitted { get; private set; }
 
@@ -51,10 +53,21 @@ namespace Typist.TextBuffers
 
         public ReadWriteTypingBuffer RemoveLast()
         {
-            if (Length > 0 && !IsLastSameAsOriginal)
-                ErrorsUncorrected.RemoveAt(ErrorsUncorrected.Count - 1);
+            if (Length > 0)
+            {
+                if (this[LastIndex] == ' ' && IsLastSameAsOriginal)
+                {
+                    for (int i = LastIndex; i >= 0 && this[i] == ' ' && Original[i] == ' '; i--)
+                        Length--;
+                }
+                else
+                {
+                    if (!IsLastSameAsOriginal)
+                        ErrorsUncorrected.RemoveAt(ErrorsUncorrected.Count - 1);
 
-            Length = Math.Max(0, Length - 1);
+                    Length--;
+                }
+            }
 
             return this;
         }
@@ -87,12 +100,15 @@ namespace Typist.TextBuffers
         public ReadWriteTypingBuffer ProcessKey(char ch)
         {
             if (ch == '\b')
+            {
+                BackspaceKeys++;
                 return RemoveLast();
+            }
 
             if (Length >= Original.Length)
                 return this;
 
-            TotalKeys++;
+            ForwardKeys++;
 
             if (ch == '\r')
                 return Append('\n');
@@ -108,10 +124,7 @@ namespace Typist.TextBuffers
 
             if (IsLastSameAsOriginal)
                 for (int i = LastIndex + 1; i < Original.Length && Original[i] == ' '; i++)
-                {
-                    TotalKeys++;
                     Append(' ');
-                }
 
             return this;
         }
@@ -127,12 +140,12 @@ namespace Typist.TextBuffers
 
         public int TotalErrors
         {
-            get { return TotalKeys - Length + ErrorsUncorrected.Count; }
+            get { return BackspaceKeys + ErrorsUncorrected.Count; }
         }
 
         public decimal Accuracy
         {
-            get { return TotalKeys > 0 ? (decimal)(Length - ErrorsUncorrected.Count) / (decimal)TotalKeys : 1m; }
+            get { return ForwardKeys > 0 ? 1m - (decimal)(BackspaceKeys + ErrorsUncorrected.Count) / (decimal)ForwardKeys : 1m; }
         }
 
         protected override bool IsWordChar(int index, char c)
