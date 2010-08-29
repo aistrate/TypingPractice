@@ -10,6 +10,8 @@ Main unsolved problems:
 
 General:
 
+- horizontal scrolling: never jump back before getting 5 chars close to right side
+
 - correct calculation of WordCount to better account for multiple spaces expanded/deleted by Tab/Backspace (maybe add user setting: "Count multiple spaces as one")
 
 
