@@ -263,7 +263,13 @@ namespace Typist
                 documentColumns = visibleColumns + extraColumns;
             }
             else
-                columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns);
+            {
+                const int visibleColumnsBeforeJumpBack = 6;
+
+                int jumpBackZone = Math.Max(1, visibleColumns - (visibleColumns / 2) + 2 - visibleColumnsBeforeJumpBack);
+
+                columnOffset = calculateOffset(cursorColumn, visibleColumns, currentLineColumns, jumpBackZone);
+            }
 
             var horizontalEventArgs = createVisibleRegionChangedEventArgs(columnOffset, visibleColumns, documentColumns);
 
@@ -277,7 +283,7 @@ namespace Typist
 
         private int calcRowOffset(int cursorRow, int visibleRows, int documentRows)
         {
-            int rowOffset = calculateOffset(cursorRow, visibleRows, documentRows);
+            int rowOffset = calculateOffset(cursorRow, visibleRows, documentRows, 1);
 
             var verticalEventArgs = createVisibleRegionChangedEventArgs(rowOffset, visibleRows, documentRows);
 
@@ -289,13 +295,13 @@ namespace Typist
         }
         private VisibleRegionChangedEventArgs oldVerticalEventArgs;
 
-        private int calculateOffset(int cursorLocation, int visibleSize, int documentSize)
+        private int calculateOffset(int cursorLocation, int visibleSize, int documentSize, int jumpBackZone)
         {
             if (documentSize <= visibleSize ||
                 cursorLocation <= visibleSize / 2)
                 return 0;
             else if (documentSize - 1 - cursorLocation >= visibleSize / 2)
-                return -cursorLocation + visibleSize / 2;
+                return -cursorLocation + visibleSize / 2 + ((cursorLocation - visibleSize / 2) % jumpBackZone);
             else
                 return visibleSize - documentSize;
         }
