@@ -38,6 +38,7 @@ namespace Typist
                 chkVisibleNewlines.Checked = userSettings.VisibleNewlines;
                 chkRemoveEndOfLineSpaces.Checked = userSettings.RemoveEndOfLineSpaces;
                 chkRemoveMultipleWhitespace.Checked = userSettings.RemoveMultipleWhitespace;
+                chkRememberLastImportedFile.Checked = userSettings.RememberLastImportedFile;
                 chkCountWhitespaceAsWordChars.Checked = userSettings.CountWhitespaceAsWordChars;
                 chkCountErrorsAsWordChars.Checked = userSettings.CountErrorsAsWordChars;
                 chkAskBeforeCloseDuringPractice.Checked = userSettings.AskBeforeCloseDuringPractice;
@@ -59,6 +60,7 @@ namespace Typist
                 VisibleNewlines = chkVisibleNewlines.Checked,
                 RemoveEndOfLineSpaces = chkRemoveEndOfLineSpaces.Checked,
                 RemoveMultipleWhitespace = chkRemoveMultipleWhitespace.Checked,
+                RememberLastImportedFile = chkRememberLastImportedFile.Checked,
                 CountWhitespaceAsWordChars = chkCountWhitespaceAsWordChars.Checked,
                 CountErrorsAsWordChars = chkCountErrorsAsWordChars.Checked,
                 AskBeforeCloseDuringPractice = chkAskBeforeCloseDuringPractice.Checked,

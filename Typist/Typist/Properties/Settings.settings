@@ -29,6 +29,9 @@
     <Setting Name="TypingFontStyle" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="LastImportedFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
     <Setting Name="UserSettings_BeepOnError" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -45,6 +48,9 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UserSettings_RemoveMultipleWhitespace" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UserSettings_RememberLastImportedFile" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UserSettings_CountWhitespaceAsWordChars" Type="System.Boolean" Scope="User">

@@ -65,7 +65,7 @@ namespace Typist
 
             PracticeMode = false;
 
-            ImportFile(filePath);
+            ImportFile(!string.IsNullOrEmpty(filePath) ? filePath : LastImportedFile);
 
             loadStatisticsMode();
         }
@@ -268,6 +268,8 @@ namespace Typist
 
         public void ImportFile(string filePath)
         {
+            LastImportedFile = "";
+
             try
             {
                 if (string.IsNullOrEmpty(filePath))
@@ -282,6 +284,8 @@ namespace Typist
                                                             userSettings.CountWhitespaceAsWordChars,
                                                             userSettings.RemoveEndOfLineSpaces,
                                                             userSettings.RemoveMultipleWhitespace);
+
+                LastImportedFile = fileInfo.FullName;
 
                 lblStatusBarMain.Text = "Imported";
 
@@ -1007,12 +1011,15 @@ namespace Typist
                 VisibleNewlines = Properties.Settings.Default.UserSettings_VisibleNewlines,
                 RemoveEndOfLineSpaces = Properties.Settings.Default.UserSettings_RemoveEndOfLineSpaces,
                 RemoveMultipleWhitespace = Properties.Settings.Default.UserSettings_RemoveMultipleWhitespace,
+                RememberLastImportedFile = Properties.Settings.Default.UserSettings_RememberLastImportedFile,
                 CountWhitespaceAsWordChars = Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars,
                 CountErrorsAsWordChars = Properties.Settings.Default.UserSettings_CountErrorsAsWordChars,
                 AskBeforeCloseDuringPractice = Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice,
                 ShowCursorWhenPaused = Properties.Settings.Default.UserSettings_ShowCursorWhenPaused,
                 PauseAfterElapsed = Properties.Settings.Default.UserSettings_PauseAfterElapsed,
             };
+
+            LastImportedFile = userSettings.RememberLastImportedFile ? Properties.Settings.Default.LastImportedFile : "";
         }
 
         private void presaveUserSettings()
@@ -1023,11 +1030,14 @@ namespace Typist
             Properties.Settings.Default.UserSettings_VisibleNewlines = userSettings.VisibleNewlines;
             Properties.Settings.Default.UserSettings_RemoveEndOfLineSpaces = userSettings.RemoveEndOfLineSpaces;
             Properties.Settings.Default.UserSettings_RemoveMultipleWhitespace = userSettings.RemoveMultipleWhitespace;
+            Properties.Settings.Default.UserSettings_RememberLastImportedFile = userSettings.RememberLastImportedFile;
             Properties.Settings.Default.UserSettings_CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
             Properties.Settings.Default.UserSettings_CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
             Properties.Settings.Default.UserSettings_AskBeforeCloseDuringPractice = userSettings.AskBeforeCloseDuringPractice;
             Properties.Settings.Default.UserSettings_ShowCursorWhenPaused = userSettings.ShowCursorWhenPaused;
             Properties.Settings.Default.UserSettings_PauseAfterElapsed = userSettings.PauseAfterElapsed;
+
+            Properties.Settings.Default.LastImportedFile = userSettings.RememberLastImportedFile ? LastImportedFile : "";
         }
 
         private SettingsDialog dlgSettingsDialog;
@@ -1064,6 +1074,8 @@ namespace Typist
 
             dlgSettingsDialog.StartPosition = FormStartPosition.Manual;
         }
+
+        protected string LastImportedFile { get; set; }
 
         #endregion
     }
