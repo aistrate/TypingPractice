@@ -10,8 +10,6 @@ Main unsolved problems:
 
 General:
 
-- horizontal scrolling: never jump back before getting 5 chars close to right side
-
 - correct calculation of WordCount to better account for multiple spaces expanded/deleted by Tab/Backspace (maybe add user setting: "Count multiple spaces as one")
 
 
@@ -74,6 +72,7 @@ Paint event handler:
 
 
 
+* horizontal scrolling: never jump back before getting at 5 chars to the right side
 * the Backspace key should delete all spaces back to a non-space char (similar to the way the Tab key works)
 * correct calculation of TotalErrors to better account for multiple spaces expanded/deleted by Tab/Backspace
 * add user setting: wrap text; if set to false, text will scroll to the left as user is typing; also, add horizontal scroll bar (if needed)

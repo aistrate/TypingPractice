@@ -300,10 +300,9 @@ namespace Typist
             if (documentSize <= visibleSize ||
                 cursorLocation <= visibleSize / 2)
                 return 0;
-            else if (documentSize - 1 - cursorLocation >= visibleSize / 2)
-                return -cursorLocation + visibleSize / 2 + ((cursorLocation - visibleSize / 2) % jumpBackZone);
             else
-                return visibleSize - documentSize;
+                return Math.Max(-cursorLocation + visibleSize / 2 + ((cursorLocation - visibleSize / 2) % jumpBackZone),
+                                visibleSize - documentSize);
         }
 
         private VisibleRegionChangedEventArgs createVisibleRegionChangedEventArgs(int offset, int visibleSize, int documentSize)
