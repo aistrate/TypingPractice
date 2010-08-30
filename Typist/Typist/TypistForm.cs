@@ -65,13 +65,6 @@ namespace Typist
 
             PracticeMode = false;
 
-            //if (string.IsNullOrEmpty(filePath))
-            //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\SingleParagraph\European Wildcat.txt";
-            //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Aluminium.txt";
-            //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
-            //filePath = @"C:\Users\Adrian\Samples\TypingPracticeTexts\Wikipedia\Done\Honore de Balzac.txt";
-                //filePath = @"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Code\C\Done\pretty.c.08.txt";
-
             ImportFile(filePath);
 
             loadStatisticsMode();
