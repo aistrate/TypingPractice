@@ -84,5 +84,10 @@ namespace Typist.TextBuffers
             return Count(k => (countWhitespace || !k.IsWhitespace) &&
                               (countErrors || !k.IsError));
         }
+
+        public int CorrectKeys
+        {
+            get { return Count(k => !k.IsError); }
+        }
     }
 }

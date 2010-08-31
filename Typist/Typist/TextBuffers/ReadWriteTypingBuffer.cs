@@ -129,15 +129,9 @@ namespace Typist.TextBuffers
             return i < 0 || (this[i] == '\n');
         }
 
-        public int WastedKeys
-        {
-            get { return TotalForwardKeys - RecordedKeys.Length; }
-        }
-
         public decimal Accuracy
         {
-            get { return TotalForwardKeys > 0 ? 1m - (decimal)(WastedKeys + ErrorsUncorrected.Count) / (decimal)TotalForwardKeys : 1m; }
-            //get { return TotalForwardKeys > 0 ? (decimal)(RecordedKeys.Length - ErrorsUncorrected.Count) / (decimal)TotalForwardKeys : 1m; }
+            get { return TotalForwardKeys > 0 ? (decimal)RecordedKeys.CorrectKeys / (decimal)TotalForwardKeys : 1m; }
         }
 
         public event EventHandler Error;
