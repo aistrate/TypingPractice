@@ -10,12 +10,14 @@ Main unsolved problems:
 
 General:
 
-- allow scrollbars (vertical and horizontal) to be moved by the user, to take a peek at the rest of the text (two Paint modes: 'follow the cursor' and 'follow the scrollbars')
+- for the three generator projects (chars, code, Wikipedia): save the local source/destination folders picked by the user in Properties.Settings.Default
+
 
 - separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
 
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L); ask for confirmation, if current text is unfinished (maybe a user setting, "Ask before reloading, if unfinished")
 
+- allow scrollbars (vertical and horizontal) to be moved by the user, to take a peek at the rest of the text (two Paint modes: 'follow the cursor' and 'follow the scrollbars')
 
 - remove the two big buttons at the top (Import and Start), and add an application menu (a more extended version of the context menu, with the status bar menu added in etc.); also, and a toolbar at the top, with nice icons (and optional text), showing the most used commands (Open, Start/Pause/Resume, many font commands, Settings etc.)
 
@@ -27,8 +29,6 @@ General:
 
 - show a small dialog with shortcuts that are not on the menu ("Other shortcuts...")
 
-
-- for the three generator projects (chars, code, Wikipedia): save the local source/destination folders picked by the user in Properties.Settings.Default
 
 - add user setting: center text horizontally
 
