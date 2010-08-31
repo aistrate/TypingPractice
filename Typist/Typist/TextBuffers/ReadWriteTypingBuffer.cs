@@ -27,8 +27,6 @@ namespace Typist.TextBuffers
 
         public int TotalForwardKeys { get; private set; }
 
-        public int BackspaceKeys { get; private set; }
-
         public int ErrorsCommitted { get; private set; }
 
         public List<int> ErrorsUncorrected { get; private set; }
@@ -90,10 +88,7 @@ namespace Typist.TextBuffers
         public ReadWriteTypingBuffer ProcessKey(char keyChar)
         {
             if (keyChar == '\b')
-            {
-                BackspaceKeys++;
                 RemoveLast();
-            }
             else if (Length < Original.Length)
                 addKey(keyChar);
 
