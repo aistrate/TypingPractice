@@ -60,9 +60,11 @@
             this.btnStatistics = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripPercentage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripTypedPerTotal = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTypedByTotal = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTyped = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTotal = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripTypedKeys = new System.Windows.Forms.ToolStripMenuItem();
             this.pgsTypingProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatusBarSep3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblTrafficLight = new System.Windows.Forms.ToolStripStatusLabel();
@@ -343,9 +345,11 @@
             this.btnStatistics.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripPercentage,
             this.toolStripSeparator2,
-            this.toolStripTypedPerTotal,
+            this.toolStripTypedByTotal,
             this.toolStripTyped,
-            this.toolStripTotal});
+            this.toolStripTotal,
+            this.toolStripSeparator4,
+            this.toolStripTypedKeys});
             this.btnStatistics.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnStatistics.Margin = new System.Windows.Forms.Padding(5, 2, 0, 0);
             this.btnStatistics.Name = "btnStatistics";
@@ -360,7 +364,7 @@
             this.toolStripPercentage.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripPercentage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripPercentage.Name = "toolStripPercentage";
-            this.toolStripPercentage.Size = new System.Drawing.Size(149, 22);
+            this.toolStripPercentage.Size = new System.Drawing.Size(152, 22);
             this.toolStripPercentage.Tag = "0";
             this.toolStripPercentage.Text = "Percentage";
             this.toolStripPercentage.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
@@ -368,22 +372,22 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
-            // toolStripTypedPerTotal
+            // toolStripTypedByTotal
             // 
-            this.toolStripTypedPerTotal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripTypedPerTotal.Name = "toolStripTypedPerTotal";
-            this.toolStripTypedPerTotal.Size = new System.Drawing.Size(149, 22);
-            this.toolStripTypedPerTotal.Tag = "1";
-            this.toolStripTypedPerTotal.Text = "Typed / Total";
-            this.toolStripTypedPerTotal.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
+            this.toolStripTypedByTotal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripTypedByTotal.Name = "toolStripTypedByTotal";
+            this.toolStripTypedByTotal.Size = new System.Drawing.Size(152, 22);
+            this.toolStripTypedByTotal.Tag = "1";
+            this.toolStripTypedByTotal.Text = "Typed / Total";
+            this.toolStripTypedByTotal.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
             // 
             // toolStripTyped
             // 
             this.toolStripTyped.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripTyped.Name = "toolStripTyped";
-            this.toolStripTyped.Size = new System.Drawing.Size(149, 22);
+            this.toolStripTyped.Size = new System.Drawing.Size(152, 22);
             this.toolStripTyped.Tag = "2";
             this.toolStripTyped.Text = "Typed";
             this.toolStripTyped.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
@@ -392,10 +396,24 @@
             // 
             this.toolStripTotal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripTotal.Name = "toolStripTotal";
-            this.toolStripTotal.Size = new System.Drawing.Size(149, 22);
+            this.toolStripTotal.Size = new System.Drawing.Size(152, 22);
             this.toolStripTotal.Tag = "3";
             this.toolStripTotal.Text = "Total";
             this.toolStripTotal.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            // 
+            // toolStripTypedKeys
+            // 
+            this.toolStripTypedKeys.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripTypedKeys.Name = "toolStripTypedKeys";
+            this.toolStripTypedKeys.Size = new System.Drawing.Size(152, 22);
+            this.toolStripTypedKeys.Tag = "4";
+            this.toolStripTypedKeys.Text = "Typed Keys";
+            this.toolStripTypedKeys.Click += new System.EventHandler(this.btnStatisticsMenuItem_Click);
             // 
             // pgsTypingProgress
             // 
@@ -554,9 +572,11 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripPercentage;
         private System.Windows.Forms.ToolStripMenuItem toolStripTyped;
         private System.Windows.Forms.ToolStripMenuItem toolStripTotal;
-        private System.Windows.Forms.ToolStripMenuItem toolStripTypedPerTotal;
+        private System.Windows.Forms.ToolStripMenuItem toolStripTypedByTotal;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.HScrollBar scrHTyping;
+        private System.Windows.Forms.ToolStripMenuItem toolStripTypedKeys;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

@@ -775,7 +775,7 @@ namespace Typist
                 case StatisticsModes.Percentage:
                     btnStatistics.Text = string.Format("{0} %", progress);
                     break;
-                case StatisticsModes.TypedPerTotal:
+                case StatisticsModes.TypedByTotal:
                     btnStatistics.Text = string.Format("{0} / {1}", TypedText.Length, ImportedText.Length);
                     break;
                 case StatisticsModes.Typed:
@@ -783,6 +783,9 @@ namespace Typist
                     break;
                 case StatisticsModes.Total:
                     btnStatistics.Text = string.Format("{0}", ImportedText.Length);
+                    break;
+                case StatisticsModes.TypedKeys:
+                    btnStatistics.Text = string.Format("{0}", TypedText.RecordedKeys.Length);
                     break;
                 default:
                     btnStatistics.Text = "";
@@ -822,9 +825,10 @@ namespace Typist
         public enum StatisticsModes
         {
             Percentage = 0,
-            TypedPerTotal = 1,
+            TypedByTotal = 1,
             Typed = 2,
             Total = 3,
+            TypedKeys = 4,
         }
 
         protected ToolStripMenuItem[] StatisticsMenuItems
@@ -835,9 +839,10 @@ namespace Typist
                     statisticsMenuItems = new ToolStripMenuItem[]
                     {
                         toolStripPercentage,
-                        toolStripTypedPerTotal,
+                        toolStripTypedByTotal,
                         toolStripTyped,
                         toolStripTotal,
+                        toolStripTypedKeys,
                     };
 
                 return statisticsMenuItems;
