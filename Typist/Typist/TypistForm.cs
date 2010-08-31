@@ -59,7 +59,6 @@ namespace Typist
 
             ImportedText = new ReadOnlyTypingBuffer("",
                                                     userSettings.VisibleNewlines,
-                                                    userSettings.CountWhitespaceAsWordChars,
                                                     userSettings.RemoveEndOfLineSpaces,
                                                     userSettings.RemoveMultipleWhitespace);
 
@@ -169,7 +168,7 @@ namespace Typist
             {
                 importedText = value;
 
-                TypedText = new ReadWriteTypingBuffer(importedText, userSettings.CountErrorsAsWordChars);
+                TypedText = new ReadWriteTypingBuffer(importedText);
 
                 picTyping.ImportedText = value;
                 picTyping.TypedText = TypedText;
@@ -281,7 +280,6 @@ namespace Typist
                 using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
                     ImportedText = new ReadOnlyTypingBuffer(sr.ReadToEnd(),
                                                             userSettings.VisibleNewlines,
-                                                            userSettings.CountWhitespaceAsWordChars,
                                                             userSettings.RemoveEndOfLineSpaces,
                                                             userSettings.RemoveMultipleWhitespace);
 
@@ -738,9 +736,13 @@ namespace Typist
             {
                 double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
 
+                int wordCharCount = TypedText.RecordedKeys.Count(userSettings.CountWhitespaceAsWordChars,
+                                                                 userSettings.CountErrorsAsWordChars);
+                double wordCount = (double)wordCharCount / 5.0;
+
                 lblWPM.Text = string.Format("{0:#0} wpm",
                                             elapsedMinutes != 0.0 ?
-                                                (double)TypedText.WordCount / elapsedMinutes :
+                                                wordCount / elapsedMinutes :
                                                 0.0);
             }
             else
@@ -1063,8 +1065,6 @@ namespace Typist
 
                 ImportedText.ExpandNewlines = userSettings.VisibleNewlines;
 
-                ImportedText.CountWhitespaceAsWordChars = userSettings.CountWhitespaceAsWordChars;
-                TypedText.CountErrorsAsWordChars = userSettings.CountErrorsAsWordChars;
                 displayWPM();
 
                 picTyping.WordWrap = userSettings.WordWrap;

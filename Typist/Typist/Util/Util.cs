@@ -22,11 +22,6 @@ namespace Typist
             return list.Contains(elem);
         }
 
-        public static string AsString(this IEnumerable<char> chars)
-        {
-            return new string(chars.ToArray());
-        }
-
         public static PropertyInfo[] AllStaticProperties(this Type type)
         {
             return type.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetProperty);

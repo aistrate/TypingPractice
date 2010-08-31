@@ -10,12 +10,10 @@ Main unsolved problems:
 
 General:
 
-- correct calculation of WordCount to better account for multiple spaces expanded/deleted by Tab/Backspace (maybe add user setting: "Count multiple spaces as one")
+- predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 
 
 - new statistics on the status bar: row/column, row (only), column (only)
-
-- predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 
 - add user setting: "Show visual glyphs for word wrap" (as in VS); or, alternatively: show visual glyphs when "Word wrap" is off, for lines that go beyond the right edge of the screen
 
@@ -72,6 +70,7 @@ Paint event handler:
 
 
 
+* correct calculation of WordCount to better account for multiple spaces expanded/deleted by Tab/Backspace (maybe add user setting: "Count multiple spaces as one")
 * horizontal scrolling: never jump back before getting at 5 chars to the right side
 * the Backspace key should delete all spaces back to a non-space char (similar to the way the Tab key works)
 * correct calculation of TotalErrors to better account for multiple spaces expanded/deleted by Tab/Backspace

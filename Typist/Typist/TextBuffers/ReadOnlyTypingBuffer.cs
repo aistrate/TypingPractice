@@ -5,8 +5,7 @@ namespace Typist.TextBuffers
 {
     public class ReadOnlyTypingBuffer : TypingBuffer
     {
-        public ReadOnlyTypingBuffer(string text, bool expandNewlines, bool countWhitespaceAsWordChars,
-                                    bool removeEndOfLineSpaces, bool removeMultipleWhitespace)
+        public ReadOnlyTypingBuffer(string text, bool expandNewlines, bool removeEndOfLineSpaces, bool removeMultipleWhitespace)
         {
             string allowedWhitespace = " \n";
 
@@ -31,10 +30,11 @@ namespace Typist.TextBuffers
             Length = text.Length;
 
             ExpandNewlines = expandNewlines;
-            CountWhitespaceAsWordChars = countWhitespaceAsWordChars;
         }
 
-        public TextBuffer Expanded
+        public virtual bool ExpandNewlines { get; set; }
+
+        public TypingBuffer Expanded
         {
             get
             {
@@ -55,17 +55,17 @@ namespace Typist.TextBuffers
 
         private const char pilcrow = '\xB6';
 
-        protected TextBuffer ActualExpanded
+        protected TypingBuffer ActualExpanded
         {
             get
             {
                 if (actualExpanded == null)
-                    actualExpanded = new TextBuffer(this.ToString().Replace("\n", string.Format("{0}\n", pilcrow)));
+                    actualExpanded = new TypingBuffer(this.ToString().Replace("\n", string.Format("{0}\n", pilcrow)));
 
                 return actualExpanded;
             }
         }
-        private TextBuffer actualExpanded;
+        private TypingBuffer actualExpanded;
 
         protected int[] ActualExpandedIndexes
         {

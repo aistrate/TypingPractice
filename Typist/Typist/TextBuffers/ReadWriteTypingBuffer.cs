@@ -6,38 +6,26 @@ namespace Typist.TextBuffers
 {
     public class ReadWriteTypingBuffer : TypingBuffer
     {
-        public ReadWriteTypingBuffer(ReadOnlyTypingBuffer original, bool countErrorsAsWordChars)
+        public ReadWriteTypingBuffer(ReadOnlyTypingBuffer original)
         {
             if (original == null)
                 throw new ArgumentNullException("original.", "Original TextBuffer cannot be null.");
 
             Original = original;
 
-            Buffer = new char[Math.Max(2000, 2 * original.Length)];
+            Buffer = new char[original.Length + 1];
             Length = 0;
 
-            CountErrorsAsWordChars = countErrorsAsWordChars;
+            RecordedKeys = new KeyBuffer(Buffer.Length);
 
             ErrorsUncorrected = new List<int>();
         }
 
         public ReadOnlyTypingBuffer Original { get; private set; }
 
-        public override bool ExpandNewlines
-        {
-            get { return Original.ExpandNewlines; }
-            set { Original.ExpandNewlines = value; }
-        }
+        public KeyBuffer RecordedKeys { get; private set; }
 
-        public override bool CountWhitespaceAsWordChars
-        {
-            get { return Original.CountWhitespaceAsWordChars; }
-            set { Original.CountWhitespaceAsWordChars = value; }
-        }
-
-        public bool CountErrorsAsWordChars { get; set; }
-
-        public int ForwardKeys { get; private set; }
+        public int TotalForwardKeys { get; private set; }
 
         public int BackspaceKeys { get; private set; }
 
@@ -67,6 +55,8 @@ namespace Typist.TextBuffers
 
                     Length--;
                 }
+
+                RecordedKeys.RemoveFromPosition(Length);
             }
 
             return this;
@@ -97,36 +87,37 @@ namespace Typist.TextBuffers
             return index <= Original.LastIndex && this[index] == Original[index];
         }
 
-        public ReadWriteTypingBuffer ProcessKey(char ch)
+        public ReadWriteTypingBuffer ProcessKey(char keyChar)
         {
-            if (ch == '\b')
+            if (keyChar == '\b')
             {
                 BackspaceKeys++;
-                return RemoveLast();
+                RemoveLast();
             }
-
-            if (Length >= Original.Length)
-                return this;
-
-            ForwardKeys++;
-
-            if (ch == '\r')
-                return Append('\n');
-            else if (ch == '\t')
-                return ExpandTab();
-            else
-                return Append(ch);
-        }
-
-        public ReadWriteTypingBuffer ExpandTab()
-        {
-            Append(' ');
-
-            if (IsLastSameAsOriginal)
-                for (int i = LastIndex + 1; i < Original.Length && Original[i] == ' '; i++)
-                    Append(' ');
+            else if (Length < Original.Length)
+                addKey(keyChar);
 
             return this;
+        }
+
+        private void addKey(char keyChar)
+        {
+            char ch = keyChar;
+
+            if (keyChar == '\r')
+                ch = '\n';
+            else if (keyChar == '\t')
+                ch = ' ';
+
+            Append(ch);
+
+            TotalForwardKeys++;
+
+            RecordedKeys.Add(keyChar, LastIndex, !IsLastSameAsOriginal);
+
+            if (keyChar == '\t' && IsLastSameAsOriginal)
+                for (int i = LastIndex + 1; i < Original.Length && Original[i] == ' '; i++)
+                    Buffer[Length++] = ' ';
         }
 
         public bool IsAtBeginningOfLine(int index)
@@ -145,13 +136,7 @@ namespace Typist.TextBuffers
 
         public decimal Accuracy
         {
-            get { return ForwardKeys > 0 ? 1m - (decimal)(BackspaceKeys + ErrorsUncorrected.Count) / (decimal)ForwardKeys : 1m; }
-        }
-
-        protected override bool IsWordChar(int index, char c)
-        {
-            return base.IsWordChar(index, c) &&
-                   (CountErrorsAsWordChars || IsSameAsOriginal(index));
+            get { return TotalForwardKeys > 0 ? 1m - (decimal)(BackspaceKeys + ErrorsUncorrected.Count) / (decimal)TotalForwardKeys : 1m; }
         }
 
         public event EventHandler Error;
