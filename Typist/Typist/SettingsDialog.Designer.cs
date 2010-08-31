@@ -44,7 +44,7 @@
             this.chkWordWrap = new System.Windows.Forms.CheckBox();
             this.chkRemoveEndOfLineSpaces = new System.Windows.Forms.CheckBox();
             this.chkRememberLastImportedFile = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblPredefinedSets = new System.Windows.Forms.Label();
             this.btnPredefChars = new System.Windows.Forms.Button();
             this.btnPredefCode = new System.Windows.Forms.Button();
             this.btnPredefArticle = new System.Windows.Forms.Button();
@@ -217,14 +217,14 @@
             this.chkRememberLastImportedFile.Text = "Remember last imported file";
             this.chkRememberLastImportedFile.UseVisualStyleBackColor = false;
             // 
-            // label1
+            // lblPredefinedSets
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 13);
-            this.label1.TabIndex = 111;
-            this.label1.Text = "Predefined:";
+            this.lblPredefinedSets.AutoSize = true;
+            this.lblPredefinedSets.Location = new System.Drawing.Point(12, 9);
+            this.lblPredefinedSets.Name = "lblPredefinedSets";
+            this.lblPredefinedSets.Size = new System.Drawing.Size(83, 13);
+            this.lblPredefinedSets.TabIndex = 111;
+            this.lblPredefinedSets.Text = "Predefined sets:";
             // 
             // btnPredefChars
             // 
@@ -287,7 +287,7 @@
             this.Controls.Add(this.btnPredefArticle);
             this.Controls.Add(this.btnPredefCode);
             this.Controls.Add(this.btnPredefChars);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblPredefinedSets);
             this.Controls.Add(this.chkRememberLastImportedFile);
             this.Controls.Add(this.chkRemoveEndOfLineSpaces);
             this.Controls.Add(this.chkWordWrap);
@@ -338,7 +338,7 @@
         private System.Windows.Forms.CheckBox chkWordWrap;
         private System.Windows.Forms.CheckBox chkRemoveEndOfLineSpaces;
         private System.Windows.Forms.CheckBox chkRememberLastImportedFile;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPredefinedSets;
         private System.Windows.Forms.Button btnPredefChars;
         private System.Windows.Forms.Button btnPredefCode;
         private System.Windows.Forms.Button btnPredefArticle;
