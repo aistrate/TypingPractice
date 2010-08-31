@@ -161,6 +161,17 @@ namespace Typist
             }
         }
 
+        private void picTyping_CursorPositionChanged(object sender, CursorPositionChangedEventArgs e)
+        {
+            cursorRow = e.Row;
+            cursorColumn = e.Column;
+
+            if (StatisticsMode == StatisticsModes.RowColumn)
+                displayProgressStatistics();
+        }
+        private int cursorRow;
+        private int cursorColumn;
+
         protected ReadOnlyTypingBuffer ImportedText
         {
             get { return importedText; }
@@ -778,14 +789,17 @@ namespace Typist
                 case StatisticsModes.TypedByTotal:
                     btnStatistics.Text = string.Format("{0} / {1}", TypedText.Length, ImportedText.Length);
                     break;
-                case StatisticsModes.Typed:
-                    btnStatistics.Text = string.Format("{0}", TypedText.Length);
-                    break;
                 case StatisticsModes.Total:
                     btnStatistics.Text = string.Format("{0}", ImportedText.Length);
                     break;
+                case StatisticsModes.Typed:
+                    btnStatistics.Text = string.Format("{0}", TypedText.Length);
+                    break;
                 case StatisticsModes.TypedKeys:
                     btnStatistics.Text = string.Format("{0}", TypedText.RecordedKeys.Length);
+                    break;
+                case StatisticsModes.RowColumn:
+                    btnStatistics.Text = string.Format("{0}, {1}", cursorRow, cursorColumn);
                     break;
                 default:
                     btnStatistics.Text = "";
@@ -826,9 +840,10 @@ namespace Typist
         {
             Percentage = 0,
             TypedByTotal = 1,
-            Typed = 2,
-            Total = 3,
+            Total = 2,
+            Typed = 3,
             TypedKeys = 4,
+            RowColumn = 5,
         }
 
         protected ToolStripMenuItem[] StatisticsMenuItems
@@ -840,9 +855,10 @@ namespace Typist
                     {
                         toolStripPercentage,
                         toolStripTypedByTotal,
-                        toolStripTyped,
                         toolStripTotal,
+                        toolStripTyped,
                         toolStripTypedKeys,
+                        toolStripRowColumn,
                     };
 
                 return statisticsMenuItems;

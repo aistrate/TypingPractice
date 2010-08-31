@@ -10,21 +10,20 @@ Main unsolved problems:
 
 General:
 
-- new statistics on the status bar: row/column, row (only), column (only)
-
-- add user setting: "Show visual glyphs for word wrap" (as in VS); or, alternatively: show visual glyphs when "Word wrap" is off, for lines that go beyond the right edge of the screen
-
 - allow scrollbars (vertical and horizontal) to be moved by the user, to take a peek at the rest of the text (two Paint modes: 'follow the cursor' and 'follow the scrollbars')
-
-- separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
 
 - separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
 
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L); ask for confirmation, if current text is unfinished (maybe a user setting, "Ask before reloading, if unfinished")
 
+
 - remove the two big buttons at the top (Import and Start), and add an application menu (a more extended version of the context menu, with the status bar menu added in etc.); also, and a toolbar at the top, with nice icons (and optional text), showing the most used commands (Open, Start/Pause/Resume, many font commands, Settings etc.)
 
 - put the statistics now at the top (WPM, Errors, Accuracy, Time) into a FlowLayoutPanel, so that all of them will be visible even when the window becomes very narrow; show a label next to each; decouple them definitively from the two buttons (Import and Start)
+
+- separate user setting "Remove multiple whitespace when importing" into two settings, one for multiple spaces and one for multiple empty lines; maybe two radio buttons, "Remove ALL multiple whitespace" and "Remove:", and then the checkboxes
+
+- add user setting: "Show visual glyphs for word wrap" (as in VS); or, alternatively: show visual glyphs when "Word wrap" is off, for lines that go beyond the right edge of the screen
 
 - show a small dialog with shortcuts that are not on the menu ("Other shortcuts...")
 
@@ -67,6 +66,7 @@ Paint event handler:
 
 
 
+* new statistics on the status bar: row/column, row (only), column (only)
 * predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 * correct calculation of WordCount to better account for multiple spaces expanded/deleted by Tab/Backspace (maybe add user setting: "Count multiple spaces as one")
 * horizontal scrolling: never jump back before getting at 5 chars to the right side

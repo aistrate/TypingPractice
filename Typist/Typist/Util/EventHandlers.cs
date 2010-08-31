@@ -51,4 +51,32 @@ namespace Typist
     public delegate void VisibleRegionChangedEventHandler(object sender, VisibleRegionChangedEventArgs e);
 
     #endregion
+
+
+    #region CursorPositionChanged
+
+    public class CursorPositionChangedEventArgs : EventArgs
+    {
+        public CursorPositionChangedEventArgs(int row, int column)
+        {
+            Row = row;
+            Column = column;
+        }
+
+        public int Row { get; private set; }
+        public int Column { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            CursorPositionChangedEventArgs other = obj as CursorPositionChangedEventArgs;
+
+            return other != null &&
+                   this.Row == other.Row &&
+                   this.Column == other.Column;
+        }
+    }
+
+    public delegate void CursorPositionChangedEventHandler(object sender, CursorPositionChangedEventArgs e);
+
+    #endregion
 }

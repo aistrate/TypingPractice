@@ -92,6 +92,10 @@ namespace Typist
         [EditorBrowsable(EditorBrowsableState.Always)]
         public event VisibleRegionChangedEventHandler VerticalVisibleRegionChanged;
 
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        public event CursorPositionChangedEventHandler CursorPositionChanged;
+
         #endregion
 
 
@@ -142,6 +146,12 @@ namespace Typist
         {
             if (VerticalVisibleRegionChanged != null)
                 VerticalVisibleRegionChanged(this, e);
+        }
+
+        protected virtual void OnCursorPositionChanged(CursorPositionChangedEventArgs e)
+        {
+            if (CursorPositionChanged != null)
+                CursorPositionChanged(this, e);
         }
 
         #endregion
@@ -228,6 +238,11 @@ namespace Typist
             RectangleF cursorArea = getCursorCharArea(g, unlimitedHeightArea);
             Point cursorColumnRow = getColumnRow(cursorArea.Location, unlimitedHeightArea.Location, cellSize);
 
+            oldCursorPositionChangedEventArgs = Util.RaiseIfEventArgsChanged(
+                OnCursorPositionChanged,
+                new CursorPositionChangedEventArgs(cursorColumnRow.Y + 1, cursorColumnRow.X + 1),
+                oldCursorPositionChangedEventArgs);
+
             int currentLineColumns = ImportedText.LineLength(TypedText.Length);
 
             Size documentColumnsRows = new Size(ImportedText.LongestLineLength,
@@ -244,6 +259,7 @@ namespace Typist
                                   typingArea.Width,
                                   typingArea.Height - vOffset);
         }
+        private CursorPositionChangedEventArgs oldCursorPositionChangedEventArgs;
 
         private int calcColumnOffset(int cursorColumn, int visibleColumns, int documentColumns, int currentLineColumns)
         {
