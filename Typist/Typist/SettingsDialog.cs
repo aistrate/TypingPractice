@@ -11,9 +11,14 @@ namespace Typist
 {
     public partial class SettingsDialog : Form
     {
+        private const bool showReleaseDebugButtons = true;
+
         public SettingsDialog()
         {
             InitializeComponent();
+
+            btnPredefRelease.Visible = showReleaseDebugButtons;
+            btnPredefDebug.Visible = showReleaseDebugButtons;
         }
 
         private void SettingsDialog_Load(object sender, EventArgs e)
@@ -103,6 +108,73 @@ namespace Typist
         private void txtPauseAfterElapsed_Leave(object sender, EventArgs e)
         {
             readInt(txtPauseAfterElapsed);
+        }
+
+        private void resetCheckBoxesBackColor()
+        {
+            Color color = Color.FromKnownColor(KnownColor.Control);
+
+            foreach (CheckBox checkBox in this.Controls.OfType<CheckBox>())
+                checkBox.BackColor = color;
+
+            lblSeconds.BackColor = color;
+        }
+
+        private void setCheckBox(CheckBox checkBox, bool isChecked)
+        {
+            checkBox.Checked = isChecked;
+            checkBox.BackColor = Color.Silver;
+
+            if (checkBox == chkPauseAfterElapsed)
+                lblSeconds.BackColor = Color.Silver;
+        }
+
+        private void btnPredefChars_Click(object sender, EventArgs e)
+        {
+            resetCheckBoxesBackColor();
+
+            setCheckBox(chkWordWrap, false);
+            setCheckBox(chkRemoveEndOfLineSpaces, true);
+            setCheckBox(chkRemoveMultipleWhitespace, true);
+        }
+
+        private void btnPredefArticle_Click(object sender, EventArgs e)
+        {
+            resetCheckBoxesBackColor();
+
+            setCheckBox(chkWordWrap, true);
+            setCheckBox(chkRemoveEndOfLineSpaces, true);
+            setCheckBox(chkRemoveMultipleWhitespace, true);
+        }
+
+        private void btnPredefCode_Click(object sender, EventArgs e)
+        {
+            resetCheckBoxesBackColor();
+
+            setCheckBox(chkWordWrap, false);
+            setCheckBox(chkRemoveEndOfLineSpaces, true);
+            setCheckBox(chkRemoveMultipleWhitespace, false);
+        }
+
+        private void btnPredefRelease_Click(object sender, EventArgs e)
+        {
+            resetCheckBoxesBackColor();
+
+            setCheckBox(chkCountWhitespaceAsWordChars, true);
+            setCheckBox(chkCountErrorsAsWordChars, false);
+            setCheckBox(chkShowCursorWhenPaused, false);
+
+            setCheckBox(chkAskBeforeCloseDuringPractice, true);
+            setCheckBox(chkPauseAfterElapsed, true);
+            txtPauseAfterElapsed.Text = "10";
+        }
+
+        private void btnPredefDebug_Click(object sender, EventArgs e)
+        {
+            resetCheckBoxesBackColor();
+
+            setCheckBox(chkAskBeforeCloseDuringPractice, false);
+            setCheckBox(chkPauseAfterElapsed, false);
         }
     }
 }
