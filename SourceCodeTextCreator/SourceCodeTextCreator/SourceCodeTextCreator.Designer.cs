@@ -84,7 +84,6 @@
             this.txtOutputFolder.Name = "txtOutputFolder";
             this.txtOutputFolder.Size = new System.Drawing.Size(531, 20);
             this.txtOutputFolder.TabIndex = 3;
-            this.txtOutputFolder.Text = "C:\\Documents and Settings\\Adrian\\Desktop\\TypingPracticeTexts\\Code\\New";
             // 
             // btnBrowseInputFile
             // 
