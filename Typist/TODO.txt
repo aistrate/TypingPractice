@@ -10,9 +10,6 @@ Main unsolved problems:
 
 General:
 
-- for the three generator projects (chars, code, Wikipedia): save the local source/destination folders picked by the user in Properties.Settings.Default
-
-
 - separate Settings dialog into sections (Import, General and/or Practice Mode etc.)
 
 - file reload (menu item and shortcut, Ctrl+R or Ctrl+L); ask for confirmation, if current text is unfinished (maybe a user setting, "Ask before reloading, if unfinished")
@@ -66,6 +63,7 @@ Paint event handler:
 
 
 
+* for the three generator projects (chars, code, Wikipedia): save the local source/destination folders picked by the user in Properties.Settings.Default
 * new statistics on the status bar: row/column, row (only), column (only)
 * predefined sets of settings: Article (eliminate multiple spaces, wrap long lines), Code (leave spaces alone, no wrap), Characters (large font, centered)
 * correct calculation of WordCount to better account for multiple spaces expanded/deleted by Tab/Backspace (maybe add user setting: "Count multiple spaces as one")
