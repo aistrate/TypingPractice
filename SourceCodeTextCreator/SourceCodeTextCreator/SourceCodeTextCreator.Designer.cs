@@ -33,7 +33,7 @@
             this.txtInputFile = new System.Windows.Forms.TextBox();
             this.txtOutputFolder = new System.Windows.Forms.TextBox();
             this.btnBrowseInputFile = new System.Windows.Forms.Button();
-            this.btnOutputFolder = new System.Windows.Forms.Button();
+            this.btnBrowseOutputFolder = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.txtLinesPerFile = new System.Windows.Forms.TextBox();
             this.cbRemoveLineComments = new System.Windows.Forms.CheckBox();
@@ -96,16 +96,16 @@
             this.btnBrowseInputFile.UseVisualStyleBackColor = true;
             this.btnBrowseInputFile.Click += new System.EventHandler(this.btnBrowseInputFile_Click);
             // 
-            // btnOutputFolder
+            // btnBrowseOutputFolder
             // 
-            this.btnOutputFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOutputFolder.Location = new System.Drawing.Point(628, 34);
-            this.btnOutputFolder.Name = "btnOutputFolder";
-            this.btnOutputFolder.Size = new System.Drawing.Size(100, 23);
-            this.btnOutputFolder.TabIndex = 5;
-            this.btnOutputFolder.Text = "Browse...";
-            this.btnOutputFolder.UseVisualStyleBackColor = true;
-            this.btnOutputFolder.Click += new System.EventHandler(this.btnOutputFolder_Click);
+            this.btnBrowseOutputFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowseOutputFolder.Location = new System.Drawing.Point(628, 34);
+            this.btnBrowseOutputFolder.Name = "btnBrowseOutputFolder";
+            this.btnBrowseOutputFolder.Size = new System.Drawing.Size(100, 23);
+            this.btnBrowseOutputFolder.TabIndex = 5;
+            this.btnBrowseOutputFolder.Text = "Browse...";
+            this.btnBrowseOutputFolder.UseVisualStyleBackColor = true;
+            this.btnBrowseOutputFolder.Click += new System.EventHandler(this.btnBrowseOutputFolder_Click);
             // 
             // label3
             // 
@@ -282,7 +282,7 @@
             this.Controls.Add(this.cbRemoveLineComments);
             this.Controls.Add(this.txtLinesPerFile);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.btnOutputFolder);
+            this.Controls.Add(this.btnBrowseOutputFolder);
             this.Controls.Add(this.btnBrowseInputFile);
             this.Controls.Add(this.txtOutputFolder);
             this.Controls.Add(this.txtInputFile);
@@ -305,7 +305,7 @@
         private System.Windows.Forms.TextBox txtInputFile;
         private System.Windows.Forms.TextBox txtOutputFolder;
         private System.Windows.Forms.Button btnBrowseInputFile;
-        private System.Windows.Forms.Button btnOutputFolder;
+        private System.Windows.Forms.Button btnBrowseOutputFolder;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtLinesPerFile;
         private System.Windows.Forms.CheckBox cbRemoveLineComments;

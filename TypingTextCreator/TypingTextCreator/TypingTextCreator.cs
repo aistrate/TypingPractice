@@ -23,7 +23,25 @@ namespace TypingTextCreator
 
         private void TypingTextCreator_Load(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.OutputFolder != "")
+                txtOutputFolder.Text = Properties.Settings.Default.OutputFolder;
+            else
+                txtOutputFolder.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            txtOutputFolder.Select(txtOutputFolder.Text.Length, 0);
+
+            txtUrl.Focus();
         }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Properties.Settings.Default.OutputFolder = txtOutputFolder.Text.Trim();
+            Properties.Settings.Default.Save();
+
+            base.OnClosing(e);
+        }
+
+        FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog() { ShowNewFolderButton = true };
 
         private void btnReadUrl_Click(object sender, EventArgs e)
         {
@@ -62,8 +80,7 @@ namespace TypingTextCreator
                     title = headings[0].InnerText;
                     text = title + "\r\n\r\n";
 
-                    txtFileName.Text = string.Format(@"C:\Documents and Settings\Adrian\Desktop\TypingPracticeTexts\Wikipedia\New\{0}.txt",
-                                                     replaceNonAscii(title));
+                    txtFileName.Text = string.Format(@"{0}.txt", replaceNonAscii(title));
                 }
 
                 //var divs = doc.DocumentNode.SelectNodes(string.Format("//body{0}", repeatString("/div", divCount + 1)));
@@ -262,34 +279,45 @@ namespace TypingTextCreator
             return Regex.Replace(text, @"[^A-Za-z0-9\s`~!@#$%\^&*();',./:""<>?\-=\[\]\\_+{}\|]", "*");
         }
 
-        private void btnBrowse_Click(object sender, EventArgs e)
+        private void btnBrowseOutputFolder_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-            dialog.ShowDialog();
-            txtFileName.Text = dialog.FileName;
+            if (txtOutputFolder.Text.Trim() != "")
+                folderBrowserDialog.SelectedPath = txtOutputFolder.Text.Trim();
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                txtOutputFolder.Text = folderBrowserDialog.SelectedPath;
         }
 
         private void btnSaveToFile_Click(object sender, EventArgs e)
         {
-            if (txtText.Text.Trim() == "")
-            {
-                MessageBox.Show("Text box is empty.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            txtText.Text = txtText.Text.Trim();
+            txtOutputFolder.Text = txtOutputFolder.Text.Trim();
+            txtFileName.Text = txtFileName.Text.Trim();
 
-            if (txtFileName.Text.Trim() == "")
+            if (txtText.Text == "")
+                MessageBox.Show("Text box is empty.", "Warning",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else if (txtFileName.Text == "")
+                MessageBox.Show("File name is empty.", "Warning",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
             {
-                MessageBox.Show("File name is empty.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                string fullFilePath = string.Format("{0}\\{1}", txtOutputFolder.Text, txtFileName.Text);
 
-            using (StreamWriter sw = new StreamWriter(txtFileName.Text.Trim()))
-            {
-                sw.WriteLine(txtText.Text.Trim());
-            }
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(fullFilePath))
+                        sw.WriteLine(txtText.Text);
 
-            MessageBox.Show("Text was written to the file successfully.", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Text was written to the file successfully.", "OK",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void txtUrl_KeyPress(object sender, KeyPressEventArgs e)

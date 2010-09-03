@@ -43,21 +43,19 @@ namespace SourceCodeTextCreator
         
         private void btnBrowseInputFile_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = openFileDialog.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 txtInputFile.Text = openFileDialog.FileName;
                 setCommentStartEndChars(openFileDialog.FileName);
             }
         }
 
-        private void btnOutputFolder_Click(object sender, EventArgs e)
+        private void btnBrowseOutputFolder_Click(object sender, EventArgs e)
         {
             if (txtOutputFolder.Text.Trim() != "")
                 folderBrowserDialog.SelectedPath = txtOutputFolder.Text.Trim();
 
-            DialogResult dialogResult = folderBrowserDialog.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                 txtOutputFolder.Text = folderBrowserDialog.SelectedPath;
         }
 

@@ -36,7 +36,9 @@
             this.txtFileName = new System.Windows.Forms.TextBox();
             this.btnReadUrl = new System.Windows.Forms.Button();
             this.btnSaveToFile = new System.Windows.Forms.Button();
-            this.btnBrowse = new System.Windows.Forms.Button();
+            this.btnBrowseOutputFolder = new System.Windows.Forms.Button();
+            this.txtOutputFolder = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnConvert
@@ -97,7 +99,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFileName.Location = new System.Drawing.Point(101, 69);
             this.txtFileName.Name = "txtFileName";
-            this.txtFileName.Size = new System.Drawing.Size(424, 20);
+            this.txtFileName.Size = new System.Drawing.Size(530, 20);
             this.txtFileName.TabIndex = 3;
             // 
             // btnReadUrl
@@ -122,23 +124,43 @@
             this.btnSaveToFile.UseVisualStyleBackColor = true;
             this.btnSaveToFile.Click += new System.EventHandler(this.btnSaveToFile_Click);
             // 
-            // btnBrowse
+            // btnBrowseOutputFolder
             // 
-            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowse.Location = new System.Drawing.Point(531, 67);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(100, 23);
-            this.btnBrowse.TabIndex = 4;
-            this.btnBrowse.Text = "Browse...";
-            this.btnBrowse.UseVisualStyleBackColor = true;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            this.btnBrowseOutputFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowseOutputFolder.Location = new System.Drawing.Point(531, 39);
+            this.btnBrowseOutputFolder.Name = "btnBrowseOutputFolder";
+            this.btnBrowseOutputFolder.Size = new System.Drawing.Size(100, 23);
+            this.btnBrowseOutputFolder.TabIndex = 4;
+            this.btnBrowseOutputFolder.Text = "Browse...";
+            this.btnBrowseOutputFolder.UseVisualStyleBackColor = true;
+            this.btnBrowseOutputFolder.Click += new System.EventHandler(this.btnBrowseOutputFolder_Click);
+            // 
+            // txtOutputFolder
+            // 
+            this.txtOutputFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtOutputFolder.Location = new System.Drawing.Point(101, 41);
+            this.txtOutputFolder.Name = "txtOutputFolder";
+            this.txtOutputFolder.Size = new System.Drawing.Size(424, 20);
+            this.txtOutputFolder.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 44);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Output Folder:";
             // 
             // TypingTextCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(748, 809);
-            this.Controls.Add(this.btnBrowse);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtOutputFolder);
+            this.Controls.Add(this.btnBrowseOutputFolder);
             this.Controls.Add(this.btnSaveToFile);
             this.Controls.Add(this.btnReadUrl);
             this.Controls.Add(this.txtFileName);
@@ -166,7 +188,9 @@
         private System.Windows.Forms.TextBox txtFileName;
         private System.Windows.Forms.Button btnReadUrl;
         private System.Windows.Forms.Button btnSaveToFile;
-        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.Button btnBrowseOutputFolder;
+        private System.Windows.Forms.TextBox txtOutputFolder;
+        private System.Windows.Forms.Label label3;
     }
 }
 
