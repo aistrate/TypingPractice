@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
 
-namespace WindowsFormsApplication1
+namespace CharTraining
 {
     public partial class CharTrainingCreator : Form
     {
@@ -19,10 +16,20 @@ namespace WindowsFormsApplication1
 
         private void CharTrainingCreator_Load(object sender, EventArgs e)
         {
+            txtOutputFolder.Text = Properties.Settings.Default.OutputFolder;
             txtOutputFolder.Select(txtOutputFolder.Text.Length, 0);
+
             cbSaveToFolder_CheckedChanged(cbSaveToFolder, EventArgs.Empty);
 
             txtLettersLower.Focus();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Properties.Settings.Default.OutputFolder = txtOutputFolder.Text;
+            Properties.Settings.Default.Save();
+
+            base.OnClosing(e);
         }
 
         private void btnClearText_Click(object sender, EventArgs e)

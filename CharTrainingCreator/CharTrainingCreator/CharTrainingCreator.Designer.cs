@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace CharTraining
 {
     partial class CharTrainingCreator
     {
@@ -492,7 +492,6 @@
             this.txtOutputFolder.Name = "txtOutputFolder";
             this.txtOutputFolder.Size = new System.Drawing.Size(395, 21);
             this.txtOutputFolder.TabIndex = 34;
-            this.txtOutputFolder.Text = "C:\\Documents and Settings\\Adrian\\Desktop\\TypingPracticeTexts\\Characters\\New";
             // 
             // btnBrowse
             // 
