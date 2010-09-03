@@ -293,6 +293,7 @@
             this.MinimumSize = new System.Drawing.Size(650, 238);
             this.Name = "SourceCodeTextCreator";
             this.Text = "Source Code Text Creator";
+            this.Load += new System.EventHandler(this.SourceCodeTextCreator_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

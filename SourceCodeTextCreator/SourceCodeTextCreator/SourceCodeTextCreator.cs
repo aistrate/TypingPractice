@@ -18,6 +18,22 @@ namespace SourceCodeTextCreator
             InitializeComponent();
         }
 
+        private void SourceCodeTextCreator_Load(object sender, EventArgs e)
+        {
+            txtOutputFolder.Text = Properties.Settings.Default.OutputFolder;
+            txtOutputFolder.Select(txtOutputFolder.Text.Length, 0);
+
+            txtInputFile.Focus();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Properties.Settings.Default.OutputFolder = txtOutputFolder.Text;
+            Properties.Settings.Default.Save();
+
+            base.OnClosing(e);
+        }
+
         OpenFileDialog openFileDialog = new OpenFileDialog()
         {
             Filter = "All Files (*.*)|*.*|C Files (*.c, *.h)|*.c;*.h|C# Files (*.cs)|*.cs|Haskell Files (*.hs, *.lhs)|*.hs;*.lhs|JavaScript Files (*.js)|*.js|Python Files (*.py)|*.py|Ruby Files (*.rb)|*.rb"
