@@ -27,6 +27,7 @@ namespace Typist
 
         private void SettingsDialog_VisibleChanged(object sender, EventArgs e)
         {
+            resetCheckBoxesBackColor();
             btnOk.Focus();
         }
 
