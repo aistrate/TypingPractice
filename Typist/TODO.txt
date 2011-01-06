@@ -15,6 +15,10 @@ Wishes/bugs (after a few months of usage):
 
 - add a new instance of the status bar menu on the status bar, so that two different statistics are visible at the same time; make "Total" the default statistic (as "Percentage" is for the original)
 
+- annoying behavior: when text is scrolled to the left (due to the line being longer than the window, and the cursor getting close to the right side), deleting the last char typed before scrolling will scroll back (to the right); fix: scroll right only if deleting beyond the left margin of the "scroll zone" (1/2 to 3/4 of the screen); so, right of 3/4 scrolls left, left of 1/2 scrolls right; but, left of 3/4 does NOT scroll right
+
+- bug: on the first line, sometimes the typed text is slightly offset from the original (towards the left); fix: always prepend a copy of the first line in front of the text (both original and typed), and draw a white rectangle on top of it; lines after the first are never offset, so this should fix the problem
+
 
 General:
 
