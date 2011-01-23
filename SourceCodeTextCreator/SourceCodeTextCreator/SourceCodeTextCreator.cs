@@ -383,8 +383,8 @@ namespace SourceCodeTextCreator
 
                 for (int i = 1; i < fragments.Length; i++)
                 {
-                    int missingCount = 8 - (newLine.Length % 8);
-                    newLine.Append(new string(' ', missingCount) + fragments[i]);
+                    int missingSpaces = 8 - (newLine.Length % 8);
+                    newLine.Append(new string(' ', missingSpaces) + fragments[i]);
                 }
 
                 return newLine.ToString();
