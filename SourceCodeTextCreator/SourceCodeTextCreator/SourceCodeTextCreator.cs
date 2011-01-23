@@ -157,6 +157,9 @@ namespace SourceCodeTextCreator
                                          removeBlockComments, blockCommentStartChars, blockCommentEndChars,
                                          removeLiterateComments);
 
+                if (cbReplaceTabsWithSpaces.Checked)
+                    lines = doReplaceTabsWithSpaces(lines);
+
                 generateFiles(lines, outputFolder, outputFileBaseName, linesPerFile);
 
                 MessageBox.Show("Files were generated successfully.", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -362,6 +365,32 @@ namespace SourceCodeTextCreator
             }
 
             return newLines;
+        }
+
+        private List<string> doReplaceTabsWithSpaces(List<string> lines)
+        {
+            return lines.Select<string, string>(replaceTabsInLine)
+                        .ToList();
+        }
+
+        private string replaceTabsInLine(string line)
+        {
+            if (line.Contains("\t"))
+            {
+                string[] fragments = line.Split('\t').ToArray();
+
+                StringBuilder newLine = new StringBuilder(fragments[0]);
+
+                for (int i = 1; i < fragments.Length; i++)
+                {
+                    int missingCount = 8 - (newLine.Length % 8);
+                    newLine.Append(new string(' ', missingCount) + fragments[i]);
+                }
+
+                return newLine.ToString();
+            }
+            else
+                return line;
         }
 
         private void generateFiles(List<string> lines, string outputFolder, string outputFileBaseName, int linesPerFile)

@@ -47,6 +47,7 @@
             this.cbRemoveLiterateComments = new System.Windows.Forms.CheckBox();
             this.comStringDelimiter = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbReplaceTabsWithSpaces = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -110,7 +111,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 175);
+            this.label3.Location = new System.Drawing.Point(10, 201);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 13);
             this.label3.TabIndex = 6;
@@ -118,7 +119,7 @@
             // 
             // txtLinesPerFile
             // 
-            this.txtLinesPerFile.Location = new System.Drawing.Point(111, 172);
+            this.txtLinesPerFile.Location = new System.Drawing.Point(111, 198);
             this.txtLinesPerFile.Name = "txtLinesPerFile";
             this.txtLinesPerFile.Size = new System.Drawing.Size(56, 20);
             this.txtLinesPerFile.TabIndex = 9;
@@ -141,7 +142,7 @@
             // btnGenerate
             // 
             this.btnGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGenerate.Location = new System.Drawing.Point(628, 170);
+            this.btnGenerate.Location = new System.Drawing.Point(628, 196);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(100, 23);
             this.btnGenerate.TabIndex = 11;
@@ -248,7 +249,7 @@
             this.comStringDelimiter.Items.AddRange(new object[] {
             "\"",
             "\'"});
-            this.comStringDelimiter.Location = new System.Drawing.Point(111, 146);
+            this.comStringDelimiter.Location = new System.Drawing.Point(111, 172);
             this.comStringDelimiter.Name = "comStringDelimiter";
             this.comStringDelimiter.Size = new System.Drawing.Size(100, 23);
             this.comStringDelimiter.TabIndex = 20;
@@ -257,18 +258,31 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 150);
+            this.label5.Location = new System.Drawing.Point(10, 176);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 13);
             this.label5.TabIndex = 21;
             this.label5.Text = "String delimiter:";
+            // 
+            // cbReplaceTabsWithSpaces
+            // 
+            this.cbReplaceTabsWithSpaces.AutoSize = true;
+            this.cbReplaceTabsWithSpaces.Checked = true;
+            this.cbReplaceTabsWithSpaces.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbReplaceTabsWithSpaces.Location = new System.Drawing.Point(13, 150);
+            this.cbReplaceTabsWithSpaces.Name = "cbReplaceTabsWithSpaces";
+            this.cbReplaceTabsWithSpaces.Size = new System.Drawing.Size(148, 17);
+            this.cbReplaceTabsWithSpaces.TabIndex = 22;
+            this.cbReplaceTabsWithSpaces.Text = "Replace tabs with spaces";
+            this.cbReplaceTabsWithSpaces.UseVisualStyleBackColor = true;
             // 
             // SourceCodeTextCreator
             // 
             this.AcceptButton = this.btnGenerate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 204);
+            this.ClientSize = new System.Drawing.Size(742, 230);
+            this.Controls.Add(this.cbReplaceTabsWithSpaces);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.comStringDelimiter);
             this.Controls.Add(this.cbRemoveLiterateComments);
@@ -288,8 +302,8 @@
             this.Controls.Add(this.txtInputFile);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.MaximumSize = new System.Drawing.Size(4000, 238);
-            this.MinimumSize = new System.Drawing.Size(650, 238);
+            this.MaximumSize = new System.Drawing.Size(4000, 264);
+            this.MinimumSize = new System.Drawing.Size(650, 264);
             this.Name = "SourceCodeTextCreator";
             this.Text = "Source Code Text Creator";
             this.Load += new System.EventHandler(this.SourceCodeTextCreator_Load);
@@ -319,6 +333,7 @@
         private System.Windows.Forms.CheckBox cbRemoveLiterateComments;
         private System.Windows.Forms.ComboBox comStringDelimiter;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox cbReplaceTabsWithSpaces;
     }
 }
 
