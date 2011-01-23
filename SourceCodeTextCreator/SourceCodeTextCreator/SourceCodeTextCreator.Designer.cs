@@ -48,6 +48,14 @@
             this.comStringDelimiter = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cbReplaceTabsWithSpaces = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.rbLinesPerFile = new System.Windows.Forms.RadioButton();
+            this.rbCharsPerFile = new System.Windows.Forms.RadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtCharsPerFile = new System.Windows.Forms.TextBox();
+            this.rbDoNotSplit = new System.Windows.Forms.RadioButton();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -75,7 +83,7 @@
             this.txtInputFile.Location = new System.Drawing.Point(91, 12);
             this.txtInputFile.Name = "txtInputFile";
             this.txtInputFile.Size = new System.Drawing.Size(531, 20);
-            this.txtInputFile.TabIndex = 2;
+            this.txtInputFile.TabIndex = 0;
             // 
             // txtOutputFolder
             // 
@@ -84,7 +92,7 @@
             this.txtOutputFolder.Location = new System.Drawing.Point(91, 36);
             this.txtOutputFolder.Name = "txtOutputFolder";
             this.txtOutputFolder.Size = new System.Drawing.Size(531, 20);
-            this.txtOutputFolder.TabIndex = 3;
+            this.txtOutputFolder.TabIndex = 2;
             // 
             // btnBrowseInputFile
             // 
@@ -92,7 +100,7 @@
             this.btnBrowseInputFile.Location = new System.Drawing.Point(628, 10);
             this.btnBrowseInputFile.Name = "btnBrowseInputFile";
             this.btnBrowseInputFile.Size = new System.Drawing.Size(100, 23);
-            this.btnBrowseInputFile.TabIndex = 4;
+            this.btnBrowseInputFile.TabIndex = 1;
             this.btnBrowseInputFile.Text = "Browse...";
             this.btnBrowseInputFile.UseVisualStyleBackColor = true;
             this.btnBrowseInputFile.Click += new System.EventHandler(this.btnBrowseInputFile_Click);
@@ -103,7 +111,7 @@
             this.btnBrowseOutputFolder.Location = new System.Drawing.Point(628, 34);
             this.btnBrowseOutputFolder.Name = "btnBrowseOutputFolder";
             this.btnBrowseOutputFolder.Size = new System.Drawing.Size(100, 23);
-            this.btnBrowseOutputFolder.TabIndex = 5;
+            this.btnBrowseOutputFolder.TabIndex = 3;
             this.btnBrowseOutputFolder.Text = "Browse...";
             this.btnBrowseOutputFolder.UseVisualStyleBackColor = true;
             this.btnBrowseOutputFolder.Click += new System.EventHandler(this.btnBrowseOutputFolder_Click);
@@ -113,16 +121,17 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(10, 201);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 13);
+            this.label3.Size = new System.Drawing.Size(50, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Lines per File:";
+            this.label3.Text = "Split into:";
             // 
             // txtLinesPerFile
             // 
-            this.txtLinesPerFile.Location = new System.Drawing.Point(111, 198);
+            this.txtLinesPerFile.Enabled = false;
+            this.txtLinesPerFile.Location = new System.Drawing.Point(182, 0);
             this.txtLinesPerFile.Name = "txtLinesPerFile";
-            this.txtLinesPerFile.Size = new System.Drawing.Size(56, 20);
-            this.txtLinesPerFile.TabIndex = 9;
+            this.txtLinesPerFile.Size = new System.Drawing.Size(45, 20);
+            this.txtLinesPerFile.TabIndex = 32;
             this.txtLinesPerFile.Text = "50";
             this.txtLinesPerFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -145,7 +154,7 @@
             this.btnGenerate.Location = new System.Drawing.Point(628, 196);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(100, 23);
-            this.btnGenerate.TabIndex = 11;
+            this.btnGenerate.TabIndex = 50;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
@@ -162,7 +171,7 @@
             this.comLineCommentStartChars.Location = new System.Drawing.Point(227, 69);
             this.comLineCommentStartChars.Name = "comLineCommentStartChars";
             this.comLineCommentStartChars.Size = new System.Drawing.Size(100, 23);
-            this.comLineCommentStartChars.TabIndex = 12;
+            this.comLineCommentStartChars.TabIndex = 11;
             this.comLineCommentStartChars.Text = "//";
             // 
             // cbRemoveLineCommentsAtEndOfLine
@@ -173,7 +182,7 @@
             this.cbRemoveLineCommentsAtEndOfLine.Location = new System.Drawing.Point(425, 72);
             this.cbRemoveLineCommentsAtEndOfLine.Name = "cbRemoveLineCommentsAtEndOfLine";
             this.cbRemoveLineCommentsAtEndOfLine.Size = new System.Drawing.Size(200, 17);
-            this.cbRemoveLineCommentsAtEndOfLine.TabIndex = 13;
+            this.cbRemoveLineCommentsAtEndOfLine.TabIndex = 12;
             this.cbRemoveLineCommentsAtEndOfLine.Text = "Remove line comments at end of line";
             this.cbRemoveLineCommentsAtEndOfLine.UseVisualStyleBackColor = true;
             // 
@@ -189,7 +198,7 @@
             this.comBlockCommentStartChars.Location = new System.Drawing.Point(227, 95);
             this.comBlockCommentStartChars.Name = "comBlockCommentStartChars";
             this.comBlockCommentStartChars.Size = new System.Drawing.Size(100, 23);
-            this.comBlockCommentStartChars.TabIndex = 15;
+            this.comBlockCommentStartChars.TabIndex = 14;
             this.comBlockCommentStartChars.Text = "/\\*";
             // 
             // cbRemoveBlockComments
@@ -200,7 +209,7 @@
             this.cbRemoveBlockComments.Location = new System.Drawing.Point(13, 98);
             this.cbRemoveBlockComments.Name = "cbRemoveBlockComments";
             this.cbRemoveBlockComments.Size = new System.Drawing.Size(208, 17);
-            this.cbRemoveBlockComments.TabIndex = 14;
+            this.cbRemoveBlockComments.TabIndex = 13;
             this.cbRemoveBlockComments.Text = "Remove block comments starting with:";
             this.cbRemoveBlockComments.UseVisualStyleBackColor = true;
             this.cbRemoveBlockComments.CheckedChanged += new System.EventHandler(this.cbRemoveBlockComments_CheckedChanged);
@@ -217,7 +226,7 @@
             this.comBlockCommentEndChars.Location = new System.Drawing.Point(425, 95);
             this.comBlockCommentEndChars.Name = "comBlockCommentEndChars";
             this.comBlockCommentEndChars.Size = new System.Drawing.Size(100, 23);
-            this.comBlockCommentEndChars.TabIndex = 16;
+            this.comBlockCommentEndChars.TabIndex = 15;
             this.comBlockCommentEndChars.Text = "\\*/";
             // 
             // label4
@@ -238,7 +247,7 @@
             this.cbRemoveLiterateComments.Location = new System.Drawing.Point(13, 124);
             this.cbRemoveLiterateComments.Name = "cbRemoveLiterateComments";
             this.cbRemoveLiterateComments.Size = new System.Drawing.Size(151, 17);
-            this.cbRemoveLiterateComments.TabIndex = 18;
+            this.cbRemoveLiterateComments.TabIndex = 16;
             this.cbRemoveLiterateComments.Text = "Remove literate comments";
             this.cbRemoveLiterateComments.UseVisualStyleBackColor = true;
             // 
@@ -252,7 +261,7 @@
             this.comStringDelimiter.Location = new System.Drawing.Point(111, 172);
             this.comStringDelimiter.Name = "comStringDelimiter";
             this.comStringDelimiter.Size = new System.Drawing.Size(100, 23);
-            this.comStringDelimiter.TabIndex = 20;
+            this.comStringDelimiter.TabIndex = 18;
             this.comStringDelimiter.Text = "\"";
             // 
             // label5
@@ -272,9 +281,85 @@
             this.cbReplaceTabsWithSpaces.Location = new System.Drawing.Point(13, 150);
             this.cbReplaceTabsWithSpaces.Name = "cbReplaceTabsWithSpaces";
             this.cbReplaceTabsWithSpaces.Size = new System.Drawing.Size(148, 17);
-            this.cbReplaceTabsWithSpaces.TabIndex = 22;
+            this.cbReplaceTabsWithSpaces.TabIndex = 17;
             this.cbReplaceTabsWithSpaces.Text = "Replace tabs with spaces";
             this.cbReplaceTabsWithSpaces.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(229, 3);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(62, 13);
+            this.label6.TabIndex = 31;
+            this.label6.Text = "lines per file";
+            // 
+            // rbLinesPerFile
+            // 
+            this.rbLinesPerFile.AutoSize = true;
+            this.rbLinesPerFile.Location = new System.Drawing.Point(163, 3);
+            this.rbLinesPerFile.Margin = new System.Windows.Forms.Padding(0);
+            this.rbLinesPerFile.Name = "rbLinesPerFile";
+            this.rbLinesPerFile.Size = new System.Drawing.Size(14, 13);
+            this.rbLinesPerFile.TabIndex = 31;
+            this.rbLinesPerFile.UseVisualStyleBackColor = true;
+            this.rbLinesPerFile.CheckedChanged += new System.EventHandler(this.rbPerFile_CheckedChanged);
+            // 
+            // rbCharsPerFile
+            // 
+            this.rbCharsPerFile.AutoSize = true;
+            this.rbCharsPerFile.Checked = true;
+            this.rbCharsPerFile.Location = new System.Drawing.Point(3, 3);
+            this.rbCharsPerFile.Margin = new System.Windows.Forms.Padding(0);
+            this.rbCharsPerFile.Name = "rbCharsPerFile";
+            this.rbCharsPerFile.Size = new System.Drawing.Size(14, 13);
+            this.rbCharsPerFile.TabIndex = 31;
+            this.rbCharsPerFile.UseVisualStyleBackColor = true;
+            this.rbCharsPerFile.CheckedChanged += new System.EventHandler(this.rbPerFile_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rbDoNotSplit);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.txtCharsPerFile);
+            this.panel1.Controls.Add(this.rbLinesPerFile);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.txtLinesPerFile);
+            this.panel1.Controls.Add(this.rbCharsPerFile);
+            this.panel1.Location = new System.Drawing.Point(111, 198);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(450, 20);
+            this.panel1.TabIndex = 30;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(69, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(67, 13);
+            this.label7.TabIndex = 31;
+            this.label7.Text = "chars per file";
+            // 
+            // txtCharsPerFile
+            // 
+            this.txtCharsPerFile.Location = new System.Drawing.Point(22, 0);
+            this.txtCharsPerFile.Name = "txtCharsPerFile";
+            this.txtCharsPerFile.Size = new System.Drawing.Size(45, 20);
+            this.txtCharsPerFile.TabIndex = 34;
+            this.txtCharsPerFile.Text = "1250";
+            this.txtCharsPerFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // rbDoNotSplit
+            // 
+            this.rbDoNotSplit.AutoSize = true;
+            this.rbDoNotSplit.Location = new System.Drawing.Point(323, 1);
+            this.rbDoNotSplit.Margin = new System.Windows.Forms.Padding(0);
+            this.rbDoNotSplit.Name = "rbDoNotSplit";
+            this.rbDoNotSplit.Size = new System.Drawing.Size(78, 17);
+            this.rbDoNotSplit.TabIndex = 31;
+            this.rbDoNotSplit.Text = "Do not split";
+            this.rbDoNotSplit.UseVisualStyleBackColor = true;
             // 
             // SourceCodeTextCreator
             // 
@@ -282,6 +367,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 230);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbReplaceTabsWithSpaces);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.comStringDelimiter);
@@ -294,7 +380,6 @@
             this.Controls.Add(this.comLineCommentStartChars);
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.cbRemoveLineComments);
-            this.Controls.Add(this.txtLinesPerFile);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnBrowseOutputFolder);
             this.Controls.Add(this.btnBrowseInputFile);
@@ -307,6 +392,8 @@
             this.Name = "SourceCodeTextCreator";
             this.Text = "Source Code Text Creator";
             this.Load += new System.EventHandler(this.SourceCodeTextCreator_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -334,6 +421,13 @@
         private System.Windows.Forms.ComboBox comStringDelimiter;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox cbReplaceTabsWithSpaces;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.RadioButton rbLinesPerFile;
+        private System.Windows.Forms.RadioButton rbCharsPerFile;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtCharsPerFile;
+        private System.Windows.Forms.RadioButton rbDoNotSplit;
     }
 }
 

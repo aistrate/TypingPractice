@@ -126,13 +126,6 @@ namespace SourceCodeTextCreator
                 return;
             }
 
-            int linesPerFile = readInt(txtLinesPerFile);
-            if (linesPerFile == 0)
-            {
-                linesPerFile = int.MaxValue;
-                txtLinesPerFile.Text = "";
-            }
-
             string outputFileBaseName = (new FileInfo(inputFileFullName)).Name;
 
             bool removeLineComments = cbRemoveLineComments.Checked && comLineCommentStartChars.Text.Trim() != "",
@@ -145,6 +138,23 @@ namespace SourceCodeTextCreator
                    blockCommentStartChars = comBlockCommentStartChars.Enabled ? comBlockCommentStartChars.Text.Trim() : "",
                    blockCommentEndChars = comBlockCommentEndChars.Enabled ? comBlockCommentEndChars.Text.Trim() : "",
                    stringDelimiter = comStringDelimiter.Text.Trim();
+
+            int charsPerFile = readPositiveInt(txtCharsPerFile),
+                linesPerFile = readPositiveInt(txtLinesPerFile);
+
+            if (rbCharsPerFile.Checked && charsPerFile == 0)
+            {
+                MessageBox.Show("Chars per file is empty.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCharsPerFile.Focus();
+                return;
+            }
+
+            if (rbLinesPerFile.Checked && linesPerFile == 0)
+            {
+                MessageBox.Show("Lines per file is empty.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtLinesPerFile.Focus();
+                return;
+            }
 
             try
             {
@@ -160,7 +170,22 @@ namespace SourceCodeTextCreator
                 if (cbReplaceTabsWithSpaces.Checked)
                     lines = doReplaceTabsWithSpaces(lines);
 
-                generateFiles(lines, outputFolder, outputFileBaseName, linesPerFile);
+                if (lines.Count == 0)
+                {
+                    MessageBox.Show("Output file has zero lines.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                List<List<string>> fileRanges = null;
+
+                if (rbCharsPerFile.Checked)
+                    fileRanges = splitByCharCount(lines, charsPerFile);
+                else if (rbLinesPerFile.Checked)
+                    fileRanges = splitByLineCount(lines, linesPerFile);
+                else
+                    fileRanges = new List<List<string>> { lines };
+
+                generateFiles(fileRanges, outputFolder, outputFileBaseName);
 
                 MessageBox.Show("Files were generated successfully.", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -393,39 +418,81 @@ namespace SourceCodeTextCreator
                 return line;
         }
 
-        private void generateFiles(List<string> lines, string outputFolder, string outputFileBaseName, int linesPerFile)
+        private List<List<string>> splitByCharCount(List<string> lines, int charsPerFile)
         {
-            if (lines.Count == 0)
+            var fileRanges = new List<List<string>>();
+
+            var fileRange = new List<string>();
+            int fileCharCount = 0, prevFileCharCount = 0;
+
+            foreach (string line in lines)
             {
-                MessageBox.Show("Output file has zero lines.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                fileRange.Add(line);
+
+                fileCharCount += Regex.Replace(line, @"\s+", " ").Length;
+
+                if (fileCharCount >= charsPerFile)
+                {
+                    fileRanges.Add(fileRange);
+
+                    fileRange = new List<string>();
+
+                    prevFileCharCount = fileCharCount;
+                    fileCharCount = 0;
+                }
             }
 
+            if (fileCharCount > 0)
+            {
+                if (fileRanges.Count >= 1 && prevFileCharCount + fileCharCount < ((3 * charsPerFile + 1) / 2))
+                    fileRanges.Last().AddRange(fileRange);
+                else
+                    fileRanges.Add(fileRange);
+            }
+
+            return fileRanges;
+        }
+
+        private List<List<string>> splitByLineCount(List<string> lines, int linesPerFile)
+        {
             int fileCount = Math.Max(1, (int)Math.Round(lines.Count() / (decimal)linesPerFile, 0));
 
-            for (int fileIndex = 0; fileIndex < fileCount; fileIndex++)
+            return Enumerable.Range(0, fileCount)
+                             .Select(fileIndex => lines.GetRange(
+                                        linesPerFile * fileIndex,
+                                        fileIndex < fileCount - 1 ? linesPerFile : lines.Count - linesPerFile * fileIndex))
+                             .ToList();
+        }
+
+        private void generateFiles(List<List<string>> fileRanges, string outputFolder, string outputFileBaseName)
+        {
+            for (int fileIndex = 0; fileIndex < fileRanges.Count; fileIndex++)
             {
-                var lineRange = lines.GetRange(linesPerFile * fileIndex,
-                                               fileIndex < fileCount - 1 ? linesPerFile : lines.Count - linesPerFile * fileIndex)
-                                     .SkipWhile(line => line.Trim() == "")
-                                     .Reverse<string>().SkipWhile(line => line.Trim() == "").Reverse()
-                                     .Concat(new string[] { "" });
+                var fileRange = fileRanges[fileIndex].SkipWhile(line => line.Trim() == "")
+                                                     .Reverse<string>().SkipWhile(line => line.Trim() == "").Reverse()
+                                                     .Concat(new string[] { "" });
 
                 using (StreamWriter sw = new StreamWriter(string.Format("{0}\\{1}.{2:000}.txt", outputFolder, outputFileBaseName, fileIndex + 1)))
                 {
-                    sw.Write(string.Join("\r\n", lineRange.ToArray()));
+                    sw.Write(string.Join("\r\n", fileRange.ToArray()));
                 }
             }
         }
 
-        private int readInt(TextBox textBox)
+        private int readPositiveInt(TextBox textBox)
         {
             int number;
             int.TryParse(textBox.Text, out number);
-            number = Math.Abs(number);
+            number = Math.Max(0, number);
 
-            textBox.Text = number.ToString();
+            textBox.Text = number > 0 ? number.ToString() : "";
             return number;
+        }
+
+        private void rbPerFile_CheckedChanged(object sender, EventArgs e)
+        {
+            txtLinesPerFile.Enabled = rbLinesPerFile.Checked;
+            txtCharsPerFile.Enabled = rbCharsPerFile.Checked;
         }
     }
 }
