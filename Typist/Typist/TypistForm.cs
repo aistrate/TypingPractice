@@ -271,6 +271,8 @@ namespace Typist
 
         protected bool IsFinished { get { return TypedText.Length >= ImportedText.Length; } }
 
+        protected bool HideStatistics { get { return PracticeMode && userSettings.HideStatisticsWhileTyping; } }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
             importFile();
@@ -743,7 +745,7 @@ namespace Typist
 
         private void displayWPM()
         {
-            if (IsImported)
+            if (IsImported && !HideStatistics)
             {
                 double elapsedMinutes = (double)stopwatch.ElapsedMilliseconds / 60000.0;
 
@@ -762,7 +764,7 @@ namespace Typist
 
         private void displayErrorCount()
         {
-            if (IsImported)
+            if (IsImported && !HideStatistics)
             {
                 lblErrorCount.Text = string.Format("{0:#0} errs", TypedText.ErrorsCommitted);
 
