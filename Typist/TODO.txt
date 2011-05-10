@@ -9,10 +9,6 @@ Main unsolved problems:
 
 Wishes/bugs (after a few months of usage):
 
-- add user setting: "Hide statistics while in practice mode" (WPM, Errors, Accuracy)
-
-- add new item on the status bar menu: 'None' (show no statistic)
-
 - small dialog on the context menu, showing all keyboard shortcuts
 
 - log every file practiced on (file name, relative file path, date and time, WPM, number of errors, correctness percentage, total duration, starting time, etc.); log at the time of finishing, when the light turns red (at 100%); but try to avoid duplicate lines (e.g.: typo on last char, "Resume", Backspace, type correct char--which would log a new line for the same file); keep this file's versions in the Git repository for typing texts; write a script (or small C# program) that produces statistics from the log file; add a checkbox in the Settings dialog, "Log practice file details", turned on by the "Release" button, and off by the "Debug" button
@@ -41,6 +37,9 @@ General:
 - add user setting: "Show visual glyphs for word wrap" (as in VS); or, alternatively: show visual glyphs when "Word wrap" is off, for lines that go beyond the right edge of the screen
 
 - show a small dialog with shortcuts that are not on the menu ("Other shortcuts...")
+
+* add user setting: "Hide statistics while in practice mode" (WPM, Errors, Accuracy)
+* add new item on the status bar menu: 'None' (show no statistic)
 
 
 - add user setting: center text horizontally

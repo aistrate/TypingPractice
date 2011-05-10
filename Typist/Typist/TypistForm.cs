@@ -803,6 +803,9 @@ namespace Typist
                 case StatisticsModes.RowColumn:
                     btnStatistics.Text = string.Format("{0}, {1}", cursorRow, cursorColumn);
                     break;
+                case StatisticsModes.None:
+                    btnStatistics.Text = "";
+                    break;
                 default:
                     btnStatistics.Text = "";
                     break;
@@ -846,6 +849,7 @@ namespace Typist
             Typed = 3,
             TypedKeys = 4,
             RowColumn = 5,
+            None = 6,
         }
 
         protected ToolStripMenuItem[] StatisticsMenuItems
@@ -861,6 +865,7 @@ namespace Typist
                         toolStripTyped,
                         toolStripTypedKeys,
                         toolStripRowColumn,
+                        toolStripNone,
                     };
 
                 return statisticsMenuItems;
