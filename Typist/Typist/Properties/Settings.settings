@@ -53,6 +53,9 @@
     <Setting Name="UserSettings_RememberLastImportedFile" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="UserSettings_HideStatisticsWhileTyping" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="UserSettings_CountWhitespaceAsWordChars" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>

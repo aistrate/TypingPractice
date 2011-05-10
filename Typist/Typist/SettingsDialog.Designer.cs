@@ -33,6 +33,7 @@
             this.chkBeepOnError = new System.Windows.Forms.CheckBox();
             this.chkAllowBackspace = new System.Windows.Forms.CheckBox();
             this.chkVisibleNewlines = new System.Windows.Forms.CheckBox();
+            this.chkHideStatisticsWhileTyping = new System.Windows.Forms.CheckBox();
             this.chkCountWhitespaceAsWordChars = new System.Windows.Forms.CheckBox();
             this.chkCountErrorsAsWordChars = new System.Windows.Forms.CheckBox();
             this.chkAskBeforeCloseDuringPractice = new System.Windows.Forms.CheckBox();
@@ -56,7 +57,7 @@
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(151, 352);
+            this.btnOk.Location = new System.Drawing.Point(151, 375);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 100;
@@ -68,7 +69,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(232, 352);
+            this.btnCancel.Location = new System.Drawing.Point(232, 375);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 101;
@@ -105,10 +106,20 @@
             this.chkVisibleNewlines.Text = "Show newlines as ¶";
             this.chkVisibleNewlines.UseVisualStyleBackColor = false;
             // 
+            // chkHideStatisticsWhileTyping
+            // 
+            this.chkHideStatisticsWhileTyping.AutoSize = true;
+            this.chkHideStatisticsWhileTyping.Location = new System.Drawing.Point(12, 225);
+            this.chkHideStatisticsWhileTyping.Name = "chkHideStatisticsWhileTyping";
+            this.chkHideStatisticsWhileTyping.Size = new System.Drawing.Size(149, 17);
+            this.chkHideStatisticsWhileTyping.TabIndex = 117;
+            this.chkHideStatisticsWhileTyping.Text = "Hide statistics while typing";
+            this.chkHideStatisticsWhileTyping.UseVisualStyleBackColor = false;
+            // 
             // chkCountWhitespaceAsWordChars
             // 
             this.chkCountWhitespaceAsWordChars.AutoSize = true;
-            this.chkCountWhitespaceAsWordChars.Location = new System.Drawing.Point(12, 225);
+            this.chkCountWhitespaceAsWordChars.Location = new System.Drawing.Point(12, 248);
             this.chkCountWhitespaceAsWordChars.Name = "chkCountWhitespaceAsWordChars";
             this.chkCountWhitespaceAsWordChars.Size = new System.Drawing.Size(204, 17);
             this.chkCountWhitespaceAsWordChars.TabIndex = 7;
@@ -118,7 +129,7 @@
             // chkCountErrorsAsWordChars
             // 
             this.chkCountErrorsAsWordChars.AutoSize = true;
-            this.chkCountErrorsAsWordChars.Location = new System.Drawing.Point(12, 248);
+            this.chkCountErrorsAsWordChars.Location = new System.Drawing.Point(12, 271);
             this.chkCountErrorsAsWordChars.Name = "chkCountErrorsAsWordChars";
             this.chkCountErrorsAsWordChars.Size = new System.Drawing.Size(176, 17);
             this.chkCountErrorsAsWordChars.TabIndex = 8;
@@ -128,7 +139,7 @@
             // chkAskBeforeCloseDuringPractice
             // 
             this.chkAskBeforeCloseDuringPractice.AutoSize = true;
-            this.chkAskBeforeCloseDuringPractice.Location = new System.Drawing.Point(12, 271);
+            this.chkAskBeforeCloseDuringPractice.Location = new System.Drawing.Point(12, 294);
             this.chkAskBeforeCloseDuringPractice.Name = "chkAskBeforeCloseDuringPractice";
             this.chkAskBeforeCloseDuringPractice.Size = new System.Drawing.Size(186, 17);
             this.chkAskBeforeCloseDuringPractice.TabIndex = 9;
@@ -138,7 +149,7 @@
             // chkShowCursorWhenPaused
             // 
             this.chkShowCursorWhenPaused.AutoSize = true;
-            this.chkShowCursorWhenPaused.Location = new System.Drawing.Point(12, 294);
+            this.chkShowCursorWhenPaused.Location = new System.Drawing.Point(12, 317);
             this.chkShowCursorWhenPaused.Name = "chkShowCursorWhenPaused";
             this.chkShowCursorWhenPaused.Size = new System.Drawing.Size(152, 17);
             this.chkShowCursorWhenPaused.TabIndex = 10;
@@ -148,7 +159,7 @@
             // chkPauseAfterElapsed
             // 
             this.chkPauseAfterElapsed.AutoSize = true;
-            this.chkPauseAfterElapsed.Location = new System.Drawing.Point(12, 317);
+            this.chkPauseAfterElapsed.Location = new System.Drawing.Point(12, 340);
             this.chkPauseAfterElapsed.Name = "chkPauseAfterElapsed";
             this.chkPauseAfterElapsed.Size = new System.Drawing.Size(80, 17);
             this.chkPauseAfterElapsed.TabIndex = 11;
@@ -158,7 +169,7 @@
             // 
             // txtPauseAfterElapsed
             // 
-            this.txtPauseAfterElapsed.Location = new System.Drawing.Point(90, 315);
+            this.txtPauseAfterElapsed.Location = new System.Drawing.Point(90, 338);
             this.txtPauseAfterElapsed.MaxLength = 4;
             this.txtPauseAfterElapsed.Name = "txtPauseAfterElapsed";
             this.txtPauseAfterElapsed.ShortcutsEnabled = false;
@@ -171,7 +182,7 @@
             // lblSeconds
             // 
             this.lblSeconds.AutoSize = true;
-            this.lblSeconds.Location = new System.Drawing.Point(126, 318);
+            this.lblSeconds.Location = new System.Drawing.Point(126, 341);
             this.lblSeconds.Name = "lblSeconds";
             this.lblSeconds.Size = new System.Drawing.Size(103, 13);
             this.lblSeconds.TabIndex = 110;
@@ -281,7 +292,8 @@
             this.AcceptButton = this.btnOk;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(319, 387);
+            this.ClientSize = new System.Drawing.Size(319, 410);
+            this.Controls.Add(this.chkHideStatisticsWhileTyping);
             this.Controls.Add(this.btnPredefDebug);
             this.Controls.Add(this.btnPredefRelease);
             this.Controls.Add(this.btnPredefArticle);
@@ -327,6 +339,7 @@
         private System.Windows.Forms.CheckBox chkBeepOnError;
         private System.Windows.Forms.CheckBox chkAllowBackspace;
         private System.Windows.Forms.CheckBox chkVisibleNewlines;
+        private System.Windows.Forms.CheckBox chkHideStatisticsWhileTyping;
         private System.Windows.Forms.CheckBox chkCountWhitespaceAsWordChars;
         private System.Windows.Forms.CheckBox chkCountErrorsAsWordChars;
         private System.Windows.Forms.CheckBox chkAskBeforeCloseDuringPractice;

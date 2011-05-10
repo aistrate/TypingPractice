@@ -14,6 +14,7 @@ namespace Typist
         public bool RemoveEndOfLineSpaces { get; set; }
         public bool RemoveMultipleWhitespace { get; set; }
         public bool RememberLastImportedFile { get; set; }
+        public bool HideStatisticsWhileTyping { get; set; }
         public bool CountWhitespaceAsWordChars { get; set; }
         public bool CountErrorsAsWordChars { get; set; }
         public bool AskBeforeCloseDuringPractice { get; set; }
