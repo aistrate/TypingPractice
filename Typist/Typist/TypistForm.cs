@@ -726,7 +726,7 @@ namespace Typist
 
         private void displayTimeElapsed()
         {
-            if (IsImported)
+            if (IsImported && !HideStatistics)
             {
                 string oldTime = lblTime.Text;
 
