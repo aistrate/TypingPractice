@@ -52,9 +52,11 @@
             this.rbLinesPerFile = new System.Windows.Forms.RadioButton();
             this.rbCharsPerFile = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbDoNotSplit = new System.Windows.Forms.RadioButton();
             this.label7 = new System.Windows.Forms.Label();
             this.txtCharsPerFile = new System.Windows.Forms.TextBox();
-            this.rbDoNotSplit = new System.Windows.Forms.RadioButton();
+            this.txtSpacesPerTab = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -280,10 +282,11 @@
             this.cbReplaceTabsWithSpaces.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbReplaceTabsWithSpaces.Location = new System.Drawing.Point(13, 150);
             this.cbReplaceTabsWithSpaces.Name = "cbReplaceTabsWithSpaces";
-            this.cbReplaceTabsWithSpaces.Size = new System.Drawing.Size(148, 17);
+            this.cbReplaceTabsWithSpaces.Size = new System.Drawing.Size(113, 17);
             this.cbReplaceTabsWithSpaces.TabIndex = 17;
-            this.cbReplaceTabsWithSpaces.Text = "Replace tabs with spaces";
+            this.cbReplaceTabsWithSpaces.Text = "Replace Tab with:";
             this.cbReplaceTabsWithSpaces.UseVisualStyleBackColor = true;
+            this.cbReplaceTabsWithSpaces.CheckedChanged += new System.EventHandler(this.cbReplaceTabsWithSpaces_CheckedChanged);
             // 
             // label6
             // 
@@ -314,6 +317,7 @@
             this.rbCharsPerFile.Name = "rbCharsPerFile";
             this.rbCharsPerFile.Size = new System.Drawing.Size(14, 13);
             this.rbCharsPerFile.TabIndex = 31;
+            this.rbCharsPerFile.TabStop = true;
             this.rbCharsPerFile.UseVisualStyleBackColor = true;
             this.rbCharsPerFile.CheckedChanged += new System.EventHandler(this.rbPerFile_CheckedChanged);
             // 
@@ -331,6 +335,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(450, 20);
             this.panel1.TabIndex = 30;
+            // 
+            // rbDoNotSplit
+            // 
+            this.rbDoNotSplit.AutoSize = true;
+            this.rbDoNotSplit.Location = new System.Drawing.Point(323, 1);
+            this.rbDoNotSplit.Margin = new System.Windows.Forms.Padding(0);
+            this.rbDoNotSplit.Name = "rbDoNotSplit";
+            this.rbDoNotSplit.Size = new System.Drawing.Size(78, 17);
+            this.rbDoNotSplit.TabIndex = 31;
+            this.rbDoNotSplit.Text = "Do not split";
+            this.rbDoNotSplit.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -350,16 +365,23 @@
             this.txtCharsPerFile.Text = "1250";
             this.txtCharsPerFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // rbDoNotSplit
+            // txtSpacesPerTab
             // 
-            this.rbDoNotSplit.AutoSize = true;
-            this.rbDoNotSplit.Location = new System.Drawing.Point(323, 1);
-            this.rbDoNotSplit.Margin = new System.Windows.Forms.Padding(0);
-            this.rbDoNotSplit.Name = "rbDoNotSplit";
-            this.rbDoNotSplit.Size = new System.Drawing.Size(78, 17);
-            this.rbDoNotSplit.TabIndex = 31;
-            this.rbDoNotSplit.Text = "Do not split";
-            this.rbDoNotSplit.UseVisualStyleBackColor = true;
+            this.txtSpacesPerTab.Location = new System.Drawing.Point(133, 148);
+            this.txtSpacesPerTab.Name = "txtSpacesPerTab";
+            this.txtSpacesPerTab.Size = new System.Drawing.Size(45, 20);
+            this.txtSpacesPerTab.TabIndex = 51;
+            this.txtSpacesPerTab.Text = "8";
+            this.txtSpacesPerTab.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(180, 150);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 13);
+            this.label8.TabIndex = 52;
+            this.label8.Text = "spaces";
             // 
             // SourceCodeTextCreator
             // 
@@ -367,6 +389,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 230);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtSpacesPerTab);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbReplaceTabsWithSpaces);
             this.Controls.Add(this.label5);
@@ -428,6 +452,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtCharsPerFile;
         private System.Windows.Forms.RadioButton rbDoNotSplit;
+        private System.Windows.Forms.TextBox txtSpacesPerTab;
+        private System.Windows.Forms.Label label8;
     }
 }
 

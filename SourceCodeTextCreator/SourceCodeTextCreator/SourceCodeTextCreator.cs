@@ -139,8 +139,16 @@ namespace SourceCodeTextCreator
                    blockCommentEndChars = comBlockCommentEndChars.Enabled ? comBlockCommentEndChars.Text.Trim() : "",
                    stringDelimiter = comStringDelimiter.Text.Trim();
 
-            int charsPerFile = readPositiveInt(txtCharsPerFile),
+            int spacesPerTab = readPositiveInt(txtSpacesPerTab),
+                charsPerFile = readPositiveInt(txtCharsPerFile),
                 linesPerFile = readPositiveInt(txtLinesPerFile);
+
+            if (cbReplaceTabsWithSpaces.Checked && spacesPerTab == 0)
+            {
+                MessageBox.Show("Spaces per Tab is empty.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSpacesPerTab.Focus();
+                return;
+            }
 
             if (rbCharsPerFile.Checked && charsPerFile == 0)
             {
@@ -168,7 +176,7 @@ namespace SourceCodeTextCreator
                                          removeLiterateComments);
 
                 if (cbReplaceTabsWithSpaces.Checked)
-                    lines = doReplaceTabsWithSpaces(lines);
+                    lines = doReplaceTabsWithSpaces(lines, spacesPerTab);
 
                 if (lines.Count == 0)
                 {
@@ -392,13 +400,13 @@ namespace SourceCodeTextCreator
             return newLines;
         }
 
-        private List<string> doReplaceTabsWithSpaces(List<string> lines)
+        private List<string> doReplaceTabsWithSpaces(List<string> lines, int spacesPerTab)
         {
-            return lines.Select<string, string>(replaceTabsInLine)
+            return lines.Select<string, string>(line => replaceTabsInLine(line, spacesPerTab))
                         .ToList();
         }
 
-        private string replaceTabsInLine(string line)
+        private string replaceTabsInLine(string line, int spacesPerTab)
         {
             if (line.Contains("\t"))
             {
@@ -408,7 +416,7 @@ namespace SourceCodeTextCreator
 
                 for (int i = 1; i < fragments.Length; i++)
                 {
-                    int missingSpaces = 8 - (newLine.Length % 8);
+                    int missingSpaces = spacesPerTab - (newLine.Length % spacesPerTab);
                     newLine.Append(new string(' ', missingSpaces) + fragments[i]);
                 }
 
@@ -493,6 +501,11 @@ namespace SourceCodeTextCreator
         {
             txtLinesPerFile.Enabled = rbLinesPerFile.Checked;
             txtCharsPerFile.Enabled = rbCharsPerFile.Checked;
+        }
+
+        private void cbReplaceTabsWithSpaces_CheckedChanged(object sender, EventArgs e)
+        {
+            txtSpacesPerTab.Enabled = cbReplaceTabsWithSpaces.Checked;
         }
     }
 }
