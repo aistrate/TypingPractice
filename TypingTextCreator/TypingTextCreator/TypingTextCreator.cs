@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using System.Net;
-using System.Xml;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using HtmlAgilityPack;
 
 namespace TypingTextCreator
@@ -65,15 +61,7 @@ namespace TypingTextCreator
                 string text = "";
                 string title = "";
 
-                HtmlNodeCollection headings = null;
-                
-                int divCount = 1;
-                for (; divCount <= 10; divCount++)
-                {
-                    headings = doc.DocumentNode.SelectNodes(string.Format("//body{0}/h1", repeatString("/div", divCount)));
-                    if (headings != null)
-                        break;
-                }
+                HtmlNodeCollection headings = doc.DocumentNode.SelectNodes("//h1[@class='firstHeading']");
 
                 if (headings != null)
                 {
@@ -83,18 +71,26 @@ namespace TypingTextCreator
                     txtFileName.Text = string.Format(@"{0}.txt", replaceNonAscii(title));
                 }
 
-                //var divs = doc.DocumentNode.SelectNodes(string.Format("//body{0}", repeatString("/div", divCount + 1)));
-
                 int paragraphCount = 0;
 
-                var divs = headings[0].ParentNode.SelectNodes("div");
+                HtmlNodeCollection divs = doc.DocumentNode.SelectNodes("//div[@id='bodyContent']");
+
                 if (divs != null)
-                {
-                    foreach (HtmlNode node in divs.Nodes())
+                    for (var nodeEnum = ((IEnumerable<HtmlNode>)divs[0].ChildNodes).GetEnumerator(); nodeEnum.MoveNext(); )
                     {
+                        HtmlNode node = nodeEnum.Current;
+
+                        if (node.Attributes["class"] != null &&
+                            node.Attributes["class"].Value == "mw-content-ltr")
+                        {
+                            nodeEnum = ((IEnumerable<HtmlNode>)node.ChildNodes).GetEnumerator();
+                            continue;
+                        }
+
                         if (isTocOrH2(node) || node.ChildNodes.Any(c => isTocOrH2(c)))
                             break;
-                        else if (node.InnerText.Trim() != "")
+
+                        if (node.InnerText.Trim() != "")
                         {
                             if (node.Name == "p")
                             {
@@ -110,7 +106,6 @@ namespace TypingTextCreator
                             }
                         }
                     }
-                }
 
                 txtText.Text = text;
 
@@ -125,7 +120,6 @@ namespace TypingTextCreator
         private bool isTocOrH2(HtmlNode node)
         {
             return (node.Name == "table" &&
-                    node.Attributes["id"] != null && node.Attributes["id"].Value == "toc" &&
                     node.Attributes["class"] != null && node.Attributes["class"].Value == "toc") ||
                     node.Name == "h2";
         }
