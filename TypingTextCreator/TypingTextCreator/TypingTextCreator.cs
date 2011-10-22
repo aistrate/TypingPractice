@@ -80,8 +80,7 @@ namespace TypingTextCreator
                     {
                         HtmlNode node = nodeEnum.Current;
 
-                        if (node.Attributes["class"] != null &&
-                            node.Attributes["class"].Value == "mw-content-ltr")
+                        if (hasClass(node, "mw-content-ltr"))
                         {
                             nodeEnum = ((IEnumerable<HtmlNode>)node.ChildNodes).GetEnumerator();
                             continue;
@@ -117,10 +116,15 @@ namespace TypingTextCreator
             }
         }
 
+        private bool hasClass(HtmlNode node, string className)
+        {
+            return node.Attributes["class"] != null &&
+                   node.Attributes["class"].Value == className;
+        }
+
         private bool isTocOrH2(HtmlNode node)
         {
-            return (node.Name == "table" &&
-                    node.Attributes["class"] != null && node.Attributes["class"].Value == "toc") ||
+            return (node.Name == "table" && hasClass(node, "toc")) ||
                     node.Name == "h2";
         }
 
