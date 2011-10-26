@@ -71,21 +71,15 @@ namespace TypingTextCreator
                     txtFileName.Text = string.Format(@"{0}.txt", replaceNonAscii(title));
                 }
 
-                int paragraphCount = 0;
-
-                HtmlNodeCollection divs = doc.DocumentNode.SelectNodes("//div[@id='bodyContent']");
+                HtmlNodeCollection divs = doc.DocumentNode.SelectNodes("//div[@class='mw-content-ltr']") ??
+                                          doc.DocumentNode.SelectNodes("//div[@id='bodyContent']");
 
                 if (divs != null)
-                    for (var nodeEnum = ((IEnumerable<HtmlNode>)divs[0].ChildNodes).GetEnumerator(); nodeEnum.MoveNext(); )
+                {
+                    int paragraphCount = 0;
+
+                    foreach (HtmlNode node in divs[0].ChildNodes)
                     {
-                        HtmlNode node = nodeEnum.Current;
-
-                        if (hasClass(node, "mw-content-ltr"))
-                        {
-                            nodeEnum = ((IEnumerable<HtmlNode>)node.ChildNodes).GetEnumerator();
-                            continue;
-                        }
-
                         if (isTocOrH2(node) || node.ChildNodes.Any(c => isTocOrH2(c)))
                             break;
 
@@ -105,6 +99,7 @@ namespace TypingTextCreator
                             }
                         }
                     }
+                }
 
                 txtText.Text = text;
 
