@@ -32,7 +32,6 @@ namespace Typist.Appearance
             new FontInfo(FontNames.FixedPitch.CourierNew, 21, FontStyle.Bold),
             new FontInfo(FontNames.FixedPitch.DejaVuSansMono, 21),
             new FontInfo(FontNames.FixedPitch.DroidSansMono, 21),
-            new FontInfo(FontNames.FixedPitch.EnvyCodeR, 21.75f),
             new FontInfo(FontNames.FixedPitch.LucidaConsole, 22),
             new FontInfo(FontNames.FixedPitch.LuxiMono, 20.25f),
             new FontInfo(FontNames.FixedPitch.MPlus1M, 22),

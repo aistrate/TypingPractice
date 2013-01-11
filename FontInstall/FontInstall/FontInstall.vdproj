@@ -123,12 +123,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_35CC13FC4B364813AB5AFBE679F9AB34"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_394CB62EEDE944F18EF9FAAC58F387B1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -136,12 +130,6 @@
         "Entry"
         {
         "MsmKey" = "8:_3DF4C92743A941DDAA2DAB87EA724A4C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3EAA6C7BC16746B2A6D58CB329CB312D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -171,12 +159,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_44F042682A554B2DBCC63C03BE765130"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4540CAFB69F84F888A1F289BAF2ED33C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -184,12 +166,6 @@
         "Entry"
         {
         "MsmKey" = "8:_4B988AC7311C41E5BA905B63BAA9F652"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4F654E6031EA40B680E34EC78C1BDB51"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -484,12 +460,6 @@
         "Entry"
         {
         "MsmKey" = "8:_D43D4B01677B4FEFA665FE132419DE1A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D5C6A45247A14D269384E6A93AED347C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1018,26 +988,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_35CC13FC4B364813AB5AFBE679F9AB34"
-            {
-            "SourcePath" = "8:..\\..\\Fonts\\Envy Code R\\Envy Code R VS Italic-as-bold.ttf"
-            "TargetName" = "8:Envy Code R VS Italic-as-bold.ttf"
-            "Tag" = "8:"
-            "Folder" = "8:_B41E198246AF4308997B21E479F46255"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:5"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_394CB62EEDE944F18EF9FAAC58F387B1"
             {
             "SourcePath" = "8:..\\..\\Fonts\\TeX Gyre Cursor\\texgyrecursor-regular.otf"
@@ -1074,26 +1024,6 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3EAA6C7BC16746B2A6D58CB329CB312D"
-            {
-            "SourcePath" = "8:..\\..\\Fonts\\Envy Code R\\Envy Code R Italic.ttf"
-            "TargetName" = "8:Envy Code R Italic.ttf"
-            "Tag" = "8:"
-            "Folder" = "8:_B41E198246AF4308997B21E479F46255"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:5"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
@@ -1178,26 +1108,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_44F042682A554B2DBCC63C03BE765130"
-            {
-            "SourcePath" = "8:..\\..\\Fonts\\Envy Code R\\Envy Code R Bold.ttf"
-            "TargetName" = "8:Envy Code R Bold.ttf"
-            "Tag" = "8:"
-            "Folder" = "8:_B41E198246AF4308997B21E479F46255"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:5"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4540CAFB69F84F888A1F289BAF2ED33C"
             {
             "SourcePath" = "8:..\\..\\Fonts\\saxMono\\saxmono.ttf"
@@ -1222,26 +1132,6 @@
             {
             "SourcePath" = "8:..\\..\\Fonts\\Audimat Mono\\AUDIMBO_.TTF"
             "TargetName" = "8:AUDIMBO_.TTF"
-            "Tag" = "8:"
-            "Folder" = "8:_B41E198246AF4308997B21E479F46255"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:5"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4F654E6031EA40B680E34EC78C1BDB51"
-            {
-            "SourcePath" = "8:..\\..\\Fonts\\Envy Code R\\Envy Code R.ttf"
-            "TargetName" = "8:Envy Code R.ttf"
             "Tag" = "8:"
             "Folder" = "8:_B41E198246AF4308997B21E479F46255"
             "Condition" = "8:"
@@ -2238,26 +2128,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D5C6A45247A14D269384E6A93AED347C"
-            {
-            "SourcePath" = "8:..\\..\\Fonts\\Envy Code R\\Envy Code R VS.ttf"
-            "TargetName" = "8:Envy Code R VS.ttf"
-            "Tag" = "8:"
-            "Folder" = "8:_B41E198246AF4308997B21E479F46255"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:5"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D659EEB598174DD995021C39CBC0E621"
             {
             "SourcePath" = "8:..\\..\\Fonts\\NotCourierSans\\NotCourierSans-Bold.otf"
@@ -2586,7 +2456,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FontInstall"
         "ProductCode" = "8:{7E0F62AB-B90E-46CB-8CAC-B0534E8EDA77}"
-        "PackageCode" = "8:{9228E28D-8DA8-49D5-B003-0BF32A8E5C7F}"
+        "PackageCode" = "8:{3A060CFC-A290-4FD7-A97E-E238D1F2EA43}"
         "UpgradeCode" = "8:{13929650-1A10-4CE5-A300-8382BE7BFD17}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"

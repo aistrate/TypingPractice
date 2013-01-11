@@ -20,7 +20,6 @@ namespace Typist.Appearance
             public static string CourierNew { get { return "Courier New"; } }
             public static string DejaVuSansMono { get { return "DejaVu Sans Mono"; } }
             public static string DroidSansMono { get { return "Droid Sans Mono"; } }
-            public static string EnvyCodeR { get { return "Envy Code R"; } }
             public static string LucidaConsole { get { return "Lucida Console"; } }
             public static string LuxiMono { get { return "Luxi Mono"; } }
             public static string MPlus1M { get { return "M+ 1m"; } }
@@ -37,7 +36,6 @@ namespace Typist.Appearance
             public static string AnonymousPro { get { return FixedPitch.AnonymousPro; } }
             public static string Consolas { get { return FixedPitch.Consolas; } }
             public static string DejaVuSansMono { get { return FixedPitch.DejaVuSansMono; } }
-            public static string EnvyCodeR { get { return FixedPitch.EnvyCodeR; } }
             public static string LuxiMono { get { return FixedPitch.LuxiMono; } }
         }
 
