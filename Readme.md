@@ -1,8 +1,8 @@
 This is a program that enables you to improve typing skills such as:
 
 * general speed (assuming you already know how to touch-type)
-* proficiency over specific types of text (e.g., programming language source code)
-* speed over specific types of characters (e.g., numbers, symbols)
+* proficiency on specific types of text (e.g., programming language source code)
+* speed on specific types of characters (e.g., numbers, symbols)
 
 It includes a couple of practice text generators (import from Wikipedia articles, import from source code, generation of random characters). These will enable practicing on a wide variety of texts, incuding source code in the programming language of your choice.
 
