@@ -1,10 +1,10 @@
-This is a program that enables you to improve typing skills such as:
+This is a program that enables you to improve your typing skills, including:
 
 * general speed (assuming you already know how to touch-type)
 * proficiency on specific types of text (e.g., programming language source code)
 * speed on specific types of characters (e.g., numbers, symbols)
 
-It includes a couple of practice text generators (import from Wikipedia articles, import from source code, generation of random characters). These will enable practicing on a wide variety of texts, incuding source code in the programming language of your choice.
+It includes a couple of practice text generators (import from Wikipedia articles, import from source code, generation of random characters). These will allow you to practice on a variety of texts of your own choosing.
 
 
 Downloads
@@ -49,7 +49,7 @@ Fonts
 
 A good font to use is 'Anonymous Pro, 27.25 point'. (It is not set as default, because this font family might not be installed on your machine, unless you used FontInstall.msi).
 
-To set it:
+To set it (after running FontInstall.msi):
 
 1. Go to: context (right-click) menu > 'Predefined Fonts' > 'Anonymous Pro (24 point)'
 2. Press Ctrl-+ to make the font size larger (or Ctrl-- to make it smaller), until you reach 27.25 point (visible on the status bar at the bottom)
