@@ -27,4 +27,21 @@ Keyboard Shortcuts
 * Ctrl-X: Open 'Settings' dialog
 * Ctrl-F: Open 'Font Properties' dialog
 
-These actions can also be accessed from the context menu (right-click on text area of the window).
+* Ctrl-N: Use next font
+* Ctrl-Shift-N: Use previous font
+* Ctrl-+: Increase size of current font (by 0.25 point)
+* Ctrl--: Decrease size of current font (by 0.25 point)
+* Ctrl-T: Set current font and font size as default (persistent)
+
+Some of these actions can also be accessed from the context menu (right-click on text area of the window). The context menu also contains a list of predefined font & size pairs.
+
+
+Fonts
+-----
+
+A good font to use is 'Anonymous Pro, 27.25 point'. (It is not set as default, because this font family might not be installed on your machine, unless you used FontInstall.msi).
+
+To set it:
+
+1. Go to: context (right-click) menu > 'Predefined Fonts' > 'Anonymous Pro (24 point)'
+2. Press Ctrl-+ to make the font size larger (or Ctrl-- to make it smaller), until you reach 27.25 point (visible on the status bar at the bottom)
