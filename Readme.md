@@ -4,22 +4,19 @@ Downloads
 Zipped executables can be downloaded here:
 
 * [Typist.zip](http://dl.dropbox.com/u/14656944/Typist/Typist.zip) -- all executables, including font installer (7 MB)
-* [TypistLite.zip](http://dl.dropbox.com/u/14656944/Typist/TypistLite.zip) -- all executables, NOT including font installer (120 kB)
+* [TypistLite.zip](http://dl.dropbox.com/u/14656944/Typist/TypistLite.zip) -- all executables, not including font installer (120 kB)
 
 
 Main executables:
 
-* Typist.exe -- practice your typing skills
-* FontInstall.msi -- install 27 free fixed-width fonts (to be used by Typist.exe)
+* Typist.exe -- practicing of typing skills
+* FontInstall.msi -- install 27 free fixed-width fonts, to be used by Typist.exe (Note: Typist.exe will work fine with standard fonts found on any Windows machine; installing extra fonts will just offer more options.)
 
-Typist.exe will work fine with the default fonts found on any Windows machine; installing the extra fonts will just offer more options.
-
-
-Executables for creating practice texts (for use with Typist.exe):
+Executables that create practice texts (to be used with Typist.exe):
 
 * TypingTextCreator.exe -- import articles from Wikipedia
 * SourceCodeTextCreator.exe -- clean up and format source code files, and split them into chunks small enough for practice; by default it assumes C-like syntax, but can also process other programming languages
-* CharTrainingCreator.exe -- generate files with groups of random characters, for typing practice directed to particular characters (e.g., digits only)
+* CharTrainingCreator.exe -- generate blocks of random characters, for practice directed to a particular character group (e.g., digits only)
 
 
 Keyboard Shortcuts
@@ -30,4 +27,4 @@ Keyboard Shortcuts
 * Ctrl-X: Open 'Settings' dialog
 * Ctrl-F: Open 'Font Properties' dialog
 
-These actions can also be accessed from the context menu (right-click on the text area of the window).
+These actions can also be accessed from the context menu (right-click on text area of the window).
