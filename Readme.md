@@ -1,13 +1,13 @@
 Typing Practice Helper
 ======================
 
-![Screenshot](https://raw.github.com/aistrate/TypingPractice/master/Screenshot02.png "Screenshot")
+This is a little app that helps you improve your typing skills, including:
 
-This is a little app that enables you to improve your typing skills, including:
-
-* general speed (assuming you already know how to touch-type)
+* general speed (assuming you can already touch-type)
 * proficiency on specific types of text (e.g., programming language source code)
 * speed on specific types of characters (e.g., numbers, symbols)
+
+![Screenshot](https://raw.github.com/aistrate/TypingPractice/master/Screenshot02.png "Screenshot")
 
 It includes a couple of practice text generators (import from Wikipedia articles, import from source code, generation of random characters). These will allow you to practice on a variety of texts of your own choosing.
 
