@@ -7,9 +7,13 @@ This is a little app that helps you improve your typing skills, including:
 * proficiency on specific types of text (e.g., programming language source code)
 * speed on specific types of characters (e.g., numbers, symbols)
 
-![Screenshot](https://raw.github.com/aistrate/TypingPractice/master/Screenshot02.png "Screenshot")
+![Normal text](https://raw.github.com/aistrate/TypingPractice/master/Screenshot01.png "Normal text")
 
-It includes a couple of practice text generators (import from Wikipedia articles, import from source code, generation of random characters). These will allow you to practice on a variety of texts of your own choosing.
+![Source code](https://raw.github.com/aistrate/TypingPractice/master/Screenshot02.png "Source code")
+
+![Special characters](https://raw.github.com/aistrate/TypingPractice/master/Screenshot03.png "Special characters")
+
+It also includes a couple of practice text generators (import from Wikipedia articles, import from source code, generation of random characters). These will allow you to practice on a variety of texts of your own choosing.
 
 
 Downloads
